@@ -4,17 +4,26 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
+import Personas from "./pages/Personas";
+import Journey from "./pages/Journey";
+import Experiences from "./pages/Experiences";
+import Chat from "./pages/experiences/Chat";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <MainLayout>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/personas" component={Personas} />
+        <Route path="/journey" component={Journey} />
+        <Route path="/experiences" component={Experiences} />
+        <Route path="/experiences/chat" component={Chat} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </MainLayout>
   );
 }
 

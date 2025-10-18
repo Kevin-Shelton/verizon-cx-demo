@@ -1,0 +1,65 @@
+{
+  "personas": [
+    {
+      "id": "carlos",
+      "name": "Carlos",
+      "role": "SMB Retail Owner",
+      "dialect": "es-MX",
+      "dialectLabel": "Mexican Spanish",
+      "description": "Small business owner who needs to order new lines and port existing numbers",
+      "avatar": "👨‍💼",
+      "needs": [
+        "Port existing phone numbers",
+        "Add new business lines",
+        "Understand pricing and plans"
+      ],
+      "journey": ["outbound", "qualification", "proposal", "negotiation"]
+    },
+    {
+      "id": "maria",
+      "name": "María",
+      "role": "Field Services Manager",
+      "dialect": "es-PR",
+      "dialectLabel": "Caribbean Spanish (Puerto Rico)",
+      "description": "Field services manager needing device swap and promo eligibility information",
+      "avatar": "👩‍🔧",
+      "needs": [
+        "Device swap assistance",
+        "Check promo eligibility",
+        "Technical support"
+      ],
+      "journey": ["support", "expansion"]
+    },
+    {
+      "id": "lucia",
+      "name": "Lucía",
+      "role": "Healthcare Clinic Administrator",
+      "dialect": "es-CO",
+      "dialectLabel": "Latin American Spanish (Colombia)",
+      "description": "Healthcare administrator dealing with fraud alerts and support cases",
+      "avatar": "👩‍⚕️",
+      "needs": [
+        "Resolve fraud alerts",
+        "Open support cases",
+        "Account security"
+      ],
+      "journey": ["support", "onboarding"]
+    },
+    {
+      "id": "diego",
+      "name": "Diego",
+      "role": "Construction Project Manager",
+      "dialect": "es-US",
+      "dialectLabel": "US Spanish",
+      "description": "Construction manager needing bulk device provisioning for field workers",
+      "avatar": "👷",
+      "needs": [
+        "Bulk device orders",
+        "Fleet management",
+        "Field worker connectivity"
+      ],
+      "journey": ["proposal", "negotiation", "onboarding", "expansion"]
+    }
+  ]
+}
+

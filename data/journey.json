@@ -1,0 +1,215 @@
+{
+  "stages": [
+    {
+      "id": "outbound",
+      "name": "Outbound Prospecting",
+      "activities": [
+        {
+          "id": "engage_top_leads",
+          "label": "Engage Top Leads",
+          "coverage": "full",
+          "pillars": ["email", "chat", "ivr"],
+          "rationale": "Calls/emails/chat fully translatable including dialects",
+          "demos": ["/experiences/chat", "/experiences/email"]
+        },
+        {
+          "id": "manage_outreach_tasks",
+          "label": "Manage Outreach Task List",
+          "coverage": "partial",
+          "pillars": ["email"],
+          "rationale": "Templates translated; manual prioritization remains",
+          "demos": ["/experiences/email"]
+        },
+        {
+          "id": "check_customer_detail",
+          "label": "Check My Customer Detail",
+          "coverage": "none",
+          "pillars": [],
+          "rationale": "CRM lookup; outside translation scope",
+          "demos": []
+        }
+      ]
+    },
+    {
+      "id": "qualification",
+      "name": "Qualification & Discovery",
+      "activities": [
+        {
+          "id": "conduct_needs_analysis",
+          "label": "Conduct Needs Analysis",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "field"],
+          "rationale": "Voice and text conversations fully supported with real-time translation",
+          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/field"]
+        },
+        {
+          "id": "review_account_history",
+          "label": "Review Account History",
+          "coverage": "partial",
+          "pillars": ["documents"],
+          "rationale": "Historical documents can be translated on-demand",
+          "demos": ["/experiences/documents"]
+        },
+        {
+          "id": "verify_credit_eligibility",
+          "label": "Verify Credit Eligibility",
+          "coverage": "none",
+          "pillars": [],
+          "rationale": "Third-party credit check; outside translation scope",
+          "demos": []
+        }
+      ]
+    },
+    {
+      "id": "proposal",
+      "name": "Proposal & Presentation",
+      "activities": [
+        {
+          "id": "generate_custom_quote",
+          "label": "Generate Custom Quote",
+          "coverage": "full",
+          "pillars": ["email", "documents", "web"],
+          "rationale": "Quote documents and emails fully translatable with dialect support",
+          "demos": ["/experiences/email", "/experiences/documents", "/experiences/web"]
+        },
+        {
+          "id": "present_solution_demo",
+          "label": "Present Solution Demo",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "field"],
+          "rationale": "Live presentation support with simultaneous translation",
+          "demos": ["/experiences/chat", "/experiences/field"]
+        },
+        {
+          "id": "address_objections",
+          "label": "Address Objections",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "email"],
+          "rationale": "Real-time conversation support across all channels",
+          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email"]
+        }
+      ]
+    },
+    {
+      "id": "negotiation",
+      "name": "Negotiation & Closing",
+      "activities": [
+        {
+          "id": "negotiate_terms",
+          "label": "Negotiate Terms & Pricing",
+          "coverage": "full",
+          "pillars": ["chat", "email", "field"],
+          "rationale": "Contract negotiation fully supported with legal terminology translation",
+          "demos": ["/experiences/chat", "/experiences/email", "/experiences/field"]
+        },
+        {
+          "id": "prepare_contract",
+          "label": "Prepare Contract Documents",
+          "coverage": "full",
+          "pillars": ["documents", "email"],
+          "rationale": "Legal documents translated with certified accuracy",
+          "demos": ["/experiences/documents", "/experiences/email"]
+        },
+        {
+          "id": "obtain_signatures",
+          "label": "Obtain Signatures",
+          "coverage": "partial",
+          "pillars": ["email"],
+          "rationale": "Email notifications translated; e-signature platform is third-party",
+          "demos": ["/experiences/email"]
+        }
+      ]
+    },
+    {
+      "id": "onboarding",
+      "name": "Onboarding & Activation",
+      "activities": [
+        {
+          "id": "schedule_installation",
+          "label": "Schedule Installation",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "email", "field"],
+          "rationale": "Scheduling communications fully translated across all channels",
+          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email", "/experiences/field"]
+        },
+        {
+          "id": "send_welcome_kit",
+          "label": "Send Welcome Kit",
+          "coverage": "full",
+          "pillars": ["email", "documents", "web"],
+          "rationale": "Welcome materials and portal access fully localized",
+          "demos": ["/experiences/email", "/experiences/documents", "/experiences/web"]
+        },
+        {
+          "id": "conduct_training",
+          "label": "Conduct Product Training",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "field", "documents"],
+          "rationale": "Training materials and live sessions fully supported",
+          "demos": ["/experiences/chat", "/experiences/field", "/experiences/documents"]
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "name": "Ongoing Support & Service",
+      "activities": [
+        {
+          "id": "handle_service_requests",
+          "label": "Handle Service Requests",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "email", "field"],
+          "rationale": "All support channels fully translated with context preservation",
+          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email", "/experiences/field"]
+        },
+        {
+          "id": "process_billing_inquiries",
+          "label": "Process Billing Inquiries",
+          "coverage": "full",
+          "pillars": ["chat", "email", "web"],
+          "rationale": "Billing communications and portal fully localized",
+          "demos": ["/experiences/chat", "/experiences/email", "/experiences/web"]
+        },
+        {
+          "id": "troubleshoot_technical_issues",
+          "label": "Troubleshoot Technical Issues",
+          "coverage": "full",
+          "pillars": ["chat", "ivr", "field"],
+          "rationale": "Technical support with specialized terminology translation",
+          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/field"]
+        }
+      ]
+    },
+    {
+      "id": "expansion",
+      "name": "Expansion & Upsell",
+      "activities": [
+        {
+          "id": "identify_growth_opportunities",
+          "label": "Identify Growth Opportunities",
+          "coverage": "partial",
+          "pillars": ["email"],
+          "rationale": "Outreach emails translated; analytics tools are third-party",
+          "demos": ["/experiences/email"]
+        },
+        {
+          "id": "present_upgrade_options",
+          "label": "Present Upgrade Options",
+          "coverage": "full",
+          "pillars": ["chat", "email", "field", "web"],
+          "rationale": "All sales channels fully supported for expansion conversations",
+          "demos": ["/experiences/chat", "/experiences/email", "/experiences/field", "/experiences/web"]
+        },
+        {
+          "id": "process_add_on_orders",
+          "label": "Process Add-on Orders",
+          "coverage": "full",
+          "pillars": ["web", "email", "documents"],
+          "rationale": "Order processing and documentation fully translated",
+          "demos": ["/experiences/web", "/experiences/email", "/experiences/documents"]
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, feedback, InsertFeedback, transcripts, InsertTranscript } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -85,4 +85,44 @@ export async function getUser(id: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Feedback queries
+export async function createFeedback(data: InsertFeedback) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(feedback).values(data);
+  return data;
+}
+
+export async function getAllFeedback() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(feedback).orderBy(feedback.createdAt);
+}
+
+export async function getFeedbackById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(feedback).where(eq(feedback.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Transcript queries
+export async function createTranscript(data: InsertTranscript) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(transcripts).values(data);
+  return data;
+}
+
+export async function getAllTranscripts() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(transcripts).orderBy(transcripts.createdAt);
+}
+
+export async function getTranscriptById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(transcripts).where(eq(transcripts.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}

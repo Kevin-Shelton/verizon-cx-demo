@@ -43,18 +43,27 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
+  /* Verizon Brand Colors */
+  --verizon-red: #E60000;
+  --verizon-dark: #0F0F10;
+  --verizon-gray: #6B7280;
+  --verizon-bg: #F7F7F7;
+  --verizon-ok: #16A34A;
+  --verizon-warn: #F59E0B;
+  --verizon-error: #DC2626;
+  
+  --primary: oklch(0.55 0.22 25); /* Verizon Red */
+  --primary-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.55 0.22 25);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --chart-1: oklch(0.55 0.22 25);
+  --chart-2: oklch(0.45 0.18 25);
+  --chart-3: oklch(0.35 0.14 25);
+  --chart-4: oklch(0.25 0.10 25);
+  --chart-5: oklch(0.15 0.06 25);
+  --radius: 0.875rem; /* 14px - Verizon medium radius */
+  --background: oklch(0.985 0 0); /* #F7F7F7 */
+  --foreground: oklch(0.06 0 0); /* #0F0F10 */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.235 0.015 65);
   --popover: oklch(1 0 0);
