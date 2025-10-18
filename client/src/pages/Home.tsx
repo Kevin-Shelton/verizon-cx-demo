@@ -200,7 +200,7 @@ export default function Home() {
             The Invictus Difference
           </p>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Understanding dialectical differences isn't just about language—it's about respect, trust, and winning business. When a Mexican customer hears "computadora" instead of "ordenador," or a Puerto Rican customer sees familiar phrasing, they know you understand them. <span className="font-semibold text-primary">That understanding makes the difference between an opportunity won or lost.</span>
+            Understanding dialectical differences isn't just about language—it's about respect, trust, and winning business. When a Mexican customer hears "la computadora" instead of "el ordenador," or a Puerto Rican customer sees familiar phrasing, they know you understand them. <span className="font-semibold text-primary">That understanding makes the difference between an opportunity won or lost.</span>
           </p>
         </div>
       </section>
