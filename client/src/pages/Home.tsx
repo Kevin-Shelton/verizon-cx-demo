@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Globe, MessageSquare, FileText, Phone, Users, MapPin } from "lucide-react";
+import { ArrowRight, Globe, MessageSquare, FileText, Phone, Users, MapPin, CheckCircle2, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -89,6 +89,120 @@ export default function Home() {
           <span className="text-primary text-3xl font-bold">~90%</span>{" "}
           of multilingual friction across the R2B journey.
         </p>
+      </section>
+
+      {/* Differentiators Section */}
+      <section className="space-y-8">
+        <div className="text-center space-y-2">
+          <h2 className="text-3xl font-bold text-foreground">
+            Why Invictus Wins
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            The difference between winning and losing an opportunity often comes down to cultural understanding.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Our Approach */}
+          <Card className="border-primary/20 bg-primary/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <CheckCircle2 className="h-6 w-6" />
+                Invictus: Culturally Aware
+              </CardTitle>
+              <CardDescription className="text-base">
+                We understand that Spanish is not just Spanish
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Dialect-Specific Translation</p>
+                    <p className="text-sm text-muted-foreground">Mexican Spanish (ES-MX), Puerto Rican (ES-PR), Colombian (ES-CO), and US Hispanic (ES-US) each have unique vocabulary, idioms, and cultural context.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Cultural Context Preservation</p>
+                    <p className="text-sm text-muted-foreground">Business terms, formality levels, and communication styles adapted to regional norms and expectations.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Localized Experience</p>
+                    <p className="text-sm text-muted-foreground">Customers feel understood and valued when communication respects their regional identity and cultural nuances.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Trust & Conversion</p>
+                    <p className="text-sm text-muted-foreground">Cultural awareness builds trust, reduces friction, and increases conversion rates across the entire customer journey.</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Competitor Approach */}
+          <Card className="border-destructive/20 bg-destructive/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-destructive">
+                <X className="h-6 w-6" />
+                Competitors: One-Size-Fits-All
+              </CardTitle>
+              <CardDescription className="text-base">
+                They believe Spanish is Spanish
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Generic Translation</p>
+                    <p className="text-sm text-muted-foreground">Single Spanish translation applied to all markets, ignoring regional differences and cultural context.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Lost in Translation</p>
+                    <p className="text-sm text-muted-foreground">Awkward phrasing, incorrect terminology, and cultural mismatches that confuse or alienate customers.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Missed Opportunities</p>
+                    <p className="text-sm text-muted-foreground">Customers feel like an afterthought when their language and culture aren't respected, leading to lost deals.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold">Reduced Trust</p>
+                    <p className="text-sm text-muted-foreground">Generic translations signal lack of investment in the customer relationship, damaging credibility and conversion.</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Key Insight */}
+        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 text-center border border-primary/20">
+          <p className="text-xl font-semibold text-foreground mb-2">
+            The Invictus Difference
+          </p>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Understanding dialectical differences isn't just about language—it's about respect, trust, and winning business. When a Mexican customer hears "computadora" instead of "ordenador," or a Puerto Rican customer sees familiar phrasing, they know you understand them. <span className="font-semibold text-primary">That understanding makes the difference between an opportunity won or lost.</span>
+          </p>
+        </div>
       </section>
 
       {/* Features Grid */}
