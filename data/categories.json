@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "id": "outbound_prospecting",
+      "name": "Outbound Prospecting",
+      "color": "#FF6B35",
+      "hoursPerWeek": 12,
+      "stages": ["outbound"]
+    },
+    {
+      "id": "selling",
+      "name": "Selling",
+      "color": "#E63946",
+      "hoursPerWeek": 13,
+      "stages": ["qualification", "proposal", "negotiation"]
+    },
+    {
+      "id": "churn_mitigation",
+      "name": "Churn Mitigation",
+      "color": "#F4A261",
+      "hoursPerWeek": 4,
+      "stages": ["expansion"]
+    },
+    {
+      "id": "service_post_sales",
+      "name": "Service & Post Sales",
+      "color": "#2A9D8F",
+      "hoursPerWeek": 4.5,
+      "stages": ["onboarding", "support"]
+    },
+    {
+      "id": "operational_tasking",
+      "name": "Operational Tasking",
+      "color": "#1982C4",
+      "hoursPerWeek": 6,
+      "stages": []
+    }
+  ]
+}
+
