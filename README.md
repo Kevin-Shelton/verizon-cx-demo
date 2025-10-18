@@ -40,14 +40,20 @@ pnpm dev
 
 ## 🗄️ Database Setup
 
-The project uses MySQL/TiDB with the following tables:
+The project uses **PostgreSQL** (Supabase) with the following tables:
 
 - `users` - User authentication and profiles
 - `feedback` - Customer feedback submissions
 - `transcripts` - Chat conversation transcripts
 
+**Quick Setup**: See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for detailed instructions.
+
 Run migrations:
 ```bash
+# Set your Supabase connection string
+export DATABASE_URL="postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:5432/postgres"
+
+# Push schema to database
 pnpm db:push
 ```
 
@@ -55,7 +61,8 @@ pnpm db:push
 
 ### Prerequisites
 - Vercel account
-- MySQL/TiDB database (recommend PlanetScale or TiDB Cloud)
+- Supabase account (free tier available)
+- GitHub repository already set up ✅
 
 ### Steps
 
@@ -67,7 +74,7 @@ pnpm db:push
    Add these in Vercel project settings:
    
    ```
-   DATABASE_URL=mysql://user:password@host:port/database
+   DATABASE_URL=postgresql://postgres:[PASSWORD]@db.xxxxx.supabase.co:5432/postgres
    JWT_SECRET=your-random-secret-key
    VITE_APP_ID=verizon-cx-demo
    VITE_APP_TITLE=Verizon Multilingual CX Demo Portal
