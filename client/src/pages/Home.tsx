@@ -106,8 +106,8 @@ export default function Home() {
           {/* Our Approach */}
           <Card className="border-primary/20 bg-primary/5">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-primary">
-                <CheckCircle2 className="h-6 w-6" />
+              <CardTitle className="flex items-center gap-2 text-foreground">
+                <CheckCircle2 className="h-6 w-6 text-green-600" />
                 Invictus: Culturally Aware
               </CardTitle>
               <CardDescription className="text-base">
