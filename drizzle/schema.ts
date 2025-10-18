@@ -1,36 +1,44 @@
-import { mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { pgEnum, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+
+/**
+ * PostgreSQL schema for Supabase
+ */
+
+// User role enum
+export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
+
+// Feedback type enum
+export const feedbackTypeEnum = pgEnum("feedback_type", ["question", "issue", "improvement", "observation"]);
 
 /**
  * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
  */
-export const users = mysqlTable("users", {
+export const users = pgTable("users", {
   id: varchar("id", { length: 64 }).primaryKey(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow(),
+  loginMethod: varchar("login_method", { length: 64 }),
+  role: userRoleEnum("role").default("user").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  lastSignedIn: timestamp("last_signed_in").defaultNow(),
 });
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 // Feedback submissions table
-export const feedback = mysqlTable("feedback", {
-  id: varchar("id", { length: 64 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  createdAt: timestamp("createdAt").defaultNow(),
-  userName: text("userName"),
-  userEmail: varchar("userEmail", { length: 320 }),
-  type: mysqlEnum("type", ["question", "issue", "improvement", "observation"]).notNull(),
+export const feedback = pgTable("feedback", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  createdAt: timestamp("created_at").defaultNow(),
+  userName: text("user_name"),
+  userEmail: varchar("user_email", { length: 320 }),
+  type: feedbackTypeEnum("type").notNull(),
   title: text("title"),
   description: text("description"),
   route: text("route"),
-  personaId: varchar("personaId", { length: 64 }),
+  personaId: varchar("persona_id", { length: 64 }),
   dialect: varchar("dialect", { length: 32 }),
-  activityId: varchar("activityId", { length: 128 }),
+  activityId: varchar("activity_id", { length: 128 }),
   attachments: text("attachments"), // JSON array stored as text
   metadata: text("metadata"), // JSON object stored as text
 });
@@ -39,10 +47,10 @@ export type Feedback = typeof feedback.$inferSelect;
 export type InsertFeedback = typeof feedback.$inferInsert;
 
 // Chat transcripts table
-export const transcripts = mysqlTable("transcripts", {
-  id: varchar("id", { length: 64 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  createdAt: timestamp("createdAt").defaultNow(),
-  personaId: varchar("personaId", { length: 64 }),
+export const transcripts = pgTable("transcripts", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  createdAt: timestamp("created_at").defaultNow(),
+  personaId: varchar("persona_id", { length: 64 }),
   dialect: varchar("dialect", { length: 32 }),
   original: text("original"), // JSON array stored as text
   translated: text("translated"), // JSON array stored as text
@@ -53,3 +61,4 @@ export const transcripts = mysqlTable("transcripts", {
 
 export type Transcript = typeof transcripts.$inferSelect;
 export type InsertTranscript = typeof transcripts.$inferInsert;
+
