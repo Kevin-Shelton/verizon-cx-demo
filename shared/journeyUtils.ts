@@ -18,15 +18,16 @@ export function getCoverageWeight(coverage: Coverage): number {
  * Calculate coverage percentage for a stage
  * Returns percentage rounded to nearest 5
  */
-export function calculateStageCoverage(stage: Stage): number {
-  if (stage.activities.length === 0) return 0;
+export function calculateStageCoverage(stage: Stage | { activities: Activity[] }): number {
+  const activities = 'activities' in stage ? stage.activities : [];
+  if (!activities || activities.length === 0) return 0;
 
-  const totalWeight = stage.activities.reduce(
+  const totalWeight = activities.reduce(
     (sum, activity) => sum + getCoverageWeight(activity.coverage),
     0
   );
 
-  const percentage = (totalWeight / stage.activities.length) * 100;
+  const percentage = (totalWeight / activities.length) * 100;
   return Math.round(percentage / 5) * 5; // Round to nearest 5
 }
 

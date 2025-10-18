@@ -143,8 +143,7 @@ export default function Journey() {
             const categoryStages = journeyData.stages.filter(s => category.stages.includes(s.id));
             const categoryCoverage = categoryStages.length > 0
               ? Math.round(categoryStages.reduce((sum, stage) => {
-                  const activities = stage.activities || [];
-                  return sum + (activities.length > 0 ? calculateStageCoverage(activities as any) : 0);
+                  return sum + calculateStageCoverage(stage as any);
                 }, 0) / categoryStages.length)
               : 0;
             
