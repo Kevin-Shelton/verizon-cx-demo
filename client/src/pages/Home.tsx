@@ -117,28 +117,28 @@ export default function Home() {
             <CardContent className="space-y-4">
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-semibold">Dialect-Specific Translation</p>
                     <p className="text-sm text-muted-foreground">Mexican Spanish (ES-MX), Puerto Rican (ES-PR), Colombian (ES-CO), and US Hispanic (ES-US) each have unique vocabulary, idioms, and cultural context.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-semibold">Cultural Context Preservation</p>
                     <p className="text-sm text-muted-foreground">Business terms, formality levels, and communication styles adapted to regional norms and expectations.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-semibold">Localized Experience</p>
                     <p className="text-sm text-muted-foreground">Customers feel understood and valued when communication respects their regional identity and cultural nuances.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-semibold">Trust & Conversion</p>
                     <p className="text-sm text-muted-foreground">Cultural awareness builds trust, reduces friction, and increases conversion rates across the entire customer journey.</p>
