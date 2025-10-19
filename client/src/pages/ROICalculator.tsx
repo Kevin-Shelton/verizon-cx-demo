@@ -9,6 +9,9 @@ import {
   Award,
   ArrowRight,
   Calculator,
+  Building2,
+  ToggleLeft,
+  ToggleRight,
   PieChart,
   BarChart3,
   Info
@@ -16,6 +19,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Slider } from '../components/ui/slider';
 import roiMetricsData from '../../../data/roiMetrics.json';
+import verizonROIData from '../../../data/verizonROIData.json';
 
 interface ROIMetrics {
   baseMetrics: {
@@ -83,6 +87,9 @@ interface ROIMetrics {
 const roiMetrics = roiMetricsData as ROIMetrics;
 
 export default function ROICalculator() {
+  // Verizon data toggle
+  const [useVerizonData, setUseVerizonData] = useState(false);
+
   // User inputs
   const [customerBase, setCustomerBase] = useState(50000);
   const [monthlyCallVolume, setMonthlyCallVolume] = useState(150000);
@@ -186,10 +193,48 @@ export default function ROICalculator() {
               <Calculator className="w-10 h-10" />
               <h1 className="text-4xl font-bold">Multilingual CX ROI Calculator</h1>
             </div>
-            <p className="text-xl text-red-100 max-w-3xl">
+            <p className="text-xl text-red-100 max-w-3xl mb-6">
               Calculate the financial impact of implementing dialect-specific multilingual customer
               experience at Verizon. Based on industry research and proven metrics.
             </p>
+            
+            {/* Verizon Data Toggle */}
+            <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 max-w-md">
+              <button
+                onClick={() => {
+                  setUseVerizonData(!useVerizonData);
+                  if (!useVerizonData) {
+                    // Switch to Verizon data
+                    setCustomerBase(verizonROIData.verizonBaseline.hispanicCustomers);
+                    setMonthlyCallVolume(Math.round(verizonROIData.verizonBaseline.hispanicCustomers * 0.15)); // Estimate 15% call monthly
+                    setCurrentChurnRate(verizonROIData.verizonBaseline.churnRate);
+                    setAvgCLV(Math.round(verizonROIData.verizonBaseline.arpa * 24)); // 24-month CLV
+                  } else {
+                    // Switch back to generic data
+                    setCustomerBase(50000);
+                    setMonthlyCallVolume(150000);
+                    setCurrentChurnRate(15);
+                    setAvgCLV(1200);
+                  }
+                }}
+                className="flex items-center gap-2 text-white hover:text-red-100 transition-colors"
+              >
+                {useVerizonData ? (
+                  <ToggleRight className="w-6 h-6" />
+                ) : (
+                  <ToggleLeft className="w-6 h-6" />
+                )}
+                <span className="font-semibold">
+                  {useVerizonData ? 'Verizon-Specific Data' : 'Generic Industry Data'}
+                </span>
+              </button>
+              {useVerizonData && (
+                <div className="flex items-center gap-2 bg-red-500 px-3 py-1 rounded-full">
+                  <Building2 className="w-4 h-4" />
+                  <span className="text-sm font-semibold">Q4 2024</span>
+                </div>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>

@@ -330,6 +330,36 @@
       "keyFindings": [
         "Hispanic consumers spend 10.5 hours per week using internet vs 8.4 hours general population"
       ]
+    },
+    {
+      "id": 33,
+      "title": "Verizon Q4 2024 Earnings Report",
+      "organization": "Verizon Communications Inc.",
+      "url": "https://www.verizon.com/about/investors/quarterly-earnings",
+      "type": "Verizon Financial Data",
+      "keyFindings": [
+        "146.1 million total wireless connections",
+        "$139.77 average revenue per account (ARPA)",
+        "1.12% consumer churn rate",
+        "$134.8B annual revenue",
+        "36% market share (down from 39%)",
+        "Estimated 17.4M Hispanic customers (11.9% of subscriber base)"
+      ]
+    },
+    {
+      "id": 34,
+      "title": "U.S. Hispanic Market Analysis - Telecommunications Sector",
+      "organization": "U.S. Census Bureau",
+      "url": "https://www.census.gov/topics/population/hispanic-origin.html",
+      "type": "Verizon Financial Data",
+      "keyFindings": [
+        "11.9% of U.S. wireless subscribers are Hispanic",
+        "Estimated $9.72B annual revenue from Verizon Hispanic segment",
+        "$6.61B revenue at risk from 68% brand switching risk",
+        "$1.46B premium pricing opportunity (64% willing to pay 5-10% more)",
+        "$797M annual churn attributed to language barriers (29% of total)",
+        "$25B total addressable market in Spanish-speaking segment"
+      ]
     }
   ],
   "categories": [
@@ -364,6 +394,10 @@
     {
       "name": "First Call Resolution",
       "sources": [1, 18, 25, 26]
+    },
+    {
+      "name": "Verizon Financial Data",
+      "sources": [33, 34]
     }
   ]
 }
