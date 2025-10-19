@@ -1,0 +1,81 @@
+{
+  "maria": {
+    "name": "María",
+    "role": "Field Services Manager",
+    "dialect": "es-PR",
+    "activeStages": [
+      "service",
+      "expansion"
+    ],
+    "activeActivities": [
+      "Handle Service Request",
+      "Check Device Eligibility",
+      "Coordinate Field Tech",
+      "Process Device Swap",
+      "Confirm Promo Eligibility",
+      "Identify Upsell Opportunity"
+    ]
+  },
+  "carlos": {
+    "name": "Carlos",
+    "role": "SMB Retail Owner",
+    "dialect": "es-MX",
+    "activeStages": [
+      "outbound",
+      "qualification",
+      "proposal",
+      "negotiation",
+      "onboarding"
+    ],
+    "activeActivities": [
+      "Engage Top Leads",
+      "Conduct Needs Analysis",
+      "Review Account History",
+      "Generate Custom Quote",
+      "Present Solution",
+      "Review Contract Terms",
+      "Negotiate Pricing",
+      "Welcome New Customer",
+      "Configure Services"
+    ]
+  },
+  "lucia": {
+    "name": "Lucía",
+    "role": "Healthcare Clinic Administrator",
+    "dialect": "es-CO",
+    "activeStages": [
+      "service",
+      "churn"
+    ],
+    "activeActivities": [
+      "Handle Service Request",
+      "Open Support Case",
+      "Resolve Fraud Alert",
+      "Monitor Account Health",
+      "Address Retention Risk",
+      "Offer Retention Incentive"
+    ]
+  },
+  "diego": {
+    "name": "Diego",
+    "role": "Construction Project Manager",
+    "dialect": "es-US",
+    "activeStages": [
+      "proposal",
+      "negotiation",
+      "onboarding",
+      "service"
+    ],
+    "activeActivities": [
+      "Generate Custom Quote",
+      "Present Solution",
+      "Review Contract Terms",
+      "Negotiate Pricing",
+      "Welcome New Customer",
+      "Configure Services",
+      "Provision Bulk Devices",
+      "Handle Service Request"
+    ]
+  }
+}
+

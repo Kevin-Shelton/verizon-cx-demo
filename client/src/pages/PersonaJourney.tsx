@@ -20,6 +20,8 @@ import {
   Send,
 } from "lucide-react";
 import personasData from "../../../data/personas.json";
+import journeyData from "../../../data/journey.json";
+import personaJourneyMappings from "../../../data/personaJourneyMappings.json";
 
 interface Message {
   sender: "customer" | "agent";
@@ -630,6 +632,86 @@ export default function PersonaJourney() {
             </div>
           </div>
         </div>
+
+        {/* R2B Journey Map */}
+        <Card className="mb-8 bg-white shadow-lg">
+          <CardHeader className="border-b">
+            <CardTitle className="text-xl font-bold flex items-center gap-2">
+              <ArrowRight className="h-5 w-5 text-red-600" />
+              Ready-to-Buy Journey Map
+            </CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">
+              Highlighted stages show where {persona.name}'s customer interactions occur
+            </p>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div className="flex flex-col gap-3">
+              {/* Journey Stages */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                {journeyData.stages.map((stage, index) => {
+                  const mapping = personaJourneyMappings[personaId as keyof typeof personaJourneyMappings];
+                  const isActive = mapping?.activeStages?.includes(stage.id) || 
+                                   (stage.id === 'support' && mapping?.activeStages?.includes('service'));
+                  
+                  return (
+                    <div key={stage.id} className="flex items-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        className={`flex-shrink-0 relative ${
+                          isActive
+                            ? 'bg-gradient-to-br from-red-600 to-red-700 text-white shadow-lg border-2 border-red-500'
+                            : 'bg-gray-100 text-gray-400 border-2 border-gray-200'
+                        } rounded-lg p-4 min-w-[160px] transition-all duration-300 hover:scale-105`}
+                      >
+                        <div className="text-center">
+                          <div className={`text-xs font-semibold mb-1 ${
+                            isActive ? 'text-red-100' : 'text-gray-500'
+                          }`}>
+                            Stage {index + 1}
+                          </div>
+                          <div className={`text-sm font-bold leading-tight ${
+                            isActive ? 'text-white' : 'text-gray-400'
+                          }`}>
+                            {stage.name}
+                          </div>
+                          {isActive && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: index * 0.1 + 0.2 }}
+                              className="absolute -top-2 -right-2 bg-green-500 rounded-full p-1"
+                            >
+                              <CheckCircle2 className="h-4 w-4 text-white" />
+                            </motion.div>
+                          )}
+                        </div>
+                      </motion.div>
+                      {index < journeyData.stages.length - 1 && (
+                        <ArrowRight className={`h-5 w-5 flex-shrink-0 mx-1 ${
+                          isActive ? 'text-red-600' : 'text-gray-300'
+                        }`} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Legend */}
+              <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground mt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-gradient-to-br from-red-600 to-red-700 rounded border-2 border-red-500"></div>
+                  <span>Active for {persona.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-gray-100 rounded border-2 border-gray-200"></div>
+                  <span>Not applicable</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Progress */}
         <Card className="mb-8">

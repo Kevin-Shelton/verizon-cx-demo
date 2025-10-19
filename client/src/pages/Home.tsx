@@ -1,298 +1,186 @@
+import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, XCircle } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Globe, MessageSquare, FileText, Phone, Users, MapPin, CheckCircle2, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
 
 export default function Home() {
-  const features = [
-    {
-      icon: Globe,
-      title: "Website Translation",
-      description: "Public and authenticated site translation with dialect support",
-      href: "/experiences/web",
-    },
-    {
-      icon: MessageSquare,
-      title: "Live Chat",
-      description: "Real-time chat translation with dual-pane view",
-      href: "/experiences/chat",
-    },
-    {
-      icon: FileText,
-      title: "Document Translation",
-      description: "Upload and translate documents with bilingual preview",
-      href: "/experiences/documents",
-    },
-    {
-      icon: Phone,
-      title: "IVR & Voice",
-      description: "Speech-to-speech translation for phone interactions",
-      href: "/experiences/ivr",
-    },
-    {
-      icon: Users,
-      title: "Email Support",
-      description: "Inbound and outbound email translation",
-      href: "/experiences/email",
-    },
-    {
-      icon: MapPin,
-      title: "Field Services",
-      description: "In-store and field mobile translation support",
-      href: "/experiences/field",
-    },
-  ];
-
   return (
-    <div className="space-y-16">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="text-center space-y-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
-            Multilingual CX
-            <span className="block text-primary mt-2">Without Boundaries</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Experience end-to-end multilingual customer experience across Website, Documents, IVR, Chat, Email, and In-Field interactions.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <Link href="/personas">
-            <Button size="lg" className="gap-2 text-lg px-8">
-              Start the Day in the Life
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-          </Link>
-          <Link href="/journey">
-            <Button size="lg" variant="outline" className="gap-2 text-lg px-8">
-              Explore Journey Map
-            </Button>
-          </Link>
-        </motion.div>
+      <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/hero-image.jpg')] bg-cover bg-center opacity-10"></div>
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Culturally Aware
+              <span className="block text-[#E60000]">Multilingual CX</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+              Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/personas">
+                <Button size="lg" className="bg-[#E60000] hover:bg-[#CC0000] text-white text-lg px-8 py-6">
+                  Explore Personas
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/journey">
+                <Button size="lg" variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 text-lg px-8 py-6">
+                  View Coverage Map
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Coverage Statement */}
-      <section className="bg-primary/10 rounded-xl p-8 text-center">
-        <p className="text-2xl font-semibold text-foreground">
-          Invictus resolves{" "}
-          <span className="text-primary text-3xl font-bold">~90%</span>{" "}
-          of multilingual friction across the R2B journey.
-        </p>
-      </section>
-
-      {/* Differentiators Section */}
-      <section className="space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold text-foreground">
-            Why Invictus Wins
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            The difference between winning and losing an opportunity often comes down to cultural understanding.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Our Approach */}
-          <Card className="border-primary/20 bg-primary/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-foreground">
-                <CheckCircle2 className="h-6 w-6 text-green-600" />
-                Invictus: Culturally Aware
-              </CardTitle>
-              <CardDescription className="text-base">
-                We understand that Spanish is not just Spanish
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Dialect-Specific Translation</p>
-                    <p className="text-sm text-muted-foreground">Mexican Spanish (ES-MX), Puerto Rican (ES-PR), Colombian (ES-CO), and US Hispanic (ES-US) each have unique vocabulary, idioms, and cultural context.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Cultural Context Preservation</p>
-                    <p className="text-sm text-muted-foreground">Business terms, formality levels, and communication styles adapted to regional norms and expectations.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Localized Experience</p>
-                    <p className="text-sm text-muted-foreground">Customers feel understood and valued when communication respects their regional identity and cultural nuances.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Trust & Conversion</p>
-                    <p className="text-sm text-muted-foreground">Cultural awareness builds trust, reduces friction, and increases conversion rates across the entire customer journey.</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Competitor Approach */}
-          <Card className="border-destructive/20 bg-destructive/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-destructive">
-                <X className="h-6 w-6" />
-                Competitors: One-Size-Fits-All
-              </CardTitle>
-              <CardDescription className="text-base">
-                They believe Spanish is Spanish
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Generic Translation</p>
-                    <p className="text-sm text-muted-foreground">Single Spanish translation applied to all markets, ignoring regional differences and cultural context.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Lost in Translation</p>
-                    <p className="text-sm text-muted-foreground">Awkward phrasing, incorrect terminology, and cultural mismatches that confuse or alienate customers.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Missed Opportunities</p>
-                    <p className="text-sm text-muted-foreground">Customers feel like an afterthought when their language and culture aren't respected, leading to lost deals.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <X className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Reduced Trust</p>
-                    <p className="text-sm text-muted-foreground">Generic translations signal lack of investment in the customer relationship, damaging credibility and conversion.</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Key Insight */}
-        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 text-center border border-primary/20">
-          <p className="text-xl font-semibold text-foreground mb-2">
-            The Invictus Difference
-          </p>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Understanding dialectical differences isn't just about language—it's about respect, trust, and winning business. When a Mexican customer hears "la computadora" instead of "el ordenador," or a Puerto Rican customer sees familiar phrasing, they know you understand them. <span className="font-semibold text-primary">That understanding makes the difference between an opportunity won or lost.</span>
-          </p>
+      <section className="py-16 bg-white border-y border-gray-200">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-3 mb-6">
+              <CheckCircle2 className="h-6 w-6 text-green-600" />
+              <span className="text-2xl font-bold text-green-700">90% Coverage</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Comprehensive Translation Across the R2B Journey
+            </h2>
+            <p className="text-lg text-gray-600">
+              From outbound prospecting to post-sales support, our culturally-aware translation solution covers 90% of customer interactions with dialect-specific Spanish for Mexican, Puerto Rican, Colombian, and US Hispanic markets.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold text-foreground">
-            Experience Modules
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Explore how translation works across every customer touchpoint
-          </p>
-        </div>
+      {/* Experience Modules */}
+      <section className="py-20 bg-gray-50">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Multilingual Experiences
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              See real-time translation in action across every customer touchpoint
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link href={feature.href}>
-                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                    <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                          <Icon className="h-6 w-6" />
-                        </div>
-                        <CardTitle className="text-xl">{feature.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        {feature.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
-            );
-          })}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[
+              { icon: Globe, title: "Web", desc: "Bilingual website with dynamic content translation", href: "/experiences/web", color: "bg-blue-500" },
+              { icon: MessageSquare, title: "Email", desc: "Automated email translation with cultural nuances", href: "/experiences/email", color: "bg-purple-500" },
+              { icon: MessageSquare, title: "Chat", desc: "Real-time dual-pane chat translation", href: "/experiences/chat", color: "bg-green-500" },
+              { icon: PhoneCall, title: "IVR", desc: "Voice-enabled multilingual phone system", href: "/experiences/ivr", color: "bg-orange-500" },
+              { icon: Globe, title: "Documents", desc: "Translated contracts and legal documents", href: "/experiences/documents", color: "bg-red-500" },
+              { icon: Globe, title: "Field Services", desc: "Mobile translation for field technicians", href: "/experiences/field", color: "bg-teal-500" },
+            ].map((module) => (
+              <Link key={module.href} href={module.href}>
+                <Card className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border-2 hover:border-[#E60000] bg-white group">
+                  <div className={`${module.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <module.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{module.title}</h3>
+                  <p className="text-gray-600">{module.desc}</p>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Invictus Wins */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Why Invictus Wins
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Understanding dialectical differences makes the difference between winning or losing business
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Invictus - Culturally Aware */}
+            <Card className="p-8 border-2 border-green-500 bg-green-50">
+              <div className="flex items-center gap-3 mb-6">
+                <CheckCircle2 className="h-8 w-8 text-green-600" />
+                <h3 className="text-2xl font-bold text-gray-900">Invictus: Culturally Aware</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  "Dialect-specific translations (ES-MX, ES-PR, ES-CO, ES-US)",
+                  "Cultural context and regional preferences",
+                  "Formal/informal register awareness",
+                  "Local terminology and expressions",
+                  "Example: 'la computadora' (MX) vs 'el ordenador' (ES)",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 p-4 bg-white rounded-lg border border-green-200">
+                <p className="text-sm font-semibold text-green-700 mb-2">Result:</p>
+                <p className="text-gray-700">Builds trust, increases conversion, reduces churn</p>
+              </div>
+            </Card>
+
+            {/* Competitors - Generic Approach */}
+            <Card className="p-8 border-2 border-red-500 bg-red-50">
+              <div className="flex items-center gap-3 mb-6">
+                <XCircle className="h-8 w-8 text-red-600" />
+                <h3 className="text-2xl font-bold text-gray-900">Competitors: "Spanish is Spanish"</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  "One-size-fits-all Spanish translation",
+                  "No cultural or regional adaptation",
+                  "Generic formal tone regardless of context",
+                  "Misses local terminology nuances",
+                  "Uses Spain Spanish for Latin American customers",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 p-4 bg-white rounded-lg border border-red-200">
+                <p className="text-sm font-semibold text-red-700 mb-2">Result:</p>
+                <p className="text-gray-700">Feels impersonal, lower engagement, lost opportunities</p>
+              </div>
+            </Card>
+          </div>
+
+          <div className="mt-12 text-center">
+            <div className="inline-block bg-gray-900 text-white px-8 py-4 rounded-lg">
+              <p className="text-lg font-semibold">
+                Understanding dialectical differences makes the difference between an opportunity being won or lost.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Value Proposition */}
-      <section className="space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold text-foreground">
-            Why Invictus?
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Single vendor, end-to-end multilingual coverage
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Transparent Coverage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Interactive overlay provides clear visibility into what's covered vs. not across your entire journey.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>150+ Languages</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Support for Spanish dialects (MX, PR, CO, US) and 150+ languages across all channels.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>CRM Integration</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                All feedback and transcripts automatically captured and written to your CRM for action.
-              </p>
-            </CardContent>
-          </Card>
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Transform Your Multilingual CX?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Explore our persona-based journeys to see how dialect-specific translation drives better customer outcomes
+            </p>
+            <Link href="/personas">
+              <Button size="lg" className="bg-[#E60000] hover:bg-[#CC0000] text-white text-lg px-8 py-6">
+                Start Exploring
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>
