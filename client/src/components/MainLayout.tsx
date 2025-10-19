@@ -13,6 +13,7 @@ import {
   Languages,
   TrendingUp,
   BookOpen,
+  Briefcase,
 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,6 +31,7 @@ const navigation = [
 ];
 
 const executiveInsights = [
+  { name: "Executive Intro", href: "/executive-intro", icon: Briefcase },
   { name: "ROI Calculator", href: "/roi-calculator", icon: Calculator },
   { name: "Translation Demo", href: "/translation-demo", icon: Languages },
   { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },

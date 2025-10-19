@@ -17,12 +17,14 @@ import ROICalculator from "./pages/ROICalculator";
 import TranslationDemo from "./pages/TranslationDemo";
 import JourneyHeatmap from "./pages/JourneyHeatmap";
 import ResearchSources from "./pages/ResearchSources";
+import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
 
 function Router() {
   return (
     <MainLayout>
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path="/executive-intro" component={ExecutiveIntroduction} />
         <Route path="/personas" component={Personas} />
         <Route path="/persona-journey" component={PersonaJourney} />
         <Route path="/journey" component={Journey} />

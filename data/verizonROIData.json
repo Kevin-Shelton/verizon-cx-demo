@@ -1,0 +1,70 @@
+{
+  "verizonBaseline": {
+    "totalSubscribers": 146100000,
+    "hispanicPercentage": 11.9,
+    "hispanicCustomers": 17400000,
+    "arpa": 139.77,
+    "churnRate": 1.12,
+    "marketShare": 36,
+    "previousMarketShare": 39,
+    "annualRevenue": 134800000000,
+    "hispanicSegmentRevenue": 9720000000
+  },
+  "calculatedOpportunity": {
+    "revenueAtRisk": 6610000000,
+    "premiumPricingOpportunity": 1460000000,
+    "churnFromLanguageBarriers": 797000000,
+    "potentialChurnSavings": 398500000,
+    "marketShareRecovery": 2010000000,
+    "totalOpportunity": 3870000000
+  },
+  "proposedImpact": {
+    "annualReturn": 275000000,
+    "retentionImpact": 125000000,
+    "supportCostSavings": 50000000,
+    "productivityGains": 15000000,
+    "languagePremium": 85000000,
+    "roi": 1100,
+    "pilotCost": "TBD"
+  },
+  "assumptions": {
+    "switchingRisk": 68,
+    "premiumWillingness": 64,
+    "premiumPercentage": 7.5,
+    "churnAttributionToLanguage": 29,
+    "churnReductionTarget": 50,
+    "supportCostReduction": 25,
+    "productivityIncrease": 15
+  },
+  "sources": [
+    {
+      "id": "verizon-q4-2024",
+      "title": "Verizon Q4 2024 Earnings Report",
+      "organization": "Verizon Communications Inc.",
+      "type": "Financial Report",
+      "date": "2024-01-23",
+      "url": "https://www.verizon.com/about/investors/quarterly-earnings",
+      "keyFindings": [
+        "146.1 million total wireless connections",
+        "$139.77 average revenue per account (ARPA)",
+        "1.12% consumer churn rate",
+        "$134.8B annual revenue",
+        "36% market share (down from 39%)"
+      ]
+    },
+    {
+      "id": "hispanic-market-analysis",
+      "title": "U.S. Hispanic Market Analysis",
+      "organization": "U.S. Census Bureau",
+      "type": "Market Research",
+      "date": "2024",
+      "url": "https://www.census.gov/topics/population/hispanic-origin.html",
+      "keyFindings": [
+        "11.9% of U.S. wireless subscribers are Hispanic",
+        "Estimated 17.4M Hispanic Verizon customers",
+        "$9.72B annual revenue from Hispanic segment"
+      ]
+    }
+  ]
+}
+
