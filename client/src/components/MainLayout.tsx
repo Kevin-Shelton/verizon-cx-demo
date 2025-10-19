@@ -127,13 +127,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
               © 2025 Verizon. Multilingual CX powered by Invictus.
             </p>
             <div className="flex gap-4 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">
+              <Link href="/privacy" className="hover:text-foreground transition-colors">
                 Privacy
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
+              </Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors">
                 Terms
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
+              </Link>
+              <a href="mailto:support@verizon.com" className="hover:text-foreground transition-colors">
                 Contact
               </a>
             </div>

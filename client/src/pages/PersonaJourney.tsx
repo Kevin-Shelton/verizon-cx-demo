@@ -100,7 +100,7 @@ export default function PersonaJourney() {
             { sender: "agent", text: "Déjeme verificar la disponibilidad. Podemos programar un técnico para mañana por la tarde. ¿Le viene bien a las 2 PM?" },
           ],
         },
-        culturalNote: "Puerto Rican Spanish uses 'dispositivo' for device and maintains formal 'usted' form to show respect. 'Con gusto' is preferred over 'me encantaría' for professional contexts.",
+        culturalNote: "🇵🇷 Puerto Rican Spanish Nuances: This translation demonstrates cultural awareness by using 'dispositivo' (device) instead of Spain's 'ordenador'. The formal 'usted' conjugation ('puede proporcionar') shows professional respect typical in Caribbean business culture. 'Con gusto' (with pleasure) is preferred over Mexico's 'me encantaría' as it conveys genuine willingness to help while maintaining professional boundaries. The phrase 'Le viene bien' (does it work for you) uses the indirect object pronoun 'le' which is standard in Puerto Rican formal speech, creating rapport while respecting social distance.",
         icon: Mail,
       },
       {
@@ -126,7 +126,7 @@ export default function PersonaJourney() {
             { sender: "agent", text: "Estado: Aprobado ✓" },
           ],
         },
-        culturalNote: "Caribbean Spanish prefers 'cambio' over 'intercambio' for swap. 'Entrega' is more natural than literal translation of 'trade-in'.",
+        culturalNote: "🇵🇷 Vocabulary Precision: Caribbean Spanish demonstrates regional preference with 'cambio' (change/swap) over the more formal 'intercambio' (exchange) used in other dialects. The term 'Valor de Entrega' for trade-in value is culturally adapted—while a literal translation would be 'valor de intercambio', Puerto Rican customers better understand 'entrega' (delivery/hand-over) in this context. Notice 'Actualización' (upgrade) instead of 'mejora', which aligns with how tech terminology is naturally adopted in Caribbean markets. These choices reduce cognitive load and build trust through familiar language patterns.",
         icon: Globe,
       },
       {
@@ -148,7 +148,7 @@ export default function PersonaJourney() {
             { sender: "customer", text: "Perfecto. Tengo el dispositivo en inventario. ¡Nos vemos mañana!" },
           ],
         },
-        culturalNote: "Puerto Rican Spanish uses 'entendido' for 'got it' in professional settings. Time format uses 'a las' before time.",
+        culturalNote: "🇵🇷 Professional Communication Style: The response '¡Entendido!' (Understood!) is distinctly Puerto Rican professional jargon—more common than Mexico's 'Entendido' or Colombia's 'Vale'. Time expressions use 'a las 2 PM' (at 2 PM) which is standard across Spanish but the preposition 'a' is never omitted in Caribbean speech. 'Nos vemos mañana' (see you tomorrow) uses the reflexive 'nos' creating a collaborative tone appropriate for team coordination. The exclamation marks reflect Caribbean communication style which tends to be warmer and more expressive than other Spanish-speaking regions, even in professional contexts.",
         icon: MessageSquare,
       },
       {
