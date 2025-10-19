@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
+import PersonaJourney from "./pages/PersonaJourney";
 import Personas from "./pages/Personas";
 import Journey from "./pages/Journey";
 import Experiences from "./pages/Experiences";
@@ -15,8 +16,9 @@ function Router() {
   return (
     <MainLayout>
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path={"/"} component={Home} />
         <Route path="/personas" component={Personas} />
+        <Route path="/persona-journey" component={PersonaJourney} />
         <Route path="/journey" component={Journey} />
         <Route path="/experiences" component={Experiences} />
         <Route path="/experiences/chat" component={Chat} />

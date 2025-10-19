@@ -13,7 +13,7 @@ export default function Personas() {
 
   const handleSelectPersona = (persona: typeof personasData.personas[0]) => {
     setSelectedPersona(persona as any);
-    setLocation("/journey");
+    setLocation(`/persona-journey?persona=${persona.id}`);
   };
 
   return (
@@ -117,10 +117,10 @@ export default function Personas() {
         >
           <Button
             size="lg"
-            onClick={() => setLocation("/journey")}
+            onClick={() => setLocation(`/persona-journey?persona=${selectedPersona.id}`)}
             className="gap-2"
           >
-            Continue to Journey Map
+            Start {selectedPersona.name}'s Journey
           </Button>
         </motion.div>
       )}
