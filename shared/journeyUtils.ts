@@ -22,12 +22,16 @@ export function calculateStageCoverage(stage: Stage | { activities: Activity[] }
   const activities = 'activities' in stage ? stage.activities : [];
   if (!activities || activities.length === 0) return 0;
 
-  const totalWeight = activities.reduce(
+  // Exclude out-of-scope activities (coverage: none) from calculation
+  const inScopeActivities = activities.filter(activity => activity.coverage !== 'none');
+  if (inScopeActivities.length === 0) return 0;
+
+  const totalWeight = inScopeActivities.reduce(
     (sum, activity) => sum + getCoverageWeight(activity.coverage),
     0
   );
 
-  const percentage = (totalWeight / activities.length) * 100;
+  const percentage = (totalWeight / inScopeActivities.length) * 100;
   return Math.round(percentage / 5) * 5; // Round to nearest 5
 }
 
@@ -37,8 +41,10 @@ export function calculateStageCoverage(stage: Stage | { activities: Activity[] }
 export function calculateOverallCoverage(stages: Stage[]): number {
   if (stages.length === 0) return 0;
 
+  // Exclude out-of-scope activities (coverage: none) from calculation
   const totalWeight = stages.reduce((sum, stage) => {
-    const stageWeight = stage.activities.reduce(
+    const inScopeActivities = stage.activities.filter(activity => activity.coverage !== 'none');
+    const stageWeight = inScopeActivities.reduce(
       (actSum, activity) => actSum + getCoverageWeight(activity.coverage),
       0
     );
@@ -46,7 +52,7 @@ export function calculateOverallCoverage(stages: Stage[]): number {
   }, 0);
 
   const totalActivities = stages.reduce(
-    (sum, stage) => sum + stage.activities.length,
+    (sum, stage) => sum + stage.activities.filter(activity => activity.coverage !== 'none').length,
     0
   );
 
