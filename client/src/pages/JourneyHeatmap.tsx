@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'wouter';
 import {
   Map,
   TrendingUp,
@@ -33,7 +34,11 @@ interface JourneyStage {
   metricsWith: JourneyMetrics;
   painPoints: string[];
   improvements: string[];
-  customerQuote: string;
+  customerQuote: {
+    spanish: string;
+    dialect: string;
+    english: string;
+  };
 }
 
 interface JourneyData {
@@ -68,6 +73,8 @@ interface JourneyData {
     metric: string;
     description: string;
     source: string;
+    sourceId?: number;
+    sourceUrl?: string;
   }>;
 }
 
@@ -401,12 +408,15 @@ export default function JourneyHeatmap() {
                     <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
                       <div className="flex items-start gap-3">
                         <Users className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <div className="text-sm font-semibold text-yellow-900 mb-1">
-                            Customer Voice
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-yellow-900 mb-2">
+                            Customer Voice ({selectedStage.customerQuote.dialect})
                           </div>
-                          <p className="text-sm text-yellow-800 italic">
-                            "{selectedStage.customerQuote}"
+                          <p className="text-sm text-yellow-800 italic mb-3">
+                            "{selectedStage.customerQuote.spanish}"
+                          </p>
+                          <p className="text-xs text-yellow-700 border-t border-yellow-200 pt-2">
+                            <span className="font-semibold">English:</span> "{selectedStage.customerQuote.english}"
                           </p>
                         </div>
                       </div>
@@ -580,7 +590,13 @@ export default function JourneyHeatmap() {
                     <div className="text-2xl font-bold text-blue-700 mb-2">{insight.metric}</div>
                     <p className="text-sm text-gray-700 mb-2">{insight.description}</p>
                     <div className="text-xs text-blue-600 font-medium">
-                      Source: {insight.source}
+                      Source: {insight.sourceUrl ? (
+                        <Link to={insight.sourceUrl} className="hover:underline">
+                          {insight.source}
+                        </Link>
+                      ) : (
+                        insight.source
+                      )}
                     </div>
                   </div>
                 ))}

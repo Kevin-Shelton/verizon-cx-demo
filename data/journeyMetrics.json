@@ -33,7 +33,11 @@
         "24/7 multilingual chat support",
         "Regional promotions and offers"
       ],
-      "customerQuote": "I couldn't understand the technical terms on the English website. When I found the Spanish page, it still felt like a machine translation. I almost gave up."
+      "customerQuote": {
+        "spanish": "No pude entender los términos técnicos en el sitio web en inglés. Cuando encontré la página en español, todavía se sentía como una traducción de máquina. Casi me rindo.",
+        "dialect": "Mexican Spanish",
+        "english": "I couldn't understand the technical terms on the English website. When I found the Spanish page, it still felt like a machine translation. I almost gave up."
+      }
     },
     {
       "id": "consideration",
@@ -68,7 +72,11 @@
         "Reduced average handle time",
         "First call resolution improvement"
       ],
-      "customerQuote": "I waited 20 minutes for a Spanish agent, and when I finally got one, they didn't understand my Puerto Rican way of speaking. Very frustrating."
+      "customerQuote": {
+        "spanish": "Esperé 20 minutos por un agente en español, y cuando por fin conseguí uno, no entendió mi forma boricua de hablar. Bien frustrante.",
+        "dialect": "Puerto Rican Spanish",
+        "english": "I waited 20 minutes for a Spanish agent, and when I finally got one, they didn't understand my Puerto Rican way of speaking. Very frustrating."
+      }
     },
     {
       "id": "purchase",
@@ -103,7 +111,11 @@
         "Step-by-step activation guides",
         "Live support during activation"
       ],
-      "customerQuote": "The contract was all in English legal terms. I had to ask my daughter to help me understand what I was signing. Not a good experience."
+      "customerQuote": {
+        "spanish": "El contrato estaba todo en términos legales en inglés. Me tocó pedirle a mi hija que me ayudara a entender qué estaba firmando. No fue una buena experiencia.",
+        "dialect": "Colombian Spanish",
+        "english": "The contract was all in English legal terms. I had to ask my daughter to help me understand what I was signing. Not a good experience."
+      }
     },
     {
       "id": "onboarding",
@@ -138,7 +150,11 @@
         "Cultural onboarding best practices",
         "Proactive outreach in native language"
       ],
-      "customerQuote": "The welcome email was in Spanish, but the setup guide was in English. I had to call support three times to get my phone working."
+      "customerQuote": {
+        "spanish": "El correo de bienvenida estaba en español, pero la guía de configuración estaba en inglés. Tuve que llamar al soporte tres veces para que mi teléfono funcionara.",
+        "dialect": "US Spanish",
+        "english": "The welcome email was in Spanish, but the setup guide was in English. I had to call support three times to get my phone working."
+      }
     },
     {
       "id": "usage",
@@ -173,7 +189,11 @@
         "Multilingual app interface",
         "Cultural competency training for agents"
       ],
-      "customerQuote": "Every time I call, I have to press 2 for Spanish, then wait forever. The app is all in English. It's like they don't care about Spanish customers."
+      "customerQuote": {
+        "spanish": "Cada vez que llamo, tengo que presionar 2 para español, y luego esperar un chorro de tiempo. La aplicación está toda en inglés. Es como si no les importaran los clientes hispanos.",
+        "dialect": "Mexican Spanish",
+        "english": "Every time I call, I have to press 2 for Spanish, then wait forever. The app is all in English. It's like they don't care about Spanish customers."
+      }
     },
     {
       "id": "retention",
@@ -208,7 +228,11 @@
         "Dialect-specific upgrade offers",
         "Community engagement initiatives"
       ],
-      "customerQuote": "After 5 years as a customer, I got a renewal notice in English. AT&T sent me a personal offer in Spanish. I'm considering switching."
+      "customerQuote": {
+        "spanish": "Después de 5 años como cliente, recibí un aviso de renovación en inglés. AT&T me mandó una oferta personal en español. Estoy considerando cambiarme.",
+        "dialect": "US Spanish",
+        "english": "After 5 years as a customer, I got a renewal notice in English. AT&T sent me a personal offer in Spanish. I'm considering switching."
+      }
     }
   ],
   "overallMetrics": {
@@ -241,22 +265,30 @@
     {
       "metric": "72% Satisfaction Increase",
       "description": "Customers experience increased satisfaction when support is delivered in their native language",
-      "source": "Industry Research"
+      "source": "Industry Research",
+      "sourceId": 19,
+      "sourceUrl": "/research-sources#source-19"
     },
     {
       "metric": "68% Brand Switching Risk",
       "description": "Consumers would switch to a competitor offering native language support",
-      "source": "Consumer Behavior Study"
+      "source": "Consumer Behavior Study",
+      "sourceId": 9,
+      "sourceUrl": "/research-sources#source-9"
     },
     {
       "metric": "86% FCR Improvement",
       "description": "First Call Resolution improvement with multilingual support - #1 operational metric",
-      "source": "Contact Center Benchmarks"
+      "source": "Contact Center Benchmarks",
+      "sourceId": 1,
+      "sourceUrl": "/research-sources#source-1"
     },
     {
       "metric": "29% Churn Reduction",
       "description": "Customer loss rate due to language barriers can be significantly reduced",
-      "source": "Retention Analysis"
+      "source": "Retention Analysis",
+      "sourceId": 5,
+      "sourceUrl": "/research-sources#source-5"
     }
   ]
 }
