@@ -17,7 +17,8 @@
           "label": "Manage Outreach Task List",
           "coverage": "partial",
           "pillars": ["email"],
-          "rationale": "Templates translated; manual prioritization remains",
+          "rationale": "Email templates and task notifications are fully translated",
+          "gaps": "Missing: Live chat and IVR support for real-time task coordination. Task prioritization logic remains in English within CRM system.",
           "demos": ["/experiences/email"]
         },
         {
@@ -25,7 +26,8 @@
           "label": "Check My Customer Detail",
           "coverage": "none",
           "pillars": [],
-          "rationale": "CRM lookup; outside translation scope",
+          "rationale": "Third-party CRM system interface is outside translation scope",
+          "gaps": "Out of scope: CRM database queries and internal system navigation remain in English. Customer-facing outputs can be translated separately.",
           "demos": []
         }
       ]
@@ -47,7 +49,8 @@
           "label": "Review Account History",
           "coverage": "partial",
           "pillars": ["documents"],
-          "rationale": "Historical documents can be translated on-demand",
+          "rationale": "Historical documents can be translated on-demand with dialect-specific formatting",
+          "gaps": "Missing: Real-time translation of CRM activity logs and internal notes. Only formal documents (contracts, invoices, statements) are translated.",
           "demos": ["/experiences/documents"]
         },
         {
@@ -55,7 +58,8 @@
           "label": "Verify Credit Eligibility",
           "coverage": "none",
           "pillars": [],
-          "rationale": "Third-party credit check; outside translation scope",
+          "rationale": "Third-party credit bureau integration is outside translation scope",
+          "gaps": "Out of scope: Credit check API calls and bureau responses are system-to-system. Customer notifications about credit decisions can be translated separately.",
           "demos": []
         }
       ]
@@ -115,7 +119,8 @@
           "label": "Obtain Signatures",
           "coverage": "partial",
           "pillars": ["email"],
-          "rationale": "Email notifications translated; e-signature platform is third-party",
+          "rationale": "Email notifications and signature request messages are fully translated",
+          "gaps": "Missing: DocuSign/e-signature platform UI remains in English. Only email notifications and document content are translated, not the signing interface itself.",
           "demos": ["/experiences/email"]
         }
       ]
@@ -189,7 +194,8 @@
           "label": "Identify Growth Opportunities",
           "coverage": "partial",
           "pillars": ["email"],
-          "rationale": "Outreach emails translated; analytics tools are third-party",
+          "rationale": "Outreach emails and opportunity notifications are fully translated",
+          "gaps": "Missing: CRM analytics dashboards and AI-powered opportunity scoring tools remain in English. Only customer-facing communications are translated.",
           "demos": ["/experiences/email"]
         },
         {

@@ -17,6 +17,7 @@ export interface Activity {
   coverage: Coverage;
   pillars: Pillar[];
   rationale: string;
+  gaps?: string;
   demos: string[];
 }
 

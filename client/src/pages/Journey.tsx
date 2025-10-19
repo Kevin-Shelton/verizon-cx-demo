@@ -385,6 +385,22 @@ export default function Journey() {
                   </CardContent>
                 </Card>
 
+                {selectedActivity.gaps && (
+                  <Card className="border-yellow-200 bg-yellow-50/50">
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5 text-yellow-600" />
+                        Coverage Gaps
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {selectedActivity.gaps}
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+
                 {selectedActivity.pillars.length > 0 && (
                   <Card>
                     <CardHeader>
