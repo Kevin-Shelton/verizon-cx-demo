@@ -207,52 +207,56 @@ export default function PersonaJourney() {
     carlos: [
       {
         id: "step1",
-        title: "Exploring Business Plans",
-        description: "Carlos browses business phone plans on the website",
-        pillar: "web",
+        title: "Initial Outreach Call",
+        description: "Carlos receives a sales call about business phone plans",
+        pillar: "ivr",
         messages: {
           english: [
-            { sender: "agent", text: "SMALL BUSINESS PHONE PLANS" },
-            { sender: "agent", text: "5-Line Business Plan" },
-            { sender: "agent", text: "$150/month for 5 lines" },
-            { sender: "agent", text: "Unlimited Talk & Text" },
-            { sender: "agent", text: "50GB Premium Data per line" },
-            { sender: "agent", text: "Keep your existing numbers" },
+            { sender: "agent", text: "Hello, this is Sarah from Verizon Business. Am I speaking with Carlos?" },
+            { sender: "customer", text: "Yes, this is Carlos. How can I help you?" },
+            { sender: "agent", text: "I'm calling about our new small business phone plans. Do you currently have business phone service?" },
+            { sender: "customer", text: "Yes, but I'm looking for better rates. What do you offer?" },
+            { sender: "agent", text: "We have a 5-line business plan for $150/month with unlimited talk, text, and 50GB data per line. Would you like to hear more?" },
+            { sender: "customer", text: "That sounds interesting. Can you send me more information?" },
           ],
           translated: [
-            { sender: "agent", text: "PLANES TELEFÓNICOS PARA PEQUEÑAS EMPRESAS" },
-            { sender: "agent", text: "Plan Empresarial de 5 Líneas" },
-            { sender: "agent", text: "$150/mes por 5 líneas" },
-            { sender: "agent", text: "Llamadas y Mensajes Ilimitados" },
-            { sender: "agent", text: "50GB de Datos Premium por línea" },
-            { sender: "agent", text: "Conserve sus números actuales" },
+            { sender: "agent", text: "Hola, soy Sarah de Verizon Business. ¿Hablo con Carlos?" },
+            { sender: "customer", text: "Sí, soy Carlos. ¿En qué puedo ayudarle?" },
+            { sender: "agent", text: "Le llamo sobre nuestros nuevos planes telefónicos para pequeñas empresas. ¿Actualmente tiene servicio telefónico empresarial?" },
+            { sender: "customer", text: "Sí, pero estoy buscando mejores tarifas. ¿Qué ofrecen?" },
+            { sender: "agent", text: "Tenemos un plan empresarial de 5 líneas por $150/mes con llamadas, mensajes ilimitados y 50GB de datos por línea. ¿Le gustaría saber más?" },
+            { sender: "customer", text: "Suena interesante. ¿Puede enviarme más información?" },
           ],
         },
-        culturalNote: "Mexican Spanish uses 'pequeñas empresas' rather than 'PYMES' in customer-facing content. 'Conservar' is preferred for 'keep'.",
-        icon: Globe,
+        culturalNote: "🇲🇽 Mexican Spanish Business Formality: The use of 'pequeñas empresas' instead of 'PYMES' reflects customer-facing language preferences in Mexico. The formal 'usted' form ('puede enviarme') maintains professional distance while 'Le gustaría' (would you like) is more polite than 'Quiere'. Mexican business culture values this respectful formality in initial sales contacts.",
+        icon: Phone,
       },
       {
         id: "step2",
-        title: "Contacting Sales via Chat",
-        description: "Carlos initiates a live chat to ask about porting numbers",
+        title: "Needs Analysis Discussion",
+        description: "Sales agent conducts needs analysis via chat",
         pillar: "chat",
         messages: {
           english: [
-            { sender: "customer", text: "Hello, I'm interested in the 5-line business plan" },
-            { sender: "agent", text: "Great! I'd be happy to help. Can I keep my existing phone numbers?" },
-            { sender: "customer", text: "Yes, you can port all your existing numbers at no charge" },
-            { sender: "agent", text: "Perfect! How long does the porting process take?" },
-            { sender: "customer", text: "Typically 1-2 business days. We'll handle everything for you" },
+            { sender: "agent", text: "Hi Carlos! Thanks for your interest. Let me ask a few questions to find the best plan for you." },
+            { sender: "customer", text: "Sure, go ahead." },
+            { sender: "agent", text: "How many employees need phone service?" },
+            { sender: "customer", text: "I have 5 employees right now, but planning to hire 2 more soon." },
+            { sender: "agent", text: "Great! Do they need international calling?" },
+            { sender: "customer", text: "Yes, we call Mexico frequently for suppliers." },
+            { sender: "agent", text: "Perfect. Our business plan includes unlimited calls to Mexico. Let me prepare a custom quote for 7 lines." },
           ],
           translated: [
-            { sender: "customer", text: "Hola, me interesa el plan empresarial de 5 líneas" },
-            { sender: "agent", text: "¡Excelente! Con gusto le ayudo. ¿Puedo conservar mis números telefónicos actuales?" },
-            { sender: "customer", text: "Sí, puede portar todos sus números existentes sin cargo" },
-            { sender: "agent", text: "¡Perfecto! ¿Cuánto tiempo toma el proceso de portabilidad?" },
-            { sender: "customer", text: "Típicamente 1-2 días hábiles. Nosotros nos encargamos de todo" },
+            { sender: "agent", text: "¡Hola Carlos! Gracias por su interés. Permítame hacerle algunas preguntas para encontrar el mejor plan para usted." },
+            { sender: "customer", text: "Claro, adelante." },
+            { sender: "agent", text: "¿Cuántos empleados necesitan servicio telefónico?" },
+            { sender: "customer", text: "Tengo 5 empleados ahora, pero planeo contratar 2 más pronto." },
+            { sender: "agent", text: "¡Excelente! ¿Necesitan llamadas internacionales?" },
+            { sender: "customer", text: "Sí, llamamos a México frecuentemente para proveedores." },
+            { sender: "agent", text: "Perfecto. Nuestro plan empresarial incluye llamadas ilimitadas a México. Permítame preparar una cotización personalizada para 7 líneas." },
           ],
         },
-        culturalNote: "Mexican Spanish uses 'conservar' for 'keep' and 'portar' for 'port' in telecommunications. 'Días hábiles' is standard for business days.",
+        culturalNote: "🇲🇽 Mexican Business Terminology: 'Cotización' is the standard term for quote in Mexican business Spanish, preferred over 'presupuesto'. 'Proveedores' (suppliers) is universal but the context of Mexico-US business relationships is culturally relevant. 'Planeo contratar' uses the first-person singular which is more direct than the conditional 'planearía', reflecting Mexican business communication style.",
         icon: MessageSquare,
       },
       {
@@ -647,23 +651,23 @@ export default function PersonaJourney() {
           <CardContent className="pt-6">
             <div className="flex flex-col gap-3">
               {/* Journey Stages */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2">
+              <div className="flex items-center gap-4 overflow-x-auto pb-2">
                 {journeyData.stages.map((stage, index) => {
                   const mapping = personaJourneyMappings[personaId as keyof typeof personaJourneyMappings];
                   const isActive = mapping?.activeStages?.includes(stage.id) || 
                                    (stage.id === 'support' && mapping?.activeStages?.includes('service'));
                   
                   return (
-                    <div key={stage.id} className="flex items-center">
+                    <div key={stage.id} className="flex items-center flex-shrink-0">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.1 }}
-                        className={`flex-shrink-0 relative ${
+                        className={`relative ${
                           isActive
                             ? 'bg-gradient-to-br from-red-600 to-red-700 text-white shadow-lg border-2 border-red-500'
                             : 'bg-gray-100 text-gray-400 border-2 border-gray-200'
-                        } rounded-lg p-4 min-w-[160px] transition-all duration-300 hover:scale-105`}
+                        } rounded-lg p-4 w-[180px] transition-all duration-300 hover:scale-105`}
                       >
                         <div className="text-center">
                           <div className={`text-xs font-semibold mb-1 ${
