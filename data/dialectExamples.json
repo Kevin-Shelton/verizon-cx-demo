@@ -1,0 +1,350 @@
+{
+  "categories": [
+    {
+      "id": "sales",
+      "name": "Sales & Acquisition",
+      "icon": "ShoppingCart"
+    },
+    {
+      "id": "support",
+      "name": "Technical Support",
+      "icon": "Headphones"
+    },
+    {
+      "id": "billing",
+      "name": "Billing & Payments",
+      "icon": "CreditCard"
+    },
+    {
+      "id": "retention",
+      "name": "Retention & Loyalty",
+      "icon": "Heart"
+    }
+  ],
+  "examples": [
+    {
+      "id": "business_plan_intro",
+      "category": "sales",
+      "english": "We have a 5-line business plan for $150/month with unlimited talk, text, and data.",
+      "translations": {
+        "generic": {
+          "text": "Tenemos un plan de negocios de 5 líneas por $150/mes con llamadas, mensajes y datos ilimitados.",
+          "qualityScore": 65,
+          "issues": ["'Plan de negocios' sounds unnatural", "'Mensajes' ambiguous for SMS vs voicemail"]
+        },
+        "mexican": {
+          "text": "Tenemos un plan empresarial de 5 líneas por $150/mes con llamadas, mensajes y datos ilimitados.",
+          "qualityScore": 92,
+          "culturalNote": "'Empresarial' preferred over 'de negocios' in business contexts. 'Por' used for pricing."
+        },
+        "puerto_rican": {
+          "text": "Tenemos un plan empresarial de 5 líneas a $150/mes con llamadas, textos y datos ilimitados.",
+          "qualityScore": 94,
+          "culturalNote": "'Textos' more common than 'mensajes' for SMS. 'A' used for pricing instead of 'por'."
+        },
+        "colombian": {
+          "text": "Tenemos un plan empresarial de 5 líneas por $150/mes con minutos, mensajes y datos ilimitados.",
+          "qualityScore": 91,
+          "culturalNote": "'Minutos' often used instead of 'llamadas' for talk time. Formal business register."
+        },
+        "us_spanish": {
+          "text": "Tenemos un plan de negocio de 5 líneas por $150/mes con llamadas, textos y data ilimitados.",
+          "qualityScore": 88,
+          "culturalNote": "'Data' (English) commonly used instead of 'datos'. Mix of English/Spanish terms natural."
+        }
+      }
+    },
+    {
+      "id": "device_upgrade",
+      "category": "sales",
+      "english": "You're eligible for a free phone upgrade. Would you like to see our latest smartphones?",
+      "translations": {
+        "generic": {
+          "text": "Es elegible para una actualización gratuita de teléfono. ¿Le gustaría ver nuestros últimos teléfonos inteligentes?",
+          "qualityScore": 70,
+          "issues": ["'Teléfonos inteligentes' sounds too literal", "Formal but not engaging"]
+        },
+        "mexican": {
+          "text": "Califica para una actualización gratis de celular. ¿Le gustaría ver nuestros smartphones más recientes?",
+          "qualityScore": 93,
+          "culturalNote": "'Calificar' preferred over 'ser elegible'. 'Celular' universal in Mexico. 'Gratis' more natural than 'gratuita'."
+        },
+        "puerto_rican": {
+          "text": "Cualifica pa' un upgrade gratis de celular. ¿Quiere ver los smartphones más nuevos que tenemos?",
+          "qualityScore": 95,
+          "culturalNote": "'Cualificar' and 'pa'' (para) reflect PR speech. English loanwords 'upgrade' and 'smartphone' common."
+        },
+        "colombian": {
+          "text": "Usted califica para una actualización gratuita de celular. ¿Le gustaría conocer nuestros celulares más recientes?",
+          "qualityScore": 92,
+          "culturalNote": "'Conocer' (to get to know) preferred over 'ver' (to see). More formal 'usted' maintained."
+        },
+        "us_spanish": {
+          "text": "Calificas para un upgrade gratis de teléfono. ¿Quieres ver nuestros smartphones más nuevos?",
+          "qualityScore": 90,
+          "culturalNote": "Informal 'tú' form common. English loanwords 'upgrade' and 'smartphone' fully integrated."
+        }
+      }
+    },
+    {
+      "id": "network_issue",
+      "category": "support",
+      "english": "I'm experiencing slow internet speeds. Can you help me troubleshoot?",
+      "translations": {
+        "generic": {
+          "text": "Estoy experimentando velocidades lentas de internet. ¿Puede ayudarme a solucionar problemas?",
+          "qualityScore": 62,
+          "issues": ["'Experimentando' too formal", "'Solucionar problemas' sounds awkward"]
+        },
+        "mexican": {
+          "text": "Tengo el internet muy lento. ¿Me puede ayudar a revisar qué pasa?",
+          "qualityScore": 94,
+          "culturalNote": "'Tengo el internet lento' more natural than 'experimentando'. 'Revisar qué pasa' conversational."
+        },
+        "puerto_rican": {
+          "text": "El internet me está funcionando bien lento. ¿Me puedes ayudar a ver qué le pasa?",
+          "qualityScore": 96,
+          "culturalNote": "'Bien lento' (very slow) is PR intensifier. 'Qué le pasa' personifies the internet."
+        },
+        "colombian": {
+          "text": "Tengo problemas con la velocidad del internet. ¿Me puede colaborar revisando qué está pasando?",
+          "qualityScore": 93,
+          "culturalNote": "'Colaborar' preferred over 'ayudar' in Colombian service contexts. More formal register."
+        },
+        "us_spanish": {
+          "text": "Mi internet está super lento. ¿Me puedes ayudar a ver qué onda?",
+          "qualityScore": 89,
+          "culturalNote": "'Super' (English) used as intensifier. 'Qué onda' (what's up) very informal, US Spanish slang."
+        }
+      }
+    },
+    {
+      "id": "bill_inquiry",
+      "category": "billing",
+      "english": "My bill is higher than usual this month. Can you explain the charges?",
+      "translations": {
+        "generic": {
+          "text": "Mi factura es más alta de lo habitual este mes. ¿Puede explicar los cargos?",
+          "qualityScore": 68,
+          "issues": ["'Factura' too formal for some regions", "'Cargos' ambiguous"]
+        },
+        "mexican": {
+          "text": "Mi recibo salió más alto de lo normal este mes. ¿Me puede explicar los cobros?",
+          "qualityScore": 93,
+          "culturalNote": "'Recibo' preferred over 'factura'. 'Salió' (came out) natural expression. 'Cobros' clearer than 'cargos'."
+        },
+        "puerto_rican": {
+          "text": "La cuenta me vino más alta que de costumbre este mes. ¿Me puedes explicar los charges?",
+          "qualityScore": 94,
+          "culturalNote": "'La cuenta' common for bill. 'Vino' (came) natural. English 'charges' often used in PR."
+        },
+        "colombian": {
+          "text": "Mi factura llegó más alta que lo normal este mes. ¿Me puede explicar los cobros adicionales?",
+          "qualityScore": 92,
+          "culturalNote": "'Llegó' (arrived) natural. 'Cobros adicionales' specifies unexpected charges."
+        },
+        "us_spanish": {
+          "text": "Mi bill salió más alto que lo usual este mes. ¿Me puedes explicar los charges?",
+          "qualityScore": 87,
+          "culturalNote": "English 'bill' and 'charges' commonly used. Code-switching natural in US Spanish."
+        }
+      }
+    },
+    {
+      "id": "payment_arrangement",
+      "category": "billing",
+      "english": "I need to set up a payment plan. Can we arrange smaller monthly payments?",
+      "translations": {
+        "generic": {
+          "text": "Necesito establecer un plan de pago. ¿Podemos organizar pagos mensuales más pequeños?",
+          "qualityScore": 66,
+          "issues": ["'Establecer' too formal", "'Más pequeños' sounds awkward"]
+        },
+        "mexican": {
+          "text": "Necesito hacer un plan de pagos. ¿Podemos arreglar pagos mensuales más chicos?",
+          "qualityScore": 92,
+          "culturalNote": "'Hacer' more natural than 'establecer'. 'Más chicos' (smaller) is Mexican Spanish."
+        },
+        "puerto_rican": {
+          "text": "Necesito hacer un plan de pago. ¿Podemos cuadrar pagos mensuales más bajitos?",
+          "qualityScore": 95,
+          "culturalNote": "'Cuadrar' (to square/arrange) very PR. 'Más bajitos' (smaller/lower) is PR diminutive."
+        },
+        "colombian": {
+          "text": "Necesito establecer un plan de pagos. ¿Podemos acordar cuotas mensuales más bajas?",
+          "qualityScore": 93,
+          "culturalNote": "'Cuotas' (installments) preferred over 'pagos'. 'Acordar' (agree upon) more formal."
+        },
+        "us_spanish": {
+          "text": "Necesito setear un payment plan. ¿Podemos hacer pagos mensuales más pequeños?",
+          "qualityScore": 85,
+          "culturalNote": "'Setear' (to set up) from English 'set'. 'Payment plan' often used in English."
+        }
+      }
+    },
+    {
+      "id": "retention_offer",
+      "category": "retention",
+      "english": "We value your loyalty. I can offer you a 20% discount if you stay with us.",
+      "translations": {
+        "generic": {
+          "text": "Valoramos su lealtad. Puedo ofrecerle un descuento del 20% si se queda con nosotros.",
+          "qualityScore": 72,
+          "issues": ["'Valoramos' sounds corporate", "'Se queda con nosotros' awkward"]
+        },
+        "mexican": {
+          "text": "Apreciamos su lealtad. Le puedo ofrecer un descuento del 20% si se queda con nosotros.",
+          "qualityScore": 91,
+          "culturalNote": "'Apreciar' warmer than 'valorar'. Formal 'usted' maintains business relationship."
+        },
+        "puerto_rican": {
+          "text": "Valoramos que nos prefiera. Le puedo dar un 20% de descuento si se queda con nosotros.",
+          "qualityScore": 94,
+          "culturalNote": "'Nos prefiera' (prefer us) more personal. 'Dar' (give) more direct than 'ofrecer'."
+        },
+        "colombian": {
+          "text": "Valoramos su fidelidad. Le puedo brindar un descuento del 20% si continúa con nosotros.",
+          "qualityScore": 93,
+          "culturalNote": "'Fidelidad' preferred over 'lealtad'. 'Brindar' (provide) and 'continúa' more formal."
+        },
+        "us_spanish": {
+          "text": "Valoramos tu lealtad. Te puedo dar un 20% de discount si te quedas con nosotros.",
+          "qualityScore": 88,
+          "culturalNote": "Informal 'tú' form. English 'discount' sometimes used. More casual tone."
+        }
+      }
+    },
+    {
+      "id": "cancel_request",
+      "category": "retention",
+      "english": "I'm thinking about canceling my service. The price is too high.",
+      "translations": {
+        "generic": {
+          "text": "Estoy pensando en cancelar mi servicio. El precio es demasiado alto.",
+          "qualityScore": 70,
+          "issues": ["Direct translation lacks emotional nuance"]
+        },
+        "mexican": {
+          "text": "Estoy pensando en dar de baja mi servicio. El precio está muy elevado.",
+          "qualityScore": 93,
+          "culturalNote": "'Dar de baja' (terminate) is standard term. 'Elevado' more formal than 'alto' for prices."
+        },
+        "puerto_rican": {
+          "text": "Estoy pensando en cancelar el servicio. El precio está bien caro.",
+          "qualityScore": 95,
+          "culturalNote": "'Bien caro' (very expensive) is PR intensifier. Direct and conversational."
+        },
+        "colombian": {
+          "text": "Estoy considerando cancelar mi servicio. El precio es muy alto para mí.",
+          "qualityScore": 92,
+          "culturalNote": "'Considerar' more thoughtful. 'Para mí' personalizes the concern."
+        },
+        "us_spanish": {
+          "text": "Estoy pensando en cancelar mi servicio. El precio está muy high.",
+          "qualityScore": 86,
+          "culturalNote": "English 'high' sometimes used. Code-switching reflects bilingual environment."
+        }
+      }
+    },
+    {
+      "id": "activation_help",
+      "category": "support",
+      "english": "I just got my new phone. Can you help me activate it and transfer my contacts?",
+      "translations": {
+        "generic": {
+          "text": "Acabo de recibir mi nuevo teléfono. ¿Puede ayudarme a activarlo y transferir mis contactos?",
+          "qualityScore": 68,
+          "issues": ["'Recibir' too formal", "Lacks conversational warmth"]
+        },
+        "mexican": {
+          "text": "Ya me llegó mi celular nuevo. ¿Me puede ayudar a activarlo y pasar mis contactos?",
+          "qualityScore": 94,
+          "culturalNote": "'Ya me llegó' (it already arrived) natural. 'Pasar' (pass/move) more conversational than 'transferir'."
+        },
+        "puerto_rican": {
+          "text": "Ya me llegó el cel nuevo. ¿Me puedes ayudar a prenderlo y mover los contactos?",
+          "qualityScore": 96,
+          "culturalNote": "'Cel' abbreviation common. 'Prenderlo' (turn it on) implies activation. 'Mover' very casual."
+        },
+        "colombian": {
+          "text": "Ya recibí mi celular nuevo. ¿Me puede colaborar activándolo y pasando mis contactos?",
+          "qualityScore": 92,
+          "culturalNote": "'Colaborar' preferred service verb. Gerund forms 'activándolo y pasando' more formal."
+        },
+        "us_spanish": {
+          "text": "Ya me llegó mi teléfono nuevo. ¿Me puedes ayudar a activarlo y transferir mis contactos?",
+          "qualityScore": 89,
+          "culturalNote": "'Transferir' acceptable in US Spanish due to English influence. Informal 'tú' form."
+        }
+      }
+    }
+  ],
+  "dialectInfo": {
+    "mexican": {
+      "name": "Mexican Spanish",
+      "flag": "🇲🇽",
+      "speakers": "130M+ globally",
+      "regions": "Mexico, US Southwest",
+      "keyFeatures": [
+        "Formal 'usted' in business contexts",
+        "'Celular' for mobile phone",
+        "'Platicar' for chat/talk",
+        "'Ahorita' (right now) time expression",
+        "Diminutives (-ito/-ita) common"
+      ]
+    },
+    "puerto_rican": {
+      "name": "Puerto Rican Spanish (Caribbean)",
+      "flag": "🇵🇷",
+      "speakers": "8M+ (3.2M in PR, 5M+ in US)",
+      "regions": "Puerto Rico, Florida, New York",
+      "keyFeatures": [
+        "English loanwords integrated",
+        "'Textos' for text messages",
+        "Dropping 's' at end of words",
+        "'Bien' as intensifier (bien caro)",
+        "Informal contractions (pa' = para)"
+      ]
+    },
+    "colombian": {
+      "name": "Colombian Spanish (Latin American)",
+      "flag": "🇨🇴",
+      "speakers": "50M+ globally",
+      "regions": "Colombia, US East Coast",
+      "keyFeatures": [
+        "'Colaborar' for help/assist",
+        "'Cuotas' for installments",
+        "Clear pronunciation",
+        "Formal register maintained",
+        "'Qué pena' (apology expression)"
+      ]
+    },
+    "us_spanish": {
+      "name": "US Spanish (Spanglish)",
+      "flag": "🇺🇸",
+      "speakers": "41M+ in United States",
+      "regions": "Throughout United States",
+      "keyFeatures": [
+        "Code-switching with English",
+        "English loanwords common",
+        "Informal 'tú' form prevalent",
+        "Simplified grammar",
+        "Regional variations by community"
+      ]
+    },
+    "generic": {
+      "name": "Generic Spanish (Machine Translation)",
+      "flag": "⚠️",
+      "speakers": "N/A - Artificial",
+      "regions": "None - Not naturally spoken",
+      "keyFeatures": [
+        "Literal word-for-word translation",
+        "Lacks cultural context",
+        "Formal register only",
+        "Misses regional idioms",
+        "Can sound robotic or unnatural"
+      ]
+    }
+  }
+}
+

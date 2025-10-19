@@ -9,6 +9,9 @@ import {
   MessageSquare,
   Menu,
   X,
+  Calculator,
+  Languages,
+  TrendingUp,
 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,6 +26,12 @@ const navigation = [
   { name: "Journey", href: "/journey", icon: Map },
   { name: "Experiences", href: "/experiences", icon: Sparkles },
   { name: "Feedback", href: "/feedback", icon: MessageSquare },
+];
+
+const executiveInsights = [
+  { name: "ROI Calculator", href: "/roi-calculator", icon: Calculator },
+  { name: "Translation Demo", href: "/translation-demo", icon: Languages },
+  { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },
 ];
 
 export default function MainLayout({ children }: MainLayoutProps) {
@@ -68,6 +77,22 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 </Link>
               );
             })}
+            <div className="h-6 w-px bg-border mx-2" />
+            {executiveInsights.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.href);
+              return (
+                <Link key={item.href} href={item.href}>
+                  <Button
+                    variant={active ? "default" : "ghost"}
+                    className="gap-2"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.name}
+                  </Button>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -95,6 +120,26 @@ export default function MainLayout({ children }: MainLayoutProps) {
             >
               <nav className="container py-4 flex flex-col gap-2">
                 {navigation.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href);
+                  return (
+                    <Link key={item.href} href={item.href}>
+                      <Button
+                        variant={active ? "default" : "ghost"}
+                        className="w-full justify-start gap-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.name}
+                      </Button>
+                    </Link>
+                  );
+                })}
+                <div className="h-px bg-border my-2" />
+                <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
+                  Executive Insights
+                </div>
+                {executiveInsights.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (

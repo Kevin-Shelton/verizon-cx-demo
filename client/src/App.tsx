@@ -13,6 +13,9 @@ import Personas from "./pages/Personas";
 import Journey from "./pages/Journey";
 import Experiences from "./pages/Experiences";
 import Chat from "./pages/experiences/Chat";
+import ROICalculator from "./pages/ROICalculator";
+import TranslationDemo from "./pages/TranslationDemo";
+import JourneyHeatmap from "./pages/JourneyHeatmap";
 
 function Router() {
   return (
@@ -24,6 +27,9 @@ function Router() {
         <Route path="/journey" component={Journey} />
         <Route path="/experiences" component={Experiences} />
         <Route path={"/experiences/chat"} component={Chat} />
+        <Route path={"/roi-calculator"} component={ROICalculator} />
+        <Route path={"/translation-demo"} component={TranslationDemo} />
+        <Route path={"/journey-heatmap"} component={JourneyHeatmap} />
         <Route path={"/terms"} component={Terms} />
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/404"} component={NotFound} />

@@ -1,0 +1,63 @@
+{
+  "baseMetrics": {
+    "avgCustomerLifetimeValue": 1200,
+    "avgMonthlyCustomers": 50000,
+    "avgCallHandleTime": 12,
+    "avgCostPerCall": 8.50,
+    "churnRate": 0.15,
+    "customerAcquisitionCost": 250,
+    "avgMonthlyCallVolume": 150000,
+    "avgRevenuePerCustomer": 85
+  },
+  "multilingualImpact": {
+    "satisfactionIncrease": 0.72,
+    "loyaltyIncrease": 0.70,
+    "fcrImprovement": 0.86,
+    "ahtReduction": 0.35,
+    "churnReduction": 0.29,
+    "retentionImprovement": 0.78,
+    "premiumPricingTolerance": 0.64,
+    "brandSwitchingRisk": 0.68,
+    "spendingLimitWithout": 500,
+    "repeatCallReduction": 0.25,
+    "churnReplacementCost": 0.20,
+    "roiMultiplier": 1.5
+  },
+  "marketData": {
+    "hispanicPopulationUS": 62300000,
+    "californiaSpanishSpeakers": 10400000,
+    "texasSpanishSpeakers": 7800000,
+    "floridaSpanishSpeakers": 5600000,
+    "newYorkSpanishSpeakers": 3900000,
+    "marketPenetrationOpportunity": 0.18
+  },
+  "costBreakdown": {
+    "increasedAHT": 0.35,
+    "repeatCalls": 0.25,
+    "churnReplace": 0.20,
+    "agentTraining": 0.15,
+    "lostRevenue": 0.05
+  },
+  "implementationCosts": {
+    "aiTranslationPlatform": 50000,
+    "agentTraining": 75000,
+    "technologyIntegration": 100000,
+    "contentLocalization": 40000,
+    "ongoingMaintenance": 30000
+  },
+  "industryBenchmarks": {
+    "bestInClassCSAT": 85,
+    "avgCSATWithoutMultilingual": 65,
+    "bestInClassNPS": 45,
+    "avgNPSWithoutMultilingual": 25,
+    "bestInClassFCR": 86,
+    "avgFCRWithoutMultilingual": 58,
+    "avgRetentionWithMultilingual": 82,
+    "avgRetentionWithoutMultilingual": 78
+  },
+  "timeToROI": {
+    "months": 8,
+    "description": "Contact centers implementing multilingual support typically achieve ROI within 6-12 months"
+  }
+}
+

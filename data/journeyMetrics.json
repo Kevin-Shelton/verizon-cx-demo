@@ -1,0 +1,263 @@
+{
+  "journeyStages": [
+    {
+      "id": "awareness",
+      "name": "Awareness & Research",
+      "description": "Customer discovers Verizon and researches options",
+      "touchpoints": ["Website", "Social Media", "Advertising", "Search"],
+      "metricsWithout": {
+        "engagement": 45,
+        "dropoffRate": 35,
+        "avgTimeSpent": 2.5,
+        "conversionRate": 12,
+        "satisfaction": 58
+      },
+      "metricsWith": {
+        "engagement": 78,
+        "dropoffRate": 15,
+        "avgTimeSpent": 5.2,
+        "conversionRate": 28,
+        "satisfaction": 82
+      },
+      "painPoints": [
+        "Can't find Spanish content on website",
+        "Technical terms confusing in English",
+        "Pricing information unclear",
+        "No chat support in Spanish",
+        "Generic translation feels impersonal"
+      ],
+      "improvements": [
+        "Dialect-specific landing pages",
+        "Localized pricing display with cultural context",
+        "Cultural imagery and testimonials",
+        "24/7 multilingual chat support",
+        "Regional promotions and offers"
+      ],
+      "customerQuote": "I couldn't understand the technical terms on the English website. When I found the Spanish page, it still felt like a machine translation. I almost gave up."
+    },
+    {
+      "id": "consideration",
+      "name": "Consideration & Comparison",
+      "description": "Customer evaluates plans and compares with competitors",
+      "touchpoints": ["Chat", "Phone", "Email", "Store Visit"],
+      "metricsWithout": {
+        "engagement": 38,
+        "dropoffRate": 42,
+        "avgTimeSpent": 8.5,
+        "conversionRate": 18,
+        "satisfaction": 52
+      },
+      "metricsWith": {
+        "engagement": 82,
+        "dropoffRate": 18,
+        "avgTimeSpent": 6.2,
+        "conversionRate": 45,
+        "satisfaction": 87
+      },
+      "painPoints": [
+        "Long wait times for Spanish-speaking agents",
+        "Miscommunication about plan features",
+        "Frustration with generic translation",
+        "Agents don't understand cultural context",
+        "Repeat explanations needed"
+      ],
+      "improvements": [
+        "Real-time dialect-specific translation",
+        "Native-speaking agent routing by dialect",
+        "Cultural context in plan recommendations",
+        "Reduced average handle time",
+        "First call resolution improvement"
+      ],
+      "customerQuote": "I waited 20 minutes for a Spanish agent, and when I finally got one, they didn't understand my Puerto Rican way of speaking. Very frustrating."
+    },
+    {
+      "id": "purchase",
+      "name": "Purchase & Activation",
+      "description": "Customer completes purchase and activates service",
+      "touchpoints": ["Online Checkout", "Store", "Phone Order", "App"],
+      "metricsWithout": {
+        "engagement": 52,
+        "dropoffRate": 28,
+        "avgTimeSpent": 12.0,
+        "conversionRate": 65,
+        "satisfaction": 68
+      },
+      "metricsWith": {
+        "engagement": 88,
+        "dropoffRate": 8,
+        "avgTimeSpent": 8.5,
+        "conversionRate": 89,
+        "satisfaction": 91
+      },
+      "painPoints": [
+        "Complex checkout process in English only",
+        "Payment terms unclear",
+        "Contract language difficult to understand",
+        "Activation instructions confusing",
+        "No support during setup"
+      ],
+      "improvements": [
+        "Multilingual checkout with dialect options",
+        "Clear payment terms in native language",
+        "Simplified contract language",
+        "Step-by-step activation guides",
+        "Live support during activation"
+      ],
+      "customerQuote": "The contract was all in English legal terms. I had to ask my daughter to help me understand what I was signing. Not a good experience."
+    },
+    {
+      "id": "onboarding",
+      "name": "Onboarding & Setup",
+      "description": "Customer sets up devices and learns to use services",
+      "touchpoints": ["Welcome Email", "Setup Guide", "Tutorial Videos", "Support Chat"],
+      "metricsWithout": {
+        "engagement": 42,
+        "dropoffRate": 32,
+        "avgTimeSpent": 15.0,
+        "conversionRate": 58,
+        "satisfaction": 61
+      },
+      "metricsWith": {
+        "engagement": 85,
+        "dropoffRate": 12,
+        "avgTimeSpent": 9.5,
+        "conversionRate": 84,
+        "satisfaction": 89
+      },
+      "painPoints": [
+        "Setup instructions only in English",
+        "Tutorial videos not translated",
+        "Technical support difficult to reach",
+        "Device settings in English",
+        "No guidance for Spanish speakers"
+      ],
+      "improvements": [
+        "Dialect-specific welcome materials",
+        "Video tutorials in multiple dialects",
+        "Multilingual device setup assistance",
+        "Cultural onboarding best practices",
+        "Proactive outreach in native language"
+      ],
+      "customerQuote": "The welcome email was in Spanish, but the setup guide was in English. I had to call support three times to get my phone working."
+    },
+    {
+      "id": "usage",
+      "name": "Ongoing Usage & Support",
+      "description": "Customer uses services and contacts support as needed",
+      "touchpoints": ["App", "IVR", "Chat", "Email", "Store"],
+      "metricsWithout": {
+        "engagement": 48,
+        "dropoffRate": 25,
+        "avgTimeSpent": 10.0,
+        "conversionRate": 70,
+        "satisfaction": 65
+      },
+      "metricsWith": {
+        "engagement": 86,
+        "dropoffRate": 10,
+        "avgTimeSpent": 6.5,
+        "conversionRate": 88,
+        "satisfaction": 88
+      },
+      "painPoints": [
+        "IVR menu only in English",
+        "Long hold times for Spanish support",
+        "Billing statements unclear",
+        "App interface not localized",
+        "Support agents lack cultural competency"
+      ],
+      "improvements": [
+        "Dialect-specific IVR menus",
+        "Priority routing for Spanish speakers",
+        "Localized billing statements",
+        "Multilingual app interface",
+        "Cultural competency training for agents"
+      ],
+      "customerQuote": "Every time I call, I have to press 2 for Spanish, then wait forever. The app is all in English. It's like they don't care about Spanish customers."
+    },
+    {
+      "id": "retention",
+      "name": "Retention & Loyalty",
+      "description": "Customer renews, upgrades, or considers leaving",
+      "touchpoints": ["Renewal Notice", "Retention Call", "Upgrade Offer", "Loyalty Program"],
+      "metricsWithout": {
+        "engagement": 35,
+        "dropoffRate": 45,
+        "avgTimeSpent": 5.0,
+        "conversionRate": 55,
+        "satisfaction": 58
+      },
+      "metricsWith": {
+        "engagement": 82,
+        "dropoffRate": 18,
+        "avgTimeSpent": 7.5,
+        "conversionRate": 82,
+        "satisfaction": 87
+      },
+      "painPoints": [
+        "Renewal notices in English only",
+        "No proactive outreach in Spanish",
+        "Competitor offers in Spanish",
+        "Feeling undervalued as customer",
+        "No loyalty recognition"
+      ],
+      "improvements": [
+        "Personalized retention in native dialect",
+        "Proactive loyalty rewards communication",
+        "Cultural appreciation programs",
+        "Dialect-specific upgrade offers",
+        "Community engagement initiatives"
+      ],
+      "customerQuote": "After 5 years as a customer, I got a renewal notice in English. AT&T sent me a personal offer in Spanish. I'm considering switching."
+    }
+  ],
+  "overallMetrics": {
+    "without": {
+      "endToEndConversion": 8,
+      "avgCustomerSatisfaction": 60,
+      "nps": 25,
+      "churnRate": 29,
+      "avgLifetimeValue": 980,
+      "recommendationRate": 32
+    },
+    "with": {
+      "endToEndConversion": 34,
+      "avgCustomerSatisfaction": 87,
+      "nps": 48,
+      "churnRate": 12,
+      "avgLifetimeValue": 1580,
+      "recommendationRate": 76
+    }
+  },
+  "impactSummary": {
+    "conversionImprovement": 325,
+    "satisfactionImprovement": 45,
+    "npsImprovement": 92,
+    "churnReduction": 59,
+    "lifetimeValueIncrease": 61,
+    "recommendationIncrease": 138
+  },
+  "researchInsights": [
+    {
+      "metric": "72% Satisfaction Increase",
+      "description": "Customers experience increased satisfaction when support is delivered in their native language",
+      "source": "Industry Research"
+    },
+    {
+      "metric": "68% Brand Switching Risk",
+      "description": "Consumers would switch to a competitor offering native language support",
+      "source": "Consumer Behavior Study"
+    },
+    {
+      "metric": "86% FCR Improvement",
+      "description": "First Call Resolution improvement with multilingual support - #1 operational metric",
+      "source": "Contact Center Benchmarks"
+    },
+    {
+      "metric": "29% Churn Reduction",
+      "description": "Customer loss rate due to language barriers can be significantly reduced",
+      "source": "Retention Analysis"
+    }
+  ]
+}
+
