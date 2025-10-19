@@ -12,6 +12,7 @@ import {
   Calculator,
   Languages,
   TrendingUp,
+  BookOpen,
 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,6 +33,7 @@ const executiveInsights = [
   { name: "ROI Calculator", href: "/roi-calculator", icon: Calculator },
   { name: "Translation Demo", href: "/translation-demo", icon: Languages },
   { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },
+  { name: "Research Sources", href: "/research-sources", icon: BookOpen },
 ];
 
 export default function MainLayout({ children }: MainLayoutProps) {
