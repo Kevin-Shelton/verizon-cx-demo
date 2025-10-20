@@ -72,7 +72,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
-              <img src="/invictus-logo.png" alt="Invictus" className="h-10 w-auto" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/120250985/tIYLxxOFWqHZpwVA.png" alt="Invictus" className="h-10 w-auto" />
               <span className="text-sm text-muted-foreground">Presented by Invictus</span>
             </div>
           </Link>
@@ -209,7 +209,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col items-center md:items-start gap-2">
               <div className="flex items-center gap-3">
-                <img src="/invictus-logo.png" alt="Invictus" className="h-6 w-auto" />
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/120250985/tIYLxxOFWqHZpwVA.png" alt="Invictus" className="h-6 w-auto" />
                 <span className="text-sm font-semibold text-foreground">Presented by Invictus</span>
               </div>
               <p className="text-xs text-muted-foreground">
