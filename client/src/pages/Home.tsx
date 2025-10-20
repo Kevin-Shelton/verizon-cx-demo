@@ -15,8 +15,11 @@ export default function Home() {
               Culturally Aware
               <span className="block text-[#E60000]">Multilingual CX</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-600 mb-4 leading-relaxed">
               Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
+            </p>
+            <p className="text-sm text-gray-500 mb-8 italic">
+              Presented by Invictus
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/personas">

@@ -29,8 +29,11 @@ export default function ExecutiveIntroduction() {
             <h1 className="text-5xl font-bold mb-4">
               Multilingual CX Transformation
             </h1>
-            <p className="text-2xl text-red-100 mb-8">
+            <p className="text-2xl text-red-100 mb-2">
               Unlocking $3.87B in Annual Value Through Dialect-Specific Customer Engagement
+            </p>
+            <p className="text-sm text-red-200 mb-8 italic">
+              Presented by Invictus
             </p>
             <div className="flex gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4">

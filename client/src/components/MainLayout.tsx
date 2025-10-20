@@ -75,9 +75,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
               {APP_LOGO && (
                 <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-auto" />
               )}
-              <span className="text-xl font-bold text-foreground">
-                {APP_TITLE}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-foreground">
+                  {APP_TITLE}
+                </span>
+                <span className="text-xs text-muted-foreground">Presented by Invictus</span>
+              </div>
             </div>
           </Link>
 
@@ -210,10 +213,16 @@ export default function MainLayout({ children }: MainLayoutProps) {
       {/* Footer */}
       <footer className="border-t border-border bg-card mt-16">
         <div className="container py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              © 2025 Verizon. Multilingual CX powered by Invictus.
-            </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <div className="flex items-center gap-3">
+                <img src="/invictus-logo.png" alt="Invictus" className="h-6 w-auto" />
+                <span className="text-sm font-semibold text-foreground">Presented by Invictus</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                © 2025 Verizon. Multilingual CX Demo Portal.
+              </p>
+            </div>
             <div className="flex gap-4 text-sm text-muted-foreground">
               <Link href="/privacy" className="hover:text-foreground transition-colors">
                 Privacy
