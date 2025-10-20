@@ -1,0 +1,152 @@
+{
+  "verizonFinancials": {
+    "totalWirelessConnections": 146.1,
+    "totalWirelessConnectionsUnit": "M",
+    "hispanicCustomers": 17.4,
+    "hispanicCustomersUnit": "M",
+    "hispanicPercentage": 11.9,
+    "arpa": 139.77,
+    "arpaUnit": "$",
+    "churnRate": 1.12,
+    "churnRateUnit": "%",
+    "hispanicSegmentRevenue": 9.72,
+    "hispanicSegmentRevenueUnit": "B",
+    "source": "Verizon Q4 2024 Earnings Report"
+  },
+  "marketOpportunity": {
+    "revenueAtRisk": 6.61,
+    "revenueAtRiskUnit": "B",
+    "revenueAtRiskPercentage": 68,
+    "annualChurn": 797,
+    "annualChurnUnit": "M",
+    "churnPercentage": 29,
+    "totalAddressableMarket": 25,
+    "totalAddressableMarketUnit": "B",
+    "totalOpportunity": 3.87,
+    "totalOpportunityUnit": "B",
+    "source": "U.S. Hispanic Market Analysis"
+  },
+  "multilingualImpact": {
+    "satisfactionIncrease": 72,
+    "satisfactionIncreaseUnit": "%",
+    "brandSwitchingRisk": 68,
+    "brandSwitchingRiskUnit": "%",
+    "fcrImprovement": 86,
+    "fcrImprovementUnit": "%",
+    "churnReduction": 29,
+    "churnReductionUnit": "%",
+    "premiumPricingTolerance": 64,
+    "premiumPricingToleranceUnit": "%",
+    "premiumPricingAmount": 1.46,
+    "premiumPricingAmountUnit": "B",
+    "churnSavings": 398.5,
+    "churnSavingsUnit": "M",
+    "source": "Industry Research & Contact Center Benchmarks"
+  },
+  "invictusSolution": {
+    "annualReturn": 275,
+    "annualReturnUnit": "M",
+    "expectedROI": 1100,
+    "expectedROIUnit": "x",
+    "paybackPeriod": 0.2,
+    "paybackPeriodUnit": "months",
+    "implementationCost": 300,
+    "implementationCostUnit": "K",
+    "pilotDuration": 8,
+    "pilotDurationUnit": "weeks",
+    "source": "Invictus Financial Projections"
+  },
+  "customerExperience": {
+    "csatBefore": 65,
+    "csatAfter": 85,
+    "csatImprovement": 20,
+    "csatImprovementUnit": "points",
+    "npsBefore": 25,
+    "npsAfter": 45,
+    "npsImprovement": 20,
+    "npsImprovementUnit": "points",
+    "fcrBefore": 58,
+    "fcrAfter": 86,
+    "fcrImprovement": 28,
+    "fcrImprovementUnit": "points",
+    "retentionBefore": 78,
+    "retentionAfter": 82,
+    "retentionImprovement": 4,
+    "retentionImprovementUnit": "points",
+    "source": "Industry Benchmarks"
+  },
+  "operationalMetrics": {
+    "ahtReduction": 35,
+    "ahtReductionUnit": "%",
+    "repeatCallReduction": 25,
+    "repeatCallReductionUnit": "%",
+    "ivrAbandonment": 50,
+    "ivrAbandonmentUnit": "%",
+    "salesConversionIncrease": 15,
+    "salesConversionIncreaseUnit": "%",
+    "emotionalConnectionIncrease": 35,
+    "emotionalConnectionIncreaseUnit": "%",
+    "source": "Contact Center Performance Data"
+  },
+  "translationQuality": {
+    "genericQuality": 65,
+    "genericQualityUnit": "%",
+    "mexicanQuality": 92,
+    "mexicanQualityUnit": "%",
+    "puertoRicanQuality": 94,
+    "puertoRicanQualityUnit": "%",
+    "colombianQuality": 91,
+    "colombianQualityUnit": "%",
+    "usSpanishQuality": 88,
+    "usSpanishQualityUnit": "%",
+    "source": "Translation Quality Benchmarks"
+  },
+  "journeyMetrics": {
+    "conversionBefore": 8,
+    "conversionAfter": 34,
+    "conversionImprovement": 325,
+    "conversionImprovementUnit": "%",
+    "churnBefore": 29,
+    "churnAfter": 12,
+    "churnReduction": 59,
+    "churnReductionUnit": "%",
+    "clvBefore": 980,
+    "clvAfter": 1580,
+    "clvIncrease": 61,
+    "clvIncreaseUnit": "%",
+    "recommendationsBefore": 32,
+    "recommendationsAfter": 76,
+    "recommendationsIncrease": 138,
+    "recommendationsIncreaseUnit": "%",
+    "source": "Customer Journey Analysis"
+  },
+  "displayFormats": {
+    "currency": {
+      "billions": "$X.XXB",
+      "millions": "$XXXM",
+      "thousands": "$XXXK",
+      "dollars": "$X,XXX"
+    },
+    "percentage": {
+      "standard": "XX%",
+      "decimal": "X.X%",
+      "improvement": "+XX%",
+      "reduction": "-XX%"
+    },
+    "multiplier": {
+      "roi": "X,XXXx",
+      "standard": "XXx"
+    },
+    "time": {
+      "months": "X.X months",
+      "weeks": "X weeks",
+      "years": "X years"
+    },
+    "count": {
+      "millions": "XX.XM",
+      "thousands": "XXK",
+      "standard": "X,XXX"
+    }
+  }
+}
+
