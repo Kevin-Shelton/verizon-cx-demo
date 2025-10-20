@@ -72,15 +72,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
-              {APP_LOGO && (
-                <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-auto" />
-              )}
-              <div className="flex flex-col">
-                <span className="text-xl font-bold text-foreground">
-                  {APP_TITLE}
-                </span>
-                <span className="text-xs text-muted-foreground">Presented by Invictus</span>
-              </div>
+              <img src="/invictus-logo.png" alt="Invictus" className="h-10 w-auto" />
+              <span className="text-sm text-muted-foreground">Presented by Invictus</span>
             </div>
           </Link>
 
