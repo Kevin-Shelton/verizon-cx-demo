@@ -97,13 +97,28 @@ export default function ExecutiveIntroduction() {
                 <div className="flex items-start gap-3">
                   <Target className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Growth Potential</h3>
-                    <ul className="space-y-2 text-gray-700">
-                      <li>• $1.46B premium pricing opportunity</li>
-                      <li>• $398.5M churn reduction savings</li>
-                      <li>• $2.01B market share recovery</li>
-                      <li>• $25B TAM in Spanish-speaking market</li>
-                    </ul>
+                    <h3 className="font-semibold text-gray-900 mb-3">Growth Potential: $3.87B Annual Value</h3>
+                    <div className="space-y-3 text-gray-700">
+                      <div className="flex justify-between items-center">
+                        <span>• Premium pricing opportunity (64% willing to pay more)</span>
+                        <span className="font-semibold text-green-700">$1.46B</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>• Churn reduction savings (29% reduction)</span>
+                        <span className="font-semibold text-green-700">$0.40B</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>• Market share recovery (12M lost customers)</span>
+                        <span className="font-semibold text-green-700">$2.01B</span>
+                      </div>
+                      <div className="border-t-2 border-green-300 pt-2 mt-2 flex justify-between items-center">
+                        <span className="font-bold">Total Annual Value</span>
+                        <span className="text-xl font-bold text-green-700">$3.87B</span>
+                      </div>
+                      <div className="text-sm text-gray-600 italic mt-2">
+                        Plus $25B TAM in broader Spanish-speaking market
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

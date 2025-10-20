@@ -39,8 +39,8 @@
     "premiumPricingToleranceUnit": "%",
     "premiumPricingAmount": 1.46,
     "premiumPricingAmountUnit": "B",
-    "churnSavings": 398.5,
-    "churnSavingsUnit": "M",
+    "churnSavings": 0.40,
+    "churnSavingsUnit": "B",
     "source": "Industry Research & Contact Center Benchmarks"
   },
   "invictusSolution": {
