@@ -474,7 +474,7 @@ export default function ExecutiveIntroduction() {
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-sm text-red-100 mb-1">4. Scope Confirm</div>
-                <div className="font-semibold">Web/IVR/Mobile</div>
+                <div className="font-semibold">Web/IVR/In Field</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div className="text-sm text-red-100 mb-1">5. Timeline</div>

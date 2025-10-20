@@ -94,7 +94,7 @@
     {
       "id": 3,
       "category": "Field Operations",
-      "gap": "No Mobile Field Sales Translation",
+      "gap": "No In Field Sales Translation",
       "impact": "High",
       "description": "Field sales teams lack real-time translation tools for in-person customer interactions",
       "businessImpact": "Lost sales opportunities in Hispanic markets, especially SMB segment"
@@ -143,7 +143,7 @@
       },
       {
         "id": 3,
-        "capability": "Mobile Field Sales App",
+        "capability": "In Field Sales App",
         "description": "Real-time translation for field teams with offline mode and dialect selection",
         "fillsGaps": [3],
         "benefit": "+15% sales conversion, $1.46B premium pricing opportunity"

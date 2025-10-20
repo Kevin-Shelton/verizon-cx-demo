@@ -16,7 +16,7 @@ import {
   Briefcase,
   FileText,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MainLayoutProps {
@@ -43,6 +43,15 @@ const executiveInsights = [
 export default function MainLayout({ children }: MainLayoutProps) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
@@ -52,7 +61,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-sm">
+      <header
+        className={`sticky top-0 z-50 border-b border-border transition-all duration-300 ${
+          scrolled
+            ? "bg-card/95 backdrop-blur-md shadow-md"
+            : "bg-card/80 backdrop-blur-sm"
+        }`}
+      >
         <div className="container flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/">
@@ -67,43 +82,57 @@ export default function MainLayout({ children }: MainLayoutProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href);
-              return (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={active ? "default" : "ghost"}
-                    className="gap-2"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.name}
-                  </Button>
-                </Link>
-              );
-            })}
-            <div className="h-6 w-px bg-border mx-2" />
-            {executiveInsights.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href);
-              return (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={active ? "default" : "ghost"}
-                    className="gap-2"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.name}
-                  </Button>
-                </Link>
-              );
-            })}
+          <nav className="hidden lg:flex items-center gap-1">
+            {/* Customer Journey Section */}
+            <div className="flex items-center gap-1 px-2">
+              {navigation.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <Link key={item.href} href={item.href}>
+                    <Button
+                      variant={active ? "default" : "ghost"}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.name}
+                    </Button>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Vertical Separator */}
+            <div className="h-8 w-px bg-gradient-to-b from-transparent via-border to-transparent mx-3" />
+
+            {/* Executive Insights Section */}
+            <div className="flex items-center gap-1 px-2">
+              <span className="text-xs font-semibold text-muted-foreground mr-2 hidden xl:block">
+                Executive Insights
+              </span>
+              {executiveInsights.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <Link key={item.href} href={item.href}>
+                    <Button
+                      variant={active ? "default" : "ghost"}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span className="hidden xl:inline">{item.name}</span>
+                    </Button>
+                  </Link>
+                );
+              })}
+            </div>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="lg:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -122,9 +151,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden border-t border-border overflow-hidden"
+              className="lg:hidden border-t border-border overflow-hidden bg-card"
             >
               <nav className="container py-4 flex flex-col gap-2">
+                {/* Customer Journey Section */}
+                <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
+                  Customer Journey
+                </div>
                 {navigation.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
@@ -141,7 +174,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
                     </Link>
                   );
                 })}
-                <div className="h-px bg-border my-2" />
+
+                {/* Separator */}
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
+
+                {/* Executive Insights Section */}
                 <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
                   Executive Insights
                 </div>
