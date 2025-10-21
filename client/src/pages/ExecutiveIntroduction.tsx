@@ -13,6 +13,7 @@ import {
   Heart,
   Handshake
 } from "lucide-react";
+import ExecutiveIntroductionImpact from "./ExecutiveIntroductionImpact";
 
 export default function ExecutiveIntroduction() {
   return (
@@ -198,63 +199,7 @@ export default function ExecutiveIntroduction() {
         </motion.section>
 
         {/* The Impact */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mb-16"
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-green-100 rounded-lg">
-              <BarChart3 className="w-8 h-8 text-green-600" />
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">The Impact</h2>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
-                <DollarSign className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-gray-900">$275M</div>
-                <div className="text-sm text-gray-600 mt-1">Annual Return</div>
-                <div className="text-xs text-green-600 mt-2">1,100x ROI</div>
-              </div>
-
-              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
-                <Users className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-gray-900">$125M</div>
-                <div className="text-sm text-gray-600 mt-1">From Retention</div>
-                <div className="text-xs text-blue-600 mt-2">5% churn reduction</div>
-              </div>
-
-              <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
-                <TrendingUp className="w-12 h-12 text-purple-600 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-gray-900">$85M</div>
-                <div className="text-sm text-gray-600 mt-1">Language Premium</div>
-                <div className="text-xs text-purple-600 mt-2">Incremental ARPU</div>
-              </div>
-
-              <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
-                <CheckCircle className="w-12 h-12 text-orange-600 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-gray-900">$50M</div>
-                <div className="text-sm text-gray-600 mt-1">Support Savings</div>
-                <div className="text-xs text-orange-600 mt-2">25% cost reduction</div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-red-50 to-red-100 rounded-lg p-6 border-l-4 border-red-600">
-              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Target className="w-5 h-5 text-red-600" />
-                Market Leadership Position
-              </h3>
-              <p className="text-gray-700">
-                First major telecom with real-time multilingual engagement at scale, positioning Verizon 
-                to capture the $25B Spanish-speaking market and establish competitive differentiation 
-                through seamless language support across all customer touchpoints.
-              </p>
-            </div>
-          </div>
-        </motion.section>
+        <ExecutiveIntroductionImpact />
 
         {/* Strategic Alignment */}
         <motion.section
