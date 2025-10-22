@@ -83,8 +83,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Executive Summary Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-8 shadow-lg">
+      {/* Executive Summary Banner - Sticky */}
+      <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-8 shadow-lg">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex-1">
