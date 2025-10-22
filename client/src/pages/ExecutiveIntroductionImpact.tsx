@@ -11,7 +11,8 @@ import {
   Target,
   Sparkles,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  PieChart
 } from "lucide-react";
 
 interface InsightProps {
@@ -112,55 +113,55 @@ export default function ExecutiveIntroductionImpact() {
 
   const impactMetrics: InsightProps[] = [
     {
-      title: "Total Opportunity",
-      value: "$3.9B",
-      subtitle: "Annual Value Potential",
-      detail: "Full market capture",
-      color: "green",
-      icon: <DollarSign className="w-12 h-12 text-green-600" />,
-      insights: {
-        basis: "Combined value of premium pricing ($1.5B), churn reduction ($0.4B), and market share recovery ($2.0B) across Verizon's 17.4M Hispanic customer base.",
-        calculation: "$1.5B + $0.4B + $2.0B = $3.9B annual value",
-        source: "Verizon Q4 2024 Earnings Report + U.S. Hispanic Market Analysis"
-      }
-    },
-    {
-      title: "Year 1 Projection",
-      value: "$0.9B",
-      subtitle: "Moderate Capture",
-      detail: "23% of total opportunity",
+      title: "Total TAM",
+      value: "$25B",
+      subtitle: "Total Addressable Market",
+      detail: "U.S. Spanish-speaking telecom",
       color: "blue",
-      icon: <Calendar className="w-12 h-12 text-blue-600" />,
+      icon: <PieChart className="w-12 h-12 text-blue-600" />,
       insights: {
-        basis: "8-week pilot (Q1) scaling to 35% customer coverage by year-end. Assumes 18% conversion improvement and 8% churn reduction in covered segments.",
-        calculation: "$3.9B × 35% coverage × 66% effectiveness = $0.9B Year 1",
-        source: "Invictus Implementation Roadmap & Industry Benchmarks"
+        basis: "62 million Hispanic consumers in the U.S. with $1.9 trillion in purchasing power. Telecom penetration at 11.9% of total spending yields $25B TAM.",
+        calculation: "62M consumers × $1.9T purchasing power × 11.9% telecom = $25B",
+        source: "U.S. Census Bureau (2023), Selig Center for Economic Growth"
       }
     },
     {
-      title: "Year 2 Projection",
-      value: "$2.1B",
-      subtitle: "Broad Deployment",
-      detail: "54% of total opportunity",
+      title: "Year 1 Target",
+      value: "42%",
+      subtitle: "Market Share Goal",
+      detail: "+3 pts from 39% → $10.5B revenue",
+      color: "green",
+      icon: <Calendar className="w-12 h-12 text-green-600" />,
+      insights: {
+        basis: "8-week pilot scaling to 35% customer coverage. Moderate market share gain from 39% to 42% through differentiated multilingual CX.",
+        calculation: "$25B TAM × 42% share = $10.5B revenue (+$0.8B from current $9.7B)",
+        source: "Invictus Implementation Roadmap & Market Analysis"
+      }
+    },
+    {
+      title: "Year 2 Target",
+      value: "46%",
+      subtitle: "Market Share Goal",
+      detail: "+7 pts from 39% → $11.5B revenue",
       color: "purple",
       icon: <TrendingUp className="w-12 h-12 text-purple-600" />,
       insights: {
-        basis: "Full deployment across all channels (Website, IVR, Chat, Email, Field). 80% customer coverage with optimized dialect-specific translation and proven conversion patterns.",
-        calculation: "$3.9B × 80% coverage × 67% effectiveness = $2.1B Year 2",
+        basis: "Full deployment across all channels with proven conversion patterns. Aggressive market share capture from competitors through superior language experience.",
+        calculation: "$25B TAM × 46% share = $11.5B revenue (+$1.8B from current $9.7B)",
         source: "Scaled Implementation Model based on Pilot Results"
       }
     },
     {
-      title: "Year 3 Projection",
-      value: "$3.5B",
-      subtitle: "Full Implementation",
-      detail: "90% of total opportunity",
+      title: "Year 3 Target",
+      value: "50%",
+      subtitle: "Market Share Goal",
+      detail: "+11 pts from 39% → $12.5B revenue",
       color: "orange",
-      icon: <CheckCircle className="w-12 h-12 text-orange-600" />,
+      icon: <Target className="w-12 h-12 text-orange-600" />,
       insights: {
-        basis: "Mature implementation with AI-driven personalization, 95% customer coverage, and expanded to new market segments. Includes network effects and brand reputation lift.",
-        calculation: "$3.9B × 95% coverage × 94% effectiveness = $3.5B Year 3",
-        source: "Long-term Value Projection with Market Expansion"
+        basis: "Market leadership position with 95% customer coverage, AI personalization, and brand reputation as the multilingual telecom leader.",
+        calculation: "$25B TAM × 50% share = $12.5B revenue (+$2.8B from current $9.7B)",
+        source: "Long-term Market Expansion Projection"
       }
     }
   ];
@@ -177,7 +178,7 @@ export default function ExecutiveIntroductionImpact() {
           <Sparkles className="w-8 h-8 text-green-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">The Impact</h2>
-        <span className="text-sm text-gray-500">3-Year Moderate Projection</span>
+        <span className="text-sm text-gray-500">3-Year Market Share Growth Strategy</span>
       </div>
 
       <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
@@ -188,28 +189,28 @@ export default function ExecutiveIntroductionImpact() {
           ))}
         </div>
 
-        {/* 3-Year Roadmap */}
+        {/* 3-Year Market Share Growth Roadmap */}
         <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 border-l-4 border-blue-600 mb-6">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-blue-600" />
-                3-Year Value Capture Roadmap
+                <PieChart className="w-5 h-5 text-blue-600" />
+                3-Year Market Share Growth Roadmap
               </h3>
               <div className="flex items-center gap-4 text-sm font-semibold text-gray-700 mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                  <span>Year 1: $0.9B (23%)</span>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span>Year 1: 42% share (+3 pts) → $10.5B</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                  <span>Year 2: $2.1B (54%)</span>
+                  <span>Year 2: 46% share (+7 pts) → $11.5B</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span>Year 3: $3.5B (90%)</span>
+                  <span>Year 3: 50% share (+11 pts) → $12.5B</span>
                 </div>
               </div>
               
@@ -231,28 +232,28 @@ export default function ExecutiveIntroductionImpact() {
                 exit={{ opacity: 0, height: 0 }}
                 className="mt-4 space-y-4 text-gray-700"
               >
-                <div className="bg-white rounded-lg p-4 border border-blue-200">
-                  <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                    Year 1: Pilot + Initial Scale ($0.9B)
+                <div className="bg-white rounded-lg p-4 border border-green-200">
+                  <h4 className="font-semibold text-green-700 mb-3 flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    Year 1: Pilot + Initial Scale → 42% Market Share ($10.5B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="font-semibold mb-1">Timeline</div>
+                      <div className="font-semibold mb-1">Market Share Strategy</div>
                       <ul className="space-y-1 text-gray-600">
-                        <li>• Q1: 8-week pilot (5% coverage)</li>
-                        <li>• Q2: Scale to 15% coverage</li>
-                        <li>• Q3: Expand to 25% coverage</li>
-                        <li>• Q4: Reach 35% coverage</li>
+                        <li>• Start: 39% share ($9.7B revenue)</li>
+                        <li>• Target: 42% share (+3 percentage points)</li>
+                        <li>• Gain: $0.8B incremental revenue</li>
+                        <li>• Focus: Protect existing + modest expansion</li>
                       </ul>
                     </div>
                     <div>
-                      <div className="font-semibold mb-1">Key Metrics</div>
+                      <div className="font-semibold mb-1">Execution Plan</div>
                       <ul className="space-y-1 text-gray-600">
+                        <li>• Q1: 8-week pilot (5% coverage)</li>
+                        <li>• Q2-Q4: Scale to 35% coverage</li>
                         <li>• 18% conversion improvement</li>
                         <li>• 8% churn reduction</li>
-                        <li>• 64% effectiveness rate</li>
-                        <li>• ROI: 3,000x ($0.9B / $300K)</li>
                       </ul>
                     </div>
                   </div>
@@ -261,25 +262,25 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-purple-200">
                   <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                    Year 2: Broad Deployment ($2.1B)
+                    Year 2: Broad Deployment → 46% Market Share ($11.5B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="font-semibold mb-1">Deployment</div>
+                      <div className="font-semibold mb-1">Market Share Strategy</div>
                       <ul className="space-y-1 text-gray-600">
-                        <li>• All channels: Web, IVR, Chat, Email, Field</li>
-                        <li>• 80% customer coverage</li>
-                        <li>• 4 Spanish dialects optimized</li>
-                        <li>• AI personalization enabled</li>
+                        <li>• Start: 42% share ($10.5B revenue)</li>
+                        <li>• Target: 46% share (+4 percentage points)</li>
+                        <li>• Gain: $1.0B incremental revenue</li>
+                        <li>• Focus: Aggressive competitive capture</li>
                       </ul>
                     </div>
                     <div>
-                      <div className="font-semibold mb-1">Performance</div>
+                      <div className="font-semibold mb-1">Execution Plan</div>
                       <ul className="space-y-1 text-gray-600">
+                        <li>• All channels: Web, IVR, Chat, Email, Field</li>
+                        <li>• 80% customer coverage</li>
                         <li>• 25% conversion improvement</li>
                         <li>• 15% churn reduction</li>
-                        <li>• 67% effectiveness rate</li>
-                        <li>• Premium pricing: +3% ARPU</li>
                       </ul>
                     </div>
                   </div>
@@ -288,25 +289,25 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-orange-200">
                   <h4 className="font-semibold text-orange-700 mb-3 flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                    Year 3: Full Implementation ($3.5B)
+                    Year 3: Market Leadership → 50% Market Share ($12.5B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="font-semibold mb-1">Maturity</div>
+                      <div className="font-semibold mb-1">Market Share Strategy</div>
                       <ul className="space-y-1 text-gray-600">
-                        <li>• 95% customer coverage</li>
-                        <li>• Proactive multilingual engagement</li>
-                        <li>• Expanded to 150+ languages</li>
-                        <li>• Market leadership established</li>
+                        <li>• Start: 46% share ($11.5B revenue)</li>
+                        <li>• Target: 50% share (+4 percentage points)</li>
+                        <li>• Gain: $1.0B incremental revenue</li>
+                        <li>• Focus: Market leadership & dominance</li>
                       </ul>
                     </div>
                     <div>
-                      <div className="font-semibold mb-1">Results</div>
+                      <div className="font-semibold mb-1">Execution Plan</div>
                       <ul className="space-y-1 text-gray-600">
+                        <li>• 95% customer coverage</li>
+                        <li>• AI-driven personalization</li>
                         <li>• 32% conversion improvement</li>
                         <li>• 20% churn reduction</li>
-                        <li>• 94% effectiveness rate</li>
-                        <li>• Brand reputation: +15 NPS</li>
                       </ul>
                     </div>
                   </div>
@@ -314,9 +315,9 @@ export default function ExecutiveIntroductionImpact() {
 
                 <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                   <div className="text-xs text-gray-600">
-                    <strong>Methodology:</strong> Projections based on phased rollout model with conservative effectiveness rates. 
-                    Coverage = % of 17.4M Hispanic customers reached. Effectiveness = actual value capture vs. theoretical maximum. 
-                    Assumes no major market disruptions and continued investment in optimization.
+                    <strong>Methodology:</strong> Market share projections based on competitive displacement through differentiated multilingual CX. 
+                    Each percentage point of the $25B TAM = $250M revenue. Total 3-year gain: +11 points = $2.8B incremental revenue 
+                    (from $9.7B to $12.5B). Conservative assumptions account for competitive response and market dynamics.
                   </div>
                 </div>
               </motion.div>
@@ -330,7 +331,7 @@ export default function ExecutiveIntroductionImpact() {
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
                 <Target className="w-5 h-5 text-red-600" />
-                The $25B Net New Market Opportunity
+                The $25B Market Opportunity
               </h3>
               <p className="text-gray-700 mb-3">
                 Beyond Verizon's existing Hispanic customer base lies a <strong>$25 billion total addressable market</strong> in 
@@ -379,13 +380,13 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-red-200">
                   <h4 className="font-semibold text-red-700 mb-2">💡 Strategic Narrative</h4>
                   <p className="text-sm leading-relaxed">
-                    Verizon's current 17.4M Hispanic customers represent just <strong>28% penetration</strong> of the addressable market. 
+                    Verizon's current 39% market share ($9.7B) represents a strong foundation. 
                     By becoming the <strong>first major telecom with dialect-specific multilingual CX</strong>, Verizon can:
                   </p>
                   <ul className="mt-2 space-y-1 text-sm ml-4">
                     <li>1. <strong>Protect</strong> $6.6B at risk from competitors</li>
-                    <li>2. <strong>Capture</strong> $3.9B in value from existing customers over 3 years</li>
-                    <li>3. <strong>Expand</strong> into the remaining $25B TAM with differentiated positioning</li>
+                    <li>2. <strong>Grow</strong> to 50% market share over 3 years (+11 points)</li>
+                    <li>3. <strong>Capture</strong> $2.8B incremental revenue ($9.7B → $12.5B)</li>
                     <li>4. <strong>Lead</strong> the industry in culturally-aware customer experience</li>
                   </ul>
                   <p className="text-xs italic text-gray-600 mt-3">
