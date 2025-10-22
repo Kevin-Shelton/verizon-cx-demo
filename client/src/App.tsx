@@ -18,6 +18,7 @@ import TranslationDemo from "./pages/TranslationDemo";
 import JourneyHeatmap from "./pages/JourneyHeatmap";
 import ResearchSources from "./pages/ResearchSources";
 import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
+import ExecutiveIntroductionV2 from "./pages/ExecutiveIntroductionV2";
 import VerizonCaseStudy from "./pages/VerizonCaseStudy";
 
 function Router() {
@@ -26,6 +27,7 @@ function Router() {
       <Switch>
         <Route path={"/"} component={Home} />
         <Route path="/executive-intro" component={ExecutiveIntroduction} />
+        <Route path="/executive-intro-v2" component={ExecutiveIntroductionV2} />
         <Route path="/verizon-case-study" component={VerizonCaseStudy} />
         <Route path="/personas" component={Personas} />
         <Route path="/persona-journey" component={PersonaJourney} />

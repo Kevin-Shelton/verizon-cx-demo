@@ -1,0 +1,119 @@
+{
+  "marketOverview": {
+    "hispanicWirelessTAM": 65.5,
+    "hispanicTotalTelecomTAM": 70.9,
+    "hispanicPopulation": 68.0,
+    "hispanicPopulationPercentage": 20,
+    "totalWirelessSubscribers": 64.6,
+    "wirelessPenetration": 95,
+    "averageARPU": 1014,
+    "totalBuyingPower": 2.4,
+    "hispanicPopulationGrowth2000": 35.3,
+    "hispanicPopulationProjected2050": 140,
+    "percentOfUSGrowth": 56
+  },
+  "competitiveLandscape": {
+    "tMobile": {
+      "marketShare": 50.2,
+      "subscribers": 32.4,
+      "revenue": 21.3,
+      "churnRate": 0.86,
+      "netAdds2024": 3.1,
+      "hispanicPercentOfBase": 25
+    },
+    "verizon": {
+      "marketShare": 26.9,
+      "subscribers": 17.4,
+      "revenue": 16.0,
+      "netAdds2024": 0.568,
+      "hispanicPercentOfBase": 11.9
+    },
+    "att": {
+      "marketShare": 20.1,
+      "subscribers": 13.0,
+      "revenue": 14.1,
+      "bilingualStores": 770,
+      "spanishCallCenters": 22
+    },
+    "others": {
+      "marketShare": 2.8,
+      "subscribers": 1.8,
+      "revenue": 14.0
+    }
+  },
+  "marketGap": {
+    "sharePoints": 23.2,
+    "subscribers": 15.0,
+    "revenue": 13.8,
+    "verizonPotentialRevenue": 29.8,
+    "percentIncrease": 86
+  },
+  "superConsumerMetrics": {
+    "hoursPerWeekOnSmartphone": 14,
+    "minutesPerMonthUsage": 658,
+    "nationalAverageMinutes": 510,
+    "smartphoneOnlyUsers": 25,
+    "generalPopulationSmartphoneOnly": 15,
+    "smartphoneOwnership": 80,
+    "digitalVideoPenetration": 81.3,
+    "netflixAccounts": 73,
+    "socialMedia3to5Hours": 27.4
+  },
+  "culturalPreferences": {
+    "satisfactionIncreaseNativeLanguage": 72,
+    "wouldSwitchForNativeLanguage": 68,
+    "appreciateBrandsSpeakingSpanish": 90,
+    "wontBuyWithoutLanguageSupport": 40,
+    "switchDeviceLanguageMonthly": 68
+  },
+  "dialectDistribution": {
+    "mexican": 57,
+    "puertoRican": 9,
+    "cuban": 4,
+    "colombian": 3,
+    "centralAmerican": 8,
+    "other": 19
+  },
+  "growthScenarios": {
+    "conservative": {
+      "gapCapturePercent": 25,
+      "newSubscribers": 3.8,
+      "incrementalRevenue": 3.5,
+      "newMarketShare": 32.8,
+      "hispanicPercentOfBase": 13.8,
+      "revenueIncrease": 22
+    },
+    "moderate": {
+      "gapCapturePercent": 40,
+      "newSubscribers": 6.0,
+      "incrementalRevenue": 5.5,
+      "newMarketShare": 36.2,
+      "hispanicPercentOfBase": 15.2,
+      "revenueIncrease": 34
+    },
+    "aggressive": {
+      "gapCapturePercent": 60,
+      "newSubscribers": 9.0,
+      "incrementalRevenue": 8.3,
+      "newMarketShare": 40.8,
+      "hispanicPercentOfBase": 17.2,
+      "revenueIncrease": 52
+    }
+  },
+  "translationQuality": {
+    "genericSpanish": 65,
+    "dialectSpecific": {
+      "min": 88,
+      "max": 94
+    }
+  },
+  "tMobileStrategy": {
+    "culturalInvestment": 19,
+    "verizonCulturalInvestment": 0.57,
+    "fifaPartnerships": true,
+    "latinoMobileTrendsReport": true,
+    "hometownGrants": 19,
+    "lowestChurn": 0.86
+  }
+}
+
