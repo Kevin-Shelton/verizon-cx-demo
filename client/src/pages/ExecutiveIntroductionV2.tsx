@@ -1,8 +1,46 @@
 import React, { useState } from 'react';
-import { TrendingDown, TrendingUp, AlertTriangle, Target, DollarSign, Users, Globe, Zap, CheckCircle, XCircle, Info } from 'lucide-react';
+import { TrendingDown, TrendingUp, AlertTriangle, Target, DollarSign, Users, Globe, Zap, CheckCircle, XCircle, Info, ChevronDown, ChevronUp } from 'lucide-react';
 import marketData from '../../../data/hispanicMarketData.json';
 
 type ScenarioType = 'conservative' | 'moderate' | 'aggressive';
+
+interface CollapsibleSectionProps {
+  id: string;
+  title: string;
+  isExpanded: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+  defaultExpanded?: boolean;
+}
+
+const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({ 
+  id, 
+  title, 
+  isExpanded, 
+  onToggle, 
+  children 
+}) => {
+  return (
+    <div className="border border-gray-200 rounded-lg overflow-hidden">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+      >
+        <span className="font-semibold text-gray-900">{title}</span>
+        {isExpanded ? (
+          <ChevronUp className="w-5 h-5 text-gray-600" />
+        ) : (
+          <ChevronDown className="w-5 h-5 text-gray-600" />
+        )}
+      </button>
+      {isExpanded && (
+        <div className="p-6 bg-white">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
@@ -21,12 +59,25 @@ const ExecutiveIntroductionV2: React.FC = () => {
   };
 
   const expandAll = () => {
-    setExpandedSections(new Set(['tmobile-strategy', 'verizon-deficit', 'super-consumer', 'dialect-examples', 'scenario-details', 'roadmap-details', 'roi-details']));
+    setExpandedSections(new Set([
+      'tmobile-strategy', 
+      'att-infrastructure',
+      'verizon-deficit', 
+      'super-consumer-details',
+      'cultural-preferences',
+      'dialect-comparison', 
+      'dialect-distribution',
+      'end-to-end-coverage',
+      'scenario-comparison',
+      'scenario-rationale'
+    ]));
   };
 
   const collapseAll = () => {
     setExpandedSections(new Set());
   };
+
+  const isExpanded = (sectionId: string) => expandedSections.has(sectionId);
 
   const scenario = marketData.growthScenarios[selectedScenario];
 
@@ -45,14 +96,16 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <div className="ml-8 flex gap-3">
               <button
                 onClick={expandAll}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
+                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
               >
+                <ChevronDown className="w-4 h-4" />
                 Expand All
               </button>
               <button
                 onClick={collapseAll}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
+                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
               >
+                <ChevronUp className="w-4 h-4" />
                 Collapse All
               </button>
             </div>
@@ -230,149 +283,214 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-900">Why T-Mobile is Winning</h1>
           </div>
 
-          {/* T-Mobile Strategy */}
-          <div className="bg-purple-50 border-l-4 border-purple-600 rounded-lg p-8 mb-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">T-Mobile's Winning Playbook</h3>
-            
-            <div className="grid grid-cols-2 gap-6 mb-6">
-              <div className="bg-white rounded-lg p-5 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Cultural Positioning</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• FIFA partnerships, Latino artists</li>
-                      <li>• "Leading provider for Latinos"</li>
-                      <li>• Latino Mobile Trends Report</li>
-                    </ul>
+          {/* T-Mobile Strategy - Collapsible */}
+          <div className="mb-6">
+            <CollapsibleSection
+              id="tmobile-strategy"
+              title="T-Mobile's Winning Playbook: How They Captured 50.2% Market Share"
+              isExpanded={isExpanded('tmobile-strategy')}
+              onToggle={() => toggleSection('tmobile-strategy')}
+            >
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Cultural Positioning</h4>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• FIFA partnerships, Latino artists</li>
+                        <li>• "Leading provider for Latinos"</li>
+                        <li>• Latino Mobile Trends Report</li>
+                        <li>• Authentic cultural engagement</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Value Proposition</h4>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Consumer-friendly pricing</li>
+                        <li>• Targets lower median income demo</li>
+                        <li>• Transparent, simple plans</li>
+                        <li>• Family plan incentives</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Community Investment</h4>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• ${marketData.tMobileStrategy.hometownGrants}M+ Hometown Grants</li>
+                        <li>• Friday Night 5G Lights</li>
+                        <li>• Hispanic community programs</li>
+                        <li>• Local market activation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Loyalty Programs</h4>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Stateside International Talk</li>
+                        <li>• Matricula consular program</li>
+                        <li>• T-Mobile Tuesdays rewards</li>
+                        <li>• International roaming benefits</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-5 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+              <div className="bg-purple-100 rounded-lg p-4">
+                <div className="grid grid-cols-4 gap-4 text-center">
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Value Proposition</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Consumer-friendly pricing</li>
-                      <li>• Targets lower median income demo</li>
-                      <li>• Transparent, simple plans</li>
-                    </ul>
+                    <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.hispanicPercentOfBase}%+</div>
+                    <div className="text-xs text-purple-600 mt-1">Hispanic % of Base</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.churnRate}%</div>
+                    <div className="text-xs text-purple-600 mt-1">Lowest Churn Rate</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-purple-700">+{marketData.competitiveLandscape.tMobile.netAdds2024}M</div>
+                    <div className="text-xs text-purple-600 mt-1">2024 Net Adds</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-purple-700">#1</div>
+                    <div className="text-xs text-purple-600 mt-1">Customer Satisfaction</div>
                   </div>
                 </div>
               </div>
-
-              <div className="bg-white rounded-lg p-5 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Community Investment</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• ${marketData.tMobileStrategy.hometownGrants}M+ Hometown Grants</li>
-                      <li>• Friday Night 5G Lights</li>
-                      <li>• Hispanic community programs</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-lg p-5 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Loyalty Programs</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Stateside International Talk</li>
-                      <li>• Matricula consular program</li>
-                      <li>• Family plan incentives</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-purple-100 rounded-lg p-4">
-              <div className="grid grid-cols-4 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.hispanicPercentOfBase}%+</div>
-                  <div className="text-xs text-purple-600 mt-1">Hispanic % of Base</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.churnRate}%</div>
-                  <div className="text-xs text-purple-600 mt-1">Lowest Churn Rate</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-700">+{marketData.competitiveLandscape.tMobile.netAdds2024}M</div>
-                  <div className="text-xs text-purple-600 mt-1">2024 Net Adds</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-700">#1</div>
-                  <div className="text-xs text-purple-600 mt-1">Customer Satisfaction</div>
-                </div>
-              </div>
-            </div>
+            </CollapsibleSection>
           </div>
 
-          {/* Verizon's Deficit */}
-          <div className="bg-red-50 border-l-4 border-red-600 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Verizon's Strategic Deficit</h3>
-            
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">No dedicated bilingual store network</span>
-                  <div className="text-sm text-gray-600">vs AT&T's 770+ bilingual stores</div>
+          {/* AT&T Infrastructure - Collapsible */}
+          <div className="mb-6">
+            <CollapsibleSection
+              id="att-infrastructure"
+              title="AT&T's Infrastructure Moat: 25+ Years of Bilingual Investment"
+              isExpanded={isExpanded('att-infrastructure')}
+              onToggle={() => toggleSection('att-infrastructure')}
+            >
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                  <h4 className="font-bold text-gray-900 mb-3">Physical Infrastructure</h4>
+                  <ul className="text-sm text-gray-700 space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span><strong>770+ bilingual stores</strong> (established since 2006)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span><strong>22 Spanish call centers</strong> (25+ years of operation)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span>Dedicated bilingual staff nationwide</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                  <h4 className="font-bold text-gray-900 mb-3">Market Position</h4>
+                  <ul className="text-sm text-gray-700 space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span><strong>$14.1B annual Hispanic revenue</strong></span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span><strong>20.1% market share</strong> (13.0M subscribers)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <span>41.5% fiber convergence penetration</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </CollapsibleSection>
+          </div>
+
+          {/* Verizon's Deficit - Collapsible */}
+          <div className="mb-6">
+            <CollapsibleSection
+              id="verizon-deficit"
+              title="Verizon's Strategic Deficit: Why We're Losing"
+              isExpanded={isExpanded('verizon-deficit')}
+              onToggle={() => toggleSection('verizon-deficit')}
+            >
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">No dedicated bilingual store network</span>
+                    <div className="text-sm text-gray-600">vs AT&T's 770+ bilingual stores</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">No Spanish call center footprint</span>
+                    <div className="text-sm text-gray-600">vs AT&T's 22 Spanish call centers (25+ years)</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">Only {marketData.competitiveLandscape.verizon.hispanicPercentOfBase}% Hispanic customer base</span>
+                    <div className="text-sm text-gray-600">Half of T-Mobile's 25%+ penetration</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">Minimal cultural investment</span>
+                    <div className="text-sm text-gray-600">${marketData.tMobileStrategy.verizonCulturalInvestment}M vs T-Mobile's ${marketData.tMobileStrategy.culturalInvestment}M</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">Generic Spanish only</span>
+                    <div className="text-sm text-gray-600">No dialect-specific support</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
+                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-700">
+                    <span className="font-semibold">Weak subscriber growth</span>
+                    <div className="text-sm text-gray-600">+{marketData.competitiveLandscape.verizon.netAdds2024}M vs T-Mobile's +{marketData.competitiveLandscape.tMobile.netAdds2024}M (2024)</div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">No Spanish call center footprint</span>
-                  <div className="text-sm text-gray-600">vs AT&T's 22 Spanish call centers (25+ years)</div>
+              <div className="bg-red-100 rounded-lg p-4 text-center border-2 border-red-300">
+                <div className="text-lg font-bold text-red-700">
+                  Result: {marketData.competitiveLandscape.verizon.marketShare}% market share despite being the largest U.S. carrier
+                </div>
+                <div className="text-sm text-red-600 mt-2">
+                  Investment gap: ${marketData.tMobileStrategy.verizonCulturalInvestment}M vs T-Mobile's ${marketData.tMobileStrategy.culturalInvestment}M (33x difference)
                 </div>
               </div>
-
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">Only {marketData.competitiveLandscape.verizon.hispanicPercentOfBase}% Hispanic customer base</span>
-                  <div className="text-sm text-gray-600">Half of T-Mobile's 25%+ penetration</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">Minimal cultural investment</span>
-                  <div className="text-sm text-gray-600">${marketData.tMobileStrategy.verizonCulturalInvestment}M vs T-Mobile's ${marketData.tMobileStrategy.culturalInvestment}M</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">Generic Spanish only</span>
-                  <div className="text-sm text-gray-600">No dialect-specific support</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                <div className="text-gray-700">
-                  <span className="font-semibold">Weak subscriber growth</span>
-                  <div className="text-sm text-gray-600">+{marketData.competitiveLandscape.verizon.netAdds2024}M vs T-Mobile's +{marketData.competitiveLandscape.tMobile.netAdds2024}M (2024)</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-red-100 rounded-lg p-4 text-center">
-              <div className="text-lg font-bold text-red-700">
-                Result: {marketData.competitiveLandscape.verizon.marketShare}% market share despite being the largest U.S. carrier
-              </div>
-            </div>
+            </CollapsibleSection>
           </div>
         </section>
 
@@ -383,12 +501,12 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-900">The Hispanic "Super Consumer"</h1>
           </div>
 
-          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 rounded-lg p-8">
+          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 rounded-lg p-8 mb-6">
             <p className="text-lg text-gray-700 mb-6">
               Hispanics are the most mobile-engaged demographic in the U.S., with significantly higher usage across all metrics.
             </p>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-6 mb-6">
               <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="text-4xl font-bold text-orange-600 mb-2">{marketData.superConsumerMetrics.hoursPerWeekOnSmartphone}+</div>
                 <div className="text-sm text-gray-600 mb-1">Hours/Week on Smartphone</div>
@@ -425,29 +543,57 @@ const ExecutiveIntroductionV2: React.FC = () => {
                 <div className="text-xs text-orange-600 font-medium">Mobile-first generation</div>
               </div>
             </div>
+          </div>
 
-            <div className="mt-6 bg-orange-100 rounded-lg p-4">
-              <h4 className="font-bold text-gray-900 mb-3">Cultural & Language Preferences Drive Loyalty:</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-bold text-orange-700">{marketData.culturalPreferences.satisfactionIncreaseNativeLanguage}%</div>
-                  <div className="text-sm text-gray-700">satisfaction increase with native language service</div>
+          {/* Cultural Preferences - Collapsible */}
+          <CollapsibleSection
+            id="cultural-preferences"
+            title="Cultural & Language Preferences Drive Loyalty and Switching Behavior"
+            isExpanded={isExpanded('cultural-preferences')}
+            onToggle={() => toggleSection('cultural-preferences')}
+          >
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-orange-50 rounded-lg p-5 border border-orange-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-3xl font-bold text-orange-700">{marketData.culturalPreferences.satisfactionIncreaseNativeLanguage}%</div>
+                  <div className="text-sm text-gray-700 flex-1">satisfaction increase with native language service</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-bold text-orange-700">{marketData.culturalPreferences.wouldSwitchForNativeLanguage}%</div>
-                  <div className="text-sm text-gray-700">would switch for native language support</div>
+                <p className="text-xs text-gray-600">Source: Accenture Language Services Study</p>
+              </div>
+
+              <div className="bg-orange-50 rounded-lg p-5 border border-orange-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-3xl font-bold text-orange-700">{marketData.culturalPreferences.wouldSwitchForNativeLanguage}%</div>
+                  <div className="text-sm text-gray-700 flex-1">would switch to competitor for native language support</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-bold text-orange-700">{marketData.culturalPreferences.appreciateBrandsSpeakingSpanish}%</div>
-                  <div className="text-sm text-gray-700">appreciate brands speaking Spanish</div>
+                <p className="text-xs text-gray-600">Source: Common Sense Advisory (CSA Research)</p>
+              </div>
+
+              <div className="bg-orange-50 rounded-lg p-5 border border-orange-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-3xl font-bold text-orange-700">{marketData.culturalPreferences.appreciateBrandsSpeakingSpanish}%</div>
+                  <div className="text-sm text-gray-700 flex-1">appreciate when brands speak Spanish</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-bold text-orange-700">{marketData.culturalPreferences.wontBuyWithoutLanguageSupport}%</div>
-                  <div className="text-sm text-gray-700">won't buy from companies not speaking their language</div>
+                <p className="text-xs text-gray-600">Source: Nielsen Hispanic Consumer Study</p>
+              </div>
+
+              <div className="bg-orange-50 rounded-lg p-5 border border-orange-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-3xl font-bold text-orange-700">{marketData.culturalPreferences.wontBuyWithoutLanguageSupport}%</div>
+                  <div className="text-sm text-gray-700 flex-1">won't buy from companies not speaking their language</div>
                 </div>
+                <p className="text-xs text-gray-600">Source: CSA Research Global Survey</p>
               </div>
             </div>
-          </div>
+
+            <div className="mt-6 bg-orange-100 rounded-lg p-4 border border-orange-300">
+              <h4 className="font-bold text-gray-900 mb-2">Key Insight:</h4>
+              <p className="text-sm text-gray-700">
+                Language preference is not just about convenience—it's a powerful driver of brand loyalty, customer satisfaction, and switching behavior. 
+                <strong className="text-orange-700"> 68% switching intent</strong> represents massive competitive vulnerability for carriers offering only generic Spanish.
+              </p>
+            </div>
+          </CollapsibleSection>
         </section>
 
         {/* Section 4: The Differentiation Opportunity */}
@@ -457,141 +603,209 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-8">
+          <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-8 mb-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Dialect-Specific Translation: Verizon's Competitive Moat</h3>
 
-            {/* Comparison */}
-            <div className="grid grid-cols-2 gap-6 mb-6">
-              {/* Current State */}
-              <div className="bg-gray-100 rounded-lg p-6 border-2 border-gray-300">
-                <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-gray-600" />
-                  ALL CARRIERS TODAY (Generic Spanish)
-                </h4>
-                <div className="space-y-2 text-sm text-gray-700">
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400">•</span>
-                    <span><span className="font-semibold">{marketData.translationQuality.genericSpanish}%</span> translation quality</span>
+            {/* Comparison - Collapsible */}
+            <div className="mb-6">
+              <CollapsibleSection
+                id="dialect-comparison"
+                title="Generic Spanish vs Dialect-Specific Translation: The Quality Gap"
+                isExpanded={isExpanded('dialect-comparison')}
+                onToggle={() => toggleSection('dialect-comparison')}
+              >
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  {/* Current State */}
+                  <div className="bg-gray-100 rounded-lg p-6 border-2 border-gray-300">
+                    <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                      <XCircle className="w-5 h-5 text-gray-600" />
+                      ALL CARRIERS TODAY (Generic Spanish)
+                    </h4>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <div className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span><span className="font-semibold">{marketData.translationQuality.genericSpanish}%</span> translation quality</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>One-size-fits-all approach</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>No dialect recognition<br/><span className="text-xs">(Mexican = Puerto Rican = Colombian = Cuban)</span></span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>Limited cultural context</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>Customers feel like an afterthought</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400">•</span>
-                    <span>One-size-fits-all approach</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400">•</span>
-                    <span>No dialect recognition<br/><span className="text-xs">(Mexican = Puerto Rican = Colombian = Cuban)</span></span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400">•</span>
-                    <span>Limited cultural context</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-gray-400">•</span>
-                    <span>Customers feel like an afterthought</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Verizon's Opportunity */}
-              <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg p-6 border-2 border-blue-400">
-                <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-blue-600" />
-                  VERIZON'S COMPETITIVE MOAT (Dialect-Specific)
-                </h4>
-                <div className="space-y-2 text-sm text-gray-700">
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-600">✓</span>
-                    <span><span className="font-semibold">{marketData.translationQuality.dialectSpecific.min}-{marketData.translationQuality.dialectSpecific.max}%</span> translation quality</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-600">✓</span>
-                    <span>Personalized by origin/preference</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-600">✓</span>
-                    <span>Dialect recognition:<br/>
-                      <span className="text-xs ml-4">- Mexican Spanish ({marketData.dialectDistribution.mexican}% of market)</span><br/>
-                      <span className="text-xs ml-4">- Puerto Rican Spanish ({marketData.dialectDistribution.puertoRican}% of market)</span><br/>
-                      <span className="text-xs ml-4">- Colombian, Cuban, Central American variants</span>
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-600">✓</span>
-                    <span>Cultural context (idioms, formality, expressions)</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-600">✓</span>
-                    <span>Customers feel understood and valued</span>
+                  {/* Verizon's Opportunity */}
+                  <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg p-6 border-2 border-blue-400">
+                    <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-600" />
+                      VERIZON'S COMPETITIVE MOAT (Dialect-Specific)
+                    </h4>
+                    <div className="space-y-2 text-sm text-gray-700">
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-600">✓</span>
+                        <span><span className="font-semibold">{marketData.translationQuality.dialectSpecific.min}-{marketData.translationQuality.dialectSpecific.max}%</span> translation quality</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-600">✓</span>
+                        <span>Personalized by origin/preference</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-600">✓</span>
+                        <span>Dialect recognition:<br/>
+                          <span className="text-xs ml-4">- Mexican Spanish ({marketData.dialectDistribution.mexican}% of market)</span><br/>
+                          <span className="text-xs ml-4">- Puerto Rican Spanish ({marketData.dialectDistribution.puertoRican}% of market)</span><br/>
+                          <span className="text-xs ml-4">- Colombian, Cuban, Central American variants</span>
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-600">✓</span>
+                        <span>Cultural context (idioms, formality, expressions)</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-blue-600">✓</span>
+                        <span>Customers feel understood and valued</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                {/* Why This is a Moat */}
+                <div className="bg-blue-100 rounded-lg p-6 border border-blue-300">
+                  <h4 className="font-bold text-gray-900 mb-3">Why This is a Defensible Competitive Moat:</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-700"><span className="font-semibold">First-mover advantage</span> in telecom (no major carrier offers this)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-700"><span className="font-semibold">Difficult to replicate</span> quickly (12-18 months for competitors)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-700"><span className="font-semibold">Builds deep loyalty</span> through cultural authenticity</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-700"><span className="font-semibold">Aligns with premium brand</span> positioning</span>
+                    </div>
+                  </div>
+                </div>
+              </CollapsibleSection>
             </div>
 
-            {/* Why This is a Moat */}
-            <div className="bg-blue-100 rounded-lg p-6">
-              <h4 className="font-bold text-gray-900 mb-3">Why This is a Defensible Competitive Moat:</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-700"><span className="font-semibold">First-mover advantage</span> in telecom (no major carrier offers this)</span>
+            {/* Dialect Distribution - Collapsible */}
+            <div className="mb-6">
+              <CollapsibleSection
+                id="dialect-distribution"
+                title="U.S. Hispanic Market Dialect Distribution"
+                isExpanded={isExpanded('dialect-distribution')}
+                onToggle={() => toggleSection('dialect-distribution')}
+              >
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.mexican}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Mexican Spanish</div>
+                    <div className="text-xs text-gray-500">~36.8M people</div>
+                  </div>
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.puertoRican}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Puerto Rican Spanish</div>
+                    <div className="text-xs text-gray-500">~5.8M people</div>
+                  </div>
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.centralAmerican}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Central American</div>
+                    <div className="text-xs text-gray-500">~5.2M people</div>
+                  </div>
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.cuban}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Cuban Spanish</div>
+                    <div className="text-xs text-gray-500">~2.6M people</div>
+                  </div>
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.colombian}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Colombian Spanish</div>
+                    <div className="text-xs text-gray-500">~1.9M people</div>
+                  </div>
+                  <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700 mb-1">{marketData.dialectDistribution.other}%</div>
+                    <div className="text-sm text-gray-600 mb-2">Other Dialects</div>
+                    <div className="text-xs text-gray-500">~12.3M people</div>
+                  </div>
                 </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-700"><span className="font-semibold">Difficult to replicate</span> quickly (12-18 months for competitors)</span>
+                <div className="mt-4 bg-blue-50 rounded-lg p-4 border border-blue-200">
+                  <p className="text-sm text-gray-700">
+                    <strong>Strategic Implication:</strong> Mexican Spanish should be prioritized in Phase 1 deployment (57% of market), 
+                    followed by Puerto Rican (9%) and Central American (8%) variants in Phase 2.
+                  </p>
                 </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-700"><span className="font-semibold">Builds deep loyalty</span> through cultural authenticity</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-700"><span className="font-semibold">Aligns with premium brand</span> positioning</span>
-                </div>
-              </div>
+              </CollapsibleSection>
             </div>
 
-            {/* End-to-End Coverage */}
-            <div className="mt-6 bg-white rounded-lg p-6 shadow-md">
-              <h4 className="font-bold text-gray-900 mb-3">End-to-End Dialect-Specific Coverage:</h4>
+            {/* End-to-End Coverage - Collapsible */}
+            <CollapsibleSection
+              id="end-to-end-coverage"
+              title="End-to-End Dialect-Specific Coverage Across All Customer Touchpoints"
+              isExpanded={isExpanded('end-to-end-coverage')}
+              onToggle={() => toggleSection('end-to-end-coverage')}
+            >
               <div className="grid grid-cols-3 gap-3 text-sm">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Account Management & Billing</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Customer Service (Voice, Chat, Email)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Product Documentation</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Mobile App Interface</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Website Content</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Support Articles & FAQs</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>IVR (Voice Response)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>In-Store Materials</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-600" />
+                <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
+                  <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                   <span>Field Service Communications</span>
                 </div>
               </div>
-            </div>
+              <div className="mt-4 bg-blue-100 rounded-lg p-4 border border-blue-300">
+                <p className="text-sm text-gray-700">
+                  <strong>Seamless Experience:</strong> Dialect-specific translation across every touchpoint creates a consistent, 
+                  culturally authentic experience that builds trust and loyalty—something no competitor currently offers.
+                </p>
+              </div>
+            </CollapsibleSection>
           </div>
         </section>
 
@@ -610,17 +824,17 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-gray-700 font-semibold">Select Scenario:</span>
                 <div className="flex gap-3">
-                  {(['conservative', 'moderate', 'aggressive'] as ScenarioType[]).map((scenario) => (
+                  {(['conservative', 'moderate', 'aggressive'] as ScenarioType[]).map((scenarioKey) => (
                     <button
-                      key={scenario}
-                      onClick={() => setSelectedScenario(scenario)}
+                      key={scenarioKey}
+                      onClick={() => setSelectedScenario(scenarioKey)}
                       className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                        selectedScenario === scenario
+                        selectedScenario === scenarioKey
                           ? 'bg-green-600 text-white shadow-md'
                           : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-green-400'
                       }`}
                     >
-                      {scenario.charAt(0).toUpperCase() + scenario.slice(1)}
+                      {scenarioKey.charAt(0).toUpperCase() + scenarioKey.slice(1)}
                     </button>
                   ))}
                 </div>
@@ -674,54 +888,105 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </div>
             </div>
 
-            {/* Scenario Comparison Table */}
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h4 className="font-bold text-gray-900 mb-4">Scenario Comparison (5-Year Impact)</h4>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b-2 border-gray-300">
-                      <th className="text-left py-3 px-4 text-gray-700">Metric</th>
-                      <th className="text-center py-3 px-4 text-gray-700">Conservative</th>
-                      <th className="text-center py-3 px-4 text-gray-700 bg-green-50">Moderate</th>
-                      <th className="text-center py-3 px-4 text-gray-700">Aggressive</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 px-4 text-gray-700">% of Gap Captured</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.gapCapturePercent}%</td>
-                      <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.gapCapturePercent}%</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.gapCapturePercent}%</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 px-4 text-gray-700">New Subscribers</td>
-                      <td className="text-center py-3 px-4">+{marketData.growthScenarios.conservative.newSubscribers}M</td>
-                      <td className="text-center py-3 px-4 bg-green-50 font-semibold">+{marketData.growthScenarios.moderate.newSubscribers}M</td>
-                      <td className="text-center py-3 px-4">+{marketData.growthScenarios.aggressive.newSubscribers}M</td>
-                    </tr>
-                    <tr className="border-b border-gray-200 bg-green-100">
-                      <td className="py-3 px-4 text-gray-900 font-bold">Incremental Annual Revenue</td>
-                      <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.conservative.incrementalRevenue}B</td>
-                      <td className="text-center py-3 px-4 bg-green-200 font-bold text-green-800">${marketData.growthScenarios.moderate.incrementalRevenue}B</td>
-                      <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.aggressive.incrementalRevenue}B</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 px-4 text-gray-700">New Market Share</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.newMarketShare}%</td>
-                      <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.newMarketShare}%</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.newMarketShare}%</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-3 px-4 text-gray-700">Hispanic % of Base</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.hispanicPercentOfBase}%</td>
-                      <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.hispanicPercentOfBase}%</td>
-                      <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.hispanicPercentOfBase}%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            {/* Scenario Comparison - Collapsible */}
+            <div className="mb-6">
+              <CollapsibleSection
+                id="scenario-comparison"
+                title="Scenario Comparison: 5-Year Financial Impact"
+                isExpanded={isExpanded('scenario-comparison')}
+                onToggle={() => toggleSection('scenario-comparison')}
+              >
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b-2 border-gray-300">
+                        <th className="text-left py-3 px-4 text-gray-700">Metric</th>
+                        <th className="text-center py-3 px-4 text-gray-700">Conservative</th>
+                        <th className="text-center py-3 px-4 text-gray-700 bg-green-50">Moderate</th>
+                        <th className="text-center py-3 px-4 text-gray-700">Aggressive</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-gray-200">
+                        <td className="py-3 px-4 text-gray-700">% of Gap Captured</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.gapCapturePercent}%</td>
+                        <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.gapCapturePercent}%</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.gapCapturePercent}%</td>
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="py-3 px-4 text-gray-700">New Subscribers</td>
+                        <td className="text-center py-3 px-4">+{marketData.growthScenarios.conservative.newSubscribers}M</td>
+                        <td className="text-center py-3 px-4 bg-green-50 font-semibold">+{marketData.growthScenarios.moderate.newSubscribers}M</td>
+                        <td className="text-center py-3 px-4">+{marketData.growthScenarios.aggressive.newSubscribers}M</td>
+                      </tr>
+                      <tr className="border-b border-gray-200 bg-green-100">
+                        <td className="py-3 px-4 text-gray-900 font-bold">Incremental Annual Revenue</td>
+                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.conservative.incrementalRevenue}B</td>
+                        <td className="text-center py-3 px-4 bg-green-200 font-bold text-green-800">${marketData.growthScenarios.moderate.incrementalRevenue}B</td>
+                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.aggressive.incrementalRevenue}B</td>
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="py-3 px-4 text-gray-700">New Market Share</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.newMarketShare}%</td>
+                        <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.newMarketShare}%</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.newMarketShare}%</td>
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="py-3 px-4 text-gray-700">Hispanic % of Base</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.conservative.hispanicPercentOfBase}%</td>
+                        <td className="text-center py-3 px-4 bg-green-50 font-semibold">{marketData.growthScenarios.moderate.hispanicPercentOfBase}%</td>
+                        <td className="text-center py-3 px-4">{marketData.growthScenarios.aggressive.hispanicPercentOfBase}%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </CollapsibleSection>
             </div>
+
+            {/* Scenario Rationale - Collapsible */}
+            <CollapsibleSection
+              id="scenario-rationale"
+              title="Scenario Assumptions & Rationale"
+              isExpanded={isExpanded('scenario-rationale')}
+              onToggle={() => toggleSection('scenario-rationale')}
+            >
+              <div className="space-y-4">
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-300">
+                  <h4 className="font-bold text-gray-900 mb-2">Conservative (25% gap capture)</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Modest execution with limited investment</li>
+                    <li>• Strong competitive response from T-Mobile/AT&T</li>
+                    <li>• Slower rollout (3-4 years to full deployment)</li>
+                    <li>• Limited marketing investment</li>
+                    <li>• Achieves {marketData.growthScenarios.conservative.newMarketShare}% market share</li>
+                  </ul>
+                </div>
+
+                <div className="bg-green-50 rounded-lg p-5 border border-green-300">
+                  <h4 className="font-bold text-gray-900 mb-2">Moderate (40% gap capture) - Recommended</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Balanced execution with standard investment</li>
+                    <li>• Normal competitive dynamics</li>
+                    <li>• Phased rollout (2-3 years to full deployment)</li>
+                    <li>• Standard marketing investment</li>
+                    <li>• Achieves {marketData.growthScenarios.moderate.newMarketShare}% market share</li>
+                    <li>• <strong>Most realistic baseline for planning</strong></li>
+                  </ul>
+                </div>
+
+                <div className="bg-blue-50 rounded-lg p-5 border border-blue-300">
+                  <h4 className="font-bold text-gray-900 mb-2">Aggressive (60% gap capture)</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Superior execution with heavy investment</li>
+                    <li>• Weak competitive response (12-18 month lag)</li>
+                    <li>• Rapid rollout (12-18 months to full deployment)</li>
+                    <li>• Heavy marketing investment</li>
+                    <li>• Achieves {marketData.growthScenarios.aggressive.newMarketShare}% market share</li>
+                    <li>• <strong>Achievable with strong executive commitment</strong></li>
+                  </ul>
+                </div>
+              </div>
+            </CollapsibleSection>
           </div>
         </section>
 
