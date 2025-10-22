@@ -110,6 +110,7 @@ function ImpactCard({ title, value, subtitle, detail, color, icon, insights }: I
 export default function ExecutiveIntroductionImpact() {
   const [showMarketStory, setShowMarketStory] = useState(false);
   const [show3YearPlan, setShow3YearPlan] = useState(false);
+  const [showAllInsights, setShowAllInsights] = useState(false);
 
   const impactMetrics: InsightProps[] = [
     {
@@ -182,6 +183,27 @@ export default function ExecutiveIntroductionImpact() {
       </div>
 
       <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+        {/* Quick Summary for Executives */}
+        <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="text-sm text-gray-700">
+                <strong>Executive Summary:</strong> Grow from 39% to 50% market share over 3 years, capturing $2.8B incremental revenue from the $25B U.S. Spanish-speaking telecom market through dialect-specific multilingual CX differentiation.
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                const newState = !showAllInsights;
+                setShow3YearPlan(newState);
+                setShowMarketStory(newState);
+              }}
+              className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-semibold whitespace-nowrap"
+            >
+              {showAllInsights || show3YearPlan || showMarketStory ? "Collapse All" : "Expand All Details"}
+            </button>
+          </div>
+        </div>
+
         {/* Main Impact Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {impactMetrics.map((metric, index) => (
