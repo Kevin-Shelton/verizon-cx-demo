@@ -32,10 +32,10 @@ export default function ExecutiveIntroduction() {
               Multilingual CX Transformation
             </h1>
             <p className="text-2xl text-red-100 mb-2">
-              Unlocking $28.9B Market Opportunity Through Dialect-Specific Customer Engagement
+              Capturing the $25B U.S. Spanish-Speaking Telecom Market
             </p>
             <p className="text-lg text-red-200 mb-2">
-              $3.9B from existing customers + $25B net new market expansion
+              $3.9B value unlock from existing customers + $15.3B net new market expansion
             </p>
             <p className="text-sm text-red-200 mb-8 italic">
               Presented by Invictus
@@ -75,27 +75,42 @@ export default function ExecutiveIntroduction() {
           
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
             {/* Total Opportunity Headline */}
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-6 border-2 border-green-400">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-6 border-2 border-blue-400">
               <div className="text-center">
-                <div className="text-5xl font-bold text-gray-900 mb-2">$28.9B</div>
-                <div className="text-xl font-semibold text-gray-700 mb-3">Total Market Opportunity</div>
-                <div className="flex justify-center gap-8 text-sm">
-                  <div>
-                    <div className="text-2xl font-bold text-green-600">$3.9B</div>
-                    <div className="text-gray-600">Existing Customer Value
+                <div className="text-5xl font-bold text-gray-900 mb-2">$25B</div>
+                <div className="text-xl font-semibold text-gray-700 mb-1">Total Addressable Market
+                  <SourceTooltip 
+                    source="U.S. Census Bureau (2023), Selig Center" 
+                    detail="62M Hispanic consumers, $1.9T purchasing power, 11.9% telecom penetration" 
+                  />
+                </div>
+                <div className="text-sm text-gray-600 mb-4">U.S. Spanish-Speaking Telecom Market</div>
+                
+                <div className="grid grid-cols-3 gap-4 mt-4 text-sm">
+                  <div className="bg-white rounded-lg p-3 border border-gray-300">
+                    <div className="text-xl font-bold text-gray-700">$9.7B</div>
+                    <div className="text-gray-600 text-xs">Current Position
                       <SourceTooltip 
-                        source="Invictus Market Analysis" 
-                        detail="$1.5B premium pricing + $0.4B churn reduction + $2.0B market recovery" 
+                        source="Verizon Q4 2024 Earnings" 
+                        detail="17.4M Hispanic customers generating $9.7B annually" 
                       />
                     </div>
                   </div>
-                  <div className="text-3xl text-gray-400">+</div>
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">$25.0B</div>
-                    <div className="text-gray-600">Net New Market TAM
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-400">
+                    <div className="text-xl font-bold text-green-700">$3.9B</div>
+                    <div className="text-gray-600 text-xs">Value Unlock
                       <SourceTooltip 
-                        source="U.S. Census Bureau (2023), Selig Center" 
-                        detail="62M Hispanic consumers, $1.9T purchasing power, 11.9% telecom penetration" 
+                        source="Invictus Market Analysis" 
+                        detail="$1.5B premium + $0.4B churn + $2.0B recovery from existing customers" 
+                      />
+                    </div>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-400">
+                    <div className="text-xl font-bold text-blue-700">$15.3B</div>
+                    <div className="text-gray-600 text-xs">Net New Market
+                      <SourceTooltip 
+                        source="Calculated: $25B TAM - $9.7B current" 
+                        detail="Remaining market share to capture from competitors" 
                       />
                     </div>
                   </div>
@@ -104,15 +119,15 @@ export default function ExecutiveIntroduction() {
             </div>
 
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              Verizon's <strong>17.4 million Hispanic customers</strong>
+              The <strong className="text-blue-600">$25 billion U.S. Spanish-speaking telecom market</strong>
+              <SourceTooltip 
+                source="U.S. Census Bureau (2023), Selig Center" 
+                detail="62M Hispanic consumers, $1.9T purchasing power, 11.9% telecom penetration" 
+              /> represents a massive opportunity. Verizon currently holds <strong>$9.7 billion</strong>
               <SourceTooltip 
                 source="Verizon Q4 2024 Earnings Report" 
-                detail="11.9% of 146.1M total wireless connections" 
-              /> generate <strong>$9.7 billion annually</strong>
-              <SourceTooltip 
-                source="Verizon Q4 2024 Earnings Report" 
-                detail="17.4M customers × $139.77 ARPA × 12 months = $9.72B" 
-              />, 
+                detail="17.4M Hispanic customers × $139.77 ARPA × 12 months" 
+              /> (39% market share), 
               yet <strong className="text-red-600">68% would switch to competitors</strong>
               <SourceTooltip 
                 source="Common Sense Advisory: Can't Read, Won't Buy (2020)" 
@@ -123,19 +138,19 @@ export default function ExecutiveIntroduction() {
                 source="Calculated: $9.7B × 68% switching risk" 
                 detail="Revenue at risk from language-driven customer switching" 
               />. With market share 
-              declining from 39% to 36%
+              declining to 36%
               <SourceTooltip 
                 source="U.S. Wireless Market Share Analysis (2023-2024)" 
                 detail="Verizon market share trend in Hispanic segment" 
-              />, multilingual differentiation could recapture lost ground while 
-              unlocking <strong className="text-green-600">$3.9 billion in annual value</strong>
+              />, dialect-specific multilingual CX could 
+              unlock <strong className="text-green-600">$3.9 billion in additional value</strong>
               <SourceTooltip 
                 source="Invictus Market Analysis" 
                 detail="$1.5B premium pricing + $0.4B churn reduction + $2.0B market recovery" 
-              /> from existing customers, plus access to a <strong className="text-blue-600">$25 billion net new market</strong>
+              /> from existing customers while positioning Verizon to capture the <strong className="text-blue-600">$15.3 billion remaining market</strong>
               <SourceTooltip 
-                source="U.S. Census Bureau (2023), Selig Center" 
-                detail="62M Hispanic consumers with $1.9T purchasing power" 
+                source="Calculated: $25B TAM - $9.7B current position" 
+                detail="Net new market opportunity from competitors" 
               />.
             </p>
 
