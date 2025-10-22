@@ -32,7 +32,10 @@ export default function ExecutiveIntroduction() {
               Multilingual CX Transformation
             </h1>
             <p className="text-2xl text-red-100 mb-2">
-              Unlocking $3.87B in Annual Value Through Dialect-Specific Customer Engagement
+              Unlocking $28.9B Market Opportunity Through Dialect-Specific Customer Engagement
+            </p>
+            <p className="text-lg text-red-200 mb-2">
+              $3.9B from existing customers + $25B net new market expansion
             </p>
             <p className="text-sm text-red-200 mb-8 italic">
               Presented by Invictus
@@ -71,12 +74,41 @@ export default function ExecutiveIntroduction() {
           </div>
           
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+            {/* Total Opportunity Headline */}
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-6 border-2 border-green-400">
+              <div className="text-center">
+                <div className="text-5xl font-bold text-gray-900 mb-2">$28.9B</div>
+                <div className="text-xl font-semibold text-gray-700 mb-3">Total Market Opportunity</div>
+                <div className="flex justify-center gap-8 text-sm">
+                  <div>
+                    <div className="text-2xl font-bold text-green-600">$3.9B</div>
+                    <div className="text-gray-600">Existing Customer Value
+                      <SourceTooltip 
+                        source="Invictus Market Analysis" 
+                        detail="$1.5B premium pricing + $0.4B churn reduction + $2.0B market recovery" 
+                      />
+                    </div>
+                  </div>
+                  <div className="text-3xl text-gray-400">+</div>
+                  <div>
+                    <div className="text-2xl font-bold text-blue-600">$25.0B</div>
+                    <div className="text-gray-600">Net New Market TAM
+                      <SourceTooltip 
+                        source="U.S. Census Bureau (2023), Selig Center" 
+                        detail="62M Hispanic consumers, $1.9T purchasing power, 11.9% telecom penetration" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
               Verizon's <strong>17.4 million Hispanic customers</strong>
               <SourceTooltip 
                 source="Verizon Q4 2024 Earnings Report" 
                 detail="11.9% of 146.1M total wireless connections" 
-              /> generate <strong>$9.72 billion annually</strong>
+              /> generate <strong>$9.7 billion annually</strong>
               <SourceTooltip 
                 source="Verizon Q4 2024 Earnings Report" 
                 detail="17.4M customers × $139.77 ARPA × 12 months = $9.72B" 
@@ -86,9 +118,9 @@ export default function ExecutiveIntroduction() {
                 source="Common Sense Advisory: Can't Read, Won't Buy (2020)" 
                 detail="Survey of 8,709 consumers across 29 countries" 
               /> offering native language 
-              support—putting <strong className="text-red-600">$6.61 billion at risk</strong>
+              support—putting <strong className="text-red-600">$6.6 billion at risk</strong>
               <SourceTooltip 
-                source="Calculated: $9.72B × 68% switching risk" 
+                source="Calculated: $9.7B × 68% switching risk" 
                 detail="Revenue at risk from language-driven customer switching" 
               />. With market share 
               declining from 39% to 36%
@@ -96,10 +128,14 @@ export default function ExecutiveIntroduction() {
                 source="U.S. Wireless Market Share Analysis (2023-2024)" 
                 detail="Verizon market share trend in Hispanic segment" 
               />, multilingual differentiation could recapture lost ground while 
-              unlocking <strong className="text-green-600">$3.87 billion in annual value</strong>
+              unlocking <strong className="text-green-600">$3.9 billion in annual value</strong>
               <SourceTooltip 
                 source="Invictus Market Analysis" 
-                detail="$1.46B premium pricing + $0.40B churn reduction + $2.01B market recovery" 
+                detail="$1.5B premium pricing + $0.4B churn reduction + $2.0B market recovery" 
+              /> from existing customers, plus access to a <strong className="text-blue-600">$25 billion net new market</strong>
+              <SourceTooltip 
+                source="U.S. Census Bureau (2023), Selig Center" 
+                detail="62M Hispanic consumers with $1.9T purchasing power" 
               />.
             </p>
 
@@ -110,13 +146,13 @@ export default function ExecutiveIntroduction() {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Revenue at Risk</h3>
                     <ul className="space-y-2 text-gray-700">
-                      <li>• $6.61B from potential customer switching
+                      <li>• $6.6B from potential customer switching
                         <SourceTooltip 
-                          source="$9.72B × 68% switching risk" 
+                          source="$9.7B × 68% switching risk" 
                           detail="Common Sense Advisory research on language-driven brand switching" 
                         />
                       </li>
-                      <li>• $797M annual churn from language barriers
+                      <li>• $0.8B annual churn from language barriers
                         <SourceTooltip 
                           source="17.4M × 1.12% monthly churn × 29% language-driven × $139.77 ARPA × 12" 
                           detail="Accenture: Language Barriers in Customer Service (2021)" 
@@ -128,10 +164,10 @@ export default function ExecutiveIntroduction() {
                           detail="3 percentage point decline in Hispanic segment over 18 months" 
                         />
                       </li>
-                      <li>• 12M lost customers = $2.01B opportunity
+                      <li>• 12M lost customers = $2.0B opportunity
                         <SourceTooltip 
                           source="3% market share × 400M addressable = 12M customers" 
-                          detail="12M × $139.77 ARPA × 12 months = $2.01B annual revenue opportunity" 
+                          detail="12M × $139.77 ARPA × 12 months = $2.0B annual revenue opportunity" 
                         />
                       </li>
                     </ul>
@@ -143,41 +179,38 @@ export default function ExecutiveIntroduction() {
                 <div className="flex items-start gap-3">
                   <Target className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-3">Growth Potential: $3.87B Annual Value</h3>
+                    <h3 className="font-semibold text-gray-900 mb-3">Existing Customer Value: $3.9B Annual</h3>
                     <div className="space-y-3 text-gray-700">
                       <div className="flex justify-between items-center">
                         <span>• Premium pricing opportunity (64% willing to pay more)
                           <SourceTooltip 
                             source="CSA Research: Can't Read, Won't Buy (2020)" 
-                            detail="17.4M × 64% × $139.77 ARPA × 12 × 5% premium = $1.46B" 
+                            detail="17.4M × 64% × $139.77 ARPA × 12 × 5% premium = $1.5B" 
                           />
                         </span>
-                        <span className="font-semibold text-green-700">$1.46B</span>
+                        <span className="font-semibold text-green-700">$1.5B</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span>• Churn reduction savings (29% reduction)
                           <SourceTooltip 
                             source="Accenture: Language Barriers in Customer Service (2021)" 
-                            detail="$797M annual churn × 50% reduction = $398.5M ≈ $0.40B" 
+                            detail="$797M annual churn × 50% reduction = $0.4B" 
                           />
                         </span>
-                        <span className="font-semibold text-green-700">$0.40B</span>
+                        <span className="font-semibold text-green-700">$0.4B</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span>• Market share recovery (12M lost customers)
                           <SourceTooltip 
                             source="Market share analysis + ARPA calculation" 
-                            detail="12M customers × $139.77 ARPA × 12 months = $2.01B" 
+                            detail="12M customers × $139.77 ARPA × 12 months = $2.0B" 
                           />
                         </span>
-                        <span className="font-semibold text-green-700">$2.01B</span>
+                        <span className="font-semibold text-green-700">$2.0B</span>
                       </div>
                       <div className="border-t-2 border-green-300 pt-2 mt-2 flex justify-between items-center">
-                        <span className="font-bold">Total Annual Value</span>
-                        <span className="text-xl font-bold text-green-700">$3.87B</span>
-                      </div>
-                      <div className="text-sm text-gray-600 italic mt-2">
-                        Plus $25B TAM in broader Spanish-speaking market
+                        <span className="font-bold">Total from Existing Customers</span>
+                        <span className="text-xl font-bold text-green-700">$3.9B</span>
                       </div>
                     </div>
                   </div>

@@ -113,53 +113,53 @@ export default function ExecutiveIntroductionImpact() {
   const impactMetrics: InsightProps[] = [
     {
       title: "Total Opportunity",
-      value: "$3.87B",
+      value: "$3.9B",
       subtitle: "Annual Value Potential",
       detail: "Full market capture",
       color: "green",
       icon: <DollarSign className="w-12 h-12 text-green-600" />,
       insights: {
-        basis: "Combined value of premium pricing ($1.46B), churn reduction ($0.40B), and market share recovery ($2.01B) across Verizon's 17.4M Hispanic customer base.",
-        calculation: "$1.46B + $0.40B + $2.01B = $3.87B annual value",
+        basis: "Combined value of premium pricing ($1.5B), churn reduction ($0.4B), and market share recovery ($2.0B) across Verizon's 17.4M Hispanic customer base.",
+        calculation: "$1.5B + $0.4B + $2.0B = $3.9B annual value",
         source: "Verizon Q4 2024 Earnings Report + U.S. Hispanic Market Analysis"
       }
     },
     {
       title: "Year 1 Projection",
-      value: "$871M",
+      value: "$0.9B",
       subtitle: "Moderate Capture",
-      detail: "22.5% of total opportunity",
+      detail: "23% of total opportunity",
       color: "blue",
       icon: <Calendar className="w-12 h-12 text-blue-600" />,
       insights: {
         basis: "8-week pilot (Q1) scaling to 35% customer coverage by year-end. Assumes 18% conversion improvement and 8% churn reduction in covered segments.",
-        calculation: "$3.87B × 35% coverage × 64% effectiveness = $871M Year 1",
+        calculation: "$3.9B × 35% coverage × 66% effectiveness = $0.9B Year 1",
         source: "Invictus Implementation Roadmap & Industry Benchmarks"
       }
     },
     {
       title: "Year 2 Projection",
-      value: "$2.13B",
+      value: "$2.1B",
       subtitle: "Broad Deployment",
-      detail: "55% of total opportunity",
+      detail: "54% of total opportunity",
       color: "purple",
       icon: <TrendingUp className="w-12 h-12 text-purple-600" />,
       insights: {
         basis: "Full deployment across all channels (Website, IVR, Chat, Email, Field). 80% customer coverage with optimized dialect-specific translation and proven conversion patterns.",
-        calculation: "$3.87B × 80% coverage × 69% effectiveness = $2.13B Year 2",
+        calculation: "$3.9B × 80% coverage × 67% effectiveness = $2.1B Year 2",
         source: "Scaled Implementation Model based on Pilot Results"
       }
     },
     {
       title: "Year 3 Projection",
-      value: "$3.48B",
+      value: "$3.5B",
       subtitle: "Full Implementation",
       detail: "90% of total opportunity",
       color: "orange",
       icon: <CheckCircle className="w-12 h-12 text-orange-600" />,
       insights: {
         basis: "Mature implementation with AI-driven personalization, 95% customer coverage, and expanded to new market segments. Includes network effects and brand reputation lift.",
-        calculation: "$3.87B × 95% coverage × 94% effectiveness = $3.48B Year 3",
+        calculation: "$3.9B × 95% coverage × 94% effectiveness = $3.5B Year 3",
         source: "Long-term Value Projection with Market Expansion"
       }
     }
@@ -199,17 +199,17 @@ export default function ExecutiveIntroductionImpact() {
               <div className="flex items-center gap-4 text-sm font-semibold text-gray-700 mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                  <span>Year 1: $871M (22.5%)</span>
+                  <span>Year 1: $0.9B (23%)</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                  <span>Year 2: $2.13B (55%)</span>
+                  <span>Year 2: $2.1B (54%)</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span>Year 3: $3.48B (90%)</span>
+                  <span>Year 3: $3.5B (90%)</span>
                 </div>
               </div>
               
@@ -234,7 +234,7 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-blue-200">
                   <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                    Year 1: Pilot + Initial Scale ($871M)
+                    Year 1: Pilot + Initial Scale ($0.9B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
@@ -252,7 +252,7 @@ export default function ExecutiveIntroductionImpact() {
                         <li>• 18% conversion improvement</li>
                         <li>• 8% churn reduction</li>
                         <li>• 64% effectiveness rate</li>
-                        <li>• ROI: 2,900x ($871M / $300K)</li>
+                        <li>• ROI: 3,000x ($0.9B / $300K)</li>
                       </ul>
                     </div>
                   </div>
@@ -261,7 +261,7 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-purple-200">
                   <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                    Year 2: Broad Deployment ($2.13B)
+                    Year 2: Broad Deployment ($2.1B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
@@ -278,7 +278,7 @@ export default function ExecutiveIntroductionImpact() {
                       <ul className="space-y-1 text-gray-600">
                         <li>• 25% conversion improvement</li>
                         <li>• 15% churn reduction</li>
-                        <li>• 69% effectiveness rate</li>
+                        <li>• 67% effectiveness rate</li>
                         <li>• Premium pricing: +3% ARPU</li>
                       </ul>
                     </div>
@@ -288,7 +288,7 @@ export default function ExecutiveIntroductionImpact() {
                 <div className="bg-white rounded-lg p-4 border border-orange-200">
                   <h4 className="font-semibold text-orange-700 mb-3 flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                    Year 3: Full Implementation ($3.48B)
+                    Year 3: Full Implementation ($3.5B)
                   </h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
@@ -383,8 +383,8 @@ export default function ExecutiveIntroductionImpact() {
                     By becoming the <strong>first major telecom with dialect-specific multilingual CX</strong>, Verizon can:
                   </p>
                   <ul className="mt-2 space-y-1 text-sm ml-4">
-                    <li>1. <strong>Protect</strong> $6.61B at risk from competitors</li>
-                    <li>2. <strong>Capture</strong> $3.87B in value from existing customers over 3 years</li>
+                    <li>1. <strong>Protect</strong> $6.6B at risk from competitors</li>
+                    <li>2. <strong>Capture</strong> $3.9B in value from existing customers over 3 years</li>
                     <li>3. <strong>Expand</strong> into the remaining $25B TAM with differentiated positioning</li>
                     <li>4. <strong>Lead</strong> the industry in culturally-aware customer experience</li>
                   </ul>
