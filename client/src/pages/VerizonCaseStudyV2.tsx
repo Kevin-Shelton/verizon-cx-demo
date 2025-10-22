@@ -28,16 +28,11 @@ export default function VerizonCaseStudyV2() {
 
   const scrollToSection = (sectionId: SectionId) => {
     setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 100; // Account for sticky nav
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+    // Scroll to top when switching sections
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -76,10 +71,11 @@ export default function VerizonCaseStudyV2() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         {/* Section 1: The Competitive Crisis */}
-        <section id="crisis" className="scroll-mt-24">
+        {activeSection === 'crisis' && (
+        <section id="crisis">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,9 +200,11 @@ export default function VerizonCaseStudyV2() {
             </div>
           </motion.div>
         </section>
+        )}
 
         {/* Section 2: Why Verizon is Losing */}
-        <section id="losing" className="scroll-mt-24">
+        {activeSection === 'losing' && (
+        <section id="losing">
           <div className="flex items-center gap-3 mb-6">
             <TrendingDown className="w-10 h-10 text-orange-600" />
             <h2 className="text-4xl font-bold text-gray-900">Why Verizon is Losing</h2>
@@ -454,9 +452,11 @@ export default function VerizonCaseStudyV2() {
             )}
           </div>
         </section>
+        )}
 
         {/* Section 3: Current State Assessment */}
-        <section id="current" className="scroll-mt-24">
+        {activeSection === 'current' && (
+        <section id="current">
           <div className="flex items-center gap-3 mb-6">
             <Target className="w-10 h-10 text-blue-600" />
             <h2 className="text-4xl font-bold text-gray-900">Current State Assessment</h2>
@@ -535,9 +535,11 @@ export default function VerizonCaseStudyV2() {
             </div>
           </div>
         </section>
+        )}
 
         {/* Section 4: The Invictus Solution */}
-        <section id="solution" className="scroll-mt-24">
+        {activeSection === 'solution' && (
+        <section id="solution">
           <div className="flex items-center gap-3 mb-6">
             <Zap className="w-10 h-10 text-green-600" />
             <h2 className="text-4xl font-bold text-gray-900">The Invictus Solution</h2>
@@ -686,9 +688,11 @@ export default function VerizonCaseStudyV2() {
             </div>
           </div>
         </section>
+        )}
 
         {/* Section 5: Expected Impact */}
-        <section id="impact" className="scroll-mt-24">
+        {activeSection === 'impact' && (
+        <section id="impact">
           <div className="flex items-center gap-3 mb-6">
             <TrendingUp className="w-10 h-10 text-purple-600" />
             <h2 className="text-4xl font-bold text-gray-900">Expected Impact</h2>
@@ -778,6 +782,7 @@ export default function VerizonCaseStudyV2() {
             </div>
           </div>
         </section>
+        )}
       </div>
     </div>
   );
