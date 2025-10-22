@@ -817,13 +817,34 @@ const ExecutiveIntroductionV2: React.FC = () => {
           </div>
 
           <div className="bg-green-50 border-l-4 border-green-600 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
               The ${scenario.incrementalRevenue}B Opportunity
               <span className="text-lg font-normal text-gray-600 ml-3">({scenario.gapCapturePercent}% of ${marketData.marketGap.revenue}B gap)</span>
             </h3>
+            
+            {/* Opportunity Explainer */}
+            <div className="bg-white rounded-lg p-5 mb-6 border-2 border-green-300 shadow-sm">
+              <div className="flex items-start gap-3">
+                <Info className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">What This Opportunity Represents:</h4>
+                  <div className="text-sm text-gray-700 space-y-2">
+                    <p>
+                      <strong className="text-green-700">The ${marketData.marketGap.revenue}B Gap:</strong> T-Mobile currently generates ${marketData.competitiveLandscape.tMobile.revenue}B from Hispanic customers vs Verizon's ${marketData.competitiveLandscape.verizon.revenue}B—a ${marketData.marketGap.revenue}B annual revenue gap representing {marketData.marketGap.subscribers}M more subscribers.
+                    </p>
+                    <p>
+                      <strong className="text-green-700">The ${scenario.incrementalRevenue}B Opportunity:</strong> By implementing dialect-specific multilingual CX, Verizon can realistically capture <strong>{scenario.gapCapturePercent}% of this gap</strong> over 5 years, adding <strong>+{scenario.newSubscribers}M subscribers</strong> and generating <strong>${scenario.incrementalRevenue}B in incremental annual revenue</strong>.
+                    </p>
+                    <p>
+                      <strong className="text-green-700">Business Impact:</strong> This would grow Verizon's Hispanic market share from {marketData.competitiveLandscape.verizon.marketShare}% to <strong>{scenario.newMarketShare}%</strong>, increasing Hispanic representation in the customer base from {marketData.competitiveLandscape.verizon.hispanicPercentOfBase}% to <strong>{scenario.hispanicPercentOfBase}%</strong>—a <strong>+{scenario.revenueIncrease}% revenue increase</strong> from this segment.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Scenario Selector */}
-            <div className="mb-8">
+            <div className="mb-6">
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-gray-700 font-semibold">Select Scenario:</span>
                 <div className="flex gap-3">
