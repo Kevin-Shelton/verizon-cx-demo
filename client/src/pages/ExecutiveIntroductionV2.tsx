@@ -817,7 +817,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
           </div>
 
           <div className="bg-green-50 border-l-4 border-green-600 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">The ${marketData.marketGap.revenue}B Opportunity</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              The ${scenario.incrementalRevenue}B Opportunity
+              <span className="text-lg font-normal text-gray-600 ml-3">({scenario.gapCapturePercent}% of ${marketData.marketGap.revenue}B gap)</span>
+            </h3>
 
             {/* Scenario Selector */}
             <div className="mb-8">
