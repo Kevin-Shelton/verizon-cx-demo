@@ -26,8 +26,8 @@ function Router() {
     <MainLayout>
       <Switch>
         <Route path={"/"} component={Home} />
-        <Route path="/executive-intro" component={ExecutiveIntroduction} />
-        <Route path="/executive-intro-v2" component={ExecutiveIntroductionV2} />
+        <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
+        <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
         <Route path="/verizon-case-study" component={VerizonCaseStudy} />
         <Route path="/personas" component={Personas} />
         <Route path="/persona-journey" component={PersonaJourney} />
