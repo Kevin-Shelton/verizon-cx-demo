@@ -62,7 +62,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
     setExpandedSections(new Set([
       'tmobile-strategy', 
       'att-infrastructure',
-      'verizon-deficit', 
+      'verizon-opportunity', 
       'super-consumer-details',
       'cultural-preferences',
       'dialect-comparison', 
@@ -84,26 +84,26 @@ const ExecutiveIntroductionV2: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Executive Summary Banner - Sticky */}
-      <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-8 shadow-lg">
+      <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-3 md:py-6 md:px-8 shadow-lg">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-2">Executive Summary</h2>
-              <p className="text-blue-100 text-lg">
-                Close the $13.8B revenue gap to T-Mobile by capturing {scenario.gapCapturePercent}% of the Hispanic market through dialect-specific translation, generating ${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years).
+              <h2 className="text-lg md:text-2xl font-bold mb-1 md:mb-2">Executive Summary</h2>
+              <p className="text-blue-100 text-sm md:text-lg">
+                Capture {scenario.gapCapturePercent}% of the Hispanic market through dialect-specific translation, generating ${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years) and strengthening Verizon's market position.
               </p>
             </div>
-            <div className="ml-8 flex gap-3">
+            <div className="md:ml-8 flex gap-2 md:gap-3 w-full md:w-auto">
               <button
                 onClick={expandAll}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                className="px-2 py-1 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1 md:gap-2"
               >
                 <ChevronDown className="w-4 h-4" />
                 Expand All
               </button>
               <button
                 onClick={collapseAll}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                className="px-2 py-1 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1 md:gap-2"
               >
                 <ChevronUp className="w-4 h-4" />
                 Collapse All
@@ -113,18 +113,18 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 py-12">
+      <div className="max-w-7xl mx-auto px-3 py-6 md:px-8 md:py-12">
         
-        {/* Section 1: The Competitive Crisis */}
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
-            <AlertTriangle className="w-8 h-8 text-red-600" />
-            <h1 className="text-4xl font-bold text-gray-900">The Competitive Crisis</h1>
+        {/* Section 1: The Strategic Opportunity */}
+        <section className="mb-8 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+            <TrendingUp className="w-5 h-5 md:w-8 md:h-8 text-blue-600" />
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900">The Strategic Opportunity</h1>
           </div>
 
           {/* Hero Stats */}
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-600 p-8 rounded-lg mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-600 p-3 md:p-8 rounded-lg mb-4 md:mb-8">
+            <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">
               The $65.5B U.S. Hispanic Wireless Market
             </h2>
             <p className="text-xl text-gray-700 mb-6">
@@ -202,7 +202,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <div className="grid grid-cols-3 gap-6 text-center">
                 <div>
                   <div className="text-3xl font-bold text-red-700">${marketData.marketGap.revenue}B</div>
-                  <div className="text-sm text-red-600 font-medium mt-1">Annual Revenue Gap</div>
+                  <div className="text-sm text-blue-600 font-medium mt-1">Growth Opportunity</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-red-700">{marketData.marketGap.subscribers}M</div>
@@ -277,8 +277,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 2: Why T-Mobile is Winning */}
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
+        <section className="mb-8 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-8 h-8 text-purple-600" />
             <h1 className="text-4xl font-bold text-gray-900">Why T-Mobile is Winning</h1>
           </div>
@@ -427,10 +427,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
           {/* Verizon's Deficit - Collapsible */}
           <div className="mb-6">
             <CollapsibleSection
-              id="verizon-deficit"
-              title="Verizon's Strategic Deficit: Why We're Losing"
-              isExpanded={isExpanded('verizon-deficit')}
-              onToggle={() => toggleSection('verizon-deficit')}
+              id="verizon-opportunity"
+              title="Verizon's Growth Opportunity: Market Expansion Potential"
+              isExpanded={isExpanded('verizon-opportunity')}
+              onToggle={() => toggleSection('verizon-opportunity')}
             >
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
@@ -495,8 +495,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 3: Super Consumer Behaviors */}
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
+        <section className="mb-8 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <Zap className="w-8 h-8 text-orange-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Hispanic "Super Consumer"</h1>
           </div>
@@ -597,8 +597,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 4: The Differentiation Opportunity */}
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
+        <section className="mb-8 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <Target className="w-8 h-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
           </div>
@@ -810,8 +810,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 5: Growth Scenarios */}
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
+        <section className="mb-8 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-8 h-8 text-green-600" />
             <h1 className="text-4xl font-bold text-gray-900">Growth Scenarios & Financial Impact</h1>
           </div>
