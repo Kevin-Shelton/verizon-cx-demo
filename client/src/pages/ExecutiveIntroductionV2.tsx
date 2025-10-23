@@ -47,6 +47,15 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [activeSection, setActiveSection] = useState<string>('market-overview');
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setActiveSection(sectionId);
+    }
+  };
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => {
@@ -115,10 +124,68 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </div>
       </div>
 
+      {/* Sticky Section Navigation */}
+      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-3 md:px-8">
+          <nav className="flex overflow-x-auto">
+            <button
+              onClick={() => scrollToSection('market-overview')}
+              className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'market-overview'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Market Overview
+            </button>
+            <button
+              onClick={() => scrollToSection('winning-strategy')}
+              className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'winning-strategy'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Winning Strategy
+            </button>
+            <button
+              onClick={() => scrollToSection('super-consumer')}
+              className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'super-consumer'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Super Consumer
+            </button>
+            <button
+              onClick={() => scrollToSection('differentiation')}
+              className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'differentiation'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Differentiation
+            </button>
+            <button
+              onClick={() => scrollToSection('growth-scenarios')}
+              className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'growth-scenarios'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Growth Scenarios
+            </button>
+          </nav>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-3 py-6 md:px-8 md:py-12">
         
         {/* Section 1: The Strategic Opportunity */}
-        <section className="mb-8 md:mb-16">
+        <section id="market-overview" className="mb-8 md:mb-16 scroll-mt-20">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-5 h-5 md:w-8 md:h-8 text-blue-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">The Strategic Opportunity</h1>
@@ -308,7 +375,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 2: How Verizon Can Win in This Space */}
-        <section className="mb-8 md:mb-16">
+        <section id="winning-strategy" className="mb-8 md:mb-16 scroll-mt-20">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-8 h-8 text-purple-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">How Verizon Can Win in This Space</h1>
@@ -550,7 +617,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 3: Super Consumer Behaviors */}
-        <section className="mb-8 md:mb-16">
+        <section id="super-consumer" className="mb-8 md:mb-16 scroll-mt-20">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <Zap className="w-8 h-8 text-orange-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Hispanic "Super Consumer"</h1>
@@ -652,7 +719,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 4: The Differentiation Opportunity */}
-        <section className="mb-8 md:mb-16">
+        <section id="differentiation" className="mb-8 md:mb-16 scroll-mt-20">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <Target className="w-8 h-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
@@ -865,7 +932,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 5: Growth Scenarios */}
-        <section className="mb-8 md:mb-16">
+        <section id="growth-scenarios" className="mb-8 md:mb-16 scroll-mt-20">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-8 h-8 text-green-600" />
             <h1 className="text-4xl font-bold text-gray-900">Growth Scenarios & Financial Impact</h1>
