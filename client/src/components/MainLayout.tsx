@@ -266,7 +266,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               </nav>
             </motion.div>
           )}
-        </AnimatePresence>>
+        </AnimatePresence>
       </header>
 
       {/* Main Content */}
