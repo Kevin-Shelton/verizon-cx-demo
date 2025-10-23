@@ -124,8 +124,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </div>
       </div>
 
-      {/* Sticky Section Navigation */}
-      <div className="sticky top-[60px] md:top-[84px] z-40 bg-white border-b border-gray-200 shadow-sm">
+      {/* Fixed Section Navigation */}
+      <div className="fixed top-[60px] md:top-[84px] left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 md:px-8">
           <nav className="flex overflow-x-auto">
             <button
