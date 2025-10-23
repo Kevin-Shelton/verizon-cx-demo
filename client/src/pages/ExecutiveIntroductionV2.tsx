@@ -938,14 +938,14 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-900">Growth Scenarios & Financial Impact</h1>
           </div>
 
-          <div className="bg-green-50 border-l-4 border-green-600 rounded-lg p-8">
+          <div className="bg-green-50 border-l-4 border-green-600 rounded-lg p-3 md:p-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               The ${scenario.fiveYearRevenue}B Opportunity (5-Year)
               <span className="text-lg font-normal text-gray-600 ml-3">({scenario.gapCapturePercent}% of ${marketData.marketGap.revenue}B gap)</span>
             </h3>
             
             {/* Opportunity Explainer */}
-            <div className="bg-white rounded-lg p-5 mb-6 border-2 border-green-300 shadow-sm">
+            <div className="bg-white rounded-lg p-3 md:p-4 mb-4 border-2 border-green-300 shadow-sm">
               <div className="flex items-start gap-3">
                 <Info className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
@@ -955,9 +955,9 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       Dialect-specific multilingual CX enables Verizon to simultaneously <strong>defend</strong> current customers, <strong>capture</strong> share from all competitors, and <strong>grow</strong> with net new customers—generating <strong>${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years)</strong>.
                     </p>
                     
-                    <div className="grid grid-cols-3 gap-4 mt-4">
+                    <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3">
                       {/* Defend */}
-                      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                      <div className="bg-blue-50 rounded-lg p-2 md:p-3 border border-blue-200">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
                           <h5 className="font-bold text-blue-900">DEFEND</h5>
@@ -971,7 +971,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
 
                       {/* Capture */}
-                      <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                      <div className="bg-purple-50 rounded-lg p-2 md:p-3 border border-purple-200">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
                           <h5 className="font-bold text-purple-900">CAPTURE</h5>
@@ -986,7 +986,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
 
                       {/* Grow */}
-                      <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                      <div className="bg-green-50 rounded-lg p-2 md:p-3 border border-green-200">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
                           <h5 className="font-bold text-green-900">GROW</h5>
@@ -999,7 +999,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="bg-green-100 rounded-lg p-3 mt-4 border border-green-300">
+                    <div className="bg-green-100 rounded-lg p-2 md:p-3 mt-3 border border-green-300">
                       <p className="text-xs text-gray-700">
                         <strong className="text-green-800">Total Impact:</strong> Grow from {marketData.competitiveLandscape.verizon.marketShare}% to <strong>{scenario.newMarketShare}% market share</strong> (+{scenario.newSubscribers}M subscribers), increasing Hispanic representation from {marketData.competitiveLandscape.verizon.hispanicPercentOfBase}% to <strong>{scenario.hispanicPercentOfBase}%</strong> of customer base—a <strong>+{scenario.revenueIncrease}% revenue increase</strong>.
                       </p>
@@ -1031,7 +1031,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </div>
 
               {/* Selected Scenario Display */}
-              <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-green-400">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-lg border-2 border-green-400">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-2xl font-bold text-gray-900">
                     {selectedScenario.charAt(0).toUpperCase() + selectedScenario.slice(1)} Scenario
@@ -1042,21 +1042,21 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4 mb-4">
-                  <div className="bg-green-50 rounded-lg p-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-3">
+                  <div className="bg-green-50 rounded-lg p-2 md:p-3">
                     <div className="text-sm text-gray-600 mb-1">New Subscribers (5yr)</div>
                     <div className="text-3xl font-bold text-green-700">+{scenario.newSubscribers}M</div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-4">
+                  <div className="bg-green-50 rounded-lg p-2 md:p-3">
                     <div className="text-sm text-gray-600 mb-1">Incremental Revenue</div>
                     <div className="text-3xl font-bold text-green-700">${scenario.annualRevenue}B/yr</div>
                     <div className="text-xl font-semibold text-green-600 mt-1">${scenario.fiveYearRevenue}B (5-yr)</div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-4">
+                  <div className="bg-green-50 rounded-lg p-2 md:p-3">
                     <div className="text-sm text-gray-600 mb-1">New Market Share</div>
                     <div className="text-3xl font-bold text-green-700">{scenario.newMarketShare}%</div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-4">
+                  <div className="bg-green-50 rounded-lg p-2 md:p-3">
                     <div className="text-sm text-gray-600 mb-1">Revenue Increase</div>
                     <div className="text-3xl font-bold text-green-700">+{scenario.revenueIncrease}%</div>
                   </div>
@@ -1079,8 +1079,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </div>
             </div>
 
-            {/* Scenario Comparison - Collapsible */}
-            <div className="mb-6">
+            {/* Scenario Comparison and Assumptions - Side by Side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <CollapsibleSection
                 id="scenario-comparison"
                 title="Scenario Comparison: 5-Year Financial Impact"
@@ -1132,10 +1132,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </table>
                 </div>
               </CollapsibleSection>
-            </div>
-
-            {/* Scenario Rationale - Collapsible */}
-            <CollapsibleSection
+              <CollapsibleSection
               id="scenario-rationale"
               title="Scenario Assumptions & Rationale"
               isExpanded={isExpanded('scenario-rationale')}
@@ -1178,6 +1175,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                 </div>
               </div>
             </CollapsibleSection>
+            </div>
           </div>
         </section>
 
