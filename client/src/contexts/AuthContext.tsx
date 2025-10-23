@@ -40,17 +40,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]); // Initialize as empty, will fetch from Supabase
 
+  const fetchUsers = async () => {
+    const { data, error } = await supabase.from('app_users').select('*');
+    if (error) {
+      console.error('Error fetching users:', error.message);
+    } else if (data) {
+      setUsers(data as User[]);
+    }
+  };
+
   // Load users from Supabase on mount and check session
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase.from('app_users').select('*');
-      if (error) {
-        console.error('Error fetching users:', error.message);
-      } else if (data) {
-        setUsers(data as User[]);
-      }
-    };
-
     fetchUsers();
 
     // Check if user is already logged in (e.g., from a previous session)
@@ -98,24 +98,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
     if (existingUsers && existingUsers.length > 0) {
-      console.warn('User already exists:', username);
+      console.warn('User already exists in Supabase:', username);
       return false;
     }
 
-    const { data, error } = await supabase.from('app_users').insert([{ username, password }]);
-    if (error) {
-      console.error('Error adding user:', error.message);
+    const { data: insertData, error: insertError } = await supabase.from('app_users').insert([{ username, password }]);
+    if (insertError) {
+      console.error('Error adding user:', insertError.message);
       return false;
     }
 
-    if (data) {
+    // Supabase insert returns data as an array of inserted objects, or null if no data
+    if (insertData && insertData.length > 0) {
       // Re-fetch users to update the local state
-      const { data: updatedUsers, error: updateError } = await supabase.from('app_users').select('*');
-      if (updateError) {
-        console.error('Error refetching users after add:', updateError.message);
-      } else if (updatedUsers) {
-        setUsers(updatedUsers as User[]);
-      }
+      await fetchUsers(); // Call the defined fetchUsers function to refresh the state
       return true;
     }
     return false;
@@ -136,12 +132,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // Re-fetch users to update the local state
-    const { data: updatedUsers, error: updateError } = await supabase.from('app_users').select('*');
-    if (updateError) {
-      console.error('Error refetching users after delete:', updateError.message);
-    } else if (updatedUsers) {
-      setUsers(updatedUsers as User[]);
-    }
+    await fetchUsers(); // Call the defined fetchUsers function
     return true;
   };
 
@@ -170,4 +161,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
