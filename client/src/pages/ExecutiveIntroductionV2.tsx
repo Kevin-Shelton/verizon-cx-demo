@@ -48,6 +48,9 @@ const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set()); // All sections hidden by default
   const [activeSection, setActiveSection] = useState<string>('market-overview');
+  
+  // Debug: log expanded sections
+  console.log('Expanded sections:', expandedSections);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
