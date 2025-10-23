@@ -507,7 +507,7 @@ export default function VerizonCaseStudyV2() {
           {/* Identified Gaps */}
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Identified Gaps & Business Impact</h3>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {verizonInitiatives.gaps.map((gap, index) => (
                 <div key={gap.id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
                   <div className="flex items-start justify-between mb-3">
