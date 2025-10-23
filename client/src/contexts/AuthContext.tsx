@@ -66,9 +66,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // No longer saving users to localStorage, as they are managed in Supabase
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    const { data, error } = await supabase.from('users').select('*').eq('username', username).eq('password', password);
-
-    if (error) {
+    cconconst { data, error } = await supabase.from(\'app_users\').select(\'*\').eq(\'username\', username).eq(\'password\', password);rd);  if (error) {
       console.error('Supabase login error:', error.message);
       return false;
     }
@@ -92,8 +90,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addUser = async (username: string, password: string): Promise<boolean> => {
     // Check if user already exists in Supabase
-    const { data: existingUsers, error: fetchError } = await supabase.from('users').select('username').eq('username', username);
-    if (fetchError) {
+    const { data: existingUsers, error: fetchError } = await supabase.from(\'app_users\').select(\'username\').eq(\'username\', username);if (fetchError) {
       console.error('Error checking existing user:', fetchError.message);
       return false;
     }
@@ -102,8 +99,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
 
-    const { data, error } = await supabase.from('users').insert([{ username, password }]);
-
+    const { data, error } = await supabase.from(\'app_users\').insert([{ username, password }]);
     if (error) {
       console.error('Error adding user:', error.message);
       return false;
@@ -111,8 +107,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     if (data) {
       // Re-fetch users to update the local state
-      const { data: updatedUsers, error: updateError } = await supabase.from('users').select('*');
-      if (updateError) {
+      const { data: updatedUsers, error: updateError } = await supabase.from(\'app_users\').select(\'*\');   if (updateError) {
         console.error('Error refetching users after add:', updateError.message);
       } else if (updatedUsers) {
         setUsers(updatedUsers as User[]);
@@ -129,7 +124,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
 
-    const { error } = await supabase.from('users').delete().eq('username', username);
+    const { error } = await supabase.from(\'app_users\').delete().eq('username', username);
 
     if (error) {
       console.error('Error deleting user:', error.message);
@@ -137,7 +132,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // Re-fetch users to update the local state
-    const { data: updatedUsers, error: updateError } = await supabase.from('users').select('*');
+const { data: updatedUsers, error: updateError } = await supabase.from(\'app_users\').select(\'*\');
     if (updateError) {
       console.error('Error refetching users after delete:', updateError.message);
     } else if (updatedUsers) {
