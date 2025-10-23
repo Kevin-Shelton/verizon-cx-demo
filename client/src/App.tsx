@@ -22,6 +22,7 @@ import ROICalculator from "./pages/ROICalculator";
 import ResearchSources from "./pages/ResearchSources";
 import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
 import ExecutiveIntroductionV2 from './pages/ExecutiveIntroductionV2';
+import OutboundProspecting from './pages/OutboundProspecting';
 import Admin from "./pages/Admin";
 
 function Router() {
@@ -38,6 +39,7 @@ function Router() {
               <Route path={"/"} component={Home} />
               <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
               <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
+              <Route path="/outbound-prospecting" component={OutboundProspecting} />
               <Route path="/personas" component={Personas} />
               <Route path="/persona-journey" component={PersonaJourney} />
               <Route path="/journey" component={Journey} />
