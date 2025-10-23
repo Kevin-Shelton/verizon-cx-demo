@@ -105,10 +105,11 @@ export default function ResearchSources() {
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
+      {/* Filters and Search - Sticky */}
+      <div className="sticky top-0 z-40 bg-gradient-to-b from-slate-50 to-white border-b border-gray-200 shadow-md">
+        <div className="container mx-auto px-4 py-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
             <div className="grid md:grid-cols-2 gap-4">
               {/* Category Filter */}
               <div>
@@ -149,9 +150,14 @@ export default function ResearchSources() {
             <div className="mt-4 text-sm text-gray-600 font-medium">
               Showing {filteredSources.length} of {sources.length} sources
             </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Sources List */}
+      {/* Sources List */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
           <div className="space-y-6">
             {filteredSources.map((source, index) => {
               const isBrandName = brandNameSources.some(brand => 

@@ -155,6 +155,45 @@
         "86% FCR improvement with native language support",
         "Customer satisfaction scores increase 40-60 points (NPS)"
       ]
+    },
+    {
+      "id": 13,
+      "title": "Verizon Q4 2024 Earnings Report",
+      "organization": "Verizon Communications Inc.",
+      "url": "https://www.verizon.com/about/investors",
+      "type": "Financial Report",
+      "year": "2024",
+      "keyFindings": [
+        "17.4M Hispanic subscribers (26.9% market share)",
+        "$18.5B annual revenue from Hispanic segment",
+        "+0.568M net adds in 2024"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "T-Mobile Q4 2024 Earnings Report",
+      "organization": "T-Mobile US, Inc.",
+      "url": "https://investor.t-mobile.com",
+      "type": "Financial Report",
+      "year": "2024",
+      "keyFindings": [
+        "32.4M Hispanic subscribers (50.2% market share)",
+        "$32.9B annual revenue from Hispanic segment",
+        "+3.1M net adds in 2024"
+      ]
+    },
+    {
+      "id": 15,
+      "title": "AT&T Q4 2024 Earnings Report",
+      "organization": "AT&T Inc.",
+      "url": "https://investors.att.com",
+      "type": "Financial Report",
+      "year": "2024",
+      "keyFindings": [
+        "13.0M Hispanic subscribers (20.1% market share)",
+        "$13.1B annual revenue from Hispanic segment",
+        "770+ bilingual stores nationwide"
+      ]
     }
   ],
   "categories": [
@@ -168,7 +207,7 @@
     },
     {
       "name": "Industry Analysis & Trends",
-      "sources": [8, 11]
+      "sources": [8, 11, 13, 14, 15]
     }
   ]
 }
