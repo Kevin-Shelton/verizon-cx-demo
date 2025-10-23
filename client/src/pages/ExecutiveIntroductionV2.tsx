@@ -182,17 +182,17 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 py-6 md:px-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-3 py-4 md:px-8 md:py-6">
         
         {/* Section 1: The Strategic Opportunity */}
-        <section id="market-overview" className="mb-8 md:mb-16 scroll-mt-20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+        <section id="market-overview" className="mb-6 md:mb-10 scroll-mt-20">
+          <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-5 h-5 md:w-8 md:h-8 text-blue-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">The Strategic Opportunity</h1>
           </div>
 
           {/* Hero Stats */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-600 p-3 md:p-8 rounded-lg mb-4 md:mb-8">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-600 p-3 md:p-6 rounded-lg mb-3 md:mb-6">
             <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">
               The $65.5B U.S. Hispanic Wireless Market
               <SourceTooltip 
@@ -205,9 +205,9 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </p>
 
             {/* Competitive Comparison Cards */}
-            <div className="grid grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-3 gap-3 md:gap-4 mb-4">
               {/* T-Mobile */}
-              <div className="bg-white rounded-lg p-6 shadow-md border-2 border-purple-200">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-md border-2 border-purple-200">
                 <div className="text-sm font-semibold text-purple-600 mb-2">T-MOBILE</div>
                 <div className="text-4xl font-bold text-purple-700 mb-1">50.2%
                   <SourceTooltip 
@@ -238,7 +238,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </div>
 
               {/* Verizon */}
-              <div className="bg-white rounded-lg p-6 shadow-md border-2 border-red-200">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-md border-2 border-red-200">
                 <div className="text-sm font-semibold text-red-600 mb-2">VERIZON</div>
                 <div className="text-4xl font-bold text-red-700 mb-1">26.9%
                   <SourceTooltip 
@@ -269,7 +269,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </div>
 
               {/* AT&T */}
-              <div className="bg-white rounded-lg p-6 shadow-md border-2 border-blue-200">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-md border-2 border-blue-200">
                 <div className="text-sm font-semibold text-blue-600 mb-2">AT&T</div>
                 <div className="text-4xl font-bold text-blue-700 mb-1">20.1%
                   <SourceTooltip 
@@ -296,8 +296,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </div>
 
             {/* The Gap */}
-            <div className="bg-red-100 border-2 border-red-300 rounded-lg p-6">
-              <div className="grid grid-cols-3 gap-6 text-center">
+            <div className="bg-red-100 border-2 border-red-300 rounded-lg p-3 md:p-4">
+              <div className="grid grid-cols-3 gap-3 md:gap-4 text-center">
                 <div>
                   <div className="text-3xl font-bold text-red-700">${marketData.marketGap.revenue}B</div>
                   <div className="text-sm text-blue-600 font-medium mt-1">Growth Opportunity</div>
@@ -375,8 +375,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 2: How Verizon Can Win in This Space */}
-        <section id="winning-strategy" className="mb-8 md:mb-16 scroll-mt-20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+        <section id="winning-strategy" className="mb-6 md:mb-10 scroll-mt-20">
+          <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-purple-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">How Verizon Can Win in This Space</h1>
           </div>
@@ -617,8 +617,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 3: Super Consumer Behaviors */}
-        <section id="super-consumer" className="mb-8 md:mb-16 scroll-mt-20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+        <section id="super-consumer" className="mb-6 md:mb-10 scroll-mt-20">
+          <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Zap className="w-8 h-8 text-orange-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Hispanic "Super Consumer"</h1>
           </div>
@@ -628,7 +628,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
               Hispanics are the most mobile-engaged demographic in the U.S., with significantly higher usage across all metrics.
             </p>
 
-            <div className="grid grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-3 gap-3 md:gap-4 mb-4">
               <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="text-4xl font-bold text-orange-600 mb-2">{marketData.superConsumerMetrics.hoursPerWeekOnSmartphone}+</div>
                 <div className="text-sm text-gray-600 mb-1">Hours/Week on Smartphone</div>
@@ -719,8 +719,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 4: The Differentiation Opportunity */}
-        <section id="differentiation" className="mb-8 md:mb-16 scroll-mt-20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+        <section id="differentiation" className="mb-6 md:mb-10 scroll-mt-20">
+          <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Target className="w-8 h-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
           </div>
@@ -932,8 +932,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 5: Growth Scenarios */}
-        <section id="growth-scenarios" className="mb-8 md:mb-16 scroll-mt-20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+        <section id="growth-scenarios" className="mb-6 md:mb-10 scroll-mt-20">
+          <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-green-600" />
             <h1 className="text-4xl font-bold text-gray-900">Growth Scenarios & Financial Impact</h1>
           </div>
