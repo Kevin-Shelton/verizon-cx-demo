@@ -1179,10 +1179,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
         {/* Call to Action */}
         <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8 shadow-xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">The Window is Closing</h2>
+            <h2 className="text-3xl font-bold mb-4">The Time to Act is Now</h2>
             <p className="text-xl mb-6 text-blue-100">
-              T-Mobile added {marketData.competitiveLandscape.tMobile.netAdds2024}M subscribers in 2024 vs Verizon's {marketData.competitiveLandscape.verizon.netAdds2024}M. 
-              Every quarter of delay means losing more ground in the fastest-growing demographic segment.
+              Verizon has a unique opportunity to capture significant market share in the fastest-growing demographic segment. 
+              Early movers in dialect-specific CX will establish lasting competitive advantages and customer loyalty.
             </p>
             <div className="flex justify-center gap-6">
               <div className="bg-white/20 rounded-lg p-4">
