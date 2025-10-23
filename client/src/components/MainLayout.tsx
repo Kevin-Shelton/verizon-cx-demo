@@ -27,7 +27,6 @@ interface MainLayoutProps {
 const executiveInsights = [
   { name: "Executive Intro", href: "/executive-intro", icon: Briefcase },
   { name: "Verizon Case Study", href: "/verizon-case-study", icon: FileText },
-  { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },
   { name: "Research Sources", href: "/research-sources", icon: BookOpen },
 ];
 

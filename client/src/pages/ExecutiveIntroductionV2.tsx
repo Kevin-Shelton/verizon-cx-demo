@@ -46,7 +46,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set()); // All sections hidden by default
   const [activeSection, setActiveSection] = useState<string>('market-overview');
 
   const scrollToSection = (sectionId: string) => {

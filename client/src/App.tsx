@@ -18,8 +18,7 @@ import Experiences from "./pages/Experiences";
 import Chat from "./pages/experiences/Chat";
 import ROICalculator from "./pages/ROICalculator";
 
-import JourneyHeatmap from './pages/JourneyHeatmap';
-import JourneyHeatmapV2 from './pages/JourneyHeatmapV2';
+
 import ResearchSources from "./pages/ResearchSources";
 import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
 import ExecutiveIntroductionV2 from './pages/ExecutiveIntroductionV2';
@@ -49,8 +48,7 @@ function Router() {
               <Route path="/experiences" component={Experiences} />
               <Route path={"/experiences/chat"} component={Chat} />
               <Route path={"/roi-calculator"} component={ROICalculator} />
-              <Route path="/journey-heatmap" component={JourneyHeatmapV2} />
-              <Route path="/journey-heatmap-old" component={JourneyHeatmap} />
+
               <Route path={'/research-sources'} component={ResearchSources} />
               <Route path={"/admin"} component={Admin} />
               <Route path={"/terms"} component={Terms} />
