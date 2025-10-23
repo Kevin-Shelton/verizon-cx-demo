@@ -3,9 +3,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
+import Login from "@/pages/Login";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import PersonaJourney from "./pages/PersonaJourney";
@@ -25,29 +28,38 @@ import VerizonCaseStudy from "./pages/VerizonCaseStudy";
 
 function Router() {
   return (
-    <MainLayout>
-      <Switch>
-        <Route path={"/"} component={Home} />
-        <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
-        <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
-        <Route path="/verizon-case-study" component={VerizonCaseStudyV2} />
-        <Route path="/verizon-case-study-old" component={VerizonCaseStudy} />
-        <Route path="/personas" component={Personas} />
-        <Route path="/persona-journey" component={PersonaJourney} />
-        <Route path="/journey" component={Journey} />
-        <Route path="/experiences" component={Experiences} />
-        <Route path={"/experiences/chat"} component={Chat} />
-        <Route path={"/roi-calculator"} component={ROICalculator} />
-
-          <Route path="/journey-heatmap" component={JourneyHeatmapV2} />
-        <Route path="/journey-heatmap-old" component={JourneyHeatmap} />
-        <Route path={"/research-sources"} component={ResearchSources} />
-        <Route path={"/terms"} component={Terms} />
-        <Route path={"/privacy"} component={Privacy} />
-        <Route path={"/404"} component={NotFound} />
-        <Route component={NotFound} />
-      </Switch>
-    </MainLayout>
+    <Switch>
+      {/* Public route - Login page */}
+      <Route path="/login" component={Login} />
+      
+      {/* All other routes are protected */}
+      <Route>
+        <ProtectedRoute>
+          <MainLayout>
+            <Switch>
+              <Route path={"/"} component={Home} />
+              <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
+              <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
+              <Route path="/verizon-case-study" component={VerizonCaseStudyV2} />
+              <Route path="/verizon-case-study-old" component={VerizonCaseStudy} />
+              <Route path="/personas" component={Personas} />
+              <Route path="/persona-journey" component={PersonaJourney} />
+              <Route path="/journey" component={Journey} />
+              <Route path="/experiences" component={Experiences} />
+              <Route path={"/experiences/chat"} component={Chat} />
+              <Route path={"/roi-calculator"} component={ROICalculator} />
+              <Route path="/journey-heatmap" component={JourneyHeatmapV2} />
+              <Route path="/journey-heatmap-old" component={JourneyHeatmap} />
+              <Route path={"/research-sources"} component={ResearchSources} />
+              <Route path={"/terms"} component={Terms} />
+              <Route path={"/privacy"} component={Privacy} />
+              <Route path={"/404"} component={NotFound} />
+              <Route component={NotFound} />
+            </Switch>
+          </MainLayout>
+        </ProtectedRoute>
+      </Route>
+    </Switch>
   );
 }
 
@@ -59,17 +71,20 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider
+          defaultTheme="light"
+          // switchable
+        >
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
 
 export default App;
+

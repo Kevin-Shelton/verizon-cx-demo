@@ -13,9 +13,11 @@ import {
   BookOpen,
   Briefcase,
   FileText,
+  LogOut,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -41,6 +43,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { logout, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,6 +143,22 @@ export default function MainLayout({ children }: MainLayoutProps) {
             </div>
           </nav>
 
+          {/* Logout Button - Desktop */}
+          <div className="hidden lg:flex items-center gap-3">
+            {user && (
+              <span className="text-sm text-gray-600">Welcome, <span className="font-semibold">{user}</span></span>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
+            </Button>
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden p-2"
@@ -223,10 +242,31 @@ export default function MainLayout({ children }: MainLayoutProps) {
                     </Link>
                   );
                 })}
+
+                {/* Separator */}
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
+
+                {/* User Info and Logout */}
+                {user && (
+                  <div className="px-3 py-2">
+                    <p className="text-xs text-gray-600 mb-2">Logged in as: <span className="font-semibold">{user}</span></p>
+                  </div>
+                )}
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </Button>
               </nav>
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence>>
       </header>
 
       {/* Main Content */}
