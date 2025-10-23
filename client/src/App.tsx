@@ -25,6 +25,7 @@ import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
 import ExecutiveIntroductionV2 from './pages/ExecutiveIntroductionV2';
 import VerizonCaseStudyV2 from './pages/VerizonCaseStudyV2';
 import VerizonCaseStudy from "./pages/VerizonCaseStudy";
+import Admin from "./pages/Admin";
 
 function Router() {
   return (
@@ -50,7 +51,8 @@ function Router() {
               <Route path={"/roi-calculator"} component={ROICalculator} />
               <Route path="/journey-heatmap" component={JourneyHeatmapV2} />
               <Route path="/journey-heatmap-old" component={JourneyHeatmap} />
-              <Route path={"/research-sources"} component={ResearchSources} />
+              <Route path={'/research-sources'} component={ResearchSources} />
+              <Route path={"/admin"} component={Admin} />
               <Route path={"/terms"} component={Terms} />
               <Route path={"/privacy"} component={Privacy} />
               <Route path={"/404"} component={NotFound} />

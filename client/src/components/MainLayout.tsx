@@ -43,7 +43,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { logout, user } = useAuth();
+  const { logout, user, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -148,6 +148,18 @@ export default function MainLayout({ children }: MainLayoutProps) {
             {user && (
               <span className="text-sm text-gray-600">Welcome, <span className="font-semibold">{user}</span></span>
             )}
+            {isAdmin && (
+              <Link href="/admin">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                >
+                  <Briefcase className="h-4 w-4" />
+                  <span>Admin</span>
+                </Button>
+              </Link>
+            )}
             <Button
               variant="ghost"
               size="sm"
@@ -251,6 +263,18 @@ export default function MainLayout({ children }: MainLayoutProps) {
                   <div className="px-3 py-2">
                     <p className="text-xs text-gray-600 mb-2">Logged in as: <span className="font-semibold">{user}</span></p>
                   </div>
+                )}
+                {isAdmin && (
+                  <Link href="/admin">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start gap-2 text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Briefcase className="h-4 w-4" />
+                      Admin Panel
+                    </Button>
+                  </Link>
                 )}
                 <Button
                   variant="ghost"
