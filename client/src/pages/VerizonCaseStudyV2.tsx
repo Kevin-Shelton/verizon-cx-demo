@@ -13,7 +13,7 @@ type SectionId = 'crisis' | 'losing' | 'current' | 'solution' | 'impact';
 
 export default function VerizonCaseStudyV2() {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
-  const [activeSection, setActiveSection] = useState<SectionId>('crisis');
+  const [activeSection, setActiveSection] = useState<SectionId | ''>(''); // Empty = no section visible by default
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
 
   const marketData = hispanicMarketData;
@@ -37,29 +37,34 @@ export default function VerizonCaseStudyV2() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Version Indicator - Fixed Position */}
+      <div className="fixed top-2 right-2 z-[100] bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+        v2024-10-23-16:45 ✓
+      </div>
+
       {/* Sticky Navigation */}
-      <div className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-2">
-              <Building2 className="w-6 h-6 text-red-600" />
-              <h1 className="text-xl font-bold text-gray-900">Verizon Hispanic Market Analysis</h1>
+              <Building2 className="w-6 h-6 text-white" />
+              <h1 className="text-xl font-bold text-white">Verizon Hispanic Market Strategy</h1>
             </div>
             <div className="flex gap-2">
               {[
-                { id: 'crisis' as SectionId, label: 'Crisis', icon: AlertTriangle },
-                { id: 'losing' as SectionId, label: 'Why Losing', icon: TrendingDown },
-                { id: 'current' as SectionId, label: 'Current State', icon: Target },
-                { id: 'solution' as SectionId, label: 'Solution', icon: Zap },
-                { id: 'impact' as SectionId, label: 'Impact', icon: TrendingUp }
+                { id: 'crisis' as SectionId, label: 'Market Opportunity', icon: Target },
+                { id: 'losing' as SectionId, label: 'Growth Potential', icon: TrendingUp },
+                { id: 'current' as SectionId, label: 'Current Position', icon: Building2 },
+                { id: 'solution' as SectionId, label: 'Strategy', icon: Zap },
+                { id: 'impact' as SectionId, label: 'Expected Impact', icon: Award }
               ].map(({ id, label, icon: Icon }) => (
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
                   className={`px-4 py-2 rounded-lg font-medium transition-all text-sm flex items-center gap-2 ${
                     activeSection === id
-                      ? 'bg-red-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-white text-blue-600 shadow-md'
+                      : 'bg-white/20 text-white hover:bg-white/30'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -82,24 +87,24 @@ export default function VerizonCaseStudyV2() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-10 h-10 text-red-600" />
-              <h2 className="text-4xl font-bold text-gray-900">The Competitive Crisis</h2>
+              <Target className="w-10 h-10 text-blue-600" />
+              <h2 className="text-4xl font-bold text-gray-900">The Market Opportunity</h2>
             </div>
 
             <p className="text-xl text-gray-600 mb-8">
-              Verizon is losing the Hispanic market to T-Mobile at an alarming rate. The $13.8B revenue gap represents not just lost opportunity, but an existential threat to Verizon's position in the fastest-growing demographic segment.
+              Verizon has a significant opportunity to capture market share in the $65.5B Hispanic wireless market. The $13.8B revenue gap represents untapped potential in the fastest-growing demographic segment, where strategic differentiation can drive substantial growth.
             </p>
 
             {/* Crisis Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {/* T-Mobile Dominance */}
-              <div className="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-lg p-6 shadow-lg">
+              {/* T-Mobile Position */}
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg p-6 shadow-lg">
                 <div className="flex items-center justify-between mb-4">
                   <Award className="w-8 h-8" />
                   <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Market Leader</span>
                 </div>
                 <div className="text-5xl font-bold mb-2">{marketData.competitiveLandscape.tMobile.marketShare}%</div>
-                <div className="text-pink-100 mb-4">T-Mobile Market Share</div>
+                <div className="text-purple-100 mb-4">T-Mobile Market Share</div>
                 <div className="space-y-1 text-sm">
                   <div>{marketData.competitiveLandscape.tMobile.subscribers}M subscribers</div>
                   <div>${marketData.competitiveLandscape.tMobile.revenue}B annual revenue</div>
@@ -108,13 +113,13 @@ export default function VerizonCaseStudyV2() {
               </div>
 
               {/* Verizon Position */}
-              <div className="bg-gradient-to-br from-red-600 to-red-700 text-white rounded-lg p-6 shadow-lg">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg p-6 shadow-lg">
                 <div className="flex items-center justify-between mb-4">
-                  <TrendingDown className="w-8 h-8" />
-                  <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Declining</span>
+                  <Building2 className="w-8 h-8" />
+                  <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Current Position</span>
                 </div>
                 <div className="text-5xl font-bold mb-2">{marketData.competitiveLandscape.verizon.marketShare}%</div>
-                <div className="text-red-100 mb-4">Verizon Market Share</div>
+                <div className="text-blue-100 mb-4">Verizon Market Share</div>
                 <div className="space-y-1 text-sm">
                   <div>{marketData.competitiveLandscape.verizon.subscribers}M subscribers</div>
                   <div>${marketData.competitiveLandscape.verizon.revenue}B annual revenue</div>
@@ -122,18 +127,18 @@ export default function VerizonCaseStudyV2() {
                 </div>
               </div>
 
-              {/* The Gap */}
-              <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg p-6 shadow-lg">
+              {/* Growth Opportunity */}
+              <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-6 shadow-lg">
                 <div className="flex items-center justify-between mb-4">
-                  <DollarSign className="w-8 h-8" />
-                  <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Opportunity</span>
+                  <TrendingUp className="w-8 h-8" />
+                  <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Growth Potential</span>
                 </div>
                 <div className="text-5xl font-bold mb-2">${marketData.marketGap.revenue}B</div>
-                <div className="text-orange-100 mb-4">Revenue Gap to Close</div>
+                <div className="text-green-100 mb-4">Revenue Growth Opportunity</div>
                 <div className="space-y-1 text-sm">
-                  <div>{marketData.marketGap.sharePoints} percentage points</div>
-                  <div>{marketData.marketGap.subscribers}M more subscribers</div>
-                  <div>+{marketData.marketGap.percentIncrease}% potential growth</div>
+                  <div>{marketData.marketGap.sharePoints} points market share gain</div>
+                  <div>{marketData.marketGap.subscribers}M potential new subscribers</div>
+                  <div>+{marketData.marketGap.percentIncrease}% growth potential</div>
                 </div>
               </div>
             </div>
