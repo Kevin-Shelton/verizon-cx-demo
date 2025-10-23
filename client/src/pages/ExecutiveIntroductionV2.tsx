@@ -96,6 +96,11 @@ const ExecutiveIntroductionV2: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Version Indicator - Fixed Position */}
+      <div className="fixed top-2 right-2 z-[100] bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+        v2024-10-23-15:35 ✓
+      </div>
+      
       {/* Executive Summary Banner with Integrated Navigation - Sticky */}
       <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-3 md:px-8">
