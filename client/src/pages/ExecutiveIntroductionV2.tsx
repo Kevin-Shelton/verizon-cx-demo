@@ -90,7 +90,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <div className="flex-1">
               <h2 className="text-2xl font-bold mb-2">Executive Summary</h2>
               <p className="text-blue-100 text-lg">
-                Close the $13.8B revenue gap to T-Mobile by capturing {scenario.gapCapturePercent}% of the Hispanic market through dialect-specific translation, generating ${scenario.incrementalRevenue}B incremental annual revenue over 5 years.
+                Close the $13.8B revenue gap to T-Mobile by capturing {scenario.gapCapturePercent}% of the Hispanic market through dialect-specific translation, generating ${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years).
               </p>
             </div>
             <div className="ml-8 flex gap-3">
@@ -818,7 +818,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
 
           <div className="bg-green-50 border-l-4 border-green-600 rounded-lg p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              The ${scenario.incrementalRevenue}B Opportunity
+              The ${scenario.fiveYearRevenue}B Opportunity (5-Year)
               <span className="text-lg font-normal text-gray-600 ml-3">({scenario.gapCapturePercent}% of ${marketData.marketGap.revenue}B gap)</span>
             </h3>
             
@@ -827,10 +827,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <div className="flex items-start gap-3">
                 <Info className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 mb-3">The ${scenario.incrementalRevenue}B Opportunity: A Three-Pronged Strategy</h4>
+                  <h4 className="font-bold text-gray-900 mb-3">The ${scenario.fiveYearRevenue}B Opportunity (5-Year): A Three-Pronged Strategy</h4>
                   <div className="text-sm text-gray-700 space-y-3">
                     <p className="text-gray-600">
-                      Dialect-specific multilingual CX enables Verizon to simultaneously <strong>defend</strong> current customers, <strong>capture</strong> share from all competitors, and <strong>grow</strong> with net new customers—generating <strong>${scenario.incrementalRevenue}B in incremental annual revenue</strong> over 5 years.
+                      Dialect-specific multilingual CX enables Verizon to simultaneously <strong>defend</strong> current customers, <strong>capture</strong> share from all competitors, and <strong>grow</strong> with net new customers—generating <strong>${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years)</strong>.
                     </p>
                     
                     <div className="grid grid-cols-3 gap-4 mt-4">
@@ -927,7 +927,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </div>
                   <div className="bg-green-50 rounded-lg p-4">
                     <div className="text-sm text-gray-600 mb-1">Incremental Revenue</div>
-                    <div className="text-3xl font-bold text-green-700">${scenario.incrementalRevenue}B</div>
+                    <div className="text-3xl font-bold text-green-700">${scenario.annualRevenue}B/yr</div>
+                    <div className="text-xl font-semibold text-green-600 mt-1">${scenario.fiveYearRevenue}B (5-yr)</div>
                   </div>
                   <div className="bg-green-50 rounded-lg p-4">
                     <div className="text-sm text-gray-600 mb-1">New Market Share</div>
@@ -989,9 +990,9 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </tr>
                       <tr className="border-b border-gray-200 bg-green-100">
                         <td className="py-3 px-4 text-gray-900 font-bold">Incremental Annual Revenue</td>
-                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.conservative.incrementalRevenue}B</td>
-                        <td className="text-center py-3 px-4 bg-green-200 font-bold text-green-800">${marketData.growthScenarios.moderate.incrementalRevenue}B</td>
-                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.aggressive.incrementalRevenue}B</td>
+                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.conservative.annualRevenue}B/yr<br/><span className="text-sm">(${marketData.growthScenarios.conservative.fiveYearRevenue}B 5-yr)</span></td>
+                        <td className="text-center py-3 px-4 bg-green-200 font-bold text-green-800">${marketData.growthScenarios.moderate.annualRevenue}B/yr<br/><span className="text-sm">(${marketData.growthScenarios.moderate.fiveYearRevenue}B 5-yr)</span></td>
+                        <td className="text-center py-3 px-4 font-bold text-green-700">${marketData.growthScenarios.aggressive.annualRevenue}B/yr<br/><span className="text-sm">(${marketData.growthScenarios.aggressive.fiveYearRevenue}B 5-yr)</span></td>
                       </tr>
                       <tr className="border-b border-gray-200">
                         <td className="py-3 px-4 text-gray-700">New Market Share</td>
@@ -1076,7 +1077,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
                 <div className="text-sm text-blue-100">First-mover window</div>
               </div>
               <div className="bg-white/20 rounded-lg p-4">
-                <div className="text-3xl font-bold">${scenario.incrementalRevenue}B</div>
+                <div className="text-3xl font-bold">${scenario.annualRevenue}B/yr</div>
+                <div className="text-xl font-semibold text-gray-600 mt-1">${scenario.fiveYearRevenue}B (5-yr)</div>
                 <div className="text-sm text-blue-100">Opportunity at stake</div>
               </div>
             </div>

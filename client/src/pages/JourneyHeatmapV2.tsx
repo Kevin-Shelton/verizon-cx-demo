@@ -139,7 +139,7 @@ export default function JourneyHeatmapV2() {
               <h1 className="text-4xl font-bold">Customer Journey Performance Analysis</h1>
             </div>
             <p className="text-xl text-red-100 mb-6 max-w-4xl">
-              Verizon's journey underperforms T-Mobile at every stage, driving higher churn and lower lifetime value. Dialect-specific CX can reverse this trend and help capture <strong>${scenario.incrementalRevenue}B</strong> in incremental revenue over 5 years.
+              Verizon's journey underperforms T-Mobile at every stage, driving higher churn and lower lifetime value. Dialect-specific CX can reverse this trend and help capture <strong>${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years)</strong>.
             </p>
 
             {/* Crisis Stats */}
@@ -209,7 +209,8 @@ export default function JourneyHeatmapV2() {
                 </div>
                 <div>
                   <div className="text-xs text-purple-700 mb-1">Revenue</div>
-                  <div className="text-xl font-bold text-purple-900">${scenario.incrementalRevenue}B</div>
+                  <div className="text-xl font-bold text-purple-900">${scenario.annualRevenue}B/yr</div>
+                  <div className="text-xs text-purple-600">(${scenario.fiveYearRevenue}B 5-yr)</div>
                 </div>
               </div>
             </div>
@@ -568,7 +569,8 @@ export default function JourneyHeatmapV2() {
                   </div>
                   <div>
                     <div className="text-sm text-green-100 mb-1">Incremental Revenue</div>
-                    <div className="text-3xl font-bold">${scenario.incrementalRevenue}B</div>
+                    <div className="text-3xl font-bold">${scenario.annualRevenue}B/yr</div>
+                    <div className="text-lg font-semibold text-green-200">${scenario.fiveYearRevenue}B (5-yr)</div>
                   </div>
                   <div>
                     <div className="text-sm text-green-100 mb-1">New Market Share</div>

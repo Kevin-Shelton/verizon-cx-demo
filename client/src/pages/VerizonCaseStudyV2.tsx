@@ -699,7 +699,7 @@ export default function VerizonCaseStudyV2() {
           </div>
 
           <p className="text-xl text-gray-600 mb-8">
-            Based on market analysis and competitive benchmarking, Invictus can help Verizon capture ${scenario.incrementalRevenue}B in incremental revenue over 5 years under a {selectedScenario} execution scenario.
+            Based on market analysis and competitive benchmarking, Invictus can help Verizon capture ${scenario.annualRevenue}B in annual incremental revenue (${scenario.fiveYearRevenue}B over 5 years) under a {selectedScenario} execution scenario.
           </p>
 
           {/* Scenario Selector */}
@@ -725,7 +725,8 @@ export default function VerizonCaseStudyV2() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-6">
                 <DollarSign className="w-8 h-8 mb-3" />
-                <div className="text-3xl font-bold mb-1">${scenario.incrementalRevenue}B</div>
+                <div className="text-3xl font-bold mb-1">${scenario.annualRevenue}B/yr</div>
+                <div className="text-lg font-semibold mb-1">${scenario.fiveYearRevenue}B (5-yr)</div>
                 <div className="text-green-100 text-sm">Incremental Revenue</div>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6">
@@ -776,7 +777,7 @@ export default function VerizonCaseStudyV2() {
               </div>
               <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                 <p className="text-sm text-purple-900">
-                  <strong>Growth:</strong> +{(scenario.newMarketShare - marketData.competitiveLandscape.verizon.marketShare).toFixed(1)} percentage points = {scenario.newSubscribers}M new subscribers = ${scenario.incrementalRevenue}B incremental revenue
+                  <strong>Growth:</strong> +{(scenario.newMarketShare - marketData.competitiveLandscape.verizon.marketShare).toFixed(1)} percentage points = {scenario.newSubscribers}M new subscribers = ${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years)
                 </p>
               </div>
             </div>
