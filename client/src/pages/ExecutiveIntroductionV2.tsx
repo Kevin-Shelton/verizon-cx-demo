@@ -22,6 +22,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   onToggle, 
   children 
 }) => {
+  console.log(`CollapsibleSection [${id}]: isExpanded=${isExpanded}, will render content: ${isExpanded}`);
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <button
@@ -55,6 +56,15 @@ const ExecutiveIntroductionV2: React.FC = () => {
   const [endToEndCoverageExpanded, setEndToEndCoverageExpanded] = useState(false);
   const [scenarioComparisonExpanded, setScenarioComparisonExpanded] = useState(false);
   const [scenarioRationaleExpanded, setScenarioRationaleExpanded] = useState(false);
+
+  // Debug logging
+  console.log('=== COLLAPSIBLE SECTIONS STATE ===');
+  console.log('culturalPreferencesExpanded:', culturalPreferencesExpanded);
+  console.log('dialectComparisonExpanded:', dialectComparisonExpanded);
+  console.log('dialectDistributionExpanded:', dialectDistributionExpanded);
+  console.log('endToEndCoverageExpanded:', endToEndCoverageExpanded);
+  console.log('scenarioComparisonExpanded:', scenarioComparisonExpanded);
+  console.log('scenarioRationaleExpanded:', scenarioRationaleExpanded);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
