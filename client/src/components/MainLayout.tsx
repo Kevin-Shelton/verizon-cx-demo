@@ -9,7 +9,6 @@ import {
   MessageSquare,
   Menu,
   X,
-  Calculator,
   Languages,
   TrendingUp,
   BookOpen,
@@ -23,20 +22,22 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-const navigation = [
+// Executive Insights - First group
+const executiveInsights = [
+  { name: "Executive Intro", href: "/executive-intro", icon: Briefcase },
+  { name: "Verizon Case Study", href: "/verizon-case-study", icon: FileText },
+  { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },
+  { name: "Research Sources", href: "/research-sources", icon: BookOpen },
+];
+
+// Demo Experience - Second group
+const demoExperience = [
   { name: "Home", href: "/", icon: Home },
   { name: "Personas", href: "/personas", icon: Users },
   { name: "Journey", href: "/journey", icon: Map },
   { name: "Experiences", href: "/experiences", icon: Sparkles },
-  { name: "Feedback", href: "/feedback", icon: MessageSquare },
-];
-
-const executiveInsights = [
-  { name: "Executive Intro", href: "/executive-intro", icon: Briefcase },
-  { name: "Verizon Case Study", href: "/verizon-case-study", icon: FileText },
   { name: "Translation Demo", href: "/translation-demo", icon: Languages },
-  { name: "Journey Heatmap", href: "/journey-heatmap", icon: TrendingUp },
-  { name: "Research Sources", href: "/research-sources", icon: BookOpen },
+  { name: "Feedback", href: "/feedback", icon: MessageSquare },
 ];
 
 export default function MainLayout({ children }: MainLayoutProps) {
@@ -72,15 +73,17 @@ export default function MainLayout({ children }: MainLayoutProps) {
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
               <img src="https://files.manuscdn.com/user_upload_by_module/session_file/120250985/tIYLxxOFWqHZpwVA.png" alt="Invictus" className="h-10 w-auto" />
-              <span className="text-sm text-muted-foreground">Presented by Invictus</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {/* Customer Journey Section */}
+            {/* Executive Insights Section - First */}
             <div className="flex items-center gap-1 px-2">
-              {navigation.map((item) => {
+              <span className="text-xs font-semibold text-muted-foreground mr-2 hidden xl:block">
+                Executive Insights
+              </span>
+              {executiveInsights.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
                 return (
@@ -91,7 +94,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                       className="gap-2"
                     >
                       <Icon className="h-4 w-4" />
-                      {item.name}
+                      <span className="hidden xl:inline">{item.name}</span>
                     </Button>
                   </Link>
                 );
@@ -101,12 +104,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             {/* Vertical Separator */}
             <div className="h-8 w-px bg-gradient-to-b from-transparent via-border to-transparent mx-3" />
 
-            {/* Executive Insights Section */}
+            {/* Demo Experience Section - Second */}
             <div className="flex items-center gap-1 px-2">
               <span className="text-xs font-semibold text-muted-foreground mr-2 hidden xl:block">
-                Executive Insights
+                Demo Experience
               </span>
-              {executiveInsights.map((item) => {
+              {demoExperience.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
                 return (
@@ -149,11 +152,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
               className="lg:hidden border-t border-border overflow-hidden bg-card"
             >
               <nav className="container py-4 flex flex-col gap-2">
-                {/* Customer Journey Section */}
+                {/* Executive Insights Section - First */}
                 <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
-                  Customer Journey
+                  Executive Insights
                 </div>
-                {navigation.map((item) => {
+                {executiveInsights.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (
@@ -173,11 +176,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 {/* Separator */}
                 <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
 
-                {/* Executive Insights Section */}
+                {/* Demo Experience Section - Second */}
                 <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
-                  Executive Insights
+                  Demo Experience
                 </div>
-                {executiveInsights.map((item) => {
+                {demoExperience.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (
