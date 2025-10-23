@@ -125,7 +125,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
       </div>
 
       {/* Sticky Section Navigation */}
-      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <div className="sticky top-[60px] md:top-[84px] z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 md:px-8">
           <nav className="flex overflow-x-auto">
             <button
@@ -185,7 +185,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
       <div className="max-w-7xl mx-auto px-3 py-4 md:px-8 md:py-6">
         
         {/* Section 1: The Strategic Opportunity */}
-        <section id="market-overview" className="mb-6 md:mb-10 scroll-mt-20">
+        <section id="market-overview" className="mb-6 md:mb-10 scroll-mt-[140px] md:scroll-mt-[160px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-5 h-5 md:w-8 md:h-8 text-blue-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">The Strategic Opportunity</h1>
@@ -375,7 +375,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 2: How Verizon Can Win in This Space */}
-        <section id="winning-strategy" className="mb-6 md:mb-10 scroll-mt-20">
+        <section id="winning-strategy" className="mb-6 md:mb-10 scroll-mt-[140px] md:scroll-mt-[160px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-purple-600" />
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">How Verizon Can Win in This Space</h1>
@@ -617,7 +617,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 3: Super Consumer Behaviors */}
-        <section id="super-consumer" className="mb-6 md:mb-10 scroll-mt-20">
+        <section id="super-consumer" className="mb-6 md:mb-10 scroll-mt-[140px] md:scroll-mt-[160px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Zap className="w-8 h-8 text-orange-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Hispanic "Super Consumer"</h1>
@@ -719,7 +719,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 4: The Differentiation Opportunity */}
-        <section id="differentiation" className="mb-6 md:mb-10 scroll-mt-20">
+        <section id="differentiation" className="mb-6 md:mb-10 scroll-mt-[140px] md:scroll-mt-[160px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Target className="w-8 h-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
@@ -932,7 +932,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
         </section>
 
         {/* Section 5: Growth Scenarios */}
-        <section id="growth-scenarios" className="mb-6 md:mb-10 scroll-mt-20">
+        <section id="growth-scenarios" className="mb-6 md:mb-10 scroll-mt-[140px] md:scroll-mt-[160px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-green-600" />
             <h1 className="text-4xl font-bold text-gray-900">Growth Scenarios & Financial Impact</h1>
