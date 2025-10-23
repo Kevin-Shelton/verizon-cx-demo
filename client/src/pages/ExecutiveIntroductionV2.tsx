@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TrendingDown, TrendingUp, AlertTriangle, Target, DollarSign, Users, Globe, Zap, CheckCircle, XCircle, Info, ChevronDown, ChevronUp } from 'lucide-react';
 import marketData from '../../../data/hispanicMarketData.json';
 import SourceTooltip from '../components/SourceTooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
 
 type ScenarioType = 'conservative' | 'moderate' | 'aggressive';
 
@@ -313,214 +314,238 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900">How Verizon Can Win in This Space</h1>
           </div>
 
-          {/* T-Mobile Strategy - Collapsible */}
-          <div className="mb-6">
-            <CollapsibleSection
-              id="tmobile-strategy"
-              title="T-Mobile's Winning Playbook: How They Captured 50.2% Market Share"
-              isExpanded={isExpanded('tmobile-strategy')}
-              onToggle={() => toggleSection('tmobile-strategy')}
-            >
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Cultural Positioning</h4>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• FIFA partnerships, Latino artists</li>
-                        <li>• "Leading provider for Latinos"</li>
-                        <li>• Latino Mobile Trends Report</li>
-                        <li>• Authentic cultural engagement</li>
-                      </ul>
+          {/* Three Strategy Cards - Side by Side with Modals */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Card 1: T-Mobile Strategy */}
+            <Dialog>
+              <div className="bg-white rounded-lg border-2 border-purple-200 p-4 md:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-6 h-6 text-purple-600" />
+                  <h3 className="text-base md:text-lg font-bold text-gray-900">T-Mobile's Playbook</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-4">50.2% market share through cultural positioning and value</p>
+                <div className="space-y-2 mb-4">
+                  <div className="text-xs text-gray-700">• FIFA partnerships & Latino artists</div>
+                  <div className="text-xs text-gray-700">• Consumer-friendly pricing</div>
+                  <div className="text-xs text-gray-700">• ${marketData.tMobileStrategy.hometownGrants}M+ community investment</div>
+                </div>
+                <DialogTrigger asChild>
+                  <button className="w-full px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    Learn More
+                  </button>
+                </DialogTrigger>
+              </div>
+              <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>T-Mobile's Winning Playbook: How They Captured 50.2% Market Share</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">Cultural Positioning</h4>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• FIFA partnerships, Latino artists</li>
+                          <li>• "Leading provider for Latinos"</li>
+                          <li>• Latino Mobile Trends Report</li>
+                          <li>• Authentic cultural engagement</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">Value Proposition</h4>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• Consumer-friendly pricing</li>
+                          <li>• Targets lower median income demo</li>
+                          <li>• Transparent, simple plans</li>
+                          <li>• Family plan incentives</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">Community Investment</h4>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• ${marketData.tMobileStrategy.hometownGrants}M+ Hometown Grants</li>
+                          <li>• Friday Night 5G Lights</li>
+                          <li>• Hispanic community programs</li>
+                          <li>• Local market activation</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">Loyalty Programs</h4>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• Stateside International Talk</li>
+                          <li>• Matricula consular program</li>
+                          <li>• T-Mobile Tuesdays rewards</li>
+                          <li>• International roaming benefits</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                <div className="bg-purple-100 rounded-lg p-4">
+                  <div className="grid grid-cols-4 gap-4 text-center">
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Value Proposition</h4>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Consumer-friendly pricing</li>
-                        <li>• Targets lower median income demo</li>
-                        <li>• Transparent, simple plans</li>
-                        <li>• Family plan incentives</li>
-                      </ul>
+                      <div className="text-xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.hispanicPercentOfBase}%+</div>
+                      <div className="text-xs text-purple-600 mt-1">Hispanic % of Base</div>
+                    </div>
+                    <div>
+                      <div className="text-xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.churnRate}%</div>
+                      <div className="text-xs text-purple-600 mt-1">Lowest Churn Rate</div>
+                    </div>
+                    <div>
+                      <div className="text-xl font-bold text-purple-700">+{marketData.competitiveLandscape.tMobile.netAdds2024}M</div>
+                      <div className="text-xs text-purple-600 mt-1">2024 Net Adds</div>
+                    </div>
+                    <div>
+                      <div className="text-xl font-bold text-purple-700">#1</div>
+                      <div className="text-xs text-purple-600 mt-1">Customer Satisfaction</div>
                     </div>
                   </div>
                 </div>
+              </DialogContent>
+            </Dialog>
 
-                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Community Investment</h4>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• ${marketData.tMobileStrategy.hometownGrants}M+ Hometown Grants</li>
-                        <li>• Friday Night 5G Lights</li>
-                        <li>• Hispanic community programs</li>
-                        <li>• Local market activation</li>
-                      </ul>
+            {/* Card 2: AT&T Infrastructure */}
+            <Dialog>
+              <div className="bg-white rounded-lg border-2 border-blue-200 p-4 md:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-2 mb-3">
+                  <Target className="w-6 h-6 text-blue-600" />
+                  <h3 className="text-base md:text-lg font-bold text-gray-900">AT&T's Infrastructure</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-4">25+ years of bilingual investment and infrastructure</p>
+                <div className="space-y-2 mb-4">
+                  <div className="text-xs text-gray-700">• 770+ bilingual stores</div>
+                  <div className="text-xs text-gray-700">• 22 Spanish call centers</div>
+                  <div className="text-xs text-gray-700">• $14.1B Hispanic revenue</div>
+                </div>
+                <DialogTrigger asChild>
+                  <button className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    Learn More
+                  </button>
+                </DialogTrigger>
+              </div>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>AT&T's Infrastructure Moat: 25+ Years of Bilingual Investment</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                    <h4 className="font-bold text-gray-900 mb-3 text-sm">Physical Infrastructure</h4>
+                    <ul className="text-xs text-gray-700 space-y-2">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span><strong>770+ bilingual stores</strong> (established since 2006)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span><strong>22 Spanish call centers</strong> (25+ years of operation)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>Dedicated bilingual staff nationwide</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                    <h4 className="font-bold text-gray-900 mb-3 text-sm">Market Position</h4>
+                    <ul className="text-xs text-gray-700 space-y-2">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span><strong>$14.1B annual Hispanic revenue</strong></span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span><strong>20.1% market share</strong> (13.0M subscribers)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <span>41.5% fiber convergence penetration</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            {/* Card 3: Verizon's Opportunity */}
+            <Dialog>
+              <div className="bg-white rounded-lg border-2 border-green-200 p-4 md:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-2 mb-3">
+                  <Zap className="w-6 h-6 text-green-600" />
+                  <h3 className="text-base md:text-lg font-bold text-gray-900">Verizon's Opportunity</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-4">Market expansion potential through differentiation</p>
+                <div className="space-y-2 mb-4">
+                  <div className="text-xs text-gray-700">• Dialect-specific translation</div>
+                  <div className="text-xs text-gray-700">• AI-powered personalization</div>
+                  <div className="text-xs text-gray-700">• Premium network advantage</div>
+                </div>
+                <DialogTrigger asChild>
+                  <button className="w-full px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    Learn More
+                  </button>
+                </DialogTrigger>
+              </div>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Verizon's Growth Opportunity: Market Expansion Potential</DialogTitle>
+                </DialogHeader>
+                <div className="mb-4">
+                  <h4 className="font-bold text-gray-900 mb-3">Current Market Position</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <div className="text-sm text-gray-700"><strong>26.9% market share</strong></div>
+                      <div className="text-xs text-gray-600">17.4M Hispanic subscribers</div>
+                    </div>
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <div className="text-sm text-gray-700"><strong>$9.7B annual revenue</strong></div>
+                      <div className="text-xs text-gray-600">From Hispanic segment</div>
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Loyalty Programs</h4>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Stateside International Talk</li>
-                        <li>• Matricula consular program</li>
-                        <li>• T-Mobile Tuesdays rewards</li>
-                        <li>• International roaming benefits</li>
-                      </ul>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-3">Growth Opportunities</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-xs text-gray-700"><strong>Dialect-specific translation</strong></div>
+                      <div className="text-xs text-gray-600">First-mover advantage in authentic localization</div>
+                    </div>
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-xs text-gray-700"><strong>Premium network positioning</strong></div>
+                      <div className="text-xs text-gray-600">Leverage superior 5G infrastructure</div>
+                    </div>
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-xs text-gray-700"><strong>AI-powered personalization</strong></div>
+                      <div className="text-xs text-gray-600">Culturally relevant customer experience</div>
+                    </div>
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="text-xs text-gray-700"><strong>Strategic partnerships</strong></div>
+                      <div className="text-xs text-gray-600">Community engagement and cultural investment</div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="bg-purple-100 rounded-lg p-4">
-                <div className="grid grid-cols-4 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.hispanicPercentOfBase}%+</div>
-                    <div className="text-xs text-purple-600 mt-1">Hispanic % of Base</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-purple-700">{marketData.competitiveLandscape.tMobile.churnRate}%</div>
-                    <div className="text-xs text-purple-600 mt-1">Lowest Churn Rate</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-purple-700">+{marketData.competitiveLandscape.tMobile.netAdds2024}M</div>
-                    <div className="text-xs text-purple-600 mt-1">2024 Net Adds</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-purple-700">#1</div>
-                    <div className="text-xs text-purple-600 mt-1">Customer Satisfaction</div>
+                <div className="bg-green-100 rounded-lg p-4 text-center border-2 border-green-300 mt-4">
+                  <div className="text-sm font-bold text-green-700">
+                    Potential: Capture 60% of the market gap = $8.3B additional annual revenue
                   </div>
                 </div>
-              </div>
-            </CollapsibleSection>
-          </div>
-
-          {/* AT&T Infrastructure - Collapsible */}
-          <div className="mb-6">
-            <CollapsibleSection
-              id="att-infrastructure"
-              title="AT&T's Infrastructure Moat: 25+ Years of Bilingual Investment"
-              isExpanded={isExpanded('att-infrastructure')}
-              onToggle={() => toggleSection('att-infrastructure')}
-            >
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
-                  <h4 className="font-bold text-gray-900 mb-3">Physical Infrastructure</h4>
-                  <ul className="text-sm text-gray-700 space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span><strong>770+ bilingual stores</strong> (established since 2006)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span><strong>22 Spanish call centers</strong> (25+ years of operation)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>Dedicated bilingual staff nationwide</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
-                  <h4 className="font-bold text-gray-900 mb-3">Market Position</h4>
-                  <ul className="text-sm text-gray-700 space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span><strong>$14.1B annual Hispanic revenue</strong></span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span><strong>20.1% market share</strong> (13.0M subscribers)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>41.5% fiber convergence penetration</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleSection>
-          </div>
-
-          {/* Verizon's Deficit - Collapsible */}
-          <div className="mb-6">
-            <CollapsibleSection
-              id="verizon-opportunity"
-              title="Verizon's Growth Opportunity: Market Expansion Potential"
-              isExpanded={isExpanded('verizon-opportunity')}
-              onToggle={() => toggleSection('verizon-opportunity')}
-            >
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">No dedicated bilingual store network</span>
-                    <div className="text-sm text-gray-600">vs AT&T's 770+ bilingual stores</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">No Spanish call center footprint</span>
-                    <div className="text-sm text-gray-600">vs AT&T's 22 Spanish call centers (25+ years)</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">Only {marketData.competitiveLandscape.verizon.hispanicPercentOfBase}% Hispanic customer base</span>
-                    <div className="text-sm text-gray-600">Half of T-Mobile's 25%+ penetration</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">Minimal cultural investment</span>
-                    <div className="text-sm text-gray-600">${marketData.tMobileStrategy.verizonCulturalInvestment}M vs T-Mobile's ${marketData.tMobileStrategy.culturalInvestment}M</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">Generic Spanish only</span>
-                    <div className="text-sm text-gray-600">No dialect-specific support</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 bg-red-50 p-4 rounded-lg border border-red-200">
-                  <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
-                  <div className="text-gray-700">
-                    <span className="font-semibold">Weak subscriber growth</span>
-                    <div className="text-sm text-gray-600">+{marketData.competitiveLandscape.verizon.netAdds2024}M vs T-Mobile's +{marketData.competitiveLandscape.tMobile.netAdds2024}M (2024)</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-red-100 rounded-lg p-4 text-center border-2 border-red-300">
-                <div className="text-lg font-bold text-red-700">
-                  Result: {marketData.competitiveLandscape.verizon.marketShare}% market share despite being the largest U.S. carrier
-                </div>
-                <div className="text-sm text-red-600 mt-2">
-                  Investment gap: ${marketData.tMobileStrategy.verizonCulturalInvestment}M vs T-Mobile's ${marketData.tMobileStrategy.culturalInvestment}M (33x difference)
-                </div>
-              </div>
-            </CollapsibleSection>
+              </DialogContent>
+            </Dialog>
           </div>
         </section>
 
