@@ -9,7 +9,6 @@ import {
   MessageSquare,
   Menu,
   X,
-  Languages,
   TrendingUp,
   BookOpen,
   Briefcase,
@@ -36,7 +35,6 @@ const demoExperience = [
   { name: "Personas", href: "/personas", icon: Users },
   { name: "Journey", href: "/journey", icon: Map },
   { name: "Experiences", href: "/experiences", icon: Sparkles },
-  { name: "Translation Demo", href: "/translation-demo", icon: Languages },
   { name: "Feedback", href: "/feedback", icon: MessageSquare },
 ];
 
