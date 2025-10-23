@@ -26,10 +26,6 @@ const ADMIN_EMAIL = 'kevin.shelton@invictusbpo.com';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Add console logs to debug the values
-
-
-
 // Check if environment variables are set
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase URL or Anon Key is not defined. Please check your Vercel environment variables.');
@@ -70,7 +66,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // No longer saving users to localStorage, as they are managed in Supabase
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    const { data, error } = await supabase.from('app_users').select('*').eq('username', username).eq('password', password);
+    // Convert password to lowercase to match database storage
+    const lowerPassword = password.toLowerCase();
+    const { data, error } = await supabase.from('app_users').select('*').eq('username', username).eq('password', lowerPassword);
 
     if (error) {
       console.error('Supabase login error:', error.message);
