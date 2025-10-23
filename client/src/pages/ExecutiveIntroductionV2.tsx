@@ -722,11 +722,11 @@ const ExecutiveIntroductionV2: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-900">The Differentiation Opportunity</h1>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-8 mb-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Dialect-Specific Translation: Verizon's Competitive Moat</h3>
+          <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-3 md:p-6 mb-4">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Dialect-Specific Translation: Verizon's Competitive Moat</h3>
 
-            {/* Comparison - Collapsible */}
-            <div className="mb-6">
+            {/* Collapsible Sections Side-by-Side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
               <CollapsibleSection
                 id="dialect-comparison"
                 title="Generic Spanish vs Dialect-Specific Translation: The Quality Gap"
@@ -822,10 +822,6 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </div>
                 </div>
               </CollapsibleSection>
-            </div>
-
-            {/* Dialect Distribution - Collapsible */}
-            <div className="mb-6">
               <CollapsibleSection
                 id="dialect-distribution"
                 title="U.S. Hispanic Market Dialect Distribution"
@@ -871,15 +867,12 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </p>
                 </div>
               </CollapsibleSection>
-            </div>
-
-            {/* End-to-End Coverage - Collapsible */}
-            <CollapsibleSection
-              id="end-to-end-coverage"
-              title="End-to-End Dialect-Specific Coverage Across All Customer Touchpoints"
-              isExpanded={isExpanded('end-to-end-coverage')}
-              onToggle={() => toggleSection('end-to-end-coverage')}
-            >
+              <CollapsibleSection
+                id="end-to-end-coverage"
+                title="End-to-End Dialect-Specific Coverage Across All Customer Touchpoints"
+                isExpanded={isExpanded('end-to-end-coverage')}
+                onToggle={() => toggleSection('end-to-end-coverage')}
+              >
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
                   <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
@@ -924,7 +917,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   culturally authentic experience that builds trust and loyalty—something no competitor currently offers.
                 </p>
               </div>
-            </CollapsibleSection>
+              </CollapsibleSection>
+            </div>
           </div>
         </section>
 
@@ -1171,7 +1165,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   </ul>
                 </div>
               </div>
-            </CollapsibleSection>
+              </CollapsibleSection>
             </div>
           </div>
         </section>
