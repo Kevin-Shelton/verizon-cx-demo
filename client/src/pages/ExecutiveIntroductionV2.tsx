@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TrendingDown, TrendingUp, AlertTriangle, Target, DollarSign, Users, Globe, Zap, CheckCircle, XCircle, Info, ChevronDown, ChevronUp } from 'lucide-react';
 import marketData from '../../../data/hispanicMarketData.json';
+import SourceTooltip from '../components/SourceTooltip';
 
 type ScenarioType = 'conservative' | 'moderate' | 'aggressive';
 
@@ -126,6 +127,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-600 p-3 md:p-8 rounded-lg mb-4 md:mb-8">
             <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">
               The $65.5B U.S. Hispanic Wireless Market
+              <SourceTooltip 
+                source="U.S. Census Bureau (2023), Wireless Industry Analysis" 
+                detail="62M Hispanic consumers × $1,058 average annual wireless spend = $65.5B TAM" 
+              />
             </h2>
             <p className="text-xl text-gray-700 mb-6">
               T-Mobile dominates with 50.2% share while Verizon holds only 26.9%
@@ -136,12 +141,22 @@ const ExecutiveIntroductionV2: React.FC = () => {
               {/* T-Mobile */}
               <div className="bg-white rounded-lg p-6 shadow-md border-2 border-purple-200">
                 <div className="text-sm font-semibold text-purple-600 mb-2">T-MOBILE</div>
-                <div className="text-4xl font-bold text-purple-700 mb-1">50.2%</div>
+                <div className="text-4xl font-bold text-purple-700 mb-1">50.2%
+                  <SourceTooltip 
+                    source="Wireless Market Share Analysis Q4 2024" 
+                    detail="T-Mobile Hispanic market share based on subscriber data and market research" 
+                  />
+                </div>
                 <div className="text-gray-600 mb-3">Market Share</div>
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subscribers:</span>
-                    <span className="font-semibold">32.4M</span>
+                    <span className="font-semibold">32.4M
+                      <SourceTooltip 
+                        source="T-Mobile Q4 2024 Earnings Report" 
+                        detail="Hispanic subscriber count from quarterly earnings and demographic analysis" 
+                      />
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Revenue:</span>
@@ -157,12 +172,22 @@ const ExecutiveIntroductionV2: React.FC = () => {
               {/* Verizon */}
               <div className="bg-white rounded-lg p-6 shadow-md border-2 border-red-200">
                 <div className="text-sm font-semibold text-red-600 mb-2">VERIZON</div>
-                <div className="text-4xl font-bold text-red-700 mb-1">26.9%</div>
+                <div className="text-4xl font-bold text-red-700 mb-1">26.9%
+                  <SourceTooltip 
+                    source="Verizon Q4 2024 Earnings Report" 
+                    detail="Verizon Hispanic market share: 17.4M subscribers ÷ 64.6M total Hispanic wireless subscribers" 
+                  />
+                </div>
                 <div className="text-gray-600 mb-3">Market Share</div>
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subscribers:</span>
-                    <span className="font-semibold">17.4M</span>
+                    <span className="font-semibold">17.4M
+                      <SourceTooltip 
+                        source="Verizon Q4 2024 Earnings Report" 
+                        detail="Hispanic subscriber count from Verizon quarterly earnings and demographic segmentation" 
+                      />
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Revenue:</span>
@@ -178,7 +203,12 @@ const ExecutiveIntroductionV2: React.FC = () => {
               {/* AT&T */}
               <div className="bg-white rounded-lg p-6 shadow-md border-2 border-blue-200">
                 <div className="text-sm font-semibold text-blue-600 mb-2">AT&T</div>
-                <div className="text-4xl font-bold text-blue-700 mb-1">20.1%</div>
+                <div className="text-4xl font-bold text-blue-700 mb-1">20.1%
+                  <SourceTooltip 
+                    source="AT&T Q4 2024 Earnings Report" 
+                    detail="AT&T Hispanic market share based on subscriber data and market analysis" 
+                  />
+                </div>
                 <div className="text-gray-600 mb-3">Market Share</div>
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
@@ -276,11 +306,11 @@ const ExecutiveIntroductionV2: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 2: Why T-Mobile is Winning */}
+        {/* Section 2: How Verizon Can Win in This Space */}
         <section className="mb-8 md:mb-16">
           <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
             <TrendingUp className="w-8 h-8 text-purple-600" />
-            <h1 className="text-4xl font-bold text-gray-900">Why T-Mobile is Winning</h1>
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900">How Verizon Can Win in This Space</h1>
           </div>
 
           {/* T-Mobile Strategy - Collapsible */}
