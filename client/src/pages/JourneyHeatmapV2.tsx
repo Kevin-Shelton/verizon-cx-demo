@@ -46,7 +46,7 @@ export default function JourneyHeatmapV2() {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
   const [viewMode, setViewMode] = useState<ViewMode>('comparison');
   const [selectedStage, setSelectedStage] = useState<JourneyStage | null>(null);
-  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
+  const [expandedStages, setExpandedStages] = useState<{ [key: string]: boolean }>({});
 
   const marketData = hispanicMarketData;
   const scenario = marketData.growthScenarios[selectedScenario];
@@ -61,11 +61,23 @@ export default function JourneyHeatmapV2() {
       'grow' as DCGPillar
   }));
 
-  const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => ({
+  const toggleStage = (stageId: string) => {
+    setExpandedStages(prev => ({
       ...prev,
-      [sectionId]: !prev[sectionId]
+      [stageId]: !prev[stageId]
     }));
+  };
+
+  const expandAll = () => {
+    const allStages = stagesWithDCG.reduce((acc, stage) => ({
+      ...acc,
+      [stage.id]: true
+    }), {});
+    setExpandedStages(allStages);
+  };
+
+  const collapseAll = () => {
+    setExpandedStages({});
   };
 
   const getDCGColor = (pillar: DCGPillar) => {
@@ -159,107 +171,97 @@ export default function JourneyHeatmapV2() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
-        {/* Scenario Selector */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
-        >
-          <Card className="border-2 border-purple-300">
-            <CardHeader>
-              <CardTitle>Select Growth Scenario</CardTitle>
-              <CardDescription>
-                Choose how aggressively Verizon executes on dialect-specific CX improvements
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-3 mb-6">
-                {(['conservative', 'moderate', 'aggressive'] as ScenarioType[]).map((scenarioKey) => (
-                  <button
-                    key={scenarioKey}
-                    onClick={() => setSelectedScenario(scenarioKey)}
-                    className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
-                      selectedScenario === scenarioKey
-                        ? 'bg-purple-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {scenarioKey.charAt(0).toUpperCase() + scenarioKey.slice(1)}
-                  </button>
-                ))}
-              </div>
+        {/* Sticky Controls Section */}
+        <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm shadow-md rounded-lg mb-8 p-6">
+          {/* Scenario Selector */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">Select Growth Scenario</h3>
+            <div className="flex gap-3 mb-4">
+              {(['conservative', 'moderate', 'aggressive'] as ScenarioType[]).map((scenarioKey) => (
+                <button
+                  key={scenarioKey}
+                  onClick={() => setSelectedScenario(scenarioKey)}
+                  className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+                    selectedScenario === scenarioKey
+                      ? 'bg-purple-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {scenarioKey.charAt(0).toUpperCase() + scenarioKey.slice(1)}
+                </button>
+              ))}
+            </div>
 
-              {/* Scenario Impact Summary */}
-              <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
-                <h3 className="font-bold text-purple-900 mb-4">
-                  {selectedScenario.charAt(0).toUpperCase() + selectedScenario.slice(1)} Scenario Impact
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div>
-                    <div className="text-sm text-purple-700 mb-1">Churn Reduction</div>
-                    <div className="text-2xl font-bold text-purple-900">{scenario.defend.churnReduction}%</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-purple-700 mb-1">New Subscribers</div>
-                    <div className="text-2xl font-bold text-purple-900">+{scenario.newSubscribers}M</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-purple-700 mb-1">Market Share</div>
-                    <div className="text-2xl font-bold text-purple-900">{scenario.newMarketShare}%</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-purple-700 mb-1">Revenue</div>
-                    <div className="text-2xl font-bold text-purple-900">${scenario.incrementalRevenue}B</div>
-                  </div>
+            {/* Scenario Impact Summary */}
+            <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-xs text-purple-700 mb-1">Churn Reduction</div>
+                  <div className="text-xl font-bold text-purple-900">{scenario.defend.churnReduction}%</div>
+                </div>
+                <div>
+                  <div className="text-xs text-purple-700 mb-1">New Subscribers</div>
+                  <div className="text-xl font-bold text-purple-900">+{scenario.newSubscribers}M</div>
+                </div>
+                <div>
+                  <div className="text-xs text-purple-700 mb-1">Market Share</div>
+                  <div className="text-xl font-bold text-purple-900">{scenario.newMarketShare}%</div>
+                </div>
+                <div>
+                  <div className="text-xs text-purple-700 mb-1">Revenue</div>
+                  <div className="text-xl font-bold text-purple-900">${scenario.incrementalRevenue}B</div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+          </div>
 
-        {/* View Mode Selector */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-8"
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle>Select View Mode</CardTitle>
-              <CardDescription>
-                Compare journey performance across carriers
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                {[
-                  { id: 'verizon-current' as ViewMode, label: 'Verizon Current', color: 'red', icon: AlertCircle },
-                  { id: 'tmobile' as ViewMode, label: 'T-Mobile', color: 'pink', icon: Award },
-                  { id: 'att' as ViewMode, label: 'AT&T', color: 'blue', icon: Shield },
-                  { id: 'verizon-invictus' as ViewMode, label: 'Verizon + Invictus', color: 'green', icon: CheckCircle },
-                  { id: 'comparison' as ViewMode, label: '4-Way Comparison', color: 'purple', icon: TrendingUp }
-                ].map(({ id, label, color, icon: Icon }) => (
-                  <button
-                    key={id}
-                    onClick={() => setViewMode(id)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      viewMode === id
-                        ? `border-${color}-600 bg-${color}-50 shadow-md`
-                        : 'border-gray-200 bg-white hover:border-gray-300'
-                    }`}
-                  >
-                    <Icon className={`w-5 h-5 mx-auto mb-2 ${viewMode === id ? `text-${color}-600` : 'text-gray-400'}`} />
-                    <div className={`text-sm font-medium ${viewMode === id ? `text-${color}-900` : 'text-gray-700'}`}>
-                      {label}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+          {/* View Mode Selector */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">Select View Mode</h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {[
+                { id: 'verizon-current' as ViewMode, label: 'Verizon Current', color: 'red', icon: AlertCircle },
+                { id: 'tmobile' as ViewMode, label: 'T-Mobile', color: 'pink', icon: Award },
+                { id: 'att' as ViewMode, label: 'AT&T', color: 'blue', icon: Shield },
+                { id: 'verizon-invictus' as ViewMode, label: 'Verizon + Invictus', color: 'green', icon: CheckCircle },
+                { id: 'comparison' as ViewMode, label: '4-Way Comparison', color: 'purple', icon: TrendingUp }
+              ].map(({ id, label, color, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setViewMode(id)}
+                  className={`p-3 rounded-lg border-2 transition-all ${
+                    viewMode === id
+                      ? `border-${color}-600 bg-${color}-50 shadow-md`
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 mx-auto mb-2 ${viewMode === id ? `text-${color}-600` : 'text-gray-400'}`} />
+                  <div className={`text-sm font-medium ${viewMode === id ? `text-${color}-900` : 'text-gray-700'}`}>
+                    {label}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Expand/Collapse All Controls */}
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={expandAll}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center gap-2"
+            >
+              <ChevronDown className="w-4 h-4" />
+              Expand All Stages
+            </button>
+            <button
+              onClick={collapseAll}
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium flex items-center gap-2"
+            >
+              <ChevronUp className="w-4 h-4" />
+              Collapse All Stages
+            </button>
+          </div>
+        </div>
 
         {/* Journey Stages with D-C-G Framework */}
         <motion.div
@@ -277,7 +279,7 @@ export default function JourneyHeatmapV2() {
               
               return (
                 <Card key={stage.id} className="border-2 border-gray-200">
-                  <CardHeader className={`bg-${dcgColor}-50 border-b-2 border-${dcgColor}-200`}>
+                  <CardHeader className={`bg-${dcgColor}-50 border-b-2 border-${dcgColor}-200 cursor-pointer hover:bg-${dcgColor}-100 transition-colors`} onClick={() => toggleStage(stage.id)}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className={`p-2 bg-${dcgColor}-100 rounded-lg`}>
@@ -293,16 +295,13 @@ export default function JourneyHeatmapV2() {
                           </CardDescription>
                         </div>
                       </div>
-                      <button
-                        onClick={() => toggleSection(stage.id)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        {expandedSections[stage.id] ? (
+                      <div className="p-2 hover:bg-white/50 rounded-lg transition-colors">
+                        {expandedStages[stage.id] ? (
                           <ChevronUp className="w-5 h-5 text-gray-600" />
                         ) : (
                           <ChevronDown className="w-5 h-5 text-gray-600" />
                         )}
-                      </button>
+                      </div>
                     </div>
                   </CardHeader>
 
@@ -387,7 +386,7 @@ export default function JourneyHeatmapV2() {
                   )}
 
                   {/* Expanded Details */}
-                  {expandedSections[stage.id] && (
+                  {expandedStages[stage.id] && (
                     <CardContent className="pt-0 border-t">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         {/* Pain Points */}
