@@ -27,8 +27,8 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Add console logs to debug the values
-console.log('VITE_SUPABASE_URL:', supabaseUrl);
-console.log('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey);
+
+
 
 // Check if environment variables are set
 if (!supabaseUrl || !supabaseAnonKey) {
