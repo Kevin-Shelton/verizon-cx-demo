@@ -84,8 +84,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('verizon_cx_auth', 'true');
       return true;
     }
+    console.warn("Supabase insert returned no data, but no error was reported. This might indicate an RLS policy silently blocking the insert, or an issue with the data being inserted.");
     return false;
-  };
+  }
 
   const logout = () => {
     setIsAuthenticated(false);
@@ -114,12 +115,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     // Supabase insert returns data as an array of inserted objects, or null if no data
     if (insertData && insertData.length > 0) {
+      console.log("Supabase insert successful. Inserted data:", insertData);
       // Re-fetch users to update the local state
       await fetchUsers(); // Call the defined fetchUsers function to refresh the state
       return true;
     }
+    console.warn("Supabase insert returned no data, but no error was reported. This might indicate an RLS policy silently blocking the insert, or an issue with the data being inserted.");
     return false;
-  };
+  }
 
   const deleteUser = async (username: string): Promise<boolean> => {
     // Prevent deleting the admin user
