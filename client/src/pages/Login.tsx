@@ -113,20 +113,7 @@ export default function Login() {
               </Button>
             </form>
 
-            {/* Demo Credentials Info */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <p className="text-xs text-gray-500 text-center mb-2">
-                Demo Credentials:
-              </p>
-              <div className="bg-gray-50 rounded-lg p-3 space-y-1">
-                <p className="text-xs text-gray-600 font-mono">
-                  <span className="font-semibold">Username:</span> demo
-                </p>
-                <p className="text-xs text-gray-600 font-mono">
-                  <span className="font-semibold">Password:</span> demo123
-                </p>
-              </div>
-            </div>
+
           </CardContent>
         </Card>
 
