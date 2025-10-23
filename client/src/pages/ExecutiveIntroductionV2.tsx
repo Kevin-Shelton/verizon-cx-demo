@@ -22,6 +22,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   onToggle, 
   children 
 }) => {
+  console.log(`CollapsibleSection [${id}]: isExpanded=${isExpanded}`);
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <button
@@ -46,7 +47,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set()); // All sections hidden by default
+  const [expandedSections, setExpandedSections] = useState<string[]>([]); // All sections hidden by default
   const [activeSection, setActiveSection] = useState<string>('market-overview');
   
   // Debug: log expanded sections
@@ -62,18 +63,16 @@ const ExecutiveIntroductionV2: React.FC = () => {
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(sectionId)) {
-        newSet.delete(sectionId);
+      if (prev.includes(sectionId)) {
+        return prev.filter(id => id !== sectionId);
       } else {
-        newSet.add(sectionId);
+        return [...prev, sectionId];
       }
-      return newSet;
     });
   };
 
   const expandAll = () => {
-    setExpandedSections(new Set([
+    setExpandedSections([
       'tmobile-strategy', 
       'att-infrastructure',
       'verizon-opportunity', 
@@ -84,14 +83,14 @@ const ExecutiveIntroductionV2: React.FC = () => {
       'end-to-end-coverage',
       'scenario-comparison',
       'scenario-rationale'
-    ]));
+    ]);
   };
 
   const collapseAll = () => {
-    setExpandedSections(new Set());
+    setExpandedSections([]);
   };
 
-  const isExpanded = (sectionId: string) => expandedSections.has(sectionId);
+  const isExpanded = (sectionId: string) => expandedSections.includes(sectionId);
 
   const scenario = marketData.growthScenarios[selectedScenario];
 
