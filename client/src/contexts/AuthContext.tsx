@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Load users from Supabase on mount and check session
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data, error } = await supabase.from('users').select('*');
+      const { data, error } = await supabase.from('app_users').select('*');
       if (error) {
         console.error('Error fetching users:', error.message);
       } else if (data) {
@@ -66,7 +66,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // No longer saving users to localStorage, as they are managed in Supabase
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    cconconst { data, error } = await supabase.from(\'app_users\').select(\'*\').eq(\'username\', username).eq(\'password\', password);rd);  if (error) {
+    const { data, error } = await supabase.from('app_users').select('*').eq('username', username).eq('password', password);
+
+    if (error) {
       console.error('Supabase login error:', error.message);
       return false;
     }
@@ -90,7 +92,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addUser = async (username: string, password: string): Promise<boolean> => {
     // Check if user already exists in Supabase
-    const { data: existingUsers, error: fetchError } = await supabase.from(\'app_users\').select(\'username\').eq(\'username\', username);if (fetchError) {
+    const { data: existingUsers, error: fetchError } = await supabase.from('app_users').select('username').eq('username', username);
+    if (fetchError) {
       console.error('Error checking existing user:', fetchError.message);
       return false;
     }
@@ -99,7 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
 
-    const { data, error } = await supabase.from(\'app_users\').insert([{ username, password }]);
+    const { data, error } = await supabase.from('app_users').insert([{ username, password }]);
     if (error) {
       console.error('Error adding user:', error.message);
       return false;
@@ -107,7 +110,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     if (data) {
       // Re-fetch users to update the local state
-      const { data: updatedUsers, error: updateError } = await supabase.from(\'app_users\').select(\'*\');   if (updateError) {
+      const { data: updatedUsers, error: updateError } = await supabase.from('app_users').select('*');
+      if (updateError) {
         console.error('Error refetching users after add:', updateError.message);
       } else if (updatedUsers) {
         setUsers(updatedUsers as User[]);
@@ -124,7 +128,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return false;
     }
 
-    const { error } = await supabase.from(\'app_users\').delete().eq('username', username);
+    const { error } = await supabase.from('app_users').delete().eq('username', username);
 
     if (error) {
       console.error('Error deleting user:', error.message);
@@ -132,7 +136,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // Re-fetch users to update the local state
-const { data: updatedUsers, error: updateError } = await supabase.from(\'app_users\').select(\'*\');
+    const { data: updatedUsers, error: updateError } = await supabase.from('app_users').select('*');
     if (updateError) {
       console.error('Error refetching users after delete:', updateError.message);
     } else if (updatedUsers) {
@@ -144,11 +148,11 @@ const { data: updatedUsers, error: updateError } = await supabase.from(\'app_use
   const isAdmin = user === ADMIN_EMAIL;
 
   return (
-    <AuthContext.Provider value={{ 
-      isAuthenticated, 
-      login, 
-      logout, 
-      user, 
+    <AuthContext.Provider value={{
+      isAuthenticated,
+      login,
+      logout,
+      user,
       isAdmin,
       users,
       addUser,
@@ -166,3 +170,4 @@ export const useAuth = () => {
   }
   return context;
 };
+
