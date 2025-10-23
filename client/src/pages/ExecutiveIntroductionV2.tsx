@@ -22,7 +22,6 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   onToggle, 
   children 
 }) => {
-  console.log(`CollapsibleSection [${id}]: isExpanded=${isExpanded}`);
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <button
@@ -47,11 +46,15 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
-  const [expandedSections, setExpandedSections] = useState<string[]>([]); // All sections hidden by default
   const [activeSection, setActiveSection] = useState<string>('market-overview');
   
-  // Debug: log expanded sections
-  console.log('Expanded sections:', expandedSections);
+  // Individual state for each collapsible section - ALL START AS FALSE (hidden)
+  const [culturalPreferencesExpanded, setCulturalPreferencesExpanded] = useState(false);
+  const [dialectComparisonExpanded, setDialectComparisonExpanded] = useState(false);
+  const [dialectDistributionExpanded, setDialectDistributionExpanded] = useState(false);
+  const [endToEndCoverageExpanded, setEndToEndCoverageExpanded] = useState(false);
+  const [scenarioComparisonExpanded, setScenarioComparisonExpanded] = useState(false);
+  const [scenarioRationaleExpanded, setScenarioRationaleExpanded] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -61,36 +64,23 @@ const ExecutiveIntroductionV2: React.FC = () => {
     }
   };
 
-  const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => {
-      if (prev.includes(sectionId)) {
-        return prev.filter(id => id !== sectionId);
-      } else {
-        return [...prev, sectionId];
-      }
-    });
-  };
-
   const expandAll = () => {
-    setExpandedSections([
-      'tmobile-strategy', 
-      'att-infrastructure',
-      'verizon-opportunity', 
-      'super-consumer-details',
-      'cultural-preferences',
-      'dialect-comparison', 
-      'dialect-distribution',
-      'end-to-end-coverage',
-      'scenario-comparison',
-      'scenario-rationale'
-    ]);
+    setCulturalPreferencesExpanded(true);
+    setDialectComparisonExpanded(true);
+    setDialectDistributionExpanded(true);
+    setEndToEndCoverageExpanded(true);
+    setScenarioComparisonExpanded(true);
+    setScenarioRationaleExpanded(true);
   };
 
   const collapseAll = () => {
-    setExpandedSections([]);
+    setCulturalPreferencesExpanded(false);
+    setDialectComparisonExpanded(false);
+    setDialectDistributionExpanded(false);
+    setEndToEndCoverageExpanded(false);
+    setScenarioComparisonExpanded(false);
+    setScenarioRationaleExpanded(false);
   };
-
-  const isExpanded = (sectionId: string) => expandedSections.includes(sectionId);
 
   const scenario = marketData.growthScenarios[selectedScenario];
 
@@ -670,8 +660,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
           <CollapsibleSection
             id="cultural-preferences"
             title="Cultural & Language Preferences Drive Loyalty and Switching Behavior"
-            isExpanded={isExpanded('cultural-preferences')}
-            onToggle={() => toggleSection('cultural-preferences')}
+            isExpanded={culturalPreferencesExpanded}
+            onToggle={() => setCulturalPreferencesExpanded(!culturalPreferencesExpanded)}
           >
             <div className="grid grid-cols-2 gap-6">
               <div className="bg-orange-50 rounded-lg p-5 border border-orange-200">
@@ -732,8 +722,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <CollapsibleSection
                 id="dialect-comparison"
                 title="Generic Spanish vs Dialect-Specific Translation: The Quality Gap"
-                isExpanded={isExpanded('dialect-comparison')}
-                onToggle={() => toggleSection('dialect-comparison')}
+                isExpanded={dialectComparisonExpanded}
+                onToggle={() => setDialectComparisonExpanded(!dialectComparisonExpanded)}
               >
                 <div className="grid grid-cols-2 gap-6 mb-6">
                   {/* Current State */}
@@ -827,8 +817,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <CollapsibleSection
                 id="dialect-distribution"
                 title="U.S. Hispanic Market Dialect Distribution"
-                isExpanded={isExpanded('dialect-distribution')}
-                onToggle={() => toggleSection('dialect-distribution')}
+                isExpanded={dialectDistributionExpanded}
+                onToggle={() => setDialectDistributionExpanded(!dialectDistributionExpanded)}
               >
                 <div className="grid grid-cols-3 gap-4">
                   <div className="bg-white rounded-lg p-5 shadow-sm border border-blue-200">
@@ -872,8 +862,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <CollapsibleSection
                 id="end-to-end-coverage"
                 title="End-to-End Dialect-Specific Coverage Across All Customer Touchpoints"
-                isExpanded={isExpanded('end-to-end-coverage')}
-                onToggle={() => toggleSection('end-to-end-coverage')}
+                isExpanded={endToEndCoverageExpanded}
+                onToggle={() => setEndToEndCoverageExpanded(!endToEndCoverageExpanded)}
               >
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div className="flex items-center gap-2 bg-white p-3 rounded border border-blue-200">
@@ -1077,8 +1067,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <CollapsibleSection
                 id="scenario-comparison"
                 title="Scenario Comparison: 5-Year Financial Impact"
-                isExpanded={isExpanded('scenario-comparison')}
-                onToggle={() => toggleSection('scenario-comparison')}
+                isExpanded={scenarioComparisonExpanded}
+                onToggle={() => setScenarioComparisonExpanded(!scenarioComparisonExpanded)}
               >
                 <div className="overflow-x-auto">
                   <table className="w-full">
@@ -1128,8 +1118,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               <CollapsibleSection
               id="scenario-rationale"
               title="Scenario Assumptions & Rationale"
-              isExpanded={isExpanded('scenario-rationale')}
-              onToggle={() => toggleSection('scenario-rationale')}
+              isExpanded={scenarioRationaleExpanded}
+              onToggle={() => setScenarioRationaleExpanded(!scenarioRationaleExpanded)}
             >
               <div className="space-y-4">
                 <div className="bg-gray-50 rounded-lg p-5 border border-gray-300">
