@@ -47,7 +47,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 
 const ExecutiveIntroductionV2: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
-  const [activeSection, setActiveSection] = useState<string>('market-overview');
+  const [activeSection, setActiveSection] = useState<string>(''); // Empty = no section visible by default
   
   // Individual state for each collapsible section - ALL START AS FALSE (hidden)
   const [culturalPreferencesExpanded, setCulturalPreferencesExpanded] = useState(false);
@@ -67,10 +67,13 @@ const ExecutiveIntroductionV2: React.FC = () => {
   console.log('scenarioRationaleExpanded:', scenarioRationaleExpanded);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setActiveSection(sectionId);
+    // Toggle section: if clicking the same section, hide it; otherwise show the new section
+    if (activeSection === sectionId) {
+      setActiveSection(''); // Hide current section
+    } else {
+      setActiveSection(sectionId); // Show new section
+      // Scroll to top of page when showing a section
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -98,7 +101,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Version Indicator - Fixed Position */}
       <div className="fixed top-2 right-2 z-[100] bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-        v2024-10-23-15:35 ✓
+        v2024-10-23-16:34 ✓
       </div>
       
       {/* Executive Summary Banner with Integrated Navigation - Sticky */}
@@ -189,6 +192,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
       <div className="max-w-7xl mx-auto px-3 py-4 md:px-8 md:py-6">
         
         {/* Section 1: The Strategic Opportunity */}
+        {activeSection === 'market-overview' && (
         <section id="market-overview" className="mb-6 md:mb-10 scroll-mt-[120px] md:scroll-mt-[140px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-5 h-5 md:w-8 md:h-8 text-blue-600" />
@@ -377,8 +381,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </div>
           </div>
         </section>
+        )}
 
         {/* Section 2: How Verizon Can Win in This Space */}
+        {activeSection === 'winning-strategy' && (
         <section id="winning-strategy" className="mb-6 md:mb-10 scroll-mt-[120px] md:scroll-mt-[140px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-purple-600" />
@@ -619,8 +625,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </Dialog>
           </div>
         </section>
+        )}
 
         {/* Section 3: Super Consumer Behaviors */}
+        {activeSection === 'super-consumer' && (
         <section id="super-consumer" className="mb-6 md:mb-10 scroll-mt-[120px] md:scroll-mt-[140px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Zap className="w-8 h-8 text-orange-600" />
@@ -721,8 +729,10 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </div>
           </CollapsibleSection>
         </section>
+        )}
 
         {/* Section 4: The Differentiation Opportunity */}
+        {activeSection === 'differentiation' && (
         <section id="differentiation" className="mb-6 md:mb-10 scroll-mt-[120px] md:scroll-mt-[140px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <Target className="w-8 h-8 text-blue-600" />
@@ -927,9 +937,11 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </CollapsibleSection>
             </div>
           </div>
-        </section>
+         </section>
+        )}
 
         {/* Section 5: Growth Scenarios */}
+        {activeSection === 'growth-scenarios' && (
         <section id="growth-scenarios" className="mb-6 md:mb-10 scroll-mt-[120px] md:scroll-mt-[140px]">
           <div className="flex items-center gap-2 mb-2 md:mb-4">
             <TrendingUp className="w-8 h-8 text-green-600" />
@@ -1175,7 +1187,8 @@ const ExecutiveIntroductionV2: React.FC = () => {
               </CollapsibleSection>
             </div>
           </div>
-        </section>
+         </section>
+        )}
 
         {/* Call to Action */}
         <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8 shadow-xl">
