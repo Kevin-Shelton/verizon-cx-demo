@@ -43,7 +43,7 @@ interface JourneyStage {
 }
 
 export default function JourneyHeatmapV2() {
-  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
   const [viewMode, setViewMode] = useState<ViewMode>('comparison');
   const [selectedStage, setSelectedStage] = useState<JourneyStage | null>(null);
   const [expandedStages, setExpandedStages] = useState<{ [key: string]: boolean }>({});

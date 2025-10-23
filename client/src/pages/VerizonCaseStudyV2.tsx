@@ -12,7 +12,7 @@ type ScenarioType = 'conservative' | 'moderate' | 'aggressive';
 type SectionId = 'crisis' | 'losing' | 'current' | 'solution' | 'impact';
 
 export default function VerizonCaseStudyV2() {
-  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
   const [activeSection, setActiveSection] = useState<SectionId>('crisis');
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
 

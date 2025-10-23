@@ -43,7 +43,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 };
 
 const ExecutiveIntroductionV2: React.FC = () => {
-  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('aggressive');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
 
   const toggleSection = (sectionId: string) => {
