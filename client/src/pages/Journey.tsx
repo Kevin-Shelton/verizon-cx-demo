@@ -571,6 +571,28 @@ export default function Journey() {
                 </button>
               </div>
               <div className="p-6 h-[calc(90vh-88px)] overflow-hidden">
+                {/* Persona Narrative Section */}
+                {selectedPersona !== 'all' && (() => {
+                  const persona = personasData.personas.find(p => p.id === selectedPersona);
+                  if (!persona) return null;
+                  return (
+                    <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-4 mb-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-green-100 border-3 border-green-500 flex items-center justify-center text-3xl shadow-lg">
+                          {persona.avatar}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold text-gray-900">{persona.name} - {persona.role}</h3>
+                          <p className="text-sm text-gray-700 mt-1">
+                            Journey showing multilingual touchpoints where Verizon representatives interact with {persona.name} 
+                            in {persona.dialect} across {filteredActivities.length} customer-facing activities.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 {/* Horizontal Swimlane Flow */}
                 {filteredActivities.length === 0 ? (
                   <div className="text-center py-12 text-gray-500">
@@ -590,7 +612,7 @@ export default function Journey() {
 
                     {/* Center: Horizontal Flow grouped by Parent Activity */}
                     <div className="flex-1 overflow-x-auto overflow-y-hidden px-4">
-                      <div className="flex items-start gap-6 pb-4">
+                      <div className="flex items-center gap-4 pb-4">
                         {(() => {
                           // Group activities by parent activity
                           type ActivityType = typeof filteredActivities[0];
@@ -635,13 +657,7 @@ export default function Journey() {
                                                   </Badge>
                                                 ))}
                                               </div>
-                                              {personas.length > 0 && (
-                                                <div className="flex gap-1 mt-1">
-                                                  {personas.map(p => (
-                                                    <span key={p.id} className="text-xs" title={p.name}>{p.avatar}</span>
-                                                  ))}
-                                                </div>
-                                              )}
+                                              {/* Removed persona icons from subprocess items */}
                                             </div>
                                           </div>
                                         </div>
@@ -649,9 +665,9 @@ export default function Journey() {
                                     })}
                                   </div>
                                 </div>
-                                {/* Arrow to next parent - positioned between cards */}
+                                {/* Arrow to next parent - inline between cards */}
                                 {groupIndex < Object.keys(parentGroups).length - 1 && (
-                                  <div className="flex items-center justify-center" style={{ marginTop: '120px' }}>
+                                  <div className="flex-shrink-0">
                                     <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
@@ -667,14 +683,19 @@ export default function Journey() {
                     {/* Right: Customer Personas */}
                     <div className="flex flex-col gap-3 flex-shrink-0">
                       {(() => {
-                        // Get unique personas from filtered activities
-                        const uniquePersonaIds = new Set<string>();
-                        filteredActivities.forEach(a => {
-                          if (a.personas) {
-                            a.personas.forEach(pid => uniquePersonaIds.add(pid));
-                          }
-                        });
-                        const activePersonas = personasData.personas.filter(p => uniquePersonaIds.has(p.id));
+                        // Filter personas based on selected persona filter
+                        const activePersonas = selectedPersona === 'all' 
+                          ? personasData.personas.filter(p => {
+                              // Get unique personas from filtered activities
+                              const uniquePersonaIds = new Set<string>();
+                              filteredActivities.forEach(a => {
+                                if (a.personas) {
+                                  a.personas.forEach(pid => uniquePersonaIds.add(pid));
+                                }
+                              });
+                              return uniquePersonaIds.has(p.id);
+                            })
+                          : personasData.personas.filter(p => p.id === selectedPersona);
                         
                         return activePersonas.map(persona => (
                           <div key={persona.id} className="flex flex-col items-center gap-1">
