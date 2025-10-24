@@ -511,11 +511,18 @@ export default function Journey() {
             </table>
           </div>
           
-          {/* Legend */}
-          <div className="mt-8 bg-white rounded-lg p-6 shadow">
-            <h3 className="font-semibold text-lg mb-4 text-gray-900">Customer Personas</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {personasData.personas.map(persona => {
+          {/* Customer Personas Section - Redesigned */}
+          <div className="mt-8 bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Customer Personas</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {personasData.personas.map((persona, idx) => {
                 // Get activities for this persona
                 const personaActivities = fullCoverageActivities.filter(activity => 
                   getPersonasForActivity(activity.stageId).some(p => p.id === persona.id)
@@ -524,25 +531,46 @@ export default function Journey() {
                 const firstDemo = personaActivities.find(a => a.demos && a.demos.length > 0)?.demos[0];
                 
                 return (
-                  <div key={persona.id} className="flex flex-col gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">{persona.avatar}</span>
-                      <div>
-                        <div className="font-semibold text-sm text-gray-900">{persona.name}</div>
-                        <div className="text-xs text-gray-600">{persona.role}</div>
-                        <div className="text-xs text-gray-500">{persona.dialectLabel}</div>
+                  <div 
+                    key={persona.id} 
+                    className="group relative bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-400 overflow-hidden"
+                  >
+                    {/* Gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-indigo-50/0 group-hover:from-blue-50/50 group-hover:to-indigo-50/50 transition-all duration-300 pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                          {persona.avatar}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-bold text-base text-gray-900 group-hover:text-blue-700 transition-colors">{persona.name}</div>
+                          <div className="text-xs text-gray-600 font-medium mt-0.5">{persona.role}</div>
+                          <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+                            <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                            </svg>
+                            <span className="text-xs font-semibold text-blue-700">{persona.dialectLabel}</span>
+                          </div>
+                        </div>
                       </div>
+                      
+                      {/* Only show View Demo button for personas other than Carlos (idx !== 0) */}
+                      {firstDemo && idx !== 0 && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full text-xs font-semibold border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700 hover:text-blue-800 transition-all"
+                          onClick={() => handleOpenDemo(firstDemo)}
+                        >
+                          <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          View Demo
+                        </Button>
+                      )}
                     </div>
-                    {firstDemo && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full text-xs"
-                        onClick={() => handleOpenDemo(firstDemo)}
-                      >
-                        View Demo
-                      </Button>
-                    )}
                   </div>
                 );
               })}

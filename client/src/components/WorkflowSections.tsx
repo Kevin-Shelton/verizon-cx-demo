@@ -15,7 +15,7 @@ interface Workflow {
 interface WorkflowSection {
   title: string;
   totalTime: string;
-  color: 'orange' | 'red' | 'yellow' | 'green';
+  color: 'slate' | 'indigo' | 'violet' | 'emerald';
   workflows: Workflow[];
 }
 
@@ -23,20 +23,24 @@ const WorkflowColumn: React.FC<{ workflow: Workflow; color: string }> = ({ workf
   return (
     <div className="flex flex-col">
       <div className={`${color} text-white px-4 py-3 rounded-t-lg`}>
-        <div className="text-sm font-semibold mb-1">{workflow.timePerWeek}</div>
-        <div className="font-bold text-lg">{workflow.title}</div>
+        <div className="text-sm font-semibold mb-1 opacity-90">{workflow.timePerWeek}</div>
+        <div className="font-bold text-base">{workflow.title}</div>
       </div>
       <div className={`bg-gradient-to-b ${
-        color === 'bg-orange-600' ? 'from-orange-100 to-orange-50 border-orange-600' :
-        color === 'bg-red-600' ? 'from-red-100 to-red-50 border-red-600' :
-        color === 'bg-yellow-600' ? 'from-yellow-100 to-yellow-50 border-yellow-600' :
-        'from-green-100 to-green-50 border-green-600'
-      } border-l-4 border-r-4 border-b-4 rounded-b-lg shadow-lg pb-4`}>
+        color === 'bg-slate-600' ? 'from-slate-50 to-white border-slate-300' :
+        color === 'bg-indigo-600' ? 'from-indigo-50 to-white border-indigo-300' :
+        color === 'bg-violet-600' ? 'from-violet-50 to-white border-violet-300' :
+        'from-emerald-50 to-white border-emerald-300'
+      } border-2 rounded-b-lg shadow-sm pb-4`}>
         {workflow.tasks.map((task, idx) => (
-          <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
-            <span className="font-medium text-gray-900">{task.name}</span>
+          <div key={idx} className="mx-3 mt-3 bg-white px-3 py-2.5 rounded-md shadow-sm border border-gray-200 flex items-center justify-between hover:shadow-md transition-shadow">
+            <span className="text-sm font-medium text-gray-800">{task.name}</span>
             {task.complete && (
-              <div className="w-6 h-6 rounded-full bg-green-600 border-2 border-gray-800" />
+              <div className="w-5 h-5 rounded-full bg-emerald-500 border-2 border-emerald-600 flex items-center justify-center">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
             )}
           </div>
         ))}
@@ -46,6 +50,7 @@ const WorkflowColumn: React.FC<{ workflow: Workflow; color: string }> = ({ workf
 };
 
 export default function WorkflowSections() {
+  const [containerExpanded, setContainerExpanded] = useState(false);
   const [showOutboundProspecting, setShowOutboundProspecting] = useState(false);
   const [showSelling, setShowSelling] = useState(false);
   const [showCoreSales, setShowCoreSales] = useState(false);
@@ -56,7 +61,7 @@ export default function WorkflowSections() {
     {
       title: 'Outbound Prospecting',
       totalTime: '12 hrs per week',
-      color: 'orange',
+      color: 'slate',
       workflows: [
         {
           title: 'Engage Top Leads',
@@ -121,7 +126,7 @@ export default function WorkflowSections() {
     {
       title: 'Selling',
       totalTime: '13 hrs per week',
-      color: 'red',
+      color: 'indigo',
       workflows: [
         {
           title: 'Plan Route',
@@ -150,81 +155,45 @@ export default function WorkflowSections() {
     {
       title: 'Core Sales Process',
       totalTime: '13 hrs per week',
-      color: 'red',
+      color: 'violet',
       workflows: [
         {
-          title: 'Manage Funnel',
-          timePerWeek: '25 min per wk',
+          title: 'Prepare for Appointment',
+          timePerWeek: '90 min per wk',
           tasks: [
-            { name: 'Gauge Opty Count', complete: false },
-            { name: 'Check for Opty Currency', complete: false },
-            { name: 'Check for Touchpoint Consistency', complete: false },
-            { name: 'Check for Next Steps', complete: false },
-            { name: 'Confirm Product & Quantity', complete: false },
-            { name: 'PVPVC', complete: false },
+            { name: 'Review Customer Info', complete: false },
+            { name: 'Prepare Presentation', complete: false },
+            { name: 'Gather Materials', complete: false },
           ],
         },
         {
-          title: 'Qualify Prospects',
-          timePerWeek: '125 min per wk',
+          title: 'Conduct Discovery',
+          timePerWeek: '180 min per wk',
           tasks: [
-            { name: 'Connect with Prospect', complete: false },
-            { name: 'Confirm Applicability to Be VBG Customer', complete: false },
-            { name: 'Confirm Business is Active', complete: false },
-            { name: 'Confirm Territory Ownership', complete: false },
-            { name: 'Confirm POC Listed on Art. of Inc.', complete: false },
-            { name: 'Confirm Appropriate Documentation', complete: false },
-            { name: 'Handle Fraud Cases', complete: false },
-            { name: 'Handle Credit Issue', complete: false },
-            { name: 'Submit MAA Request & Create Profile', complete: false },
+            { name: 'Understand Business Needs', complete: true },
+            { name: 'Identify Pain Points', complete: true },
+            { name: 'Assess Current Solutions', complete: true },
+            { name: 'Document Requirements', complete: true },
           ],
         },
         {
-          title: 'Engage in Discovery Process',
-          timePerWeek: '25 min per wk',
+          title: 'Present Solution',
+          timePerWeek: '120 min per wk',
           tasks: [
-            { name: 'Connect with Prospect', complete: false },
-            { name: 'Complete Discovery Questionnaire', complete: true },
+            { name: 'Tailor Presentation', complete: true },
+            { name: 'Demonstrate Features', complete: true },
+            { name: 'Address Objections', complete: true },
+            { name: 'Provide Pricing', complete: true },
           ],
         },
         {
-          title: 'Manage Opportunity',
-          timePerWeek: '310 min per wk',
+          title: 'Close Deal',
+          timePerWeek: '90 min per wk',
           tasks: [
-            { name: 'Convert to Opty', complete: false },
-            { name: 'Send Nudges', complete: true },
-            { name: "Cont'd Engagement", complete: false },
-            { name: 'Set/reset Appointment', complete: true },
-            { name: 'Meet w/ Customer', complete: true },
-            { name: 'Post Meeting Analysis', complete: false },
-            { name: 'Overcome Objections & Negotiate', complete: true },
-          ],
-        },
-        {
-          title: 'Build & Share Quote',
-          timePerWeek: '75 min per wk',
-          tasks: [
-            { name: 'Fill In Customer Details', complete: false },
-            { name: 'Select Devices & Customize', complete: false },
-            { name: 'Select Payment Plan', complete: false },
-            { name: 'Select Service, Protection, & Add Ons', complete: false },
-            { name: 'Validate Quote & Cart', complete: false },
-            { name: 'Apply Nonstandard Adjustments', complete: false },
-            { name: 'Share Quote', complete: true },
-          ],
-        },
-        {
-          title: 'Close & Follow Up',
-          timePerWeek: '75 min per wk',
-          tasks: [
-            { name: 'Plan Logistics', complete: false },
-            { name: 'Process Order', complete: false },
-            { name: 'Fill In Customer Details', complete: false },
-            { name: 'Perform Credit Check', complete: false },
-            { name: 'Submit Order', complete: true },
-            { name: 'Ensure Hardware Delivered', complete: false },
-            { name: 'Port Lines & Transfer Data', complete: false },
-            { name: 'Execute Deployment Plan', complete: true },
+            { name: 'Negotiate Terms', complete: true },
+            { name: 'Finalize Contract', complete: true },
+            { name: 'Process Order', complete: true },
+            { name: 'Schedule Implementation', complete: true },
           ],
         },
       ],
@@ -232,22 +201,14 @@ export default function WorkflowSections() {
     {
       title: 'Churn Mitigation',
       totalTime: '4 hrs per week',
-      color: 'yellow',
+      color: 'violet',
       workflows: [
         {
-          title: 'Engage in Quarterly Business review (QBR)!',
-          timePerWeek: '90 min per wk',
+          title: 'Manage Inbound Disco Requests',
+          timePerWeek: '55 min per wk',
           tasks: [
-            { name: 'Choose Template', complete: false },
-            { name: 'Build/Edit Deck', complete: true },
-            { name: 'Review w/ Customer', complete: true },
-          ],
-        },
-        {
-          title: 'Work Through Artemis Churn Lists',
-          timePerWeek: '10 min per wk',
-          tasks: [
-            { name: 'Build Churn Model List', complete: false },
+            { name: 'Review Disco Request', complete: false },
+            { name: 'Identify Churn Driver', complete: false },
             { name: 'Engage (call)', complete: true },
             { name: 'Engage (email)', complete: true },
           ],
@@ -303,7 +264,7 @@ export default function WorkflowSections() {
     {
       title: 'Service & Post Sales',
       totalTime: '4.5 hrs per week',
-      color: 'green',
+      color: 'emerald',
       workflows: [
         {
           title: 'Hand Off to White Glove Care Team',
@@ -379,85 +340,108 @@ export default function WorkflowSections() {
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'orange':
+      case 'slate':
         return {
-          bg: 'bg-[#E8DCC8]',
-          border: 'border-orange-600',
-          hover: 'hover:bg-[#DDD0BA]',
-          text: 'text-red-700',
-          headerBg: 'bg-orange-600',
+          bg: 'bg-slate-50',
+          border: 'border-slate-300',
+          hover: 'hover:bg-slate-100',
+          text: 'text-slate-700',
+          headerBg: 'bg-slate-600',
         };
-      case 'red':
+      case 'indigo':
         return {
-          bg: 'bg-[#F5E6E6]',
-          border: 'border-red-600',
-          hover: 'hover:bg-[#EDD8D8]',
-          text: 'text-red-700',
-          headerBg: 'bg-red-600',
+          bg: 'bg-indigo-50',
+          border: 'border-indigo-300',
+          hover: 'hover:bg-indigo-100',
+          text: 'text-indigo-700',
+          headerBg: 'bg-indigo-600',
         };
-      case 'yellow':
+      case 'violet':
         return {
-          bg: 'bg-[#FFF9E6]',
-          border: 'border-yellow-600',
-          hover: 'hover:bg-[#FFF4D6]',
-          text: 'text-red-700',
-          headerBg: 'bg-yellow-600',
+          bg: 'bg-violet-50',
+          border: 'border-violet-300',
+          hover: 'hover:bg-violet-100',
+          text: 'text-violet-700',
+          headerBg: 'bg-violet-600',
         };
-      case 'green':
+      case 'emerald':
         return {
-          bg: 'bg-[#E6F5E6]',
-          border: 'border-green-600',
-          hover: 'hover:bg-[#D8EDD8]',
-          text: 'text-red-700',
-          headerBg: 'bg-green-600',
+          bg: 'bg-emerald-50',
+          border: 'border-emerald-300',
+          hover: 'hover:bg-emerald-100',
+          text: 'text-emerald-700',
+          headerBg: 'bg-emerald-600',
         };
       default:
         return {
-          bg: 'bg-[#E8DCC8]',
-          border: 'border-orange-600',
-          hover: 'hover:bg-[#DDD0BA]',
-          text: 'text-red-700',
-          headerBg: 'bg-orange-600',
+          bg: 'bg-slate-50',
+          border: 'border-slate-300',
+          hover: 'hover:bg-slate-100',
+          text: 'text-slate-700',
+          headerBg: 'bg-slate-600',
         };
     }
   };
 
   return (
-    <>
-      {sections.map((section, idx) => {
-        const colors = getColorClasses(section.color);
-        const { show, setShow } = sectionStates[idx];
+    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 overflow-hidden">
+      {/* Container Header */}
+      <button
+        onClick={() => setContainerExpanded(!containerExpanded)}
+        className="w-full px-6 py-4 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-150 transition-all flex items-center justify-between border-b-2 border-gray-200"
+      >
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl font-bold text-gray-800">R2B Journey Stages</h2>
+          <span className="text-sm font-medium text-gray-600 bg-white px-3 py-1 rounded-full border border-gray-300">
+            {sections.length} Stages
+          </span>
+        </div>
+        {containerExpanded ? (
+          <ChevronUp className="w-6 h-6 text-gray-600" />
+        ) : (
+          <ChevronDown className="w-6 h-6 text-gray-600" />
+        )}
+      </button>
 
-        return (
-          <div key={idx} className={`${colors.bg} border-2 ${colors.border} rounded-lg mb-12 overflow-hidden`}>
-            <button
-              onClick={() => setShow(!show)}
-              className={`w-full px-6 py-4 flex items-center justify-between ${colors.hover} transition-colors`}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`text-4xl font-bold ${colors.text}`}>{section.title}</div>
-                <div className={`text-xl font-bold ${colors.text} italic`}>({section.totalTime})</div>
-              </div>
-              {show ? (
-                <ChevronUp className={`w-8 h-8 ${colors.text}`} />
-              ) : (
-                <ChevronDown className={`w-8 h-8 ${colors.text}`} />
-              )}
-            </button>
+      {/* Container Content */}
+      {containerExpanded && (
+        <div className="p-6 space-y-6">
+          {sections.map((section, idx) => {
+            const colors = getColorClasses(section.color);
+            const { show, setShow } = sectionStates[idx];
 
-            {show && (
-              <div className="p-6">
-                <div className={`grid grid-cols-1 ${section.workflows.length <= 2 ? 'md:grid-cols-2' : section.workflows.length <= 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-5'} gap-6`}>
-                  {section.workflows.map((workflow, wIdx) => (
-                    <WorkflowColumn key={wIdx} workflow={workflow} color={colors.headerBg} />
-                  ))}
-                </div>
+            return (
+              <div key={idx} className={`${colors.bg} border-2 ${colors.border} rounded-lg overflow-hidden shadow-sm`}>
+                <button
+                  onClick={() => setShow(!show)}
+                  className={`w-full px-5 py-3 flex items-center justify-between ${colors.hover} transition-colors`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`text-xl font-bold ${colors.text}`}>{section.title}</div>
+                    <div className={`text-sm font-semibold ${colors.text} opacity-75`}>({section.totalTime})</div>
+                  </div>
+                  {show ? (
+                    <ChevronUp className={`w-6 h-6 ${colors.text}`} />
+                  ) : (
+                    <ChevronDown className={`w-6 h-6 ${colors.text}`} />
+                  )}
+                </button>
+
+                {show && (
+                  <div className="p-5 bg-white">
+                    <div className={`grid grid-cols-1 ${section.workflows.length <= 2 ? 'md:grid-cols-2' : section.workflows.length <= 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-5'} gap-4`}>
+                      {section.workflows.map((workflow, wIdx) => (
+                        <WorkflowColumn key={wIdx} workflow={workflow} color={colors.headerBg} />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        );
-      })}
-    </>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 
