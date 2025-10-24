@@ -1,11 +1,18 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import { useLocation } from "wouter";
-import { ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe } from "lucide-react";
+import { ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe, ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import journeyData from "../../../data/journey.json";
 import personasData from "../../../data/personas.json";
@@ -22,17 +29,94 @@ interface ExtendedActivity extends Activity {
   parentActivity?: string;
 }
 
+interface Persona {
+  id: string;
+  name: string;
+  role: string;
+  dialect: string;
+  dialectLabel: string;
+  description: string;
+  avatar: string;
+  needs: string[];
+  journey: string[];
+  painPoints?: string[];
+  interactionNeeds?: string[];
+}
+
 export default function Journey() {
   const [, setLocation] = useLocation();
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
   const [activeSection, setActiveSection] = useState<string>('');
   const [fullCoverageExpanded, setFullCoverageExpanded] = useState(false);
   const [journeyMapExpanded, setJourneyMapExpanded] = useState(true);
-  const [personasExpanded, setPersonasExpanded] = useState(false);
+  const [personasExpanded, setPersonasExpanded] = useState(true);
   const [selectedPersona, setSelectedPersona] = useState<string>('all');
   const [selectedStage, setSelectedStage] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'visual'>('grid');
   const [showVisualPopup, setShowVisualPopup] = useState(false);
+  const [selectedPersonaDetail, setSelectedPersonaDetail] = useState<Persona | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Persona details with pain points and interaction needs
+  const personaDetails: Record<string, { painPoints: string[]; interactionNeeds: string[] }> = {
+    carlos: {
+      painPoints: [
+        "Language barriers when discussing technical details",
+        "Confusion about porting process and timelines",
+        "Difficulty understanding pricing structures and contract terms",
+        "Concerns about business downtime during transition"
+      ],
+      interactionNeeds: [
+        "Clear explanations in Mexican Spanish with business terminology",
+        "Step-by-step guidance through porting process",
+        "Transparent pricing breakdown with no hidden fees",
+        "Dedicated support during business hours (9am-6pm CST)"
+      ]
+    },
+    maria: {
+      painPoints: [
+        "Technical jargon that doesn't translate well to Caribbean Spanish",
+        "Frustration with long wait times for device support",
+        "Uncertainty about promo eligibility and redemption process",
+        "Need for quick resolution to keep field teams operational"
+      ],
+      interactionNeeds: [
+        "Technical support in Puerto Rican Spanish with local context",
+        "Priority handling for field service disruptions",
+        "Clear promo eligibility criteria and simple redemption",
+        "Proactive updates on device swap status and timelines"
+      ]
+    },
+    lucia: {
+      painPoints: [
+        "Anxiety about fraud alerts and account security",
+        "Compliance concerns with healthcare regulations (HIPAA)",
+        "Difficulty navigating support case management system",
+        "Need for documentation in Spanish for staff training"
+      ],
+      interactionNeeds: [
+        "Security-focused communication in Colombian Spanish",
+        "Healthcare-compliant solutions and documentation",
+        "Simplified case tracking with email/SMS updates",
+        "Bilingual support materials for clinic staff"
+      ]
+    },
+    diego: {
+      painPoints: [
+        "Complexity of managing large device fleets",
+        "Coordination challenges across multiple job sites",
+        "Budget constraints and need for cost-effective solutions",
+        "Limited time to handle telecom issues during projects"
+      ],
+      interactionNeeds: [
+        "Bulk ordering and provisioning support in US Spanish",
+        "Fleet management tools with Spanish interface",
+        "Flexible payment options for project-based work",
+        "Dedicated account manager familiar with construction industry"
+      ]
+    }
+  };
 
 
   // Get all subprocesses with full coverage from the hierarchical structure
@@ -74,6 +158,18 @@ export default function Journey() {
     });
   }, [fullCoverageActivities, selectedPersona, selectedStage]);
 
+  // Pagination
+  const totalPages = Math.ceil(filteredActivities.length / itemsPerPage);
+  const paginatedActivities = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredActivities.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredActivities, currentPage]);
+
+  // Reset to page 1 when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedPersona, selectedStage]);
+
   // Map personas to activities based on journey stages
   const getPersonasForActivity = (stageId: string) => {
     return personasData.personas.filter(persona => 
@@ -96,6 +192,15 @@ export default function Journey() {
     setLocation(demoPath);
   };
 
+  const handlePersonaClick = (persona: any) => {
+    const details = personaDetails[persona.id];
+    setSelectedPersonaDetail({
+      ...persona,
+      painPoints: details?.painPoints || [],
+      interactionNeeds: details?.interactionNeeds || []
+    });
+  };
+
   const scrollToSection = (sectionId: string) => {
     // Collapse all sections first
     setFullCoverageExpanded(false);
@@ -116,18 +221,6 @@ export default function Journey() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const expandAll = () => {
-    setFullCoverageExpanded(true);
-    setJourneyMapExpanded(true);
-    setPersonasExpanded(true);
-  };
-
-  const collapseAll = () => {
-    setFullCoverageExpanded(false);
-    setJourneyMapExpanded(false);
-    setPersonasExpanded(false);
   };
 
   const getCoverageIcon = (coverage: Coverage) => {
@@ -157,7 +250,7 @@ export default function Journey() {
       {/* Sticky Header with Navigation */}
       <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-3 md:px-8">
-          {/* Top Row: Title and Quick Actions */}
+          {/* Top Row: Title Only */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 py-2 md:py-4">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-1">
@@ -167,22 +260,6 @@ export default function Journey() {
               <p className="text-blue-100 text-xs md:text-base">
                 Comprehensive analysis of multilingual solution coverage across the entire customer journey
               </p>
-            </div>
-            <div className="flex gap-2 md:gap-3">
-              <button
-                onClick={expandAll}
-                className="px-2 py-1 md:px-3 md:py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"
-              >
-                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 rotate-90" />
-                Expand All
-              </button>
-              <button
-                onClick={collapseAll}
-                className="px-2 py-1 md:px-3 md:py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"
-              >
-                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 -rotate-90" />
-                Collapse All
-              </button>
             </div>
           </div>
           
@@ -199,16 +276,6 @@ export default function Journey() {
               R2B Journey Map
             </button>
             <button
-              onClick={() => scrollToSection('full-coverage')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
-                activeSection === 'full-coverage'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
-              }`}
-            >
-              Full Coverage Activities
-            </button>
-            <button
               onClick={() => scrollToSection('personas')}
               className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
                 activeSection === 'personas'
@@ -217,6 +284,16 @@ export default function Journey() {
               }`}
             >
               Customer Personas
+            </button>
+            <button
+              onClick={() => scrollToSection('full-coverage')}
+              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'full-coverage'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+              }`}
+            >
+              Full Coverage Activities
             </button>
           </nav>
         </div>
@@ -298,67 +375,142 @@ export default function Journey() {
                 <div className="font-bold">Churn Mitigation</div>
               </div>
               <div className="bg-yellow-50 p-4 space-y-2">
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Engage in Quarterly Business Review (QBR)</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Manage Inbound Disco Requests</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Walk Through Artemis Churn List</div>
-                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Review and Engage High Risk Accounts</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Review & Engage High Risk Accounts</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
                 <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Manage Intraday Sales Alerts</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Account Migration & Handoffs</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Acct Migration Handoffs</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
                 <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Contact Scheduled Disconnects</div>
+              </div>
+            </div>
+
+            {/* Core Sales Process */}
+            <div className="border-2 border-red-700 rounded-lg overflow-hidden">
+              <div className="bg-red-700 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-red-700 text-xs font-bold px-2 py-1 rounded-full shadow-md">85%</div>
+                <div className="text-sm font-semibold">13 hr/wk</div>
+                <div className="font-bold">Core Sales Process</div>
+              </div>
+              <div className="bg-red-50 p-4 space-y-2">
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Manage Funnel</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Qualify Prospects</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Engage in Discovery</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Manage Opportunity</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Build & Share Quote</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Close & Follow Up</div>
               </div>
             </div>
 
             {/* Service & Post Sales */}
             <div className="border-2 border-green-600 rounded-lg overflow-hidden">
               <div className="bg-green-600 text-white px-4 py-2 text-center relative">
-                <div className="absolute top-2 right-2 bg-white text-green-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">85%</div>
+                <div className="absolute top-2 right-2 bg-white text-green-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">100%</div>
                 <div className="text-sm font-semibold">4.5 hr/wk</div>
                 <div className="font-bold">Service & Post Sales</div>
               </div>
               <div className="bg-green-50 p-4 space-y-2">
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Hand Off to White Glove Service Team</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Hand Off to White Glove</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Setup Support Cases</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Setup Support</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Port Support Cases</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Port Support</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Mange Promo & Trade-in Support Cases</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Promo & Trade-in</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Post-Sale Fraud Cases</div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Post-Sales Fraud</div>
                 <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
                 <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Call for Post-sale Welcome</div>
               </div>
             </div>
-
-            {/* Operational Tasking */}
-            <div className="border-2 border-blue-600 rounded-lg overflow-hidden">
-              <div className="bg-blue-600 text-white px-4 py-2 text-center relative">
-                <div className="absolute top-2 right-2 bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">45%</div>
-                <div className="text-sm font-semibold">6 hr/wk</div>
-                <div className="font-bold">Operational Tasking</div>
-              </div>
-              <div className="bg-blue-50 p-4 space-y-2">
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Train & Upskill</div>
-                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Attend Meetings</div>
-                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Manage Expense Reports</div>
-                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Manage Commissions & Payroll</div>
-                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
-                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Complete Compliance Tasks</div>
-              </div>
-            </div>
+          </div>
+          
+          <div className="mt-8">
+            <WorkflowSections />
           </div>
         </div>
           )}
         </div>
 
-        {/* FULL COVERAGE ACTIVITIES VISUALIZATION */}
+        {/* Customer Personas Section - MOVED ABOVE Full Coverage Activities */}
+        <div id="personas" className="mb-8">
+          <button
+            onClick={() => setPersonasExpanded(!personasExpanded)}
+            className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors rounded-lg border border-gray-200 mb-4"
+          >
+            <span className="font-semibold text-gray-900 text-lg">Customer Personas</span>
+            <ChevronRight className={`w-5 h-5 text-gray-600 transition-transform ${personasExpanded ? 'rotate-90' : ''}`} />
+          </button>
+          {personasExpanded && (
+          <div className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Customer Personas</h3>
+              <span className="ml-auto text-sm text-gray-600 bg-white px-3 py-1 rounded-full border border-gray-300">
+                Click any persona to view details
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {personasData.personas.map((persona, idx) => {
+                // Get activities for this persona
+                const personaActivities = fullCoverageActivities.filter(activity => 
+                  getPersonasForActivity(activity.stageId).some(p => p.id === persona.id)
+                );
+                // Get first demo from persona's activities
+                const firstDemo = personaActivities.find(a => a.demos && a.demos.length > 0)?.demos[0];
+                
+                return (
+                  <div 
+                    key={persona.id} 
+                    onClick={() => handlePersonaClick(persona)}
+                    className="group relative bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-400 overflow-hidden cursor-pointer"
+                  >
+                    {/* Gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-indigo-50/0 group-hover:from-blue-50/50 group-hover:to-indigo-50/50 transition-all duration-300 pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                          {persona.avatar}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-bold text-base text-gray-900 group-hover:text-blue-700 transition-colors">{persona.name}</div>
+                          <div className="text-xs text-gray-600 font-medium mt-0.5">{persona.role}</div>
+                          <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+                            <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                            </svg>
+                            <span className="text-xs font-semibold text-blue-700">{persona.dialectLabel}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-center text-blue-600 font-semibold group-hover:text-blue-700">
+                          Click to view full profile →
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          )}
+        </div>
+
+        {/* Full Coverage Activities */}
         <div id="full-coverage" className="mb-8">
           <button
             onClick={() => setFullCoverageExpanded(!fullCoverageExpanded)}
@@ -368,19 +520,12 @@ export default function Journey() {
             <ChevronRight className={`w-5 h-5 text-gray-600 transition-transform ${fullCoverageExpanded ? 'rotate-90' : ''}`} />
           </button>
           {fullCoverageExpanded && (
-        <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
+        <div className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-6">
           <div className="mb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <CheckCircle2 className="w-8 h-8 text-green-600" />
-              <h2 className="text-2xl font-bold text-gray-900">Full Coverage Activities</h2>
-            </div>
-            <p className="text-gray-600 mb-4">Translation-ready customer touchpoints with multilingual support</p>
-            
-            {/* Filters */}
-            <div className="flex gap-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Persona</label>
-                <select 
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-700">Filter by Persona:</label>
+                <select
                   value={selectedPersona}
                   onChange={(e) => setSelectedPersona(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -388,14 +533,14 @@ export default function Journey() {
                   <option value="all">All Personas</option>
                   {personasData.personas.map(persona => (
                     <option key={persona.id} value={persona.id}>
-                      {persona.avatar} {persona.name} - {persona.role}
+                      {persona.name}
                     </option>
                   ))}
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Stage</label>
-                <select 
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-700">Filter by Stage:</label>
+                <select
                   value={selectedStage}
                   onChange={(e) => setSelectedStage(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -410,7 +555,7 @@ export default function Journey() {
               </div>
               <div className="flex items-end gap-2">
                 <div className="text-sm text-gray-600">
-                  Showing {filteredActivities.length} of {fullCoverageActivities.length} activities
+                  Showing {paginatedActivities.length} of {filteredActivities.length} activities
                 </div>
               </div>
               <div className="flex items-end gap-2 ml-auto">
@@ -441,7 +586,7 @@ export default function Journey() {
           </div>
           
           {/* Compact Table View */}
-          <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+          <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200 mb-4">
             <table className="w-full">
               <thead className="bg-gray-100 border-b border-gray-200">
                 <tr>
@@ -453,7 +598,7 @@ export default function Journey() {
                 </tr>
               </thead>
               <tbody>
-                {filteredActivities.map((activity, index) => {
+                {paginatedActivities.map((activity, index) => {
                   const personas = activity.personas ? 
                     personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
                   return (
@@ -510,353 +655,339 @@ export default function Journey() {
               </tbody>
             </table>
           </div>
-          
-          {/* Customer Personas Section - Redesigned */}
-          <div className="mt-8 bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl p-6 shadow-lg border-2 border-gray-200">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-4">
+              <div className="text-sm text-gray-600">
+                Page {currentPage} of {totalPages}
               </div>
-              <h3 className="text-2xl font-bold text-gray-800">Customer Personas</h3>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-1"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {personasData.personas.map((persona, idx) => {
-                // Get activities for this persona
-                const personaActivities = fullCoverageActivities.filter(activity => 
-                  getPersonasForActivity(activity.stageId).some(p => p.id === persona.id)
-                );
-                // Get first demo from persona's activities
-                const firstDemo = personaActivities.find(a => a.demos && a.demos.length > 0)?.demos[0];
-                
-                return (
-                  <div 
-                    key={persona.id} 
-                    className="group relative bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-400 overflow-hidden"
-                  >
-                    {/* Gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-indigo-50/0 group-hover:from-blue-50/50 group-hover:to-indigo-50/50 transition-all duration-300 pointer-events-none" />
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
-                          {persona.avatar}
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-bold text-base text-gray-900 group-hover:text-blue-700 transition-colors">{persona.name}</div>
-                          <div className="text-xs text-gray-600 font-medium mt-0.5">{persona.role}</div>
-                          <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
-                            <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                            </svg>
-                            <span className="text-xs font-semibold text-blue-700">{persona.dialectLabel}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Only show View Demo button for personas other than Carlos (idx !== 0) */}
-                      {firstDemo && idx !== 0 && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="w-full text-xs font-semibold border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700 hover:text-blue-800 transition-all"
-                          onClick={() => handleOpenDemo(firstDemo)}
-                        >
-                          <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          View Demo
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          )}
         </div>
           )}
         </div>
-
-        {/* Visual Flow Popup */}
-        {showVisualPopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setShowVisualPopup(false)}>
-            <div className="bg-white rounded-xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
-              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Customer Journey Visual Flow</h2>
-                  <p className="text-sm text-gray-600 mt-1">Verizon Rep ↔ Customer interactions across touchpoints</p>
-                </div>
-                <button
-                  onClick={() => setShowVisualPopup(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="p-6 h-[calc(90vh-88px)] overflow-hidden">
-                {/* Persona Narrative Section */}
-                {selectedPersona !== 'all' && (() => {
-                  const persona = personasData.personas.find(p => p.id === selectedPersona);
-                  if (!persona) return null;
-                  return (
-                    <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-4 mb-4">
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-green-100 border-3 border-green-500 flex items-center justify-center text-3xl shadow-lg">
-                          {persona.avatar}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-lg font-bold text-gray-900">{persona.name} - {persona.role}</h3>
-                          <p className="text-sm text-gray-700 mt-1">
-                            {persona.description}
-                          </p>
-                          <div className="mt-2 grid grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-xs font-semibold text-gray-600 uppercase">Key Needs</p>
-                              <ul className="text-sm text-gray-700 mt-1 space-y-0.5">
-                                {persona.needs.map((need: string, idx: number) => (
-                                  <li key={idx} className="flex items-start gap-1">
-                                    <span className="text-green-600 mt-0.5">✓</span>
-                                    <span>{need}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <p className="text-xs font-semibold text-gray-600 uppercase">Journey Coverage</p>
-                              <p className="text-sm text-gray-700 mt-1">
-                                Verizon reps interact with {persona.name} in <span className="font-semibold text-green-700">{persona.dialectLabel}</span> across <span className="font-semibold text-blue-700">{filteredActivities.length} multilingual touchpoints</span> spanning {persona.journey.length} journey stages.
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })()}
-
-                {/* Horizontal Swimlane Flow */}
-                {filteredActivities.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500">
-                    No activities match the selected filters. Please adjust your persona or stage selection.
-                  </div>
-                ) : (
-                  <div className="h-full flex items-center gap-6">
-                    {/* Left: Verizon Rep */}
-                    <div className="flex flex-col items-center gap-2 flex-shrink-0">
-                      <div className="w-20 h-20 rounded-full bg-blue-100 border-3 border-blue-500 flex items-center justify-center shadow-lg">
-                        <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div className="text-sm font-bold text-blue-700 text-center">Verizon<br/>Rep</div>
-                    </div>
-
-                    {/* Center: Horizontal Flow grouped by Parent Activity */}
-                    <div className="flex-1 overflow-x-auto overflow-y-visible px-4" style={{ maxHeight: '500px' }}>
-                      <div className="flex items-start gap-4 pb-4" style={{ minWidth: 'max-content' }}>
-                        {(() => {
-                          // Group activities by parent activity
-                          type ActivityType = typeof filteredActivities[0];
-                          const parentGroups: Record<string, ActivityType[]> = {};
-                          filteredActivities.forEach(activity => {
-                            const key = activity.parentActivity || 'Other';
-                            if (!parentGroups[key]) {
-                              parentGroups[key] = [];
-                            }
-                            parentGroups[key].push(activity);
-                          });
-
-                          return Object.entries(parentGroups).map(([parentName, activities], groupIndex) => {
-                            const stageColor = journeyData.stages.find(s => s.id === activities[0].stageId)?.color || '#6B7280';
-                            return (
-                              <div key={parentName} className="flex-shrink-0 flex items-start gap-2">
-                                {/* Parent Activity Card */}
-                                <div className="bg-white rounded-lg border-2 shadow-md relative" style={{ borderColor: stageColor, minWidth: '200px', maxWidth: '220px', minHeight: '400px' }}>
-                                  {/* Parent Header */}
-                                  <div className="px-3 py-2 border-b" style={{ backgroundColor: `${stageColor}15`, borderColor: stageColor }}>
-                                    <div className="font-semibold text-sm text-gray-900">{parentName}</div>
-                                    <div className="text-[10px] text-gray-600 mt-0.5">{activities[0].stageId.replace(/-/g, ' ')}</div>
-                                  </div>
-                                  {/* Subprocess List */}
-                                  <div className="p-2 space-y-2">
-                                    {activities.map((activity: ActivityType, idx: number) => {
-                                      // Filter personas based on selected persona filter
-                                      const personas = activity.personas ? 
-                                        personasData.personas.filter(p => {
-                                          const personaMatch = selectedPersona === 'all' || p.id === selectedPersona;
-                                          return activity.personas?.includes(p.id) && personaMatch;
-                                        }) : [];
-                                      return (
-                                        <div key={`${activity.id}-${idx}`} className="bg-gray-50 rounded p-2 border border-gray-200">
-                                          <div className="flex items-start justify-between gap-2">
-                                            <div className="flex-1">
-                                              <div className="font-medium text-xs text-gray-900 mb-1">{activity.label}</div>
-                                              <div className="flex flex-wrap gap-1 mb-1">
-                                                {activity.pillars.map((pillar: string) => (
-                                                  <Badge key={pillar} variant="secondary" className="text-[9px] px-1 py-0">
-                                                    {pillar}
-                                                  </Badge>
-                                                ))}
-                                              </div>
-                                            </div>
-                                            {activity.demos && activity.demos.length > 0 && (
-                                              <a
-                                                href={activity.demos[0]}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex-shrink-0 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white text-[9px] rounded transition-colors"
-                                              >
-                                                Demo
-                                              </a>
-                                            )}
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                                {/* Arrow between cards - centered at 50% card height */}
-                                {groupIndex < Object.keys(parentGroups).length - 1 && (
-                                  <div className="flex items-center self-start" style={{ marginTop: '200px' }}>
-                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          });
-                        })()}
-                      </div>
-                    </div>
-
-                    {/* Right: Customer Personas */}
-                    <div className="flex flex-col gap-3 flex-shrink-0">
-                      {(() => {
-                        // Filter personas based on selected persona filter
-                        const activePersonas = selectedPersona === 'all' 
-                          ? personasData.personas.filter(p => {
-                              // Get unique personas from filtered activities
-                              const uniquePersonaIds = new Set<string>();
-                              filteredActivities.forEach(a => {
-                                if (a.personas) {
-                                  a.personas.forEach(pid => uniquePersonaIds.add(pid));
-                                }
-                              });
-                              return uniquePersonaIds.has(p.id);
-                            })
-                          : personasData.personas.filter(p => p.id === selectedPersona);
-                        
-                        return activePersonas.map(persona => (
-                          <div key={persona.id} className="flex flex-col items-center gap-1">
-                            <div className="w-16 h-16 rounded-full bg-green-100 border-3 border-green-500 flex items-center justify-center text-2xl shadow-lg">
-                              {persona.avatar}
-                            </div>
-                            <div className="text-xs font-semibold text-green-700 text-center">{persona.name}</div>
-                          </div>
-                        ));
-                      })()}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Workflow Sections Component */}
-        <WorkflowSections />
-
-
       </div>
 
-      {/* Activity Detail Sheet */}
-      <Sheet
-        open={!!selectedActivity}
-        onOpenChange={(open) => !open && setSelectedActivity(null)}
-      >
-        <SheetContent className="overflow-y-auto">
-          {selectedActivity && (
+      {/* Persona Detail Popup */}
+      <Dialog open={!!selectedPersonaDetail} onOpenChange={() => setSelectedPersonaDetail(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          {selectedPersonaDetail && (
             <>
-              <SheetHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  {getCoverageIcon(selectedActivity.coverage as Coverage)}
-                  <Badge variant="outline">
-                    {selectedActivity.coverage} coverage
-                  </Badge>
+              <DialogHeader>
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-4xl shadow-md">
+                    {selectedPersonaDetail.avatar}
+                  </div>
+                  <div>
+                    <DialogTitle className="text-2xl font-bold text-gray-900">
+                      {selectedPersonaDetail.name}
+                    </DialogTitle>
+                    <DialogDescription className="text-base text-gray-600 mt-1">
+                      {selectedPersonaDetail.role}
+                    </DialogDescription>
+                    <div className="inline-flex items-center gap-1 mt-2 px-3 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                      </svg>
+                      <span className="text-sm font-semibold text-blue-700">{selectedPersonaDetail.dialectLabel}</span>
+                    </div>
+                  </div>
                 </div>
-                <SheetTitle className="text-2xl">
-                  {selectedActivity.label}
-                </SheetTitle>
-                <SheetDescription className="text-base">
-                  Multilingual solution details and implementation status
-                </SheetDescription>
-              </SheetHeader>
+              </DialogHeader>
 
-              <div className="mt-6 space-y-6">
-                <div>
-                  <h3 className="font-semibold text-lg mb-3">
-                    Supported Channels
+              <div className="space-y-6 mt-4">
+                {/* Narrative */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border-2 border-blue-200">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Customer Profile
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedActivity.pillars.map((pillar) => (
-                      <Badge key={pillar} variant="secondary" className="text-sm">
-                        {pillar}
-                      </Badge>
-                    ))}
-                  </div>
+                  <p className="text-gray-700 leading-relaxed">{selectedPersonaDetail.description}</p>
                 </div>
 
-                {selectedActivity.rationale && (
-                  <div>
-                    <h3 className="font-semibold text-lg mb-3">
-                      Coverage Rationale
-                    </h3>
-                    <Card className="p-4">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-gray-700">
-                          {selectedActivity.rationale}
-                        </p>
-                      </div>
-                    </Card>
-                  </div>
-                )}
+                {/* Key Needs */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Key Needs
+                  </h3>
+                  <ul className="space-y-2">
+                    {selectedPersonaDetail.needs.map((need, idx) => (
+                      <li key={idx} className="flex items-start gap-2 bg-green-50 p-3 rounded-lg border border-green-200">
+                        <span className="text-green-600 mt-0.5">✓</span>
+                        <span className="text-gray-800">{need}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                {selectedActivity.gaps && (
-                  <div>
-                    <h3 className="font-semibold text-lg mb-3">Coverage Gaps</h3>
-                    <Card className="p-4 border-yellow-200 bg-yellow-50">
-                      <div className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-gray-700">
-                          {selectedActivity.gaps}
-                        </p>
-                      </div>
-                    </Card>
-                  </div>
-                )}
+                {/* Pain Points */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Pain Points
+                  </h3>
+                  <ul className="space-y-2">
+                    {selectedPersonaDetail.painPoints?.map((pain, idx) => (
+                      <li key={idx} className="flex items-start gap-2 bg-red-50 p-3 rounded-lg border border-red-200">
+                        <span className="text-red-600 mt-0.5">⚠</span>
+                        <span className="text-gray-800">{pain}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                {selectedActivity.demos && selectedActivity.demos.length > 0 && (
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    onClick={() => handleOpenDemo(selectedActivity.demos[0])}
-                  >
-                    Launch Interactive Demo
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
-                )}
+                {/* Interaction Needs with Verizon */}
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    Interaction Needs with Verizon
+                  </h3>
+                  <ul className="space-y-2">
+                    {selectedPersonaDetail.interactionNeeds?.map((need, idx) => (
+                      <li key={idx} className="flex items-start gap-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                        <span className="text-blue-600 mt-0.5">→</span>
+                        <span className="text-gray-800">{need}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </>
           )}
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
+
+      {/* Visual Flow Popup - keeping existing implementation */}
+      {showVisualPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setShowVisualPopup(false)}>
+          <div className="bg-white rounded-xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Customer Journey Visual Flow</h2>
+                <p className="text-sm text-gray-600 mt-1">Verizon Rep ↔ Customer interactions across touchpoints</p>
+              </div>
+              <button
+                onClick={() => setShowVisualPopup(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 h-[calc(90vh-88px)] overflow-hidden">
+              {/* Persona Narrative Section */}
+              {selectedPersona !== 'all' && (() => {
+                const persona = personasData.personas.find(p => p.id === selectedPersona);
+                if (!persona) return null;
+                return (
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-4 mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-green-100 border-3 border-green-500 flex items-center justify-center text-3xl shadow-lg">
+                        {persona.avatar}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold text-gray-900">{persona.name} - {persona.role}</h3>
+                        <p className="text-sm text-gray-700 mt-1">
+                          {persona.description}
+                        </p>
+                        <div className="mt-2 grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-xs font-semibold text-gray-600 uppercase">Key Needs</p>
+                            <ul className="text-sm text-gray-700 mt-1 space-y-0.5">
+                              {persona.needs.map((need: string, idx: number) => (
+                                <li key={idx} className="flex items-start gap-1">
+                                  <span className="text-green-600 mt-0.5">✓</span>
+                                  <span>{need}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold text-gray-600 uppercase">Journey Coverage</p>
+                            <div className="text-sm text-gray-700 mt-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-semibold text-blue-700">{persona.dialectLabel}</span>
+                              </div>
+                              <div className="text-xs text-gray-600 mt-1">
+                                {fullCoverageActivities.filter(a => a.personas?.includes(persona.id)).length} touchpoints covered
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Visual Flow Content */}
+              <div className="flex items-start gap-6 overflow-x-auto pb-6" style={{ minWidth: 'max-content' }}>
+                {/* Verizon Rep Icon */}
+                <div className="flex flex-col items-center sticky left-0 bg-white z-10">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg border-4 border-white">
+                    <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="mt-2 text-center">
+                    <div className="font-bold text-gray-900">Verizon Rep</div>
+                    <div className="text-xs text-gray-600">Actions</div>
+                  </div>
+                </div>
+
+                {/* Parent Activity Cards with Subprocesses */}
+                {journeyData.stages.map((stage) => {
+                  return stage.activities.map((activity) => {
+                    // Filter subprocesses based on selected persona
+                    const relevantSubprocesses = activity.subprocesses?.filter((subprocess: any) => {
+                      if (subprocess.coverage !== 'full') return false;
+                      if (selectedPersona === 'all') return true;
+                      return subprocess.personas?.includes(selectedPersona);
+                    }) || [];
+
+                    if (relevantSubprocesses.length === 0) return null;
+
+                    const stageColors: Record<string, { bg: string; border: string; text: string }> = {
+                      'outbound': { bg: 'bg-orange-50', border: 'border-orange-400', text: 'text-orange-700' },
+                      'qualification': { bg: 'bg-red-50', border: 'border-red-400', text: 'text-red-700' },
+                      'proposal': { bg: 'bg-red-50', border: 'border-red-400', text: 'text-red-700' },
+                      'negotiation': { bg: 'bg-yellow-50', border: 'border-yellow-400', text: 'text-yellow-700' },
+                      'onboarding': { bg: 'bg-red-50', border: 'border-red-400', text: 'text-red-700' },
+                      'support': { bg: 'bg-green-50', border: 'border-green-400', text: 'text-green-700' },
+                      'expansion': { bg: 'bg-green-50', border: 'border-green-400', text: 'text-green-700' }
+                    };
+
+                    const colors = stageColors[stage.id] || { bg: 'bg-gray-50', border: 'border-gray-400', text: 'text-gray-700' };
+
+                    return (
+                      <div key={`${stage.id}-${activity.id}`} className="relative flex items-center gap-6">
+                        {/* Parent Activity Card */}
+                        <div className={`flex flex-col ${colors.bg} border-2 ${colors.border} rounded-lg shadow-lg min-h-[400px] w-64`}>
+                          {/* Header */}
+                          <div className={`${colors.border.replace('border-', 'bg-')} text-white px-4 py-3 rounded-t-lg`}>
+                            <div className="text-xs font-semibold opacity-90">{stage.name}</div>
+                            <div className="font-bold text-sm mt-1">{activity.label}</div>
+                          </div>
+
+                          {/* Subprocesses */}
+                          <div className="flex-1 p-3 space-y-2">
+                            {relevantSubprocesses.map((subprocess: any, idx: number) => (
+                              <div key={subprocess.id} className="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
+                                <div className="flex items-start gap-2 mb-2">
+                                  <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                                  <span className="text-xs font-medium text-gray-900 leading-tight">{subprocess.label}</span>
+                                </div>
+                                {subprocess.channels && subprocess.channels.length > 0 && (
+                                  <div className="flex flex-wrap gap-1 mb-2">
+                                    {subprocess.channels.map((channel: string) => (
+                                      <Badge key={channel} variant="secondary" className="text-[10px] px-1.5 py-0.5">
+                                        {channel}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                )}
+                                {subprocess.demos && subprocess.demos.length > 0 && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="w-full text-[10px] h-6 px-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700"
+                                    onClick={() => {
+                                      setShowVisualPopup(false);
+                                      handleOpenDemo(subprocess.demos[0]);
+                                    }}
+                                  >
+                                    <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Demo
+                                  </Button>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Arrow between cards - positioned at 200px from top (50% of 400px) */}
+                        <div className="absolute left-full ml-2" style={{ top: '200px', transform: 'translateY(-50%)' }}>
+                          <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </div>
+                      </div>
+                    );
+                  });
+                })}
+
+                {/* Customer Persona Icons on Right */}
+                {selectedPersona !== 'all' ? (
+                  <div className="flex flex-col items-center sticky right-0 bg-white z-10">
+                    {(() => {
+                      const persona = personasData.personas.find(p => p.id === selectedPersona);
+                      if (!persona) return null;
+                      return (
+                        <>
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-5xl shadow-lg border-4 border-white">
+                            {persona.avatar}
+                          </div>
+                          <div className="mt-2 text-center">
+                            <div className="font-bold text-gray-900">{persona.name}</div>
+                            <div className="text-xs text-gray-600">{persona.role}</div>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-4 sticky right-0 bg-white z-10">
+                    {personasData.personas.map(persona => (
+                      <div key={persona.id} className="flex flex-col items-center">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl shadow-md border-2 border-white">
+                          {persona.avatar}
+                        </div>
+                        <div className="text-xs font-semibold text-gray-700 mt-1">{persona.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
