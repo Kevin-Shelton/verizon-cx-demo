@@ -706,7 +706,7 @@ export default function Journey() {
 
       {/* Persona Detail Popup */}
       <Dialog open={!!selectedPersonaDetail} onOpenChange={() => setSelectedPersonaDetail(null)}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
           {selectedPersonaDetail && (
             <>
               <DialogHeader>
