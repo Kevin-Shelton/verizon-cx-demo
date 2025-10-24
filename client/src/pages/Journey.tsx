@@ -18,6 +18,8 @@ import WorkflowSections from "@/components/WorkflowSections";
 interface ExtendedActivity extends Activity {
   stageName: string;
   stageId: string;
+  personas?: string[];
+  parentActivity?: string;
 }
 
 export default function Journey() {
@@ -27,6 +29,8 @@ export default function Journey() {
   const [fullCoverageExpanded, setFullCoverageExpanded] = useState(false);
   const [journeyMapExpanded, setJourneyMapExpanded] = useState(true);
   const [personasExpanded, setPersonasExpanded] = useState(false);
+  const [selectedPersona, setSelectedPersona] = useState<string>('all');
+  const [selectedStage, setSelectedStage] = useState<string>('all');
 
 
   // Get all subprocesses with full coverage from the hierarchical structure
@@ -57,6 +61,16 @@ export default function Journey() {
     });
     return activities;
   }, []);
+
+  // Filter activities based on selected persona and stage
+  const filteredActivities = useMemo(() => {
+    return fullCoverageActivities.filter(activity => {
+      const personaMatch = selectedPersona === 'all' || 
+        (activity.personas && activity.personas.includes(selectedPersona));
+      const stageMatch = selectedStage === 'all' || activity.stageId === selectedStage;
+      return personaMatch && stageMatch;
+    });
+  }, [fullCoverageActivities, selectedPersona, selectedStage]);
 
   // Map personas to activities based on journey stages
   const getPersonasForActivity = (stageId: string) => {
@@ -352,94 +366,123 @@ export default function Journey() {
             <ChevronRight className={`w-5 h-5 text-gray-600 transition-transform ${fullCoverageExpanded ? 'rotate-90' : ''}`} />
           </button>
           {fullCoverageExpanded && (
-        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-4 border-green-400 rounded-2xl mb-12 p-12 shadow-2xl">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <CheckCircle2 className="w-12 h-12 text-green-600" />
-              <h2 className="text-4xl font-bold text-gray-900">Full Coverage Activities</h2>
+        <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <CheckCircle2 className="w-8 h-8 text-green-600" />
+              <h2 className="text-2xl font-bold text-gray-900">Full Coverage Activities</h2>
             </div>
-            <p className="text-xl text-gray-600">Translation-ready customer touchpoints with persona interactions</p>
-            <p className="text-sm text-gray-500 mt-2">Only activities with complete multilingual support (excluding out-of-scope items)</p>
-          </div>
-          
-          {/* Activities Flow Chart */}
-          <div className="bg-white rounded-xl p-8 shadow-lg overflow-x-auto">
-            <div className="min-w-max">
-              {/* Activity Cards in Horizontal Flow */}
-              <div className="flex gap-4 items-start pb-4">
-                {fullCoverageActivities.map((activity, index) => {
-                  const personas = getPersonasForActivity(activity.stageId);
-                  return (
-                    <div key={activity.id} className="flex items-center gap-2">
-                      {/* Activity Card */}
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="relative"
-                      >
-                        <Card 
-                          className="w-48 border-2 border-green-300 bg-green-50 hover:bg-green-100 cursor-pointer transition-all hover:shadow-lg"
-                          onClick={() => handleActivityClick(activity)}
-                        >
-                          <CardHeader className="pb-2 pt-3 px-3">
-                            <div className="flex items-start justify-between gap-1 mb-1">
-                              <Badge variant="outline" className="text-[10px] px-1 py-0 bg-white">
-                                {activity.stageName}
-                              </Badge>
-                              <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
-                            </div>
-                            <CardTitle className="text-xs leading-tight">
-                              {activity.label}
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent className="pt-0 px-3 pb-3">
-                            {/* Persona Icons */}
-                            {personas.length > 0 && (
-                              <div className="flex flex-wrap gap-1 mb-2">
-                                {personas.map(persona => (
-                                  <div 
-                                    key={persona.id}
-                                    className="flex items-center gap-0.5 bg-white px-1.5 py-0.5 rounded-full border border-green-300"
-                                    title={`${persona.name} - ${persona.role}`}
-                                  >
-                                    <span className="text-sm">{persona.avatar}</span>
-                                    <span className="text-[10px] font-medium text-gray-700">{persona.name}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                            
-                            {/* Pillars */}
-                            <div className="flex flex-wrap gap-1">
-                              {activity.pillars.slice(0, 3).map((pillar) => (
-                                <Badge
-                                  key={pillar}
-                                  variant="secondary"
-                                  className="text-[10px] px-1 py-0"
-                                >
-                                  {pillar}
-                                </Badge>
-                              ))}
-                              {activity.pillars.length > 3 && (
-                                <Badge variant="secondary" className="text-[10px] px-1 py-0">
-                                  +{activity.pillars.length - 3}
-                                </Badge>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                      
-                      {/* Arrow between cards */}
-                      {index < fullCoverageActivities.length - 1 && (
-                        <ChevronRight className="w-4 h-4 text-green-600 flex-shrink-0" />
-                      )}
-                    </div>
-                  );
-                })}
+            <p className="text-gray-600 mb-4">Translation-ready customer touchpoints with multilingual support</p>
+            
+            {/* Filters */}
+            <div className="flex gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Persona</label>
+                <select 
+                  value={selectedPersona}
+                  onChange={(e) => setSelectedPersona(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Personas</option>
+                  {personasData.personas.map(persona => (
+                    <option key={persona.id} value={persona.id}>
+                      {persona.avatar} {persona.name} - {persona.role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Stage</label>
+                <select 
+                  value={selectedStage}
+                  onChange={(e) => setSelectedStage(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Stages</option>
+                  {journeyData.stages.map(stage => (
+                    <option key={stage.id} value={stage.id}>
+                      {stage.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-end">
+                <div className="text-sm text-gray-600">
+                  Showing {filteredActivities.length} of {fullCoverageActivities.length} activities
+                </div>
               </div>
             </div>
+          </div>
+          
+          {/* Compact Table View */}
+          <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-200">
+                <tr>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Stage</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Parent Activity</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Subprocess</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Personas</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Channels</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredActivities.map((activity, index) => {
+                  const personas = activity.personas ? 
+                    personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
+                  return (
+                    <tr 
+                      key={`${activity.id}-${index}`}
+                      className="border-b border-gray-200 hover:bg-green-50 cursor-pointer transition-colors"
+                      onClick={() => handleActivityClick(activity)}
+                    >
+                      <td className="px-4 py-3">
+                        <Badge variant="outline" className="text-xs">
+                          {activity.stageName}
+                        </Badge>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-700">
+                        {activity.parentActivity || '-'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
+                          <span className="text-sm font-medium text-gray-900">{activity.label}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-wrap gap-1">
+                          {personas.map(persona => (
+                            <div 
+                              key={persona.id}
+                              className="flex items-center gap-1 bg-white px-2 py-1 rounded-full border border-gray-300"
+                              title={`${persona.name} - ${persona.role}`}
+                            >
+                              <span className="text-sm">{persona.avatar}</span>
+                              <span className="text-xs font-medium text-gray-700">{persona.name}</span>
+                            </div>
+                          ))}
+                          {personas.length === 0 && <span className="text-xs text-gray-400">-</span>}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-wrap gap-1">
+                          {activity.pillars.map((pillar) => (
+                            <Badge
+                              key={pillar}
+                              variant="secondary"
+                              className="text-xs"
+                            >
+                              {pillar}
+                            </Badge>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
           
           {/* Legend */}
