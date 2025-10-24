@@ -965,24 +965,24 @@ export default function Journey() {
 
                     if (relevantSubprocesses.length === 0) return null;
 
-                    const stageColors: Record<string, { bg: string; border: string; text: string; headerBg: string }> = {
-                      'outbound': { bg: 'bg-orange-50', border: 'border-orange-500', text: 'text-orange-900', headerBg: 'bg-orange-600' },
-                      'qualification': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600' },
-                      'proposal': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600' },
-                      'negotiation': { bg: 'bg-yellow-50', border: 'border-yellow-500', text: 'text-yellow-900', headerBg: 'bg-yellow-600' },
-                      'onboarding': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600' },
-                      'support': { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-900', headerBg: 'bg-green-600' },
-                      'expansion': { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-900', headerBg: 'bg-green-600' }
+                    const stageColors: Record<string, { bg: string; border: string; text: string; headerBg: string; headerText: string }> = {
+                      'outbound': { bg: 'bg-orange-50', border: 'border-orange-500', text: 'text-orange-900', headerBg: 'bg-orange-600', headerText: 'text-white' },
+                      'qualification': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600', headerText: 'text-white' },
+                      'proposal': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600', headerText: 'text-white' },
+                      'negotiation': { bg: 'bg-yellow-50', border: 'border-yellow-500', text: 'text-yellow-900', headerBg: 'bg-yellow-600', headerText: 'text-white' },
+                      'onboarding': { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-900', headerBg: 'bg-red-600', headerText: 'text-white' },
+                      'support': { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-900', headerBg: 'bg-green-600', headerText: 'text-white' },
+                      'expansion': { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-900', headerBg: 'bg-green-600', headerText: 'text-white' }
                     };
 
-                    const colors = stageColors[stage.id] || { bg: 'bg-gray-50', border: 'border-gray-400', text: 'text-gray-700', headerBg: 'bg-gray-700' };
+                    const colors = stageColors[stage.id] || { bg: 'bg-gray-50', border: 'border-gray-400', text: 'text-gray-700', headerBg: 'bg-gray-700', headerText: 'text-white' };
 
                     return (
                       <div key={`${stage.id}-${activity.id}`} className="relative flex items-center gap-6">
                         {/* Parent Activity Card */}
                         <div className={`flex flex-col ${colors.bg} border-2 ${colors.border} rounded-lg shadow-lg min-h-[400px] w-64`}>
                           {/* Header */}
-                          <div className={`${colors.headerBg} text-black px-4 py-3 rounded-t-lg`}>
+                          <div className={`${colors.headerBg} ${colors.headerText} px-4 py-3 rounded-t-lg`}>
                             <div className="text-xs font-semibold opacity-90">{stage.name}</div>
                             <div className="font-bold text-sm mt-1">{activity.label}</div>
                           </div>
