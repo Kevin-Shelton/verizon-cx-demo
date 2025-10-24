@@ -25,7 +25,7 @@ export default function Journey() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
   const [activeSection, setActiveSection] = useState<string>('');
   const [fullCoverageExpanded, setFullCoverageExpanded] = useState(false);
-  const [journeyMapExpanded, setJourneyMapExpanded] = useState(false);
+  const [journeyMapExpanded, setJourneyMapExpanded] = useState(true);
   const [personasExpanded, setPersonasExpanded] = useState(false);
 
 
@@ -151,16 +151,6 @@ export default function Journey() {
           {/* Bottom Row: Section Navigation */}
           <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8">
             <button
-              onClick={() => scrollToSection('full-coverage')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
-                activeSection === 'full-coverage'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
-              }`}
-            >
-              Full Coverage Activities
-            </button>
-            <button
               onClick={() => scrollToSection('journey-map')}
               className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
                 activeSection === 'journey-map'
@@ -169,6 +159,16 @@ export default function Journey() {
               }`}
             >
               R2B Journey Map
+            </button>
+            <button
+              onClick={() => scrollToSection('full-coverage')}
+              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'full-coverage'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+              }`}
+            >
+              Full Coverage Activities
             </button>
             <button
               onClick={() => scrollToSection('personas')}
