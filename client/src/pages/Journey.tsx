@@ -901,33 +901,33 @@ export default function Journey() {
 
                     {/* Pain Points & Interaction Needs - Side by Side */}
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-red-200 rounded-lg p-4 border-2 border-red-600">
-                        <h4 className="text-sm font-bold text-red-950 mb-3 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="bg-red-300 rounded-lg p-4 border-2 border-red-700">
+                        <h4 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
+                          <svg className="w-4 h-4 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                           </svg>
                           Pain Points
                         </h4>
                         <ul className="space-y-2">
                           {details.painPoints.slice(0, 3).map((point, idx) => (
-                            <li key={idx} className="text-sm text-red-950 font-semibold flex items-start gap-2">
-                              <span className="text-red-800 mt-0.5 flex-shrink-0 text-lg">⚠</span>
+                            <li key={idx} className="text-sm text-black font-bold flex items-start gap-2">
+                              <span className="text-red-900 mt-0.5 flex-shrink-0 text-lg font-bold">⚠</span>
                               <span>{point}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
-                      <div className="bg-green-200 rounded-lg p-4 border-2 border-green-600">
-                        <h4 className="text-sm font-bold text-green-950 mb-3 flex items-center gap-2">
-                          <svg className="w-4 h-4 text-green-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="bg-green-300 rounded-lg p-4 border-2 border-green-700">
+                        <h4 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
+                          <svg className="w-4 h-4 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           Key Interaction Needs
                         </h4>
                         <ul className="space-y-2">
                           {details.interactionNeeds.slice(0, 3).map((need, idx) => (
-                            <li key={idx} className="text-sm text-green-950 font-semibold flex items-start gap-2">
-                              <span className="text-green-800 mt-0.5 flex-shrink-0 text-lg">→</span>
+                            <li key={idx} className="text-sm text-black font-bold flex items-start gap-2">
+                              <span className="text-green-900 mt-0.5 flex-shrink-0 text-lg font-bold">→</span>
                               <span>{need}</span>
                             </li>
                           ))}
