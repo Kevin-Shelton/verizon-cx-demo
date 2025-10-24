@@ -29,17 +29,29 @@ export default function Journey() {
   const [personasExpanded, setPersonasExpanded] = useState(false);
 
 
-  // Get all activities with full coverage
+  // Get all subprocesses with full coverage from the hierarchical structure
   const fullCoverageActivities = useMemo(() => {
     const activities: ExtendedActivity[] = [];
     journeyData.stages.forEach(stage => {
       stage.activities.forEach(activity => {
-        if (activity.coverage === 'full') {
-          activities.push({
-            ...activity,
-            stageName: stage.name,
-            stageId: stage.id
-          } as ExtendedActivity);
+        // Check if activity has subprocesses
+        if (activity.subprocesses && Array.isArray(activity.subprocesses)) {
+          activity.subprocesses.forEach((subprocess: any) => {
+            if (subprocess.coverage === 'full') {
+              activities.push({
+                id: subprocess.id,
+                label: subprocess.label,
+                coverage: subprocess.coverage,
+                pillars: subprocess.channels || [],
+                personas: subprocess.personas || [],
+                demos: subprocess.demos || [],
+                rationale: `${activity.label} - ${subprocess.label}`,
+                stageName: stage.name,
+                stageId: stage.id,
+                parentActivity: activity.label
+              } as ExtendedActivity);
+            }
+          });
         }
       });
     });

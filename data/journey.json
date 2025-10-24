@@ -3,216 +3,1018 @@
     {
       "id": "outbound",
       "name": "Outbound Prospecting",
+      "hoursPerWeek": 12,
+      "coveragePercent": 65,
+      "color": "orange",
       "activities": [
         {
           "id": "engage_top_leads",
           "label": "Engage Top Leads",
-          "coverage": "full",
-          "pillars": ["email", "chat", "ivr"],
-          "rationale": "Calls/emails/chat fully translatable including dialects",
-          "demos": ["/experiences/chat", "/experiences/email"]
+          "minutesPerWeek": 55,
+          "subprocesses": [
+            {
+              "id": "research_account",
+              "label": "Research Account",
+              "coverage": "none"
+            },
+            {
+              "id": "verify_customer_info",
+              "label": "Verify Customer Info",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call",
+              "label": "Engage (Call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_email",
+              "label": "Engage (Email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "set_appointment",
+              "label": "Set Appointment",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "log_activity",
+              "label": "Log Activity",
+              "coverage": "none"
+            }
+          ]
+        },
+        {
+          "id": "engage_homegrown_list",
+          "label": "Engage Leads from Homegrown List",
+          "minutesPerWeek": 225,
+          "subprocesses": [
+            {
+              "id": "research_account_2",
+              "label": "Research Account",
+              "coverage": "none"
+            },
+            {
+              "id": "verify_customer_info_2",
+              "label": "Verify Customer Info",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call_2",
+              "label": "Engage (Call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_email_2",
+              "label": "Engage (Email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "set_appointment_2",
+              "label": "Set Appointment",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "log_activity_2",
+              "label": "Log Activity",
+              "coverage": "none"
+            }
+          ]
+        },
+        {
+          "id": "sequence_battlecard",
+          "label": "Sequence Battlecard Contacts",
+          "minutesPerWeek": 90,
+          "subprocesses": [
+            {
+              "id": "select_lead",
+              "label": "Select Lead",
+              "coverage": "none"
+            },
+            {
+              "id": "research_account_3",
+              "label": "Research Account",
+              "coverage": "none"
+            },
+            {
+              "id": "select_sequence",
+              "label": "Select Sequence",
+              "coverage": "none"
+            },
+            {
+              "id": "enroll",
+              "label": "Enroll",
+              "coverage": "none"
+            },
+            {
+              "id": "log_activity_3",
+              "label": "Log Activity",
+              "coverage": "none"
+            }
+          ]
         },
         {
           "id": "manage_outreach_tasks",
           "label": "Manage Outreach Task List",
-          "coverage": "partial",
-          "pillars": ["email"],
-          "rationale": "Email templates and task notifications are fully translated",
-          "gaps": "Missing: Live chat and IVR support for real-time task coordination. Task prioritization logic remains in English within CRM system.",
-          "demos": ["/experiences/email"]
+          "minutesPerWeek": 265,
+          "subprocesses": [
+            {
+              "id": "identify_hand_raisers",
+              "label": "Identify Hand Raisers",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_hand_raisers",
+              "label": "Engage Hand Raisers",
+              "coverage": "none"
+            },
+            {
+              "id": "select_templates",
+              "label": "Select Template(s)",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_other_email",
+              "label": "Engage Other (Email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "set_appointment_4",
+              "label": "Set Appointment",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "log_activity_4",
+              "label": "Log Activity",
+              "coverage": "none"
+            }
+          ]
         },
         {
           "id": "check_customer_detail",
-          "label": "Check My Customer Detail",
-          "coverage": "none",
-          "pillars": [],
-          "rationale": "Third-party CRM system interface is outside translation scope",
-          "gaps": "Out of scope: CRM database queries and internal system navigation remain in English. Customer-facing outputs can be translated separately.",
-          "demos": []
+          "label": "Check my Customers Detail",
+          "minutesPerWeek": 75,
+          "subprocesses": [
+            {
+              "id": "select_customer_promo",
+              "label": "Select Customer + Promo",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call_5",
+              "label": "Engage (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_mail",
+              "label": "Engage (mail)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "set_appointment_5",
+              "label": "Set Appointment",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "log_activity_5",
+              "label": "Log Activity",
+              "coverage": "none"
+            }
+          ]
         }
       ]
     },
     {
-      "id": "qualification",
-      "name": "Qualification & Discovery",
+      "id": "selling",
+      "name": "Selling",
+      "hoursPerWeek": 13,
+      "coveragePercent": 92,
+      "color": "red",
+      "channels": ["Virtual", "In Store", "Footblitz"],
       "activities": [
         {
-          "id": "conduct_needs_analysis",
-          "label": "Conduct Needs Analysis",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "field"],
-          "rationale": "Voice and text conversations fully supported with real-time translation",
-          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/field"]
+          "id": "plan_route",
+          "label": "Plan Route",
+          "minutesPerWeek": 45,
+          "subprocesses": [
+            {
+              "id": "built_foot_blitz_list",
+              "label": "Built Foot Blitz List",
+              "coverage": "none"
+            },
+            {
+              "id": "trim_vet_filter",
+              "label": "Trim, Vet, & Filter List",
+              "coverage": "none"
+            },
+            {
+              "id": "plan_route_sub",
+              "label": "Plan Route",
+              "coverage": "none"
+            },
+            {
+              "id": "core_sales_process_link",
+              "label": "Core Sales Process",
+              "coverage": "full",
+              "note": "Links to Core Sales Process stage"
+            }
+          ]
         },
         {
-          "id": "review_account_history",
-          "label": "Review Account History",
-          "coverage": "partial",
-          "pillars": ["documents"],
-          "rationale": "Historical documents can be translated on-demand with dialect-specific formatting",
-          "gaps": "Missing: Real-time translation of CRM activity logs and internal notes. Only formal documents (contracts, invoices, statements) are translated.",
-          "demos": ["/experiences/documents"]
-        },
-        {
-          "id": "verify_credit_eligibility",
-          "label": "Verify Credit Eligibility",
-          "coverage": "none",
-          "pillars": [],
-          "rationale": "Third-party credit bureau integration is outside translation scope",
-          "gaps": "Out of scope: Credit check API calls and bureau responses are system-to-system. Customer notifications about credit decisions can be translated separately.",
-          "demos": []
+          "id": "participate_sales_blitz",
+          "label": "Participate Sales Blitz",
+          "minutesPerWeek": 90,
+          "subprocesses": [
+            {
+              "id": "build_list",
+              "label": "Build List",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call_blitz",
+              "label": "Engage (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_mail_blitz",
+              "label": "Engage (mail)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "validate_dnc",
+              "label": "Validate (not on DNC list)",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_sms",
+              "label": "Engage (SMS)",
+              "coverage": "full",
+              "channels": ["chat"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "core_sales_process_link_2",
+              "label": "Core Sales Process",
+              "coverage": "full",
+              "note": "Links to Core Sales Process stage"
+            }
+          ]
         }
       ]
     },
     {
-      "id": "proposal",
-      "name": "Proposal & Presentation",
+      "id": "core_sales",
+      "name": "Core Sales Process",
+      "hoursPerWeek": 13,
+      "coveragePercent": 92,
+      "color": "red",
       "activities": [
         {
-          "id": "generate_custom_quote",
-          "label": "Generate Custom Quote",
-          "coverage": "full",
-          "pillars": ["email", "documents", "web"],
-          "rationale": "Quote documents and emails fully translatable with dialect support",
-          "demos": ["/experiences/email", "/experiences/documents", "/experiences/web"]
+          "id": "manage_funnel",
+          "label": "Manage Funnel",
+          "minutesPerWeek": 25,
+          "subprocesses": [
+            {
+              "id": "gauge_opty_count",
+              "label": "Gauge Opty Count",
+              "coverage": "none"
+            },
+            {
+              "id": "check_opty_currency",
+              "label": "Check for Opty Currency",
+              "coverage": "none"
+            },
+            {
+              "id": "check_touchpoint",
+              "label": "Check for Touchpoint Consistency",
+              "coverage": "none"
+            },
+            {
+              "id": "check_next_steps",
+              "label": "Check for Next Steps",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_product_qty",
+              "label": "Confirm Product & Quantity",
+              "coverage": "none"
+            },
+            {
+              "id": "pvpvc",
+              "label": "PVPVC",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "present_solution_demo",
-          "label": "Present Solution Demo",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "field"],
-          "rationale": "Live presentation support with simultaneous translation",
-          "demos": ["/experiences/chat", "/experiences/field"]
+          "id": "qualify_prospects",
+          "label": "Qualify Prospects",
+          "minutesPerWeek": 125,
+          "subprocesses": [
+            {
+              "id": "connect_prospect",
+              "label": "Connect with Prospect",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_vbg",
+              "label": "Confirm Applicability to Be VBG Customer",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_active",
+              "label": "Confirm Business is Active",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_territory",
+              "label": "Confirm Territory Ownership",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_poc",
+              "label": "Confirm POC Listed on Art. of Inc.",
+              "coverage": "none"
+            },
+            {
+              "id": "confirm_docs",
+              "label": "Confirm Appropriate Documentation",
+              "coverage": "none"
+            },
+            {
+              "id": "handle_fraud",
+              "label": "Handle Fraud Cases",
+              "coverage": "none"
+            },
+            {
+              "id": "handle_credit",
+              "label": "Handle Credit Issue",
+              "coverage": "none"
+            },
+            {
+              "id": "submit_maa",
+              "label": "Submit MAA Request & Create Profile",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "address_objections",
-          "label": "Address Objections",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "email"],
-          "rationale": "Real-time conversation support across all channels",
-          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email"]
+          "id": "discovery_process",
+          "label": "Engage in Discovery Process",
+          "minutesPerWeek": 25,
+          "subprocesses": [
+            {
+              "id": "connect_prospect_disc",
+              "label": "Connect with Prospect",
+              "coverage": "none"
+            },
+            {
+              "id": "complete_discovery",
+              "label": "Complete Discovery Questionnaire",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "field"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat", "/experiences/field"]
+            }
+          ]
+        },
+        {
+          "id": "manage_opportunity",
+          "label": "Manage Opportunity",
+          "minutesPerWeek": 310,
+          "subprocesses": [
+            {
+              "id": "convert_opty",
+              "label": "Convert to Opty",
+              "coverage": "none"
+            },
+            {
+              "id": "send_nudges",
+              "label": "Send Nudges",
+              "coverage": "full",
+              "channels": ["email", "chat"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "contd_engagement",
+              "label": "Cont'd Engagement",
+              "coverage": "none"
+            },
+            {
+              "id": "set_reset_appt",
+              "label": "Set/reset Appointment",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "meet_customer",
+              "label": "Meet w/ Customer",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "field"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/field", "/experiences/chat"]
+            },
+            {
+              "id": "post_meeting",
+              "label": "Post Meeting Analysis",
+              "coverage": "none"
+            },
+            {
+              "id": "overcome_objections",
+              "label": "Overcome Objections & Negotiate",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "field", "email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat", "/experiences/field"]
+            }
+          ]
+        },
+        {
+          "id": "build_share_quote",
+          "label": "Build & Share Quote",
+          "minutesPerWeek": 75,
+          "subprocesses": [
+            {
+              "id": "fill_customer_details",
+              "label": "Fill In Customer Details",
+              "coverage": "none"
+            },
+            {
+              "id": "select_devices",
+              "label": "Select Devices & Customize",
+              "coverage": "none"
+            },
+            {
+              "id": "select_payment",
+              "label": "Select Payment Plan",
+              "coverage": "none"
+            },
+            {
+              "id": "select_service",
+              "label": "Select Service, Protection, & Add Ons",
+              "coverage": "none"
+            },
+            {
+              "id": "validate_quote",
+              "label": "Validate Quote & Cart",
+              "coverage": "none"
+            },
+            {
+              "id": "apply_adjustments",
+              "label": "Apply Nonstandard Adjustments",
+              "coverage": "none"
+            },
+            {
+              "id": "share_quote",
+              "label": "Share Quote",
+              "coverage": "full",
+              "channels": ["email", "documents"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/documents", "/experiences/email"]
+            }
+          ]
+        },
+        {
+          "id": "close_follow_up",
+          "label": "Close & Follow Up",
+          "minutesPerWeek": 75,
+          "subprocesses": [
+            {
+              "id": "plan_logistics",
+              "label": "Plan Logistics",
+              "coverage": "none"
+            },
+            {
+              "id": "process_order",
+              "label": "Process Order",
+              "coverage": "none"
+            },
+            {
+              "id": "fill_customer_details_close",
+              "label": "Fill In Customer Details",
+              "coverage": "none"
+            },
+            {
+              "id": "perform_credit",
+              "label": "Perform Credit Check",
+              "coverage": "none"
+            },
+            {
+              "id": "submit_order",
+              "label": "Submit Order",
+              "coverage": "full",
+              "channels": ["web", "email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "ensure_hardware",
+              "label": "Ensure Hardware Delivered",
+              "coverage": "none"
+            },
+            {
+              "id": "port_lines",
+              "label": "Port Lines & Transfer Data",
+              "coverage": "none"
+            },
+            {
+              "id": "execute_deployment",
+              "label": "Execute Deployment Plan",
+              "coverage": "full",
+              "channels": ["email", "documents", "field"],
+              "personas": ["diego"],
+              "demos": ["/experiences/field", "/experiences/documents"]
+            }
+          ]
         }
       ]
     },
     {
-      "id": "negotiation",
-      "name": "Negotiation & Closing",
+      "id": "churn",
+      "name": "Churn Mitigation",
+      "hoursPerWeek": 4,
+      "coveragePercent": 78,
+      "color": "yellow",
       "activities": [
         {
-          "id": "negotiate_terms",
-          "label": "Negotiate Terms & Pricing",
-          "coverage": "full",
-          "pillars": ["chat", "email", "field"],
-          "rationale": "Contract negotiation fully supported with legal terminology translation",
-          "demos": ["/experiences/chat", "/experiences/email", "/experiences/field"]
+          "id": "qbr",
+          "label": "Engage in Quarterly Business Review (QBR)!",
+          "minutesPerWeek": 90,
+          "subprocesses": [
+            {
+              "id": "choose_template",
+              "label": "Choose Template",
+              "coverage": "none"
+            },
+            {
+              "id": "build_edit_deck",
+              "label": "Build/Edit Deck",
+              "coverage": "full",
+              "channels": ["documents"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/documents"]
+            },
+            {
+              "id": "review_customer",
+              "label": "Review w/ Customer",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "field"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/field", "/experiences/chat"]
+            }
+          ]
         },
         {
-          "id": "prepare_contract",
-          "label": "Prepare Contract Documents",
-          "coverage": "full",
-          "pillars": ["documents", "email"],
-          "rationale": "Legal documents translated with certified accuracy",
-          "demos": ["/experiences/documents", "/experiences/email"]
+          "id": "artemis_churn",
+          "label": "Work Through Artemis Churn Lists",
+          "minutesPerWeek": 10,
+          "subprocesses": [
+            {
+              "id": "build_churn_model",
+              "label": "Build Churn Model List",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call_churn",
+              "label": "Engage (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_email_churn",
+              "label": "Engage (email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/email"]
+            }
+          ]
         },
         {
-          "id": "obtain_signatures",
-          "label": "Obtain Signatures",
-          "coverage": "partial",
-          "pillars": ["email"],
-          "rationale": "Email notifications and signature request messages are fully translated",
-          "gaps": "Missing: DocuSign/e-signature platform UI remains in English. Only email notifications and document content are translated, not the signing interface itself.",
-          "demos": ["/experiences/email"]
+          "id": "high_risk_accounts",
+          "label": "Review & Engage High Risk Accounts",
+          "minutesPerWeek": 25,
+          "subprocesses": [
+            {
+              "id": "review_leadership",
+              "label": "Review w/ Leadership",
+              "coverage": "none"
+            },
+            {
+              "id": "understand_need",
+              "label": "Understand Need",
+              "coverage": "full",
+              "channels": ["chat", "ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "determine_lac",
+              "label": "Determine LAC Offer / Solution",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "get_commit",
+              "label": "Get Commit & Close",
+              "coverage": "full",
+              "channels": ["chat", "ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "submit_changes",
+              "label": "Submit Change(s)",
+              "coverage": "full",
+              "channels": ["web", "email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/email"]
+            }
+          ]
+        },
+        {
+          "id": "sales_alerts",
+          "label": "Manage Intraday Sales Alerts",
+          "minutesPerWeek": 20,
+          "subprocesses": [
+            {
+              "id": "review_lead",
+              "label": "Review Lead",
+              "coverage": "none"
+            },
+            {
+              "id": "identify_driver",
+              "label": "Identify Churn Driver",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_call_alert",
+              "label": "Engage (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_email_alert",
+              "label": "Engage (email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "engage_sms_alert",
+              "label": "Engage (SMS)",
+              "coverage": "full",
+              "channels": ["chat"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            }
+          ]
+        },
+        {
+          "id": "account_migration",
+          "label": "Acct Migration (New Channel) Handoffs (New Rep)",
+          "minutesPerWeek": 5,
+          "subprocesses": [
+            {
+              "id": "notify_sam",
+              "label": "Notify SAM and Customer",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "introduce_rep",
+              "label": "Introduce New Rep",
+              "coverage": "full",
+              "channels": ["email", "chat"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "send_handoff",
+              "label": "Send Handoff Summary (email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "submit_nbo",
+              "label": "Submit NBO TM Request Form",
+              "coverage": "none"
+            },
+            {
+              "id": "review_top_30",
+              "label": "Review Top 30 Accts",
+              "coverage": "none"
+            },
+            {
+              "id": "update_base",
+              "label": "Update Base",
+              "coverage": "none"
+            },
+            {
+              "id": "review_funnel",
+              "label": "Review Funnel Opportunities",
+              "coverage": "none"
+            }
+          ]
+        },
+        {
+          "id": "scheduled_disconnects",
+          "label": "Contact Scheduled Disconnects",
+          "minutesPerWeek": 80,
+          "subprocesses": [
+            {
+              "id": "obtain_approval",
+              "label": "Obtain Director Approval (for LAC)",
+              "coverage": "none"
+            },
+            {
+              "id": "engage_deact_call",
+              "label": "Engage Planned Line Deact's (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_deact_email",
+              "label": "Engage Planned Line Deact's (email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/email"]
+            },
+            {
+              "id": "engage_mybiz_call",
+              "label": "Engage Planned MyBiz Discos (call)",
+              "coverage": "full",
+              "channels": ["ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/ivr"]
+            },
+            {
+              "id": "engage_mybiz_email",
+              "label": "Engage Planned MyBiz Discos (email)",
+              "coverage": "full",
+              "channels": ["email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/email"]
+            }
+          ]
         }
       ]
     },
     {
-      "id": "onboarding",
-      "name": "Onboarding & Activation",
+      "id": "service",
+      "name": "Service & Post Sales",
+      "hoursPerWeek": 4.5,
+      "coveragePercent": 85,
+      "color": "green",
       "activities": [
         {
-          "id": "schedule_installation",
-          "label": "Schedule Installation",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "email", "field"],
-          "rationale": "Scheduling communications fully translated across all channels",
-          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email", "/experiences/field"]
+          "id": "white_glove_handoff",
+          "label": "Hand Off to White Glove Care Team",
+          "minutesPerWeek": 5,
+          "subprocesses": [
+            {
+              "id": "confirm_vbg_service",
+              "label": "Confirm Applicability to Be VBG Customer",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "send_welcome_kit",
-          "label": "Send Welcome Kit",
-          "coverage": "full",
-          "pillars": ["email", "documents", "web"],
-          "rationale": "Welcome materials and portal access fully localized",
-          "demos": ["/experiences/email", "/experiences/documents", "/experiences/web"]
+          "id": "setup_support",
+          "label": "Manage Setup Support Cases",
+          "minutesPerWeek": 105,
+          "subprocesses": [
+            {
+              "id": "device_setup",
+              "label": "Device Setup & VMDE Enrollment",
+              "coverage": "none"
+            },
+            {
+              "id": "mybiz_registration",
+              "label": "MyBiz Registration",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "web"],
+              "personas": ["diego", "maria"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "onetalk_config",
+              "label": "OneTalk Configuration",
+              "coverage": "full",
+              "channels": ["chat", "ivr"],
+              "personas": ["diego"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "resolve_shipping",
+              "label": "Resolve Shipping Issues",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["maria", "diego"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "resolve_b360",
+              "label": "Resolve B360 Errors",
+              "coverage": "none"
+            },
+            {
+              "id": "resolve_order",
+              "label": "Resolve Order Processing Issues",
+              "coverage": "none"
+            },
+            {
+              "id": "resolve_escalate",
+              "label": "Resolve & Escalate Open Issues",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["maria", "lucia", "diego"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "bgco_deflection",
+              "label": "BGCO Deflection",
+              "coverage": "full",
+              "channels": ["chat", "ivr"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            }
+          ]
         },
         {
-          "id": "conduct_training",
-          "label": "Conduct Product Training",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "field", "documents"],
-          "rationale": "Training materials and live sessions fully supported",
-          "demos": ["/experiences/chat", "/experiences/field", "/experiences/documents"]
-        }
-      ]
-    },
-    {
-      "id": "support",
-      "name": "Ongoing Support & Service",
-      "activities": [
-        {
-          "id": "handle_service_requests",
-          "label": "Handle Service Requests",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "email", "field"],
-          "rationale": "All support channels fully translated with context preservation",
-          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/email", "/experiences/field"]
+          "id": "port_support",
+          "label": "Manage Port Support Cases",
+          "minutesPerWeek": 45,
+          "subprocesses": [
+            {
+              "id": "obtain_port_info",
+              "label": "Obtain Port Info",
+              "coverage": "none"
+            },
+            {
+              "id": "assign_temp",
+              "label": "Assign Temp Numbers",
+              "coverage": "none"
+            },
+            {
+              "id": "port_activation",
+              "label": "Port & Activation Issues",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos", "maria"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "promo_fallout",
+              "label": "Promo Fallout",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "process_billing_inquiries",
-          "label": "Process Billing Inquiries",
-          "coverage": "full",
-          "pillars": ["chat", "email", "web"],
-          "rationale": "Billing communications and portal fully localized",
-          "demos": ["/experiences/chat", "/experiences/email", "/experiences/web"]
+          "id": "promo_tradein_support",
+          "label": "Manage Promo & Trade-in Support Cases",
+          "minutesPerWeek": 60,
+          "subprocesses": [
+            {
+              "id": "review_eligibility",
+              "label": "Review Account Eligibility",
+              "coverage": "none"
+            },
+            {
+              "id": "submit_approvals",
+              "label": "Submit Appropriate Form for Approvals",
+              "coverage": "none"
+            },
+            {
+              "id": "escalate_collections",
+              "label": "Escalate Collections & Corrections",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "troubleshoot_technical_issues",
-          "label": "Troubleshoot Technical Issues",
-          "coverage": "full",
-          "pillars": ["chat", "ivr", "field"],
-          "rationale": "Technical support with specialized terminology translation",
-          "demos": ["/experiences/chat", "/experiences/ivr", "/experiences/field"]
-        }
-      ]
-    },
-    {
-      "id": "expansion",
-      "name": "Expansion & Upsell",
-      "activities": [
-        {
-          "id": "identify_growth_opportunities",
-          "label": "Identify Growth Opportunities",
-          "coverage": "partial",
-          "pillars": ["email"],
-          "rationale": "Outreach emails and opportunity notifications are fully translated",
-          "gaps": "Missing: CRM analytics dashboards and AI-powered opportunity scoring tools remain in English. Only customer-facing communications are translated.",
-          "demos": ["/experiences/email"]
+          "id": "fraud_cases",
+          "label": "Manage Post-Sales Fraud Cases",
+          "minutesPerWeek": 20,
+          "subprocesses": [
+            {
+              "id": "flag_drill",
+              "label": "Flag Drill Orders",
+              "coverage": "none"
+            },
+            {
+              "id": "flag_no_use",
+              "label": "Flag No Use / No Pay Devices",
+              "coverage": "none"
+            },
+            {
+              "id": "get_fraud_support",
+              "label": "Get Fraud Support",
+              "coverage": "none"
+            }
+          ]
         },
         {
-          "id": "present_upgrade_options",
-          "label": "Present Upgrade Options",
-          "coverage": "full",
-          "pillars": ["chat", "email", "field", "web"],
-          "rationale": "All sales channels fully supported for expansion conversations",
-          "demos": ["/experiences/chat", "/experiences/email", "/experiences/field", "/experiences/web"]
-        },
-        {
-          "id": "process_add_on_orders",
-          "label": "Process Add-on Orders",
-          "coverage": "full",
-          "pillars": ["web", "email", "documents"],
-          "rationale": "Order processing and documentation fully translated",
-          "demos": ["/experiences/web", "/experiences/email", "/experiences/documents"]
+          "id": "welcome_call",
+          "label": "Call for Post-sale Welcome",
+          "minutesPerWeek": 25,
+          "subprocesses": [
+            {
+              "id": "set_expectations",
+              "label": "Set Expectations for First Bill",
+              "coverage": "none"
+            },
+            {
+              "id": "field_questions",
+              "label": "Field Questions for New Equipment",
+              "coverage": "full",
+              "channels": ["chat", "ivr"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat", "/experiences/ivr"]
+            },
+            {
+              "id": "address_zero_use",
+              "label": "Address Zero Use Issues",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["maria", "lucia"],
+              "demos": ["/experiences/chat"]
+            },
+            {
+              "id": "support_onboarding",
+              "label": "Support with Onboarding",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "field"],
+              "personas": ["diego"],
+              "demos": ["/experiences/field", "/experiences/chat"]
+            },
+            {
+              "id": "schedule_followup",
+              "label": "Schedule Follow-up",
+              "coverage": "full",
+              "channels": ["chat", "ivr", "email"],
+              "personas": ["carlos", "diego"],
+              "demos": ["/experiences/chat"]
+            }
+          ]
         }
       ]
     }
