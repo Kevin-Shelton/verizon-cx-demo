@@ -570,74 +570,130 @@ export default function Journey() {
                   </svg>
                 </button>
               </div>
-              <div className="p-8">
-                {/* Visual Flow Diagram */}
-                <div className="space-y-6">
-                  {filteredActivities.map((activity, index) => {
-                    const personas = activity.personas ? 
-                      personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
-                    return (
-                      <div key={`visual-${activity.id}-${index}`} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        {/* Verizon Rep */}
-                        <div className="flex flex-col items-center gap-2 w-32">
-                          <div className="w-16 h-16 rounded-full bg-blue-100 border-2 border-blue-500 flex items-center justify-center">
-                            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                          </div>
-                          <div className="text-xs font-semibold text-blue-700 text-center">Verizon Rep</div>
-                        </div>
-
-                        {/* Interaction Arrow */}
-                        <div className="flex-1 flex flex-col items-center gap-2">
-                          <div className="w-full flex items-center gap-2">
-                            <div className="flex-1 h-0.5 bg-gradient-to-r from-blue-500 to-green-500"></div>
-                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </div>
-                          <div className="text-center">
-                            <div className="font-semibold text-sm text-gray-900 mb-1">{activity.label}</div>
-                            <div className="text-xs text-gray-600 mb-2">{activity.parentActivity}</div>
-                            <div className="flex flex-wrap gap-1 justify-center">
-                              {activity.pillars.map((pillar) => (
-                                <Badge key={pillar} variant="secondary" className="text-xs">
-                                  {pillar}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Customer Personas */}
-                        <div className="flex flex-col items-center gap-2 w-32">
-                          {personas.length > 0 ? (
-                            personas.map(persona => (
-                              <div key={persona.id} className="flex flex-col items-center gap-1">
-                                <div className="w-16 h-16 rounded-full bg-green-100 border-2 border-green-500 flex items-center justify-center text-3xl">
-                                  {persona.avatar}
-                                </div>
-                                <div className="text-xs font-semibold text-green-700 text-center">{persona.name}</div>
-                                <div className="text-[10px] text-gray-600 text-center">{persona.role}</div>
-                              </div>
-                            ))
-                          ) : (
-                            <div className="w-16 h-16 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center">
-                              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                              </svg>
-                            </div>
-                          )}
-                        </div>
+              <div className="p-6 h-[calc(90vh-88px)] overflow-hidden">
+                {/* Horizontal Swimlane Flow */}
+                {filteredActivities.length === 0 ? (
+                  <div className="text-center py-12 text-gray-500">
+                    No activities match the selected filters. Please adjust your persona or stage selection.
+                  </div>
+                ) : (
+                  <div className="h-full flex items-center gap-6">
+                    {/* Left: Verizon Rep */}
+                    <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                      <div className="w-20 h-20 rounded-full bg-blue-100 border-3 border-blue-500 flex items-center justify-center shadow-lg">
+                        <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                       </div>
-                    );
-                  })}
-                  {filteredActivities.length === 0 && (
-                    <div className="text-center py-12 text-gray-500">
-                      No activities match the selected filters. Please adjust your persona or stage selection.
+                      <div className="text-sm font-bold text-blue-700 text-center">Verizon<br/>Rep</div>
                     </div>
-                  )}
-                </div>
+
+                    {/* Center: Horizontal Timeline with Touchpoints */}
+                    <div className="flex-1 overflow-x-auto overflow-y-hidden">
+                      <div className="flex items-center gap-3 pb-4">
+                        {(() => {
+                          // Group activities by stage
+                          const stageGroups = journeyData.stages.map(stage => ({
+                            stage,
+                            activities: filteredActivities.filter(a => a.stageId === stage.id)
+                          })).filter(g => g.activities.length > 0);
+
+                          return stageGroups.map((group, groupIndex) => (
+                            <div key={group.stage.id} className="flex items-center gap-3">
+                              {/* Stage Section */}
+                              <div className="flex flex-col items-center gap-2">
+                                {/* Stage Label */}
+                                <div 
+                                  className="text-xs font-semibold px-3 py-1 rounded-full text-white mb-2"
+                                  style={{ backgroundColor: group.stage.color }}
+                                >
+                                  {group.stage.name}
+                                </div>
+                                {/* Touchpoint Nodes */}
+                                <div className="flex gap-2">
+                                  {group.activities.map((activity, actIndex) => {
+                                    const personas = activity.personas ? 
+                                      personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
+                                    return (
+                                      <div key={`node-${activity.id}-${actIndex}`} className="group relative">
+                                        {/* Compact Node */}
+                                        <div 
+                                          className="w-12 h-12 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all hover:scale-110 shadow-md"
+                                          style={{ 
+                                            backgroundColor: `${group.stage.color}20`,
+                                            borderColor: group.stage.color
+                                          }}
+                                          title={`${activity.label} - ${activity.parentActivity}`}
+                                        >
+                                          <span className="text-xs font-bold" style={{ color: group.stage.color }}>
+                                            {actIndex + 1}
+                                          </span>
+                                        </div>
+                                        {/* Hover Tooltip */}
+                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10 w-48">
+                                          <div className="bg-gray-900 text-white text-xs rounded-lg p-2 shadow-xl">
+                                            <div className="font-semibold mb-1">{activity.label}</div>
+                                            <div className="text-gray-300 text-[10px] mb-1">{activity.parentActivity}</div>
+                                            <div className="flex flex-wrap gap-1">
+                                              {activity.pillars.map(p => (
+                                                <span key={p} className="bg-gray-700 px-1 py-0.5 rounded text-[9px]">{p}</span>
+                                              ))}
+                                            </div>
+                                            {personas.length > 0 && (
+                                              <div className="mt-1 pt-1 border-t border-gray-700 text-[10px]">
+                                                {personas.map(p => p.avatar).join(' ')}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                        {/* Connection Line to Next Node */}
+                                        {actIndex < group.activities.length - 1 && (
+                                          <div 
+                                            className="absolute top-1/2 left-full w-2 h-0.5"
+                                            style={{ backgroundColor: group.stage.color }}
+                                          />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                              {/* Arrow to Next Stage */}
+                              {groupIndex < stageGroups.length - 1 && (
+                                <svg className="w-6 h-6 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                              )}
+                            </div>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Right: Customer Personas */}
+                    <div className="flex flex-col gap-3 flex-shrink-0">
+                      {(() => {
+                        // Get unique personas from filtered activities
+                        const uniquePersonaIds = new Set<string>();
+                        filteredActivities.forEach(a => {
+                          if (a.personas) {
+                            a.personas.forEach(pid => uniquePersonaIds.add(pid));
+                          }
+                        });
+                        const activePersonas = personasData.personas.filter(p => uniquePersonaIds.has(p.id));
+                        
+                        return activePersonas.map(persona => (
+                          <div key={persona.id} className="flex flex-col items-center gap-1">
+                            <div className="w-16 h-16 rounded-full bg-green-100 border-3 border-green-500 flex items-center justify-center text-2xl shadow-lg">
+                              {persona.avatar}
+                            </div>
+                            <div className="text-xs font-semibold text-green-700 text-center">{persona.name}</div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
