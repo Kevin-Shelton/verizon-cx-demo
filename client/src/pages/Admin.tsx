@@ -20,7 +20,7 @@ export default function Admin() {
     }
   }, [isAdmin, setLocation]);
 
-  const handleAddUser = (e: React.FormEvent) => {
+  const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
@@ -34,7 +34,7 @@ export default function Admin() {
       return;
     }
 
-    const success = addUser(newUsername, newPassword);
+    const success = await addUser(newUsername, newPassword);
     if (success) {
       setMessage({ type: 'success', text: `User "${newUsername}" added successfully` });
       setNewUsername('');
@@ -44,14 +44,14 @@ export default function Admin() {
     }
   };
 
-  const handleDeleteUser = (username: string) => {
+  const handleDeleteUser = async (username: string) => {
     if (username === 'kevin.shelton@invictusbpo.com') {
       setMessage({ type: 'error', text: 'Cannot delete admin user' });
       return;
     }
 
     if (confirm(`Are you sure you want to delete user "${username}"?`)) {
-      const success = deleteUser(username);
+      const success = await deleteUser(username);
       if (success) {
         setMessage({ type: 'success', text: `User "${username}" deleted successfully` });
       } else {

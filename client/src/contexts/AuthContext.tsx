@@ -112,7 +112,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // Supabase insert returns data as an array of inserted objects, or null if no data
-    if (insertData && insertData.length > 0) {
+    // With RLS policies, insertData might be null even on success
+    if (!insertError) {
       console.log("Supabase insert successful. Inserted data:", insertData);
       // Re-fetch users to update the local state
       await fetchUsers(); // Call the defined fetchUsers function to refresh the state
