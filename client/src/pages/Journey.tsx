@@ -864,7 +864,7 @@ export default function Journey() {
                 </svg>
               </button>
             </div>
-            <div className="p-6 h-[calc(90vh-88px)] overflow-hidden">
+            <div className="p-6 h-[calc(90vh-88px)] overflow-y-auto visual-flow-container" style={{ scrollbarWidth: 'auto', scrollbarColor: '#3b82f6 #e5e7eb' }}>
               {/* Persona Narrative Section */}
               {selectedPersona !== 'all' && (() => {
                 const persona = personasData.personas.find(p => p.id === selectedPersona);
@@ -939,7 +939,7 @@ export default function Journey() {
               })()}
 
               {/* Visual Flow Content */}
-              <div className="flex items-start gap-6 overflow-x-auto pb-6" style={{ minWidth: 'max-content' }}>
+              <div className="flex items-start gap-6 overflow-x-auto pb-6 visual-flow-horizontal" style={{ minWidth: 'max-content', scrollbarWidth: 'auto', scrollbarColor: '#3b82f6 #e5e7eb' }}>
                 {/* Verizon Rep Icon */}
                 <div className="flex flex-col items-center sticky left-0 bg-white z-10">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg border-4 border-white">
