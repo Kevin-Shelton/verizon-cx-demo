@@ -3,15 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+
 import { useLocation } from "wouter";
-import { Download, Filter, ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe } from "lucide-react";
+import { ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import journeyData from "../../../data/journey.json";
 import personasData from "../../../data/personas.json";
-import categoriesData from "../../../data/categories.json";
+
 import { calculateStageCoverage, calculateOverallCoverage, getCoverageDot, getCoverageColor } from "@shared/journeyUtils";
 import type { Activity, Coverage, Pillar } from "@shared/types";
 import WorkflowSections from "@/components/WorkflowSections";
@@ -25,13 +23,7 @@ interface ExtendedActivity extends Activity {
 export default function Journey() {
   const [, setLocation] = useLocation();
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
-    pillar: null as Pillar | null,
-    coverage: [] as Coverage[],
-    onlyGaps: false,
-  });
+
 
   // Get all activities with full coverage
   const fullCoverageActivities = useMemo(() => {
@@ -62,39 +54,7 @@ export default function Journey() {
     []
   );
 
-  const filteredStages = useMemo(() => {
-    let stages = journeyData.stages;
 
-    // Filter by category
-    if (selectedCategory) {
-      const category = categoriesData.categories.find(c => c.id === selectedCategory);
-      if (category) {
-        stages = stages.filter(stage => category.stages.includes(stage.id));
-      }
-    }
-
-    return stages.map((stage) => {
-      let activities = stage.activities;
-
-      if (filters.pillar) {
-        activities = activities.filter((a) =>
-          a.pillars.includes(filters.pillar!)
-        );
-      }
-
-      if (filters.coverage.length > 0) {
-        activities = activities.filter((a) =>
-          filters.coverage.includes(a.coverage as Coverage)
-        );
-      }
-
-      if (filters.onlyGaps) {
-        activities = activities.filter((a) => a.coverage !== "full");
-      }
-
-      return { ...stage, activities };
-    }).filter((stage) => stage.activities.length > 0);
-  }, [filters, selectedCategory]);
 
   const handleActivityClick = (activity: Activity) => {
     setSelectedActivity(activity);
@@ -420,198 +380,7 @@ export default function Journey() {
         {/* Workflow Sections Component */}
         <WorkflowSections />
 
-        {/* Filter Controls */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Journey Stages
-            </h2>
-            <p className="text-gray-600">
-              Explore multilingual coverage across customer touchpoints
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2"
-          >
-            <Filter className="h-4 w-4" />
-            {showFilters ? "Hide Filters" : "Show Filters"}
-          </Button>
-        </div>
 
-        {/* Filter Panel */}
-        {showFilters && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Filter Journey Activities</CardTitle>
-              <CardDescription>
-                Refine the view to focus on specific pillars or coverage levels
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <Label>Pillar</Label>
-                  <Select
-                    value={filters.pillar || "all"}
-                    onValueChange={(value) =>
-                      setFilters({
-                        ...filters,
-                        pillar: value === "all" ? null : (value as Pillar),
-                      })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Pillars" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Pillars</SelectItem>
-                      <SelectItem value="web">Web</SelectItem>
-                      <SelectItem value="email">Email</SelectItem>
-                      <SelectItem value="chat">Chat</SelectItem>
-                      <SelectItem value="ivr">IVR</SelectItem>
-                      <SelectItem value="documents">Documents</SelectItem>
-                      <SelectItem value="field">Field Services</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Coverage Level</Label>
-                  <div className="flex gap-2">
-                    {(["full", "partial", "none"] as Coverage[]).map((cov) => (
-                      <Button
-                        key={cov}
-                        variant={
-                          filters.coverage.includes(cov) ? "default" : "outline"
-                        }
-                        size="sm"
-                        onClick={() => {
-                          const newCoverage = filters.coverage.includes(cov)
-                            ? filters.coverage.filter((c) => c !== cov)
-                            : [...filters.coverage, cov];
-                          setFilters({ ...filters, coverage: newCoverage });
-                        }}
-                      >
-                        {cov}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="gaps-only"
-                      checked={filters.onlyGaps}
-                      onCheckedChange={(checked) =>
-                        setFilters({ ...filters, onlyGaps: checked })
-                      }
-                    />
-                    <Label htmlFor="gaps-only">Show Gaps Only</Label>
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  setFilters({
-                    pillar: null,
-                    coverage: [],
-                    onlyGaps: false,
-                  })
-                }
-              >
-                Clear All Filters
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Journey Stages */}
-        <div className="space-y-6">
-          {filteredStages.map((stage, stageIndex) => (
-            <motion.div
-              key={stage.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: stageIndex * 0.1 }}
-            >
-              <Card className="overflow-hidden border-l-4" style={{ borderLeftColor: getCoverageColor(calculateStageCoverage(stage as any) >= 75 ? 'full' : calculateStageCoverage(stage as any) >= 50 ? 'partial' : 'none') }}>
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-white">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge variant="outline" className="text-sm">
-                          Stage {stageIndex + 1}
-                        </Badge>
-                        <div className="flex items-center gap-2">
-                          {getCoverageDot(calculateStageCoverage(stage as any) >= 75 ? 'full' : calculateStageCoverage(stage as any) >= 50 ? 'partial' : 'none')}
-                          <span className="text-sm font-medium text-gray-600">
-                            {calculateStageCoverage(stage as any)}% Coverage
-                          </span>
-                        </div>
-                      </div>
-                      <CardTitle className="text-2xl">{stage.name}</CardTitle>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {stage.activities.map((activity) => (
-                      <motion.div
-                        key={activity.id}
-                        whileHover={{ scale: 1.02 }}
-                        className="cursor-pointer"
-                        onClick={() => handleActivityClick(activity as Activity)}
-                      >
-                        <Card className={`h-full border-2 transition-all ${getCoverageBg(activity.coverage as Coverage)}`}>
-                          <CardHeader className="pb-3">
-                            <div className="flex items-start justify-between gap-2">
-                              <CardTitle className="text-base leading-tight">
-                                {activity.label}
-                              </CardTitle>
-                              {getCoverageIcon(activity.coverage as Coverage)}
-                            </div>
-                          </CardHeader>
-                          <CardContent className="pt-0">
-                            <div className="flex flex-wrap gap-1 mb-3">
-                              {activity.pillars.map((pillar) => (
-                                <Badge
-                                  key={pillar}
-                                  variant="secondary"
-                                  className="text-xs"
-                                >
-                                  {pillar}
-                                </Badge>
-                              ))}
-                            </div>
-                            {activity.demos && activity.demos.length > 0 && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="w-full"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenDemo(activity.demos[0]);
-                                }}
-                              >
-                                View Demo
-                                <ChevronRight className="ml-2 h-4 w-4" />
-                              </Button>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
       {/* Activity Detail Sheet */}
