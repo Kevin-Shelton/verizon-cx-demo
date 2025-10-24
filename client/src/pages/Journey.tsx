@@ -629,8 +629,8 @@ export default function Journey() {
                     </div>
 
                     {/* Center: Horizontal Flow grouped by Parent Activity */}
-                    <div className="flex-1 overflow-x-auto overflow-y-hidden px-4">
-                      <div className="flex items-start gap-4 pb-4">
+                    <div className="flex-1 overflow-x-auto overflow-y-visible px-4" style={{ maxHeight: '500px' }}>
+                      <div className="flex items-start gap-4 pb-4" style={{ minWidth: 'max-content' }}>
                         {(() => {
                           // Group activities by parent activity
                           type ActivityType = typeof filteredActivities[0];
@@ -665,7 +665,7 @@ export default function Journey() {
                                         }) : [];
                                       return (
                                         <div key={`${activity.id}-${idx}`} className="bg-gray-50 rounded p-2 border border-gray-200">
-                                          <div className="flex items-start gap-2">
+                                          <div className="flex items-start justify-between gap-2">
                                             <div className="flex-1">
                                               <div className="font-medium text-xs text-gray-900 mb-1">{activity.label}</div>
                                               <div className="flex flex-wrap gap-1 mb-1">
@@ -675,8 +675,17 @@ export default function Journey() {
                                                   </Badge>
                                                 ))}
                                               </div>
-                                              {/* Removed persona icons from subprocess items */}
                                             </div>
+                                            {activity.demos && activity.demos.length > 0 && (
+                                              <a
+                                                href={activity.demos[0]}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex-shrink-0 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white text-[9px] rounded transition-colors"
+                                              >
+                                                Demo
+                                              </a>
+                                            )}
                                           </div>
                                         </div>
                                       );
