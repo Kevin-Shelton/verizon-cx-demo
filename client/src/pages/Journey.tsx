@@ -584,9 +584,27 @@ export default function Journey() {
                         <div className="flex-1">
                           <h3 className="text-lg font-bold text-gray-900">{persona.name} - {persona.role}</h3>
                           <p className="text-sm text-gray-700 mt-1">
-                            Journey showing multilingual touchpoints where Verizon representatives interact with {persona.name} 
-                            in {persona.dialect} across {filteredActivities.length} customer-facing activities.
+                            {persona.description}
                           </p>
+                          <div className="mt-2 grid grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-xs font-semibold text-gray-600 uppercase">Key Needs</p>
+                              <ul className="text-sm text-gray-700 mt-1 space-y-0.5">
+                                {persona.needs.map((need: string, idx: number) => (
+                                  <li key={idx} className="flex items-start gap-1">
+                                    <span className="text-green-600 mt-0.5">✓</span>
+                                    <span>{need}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold text-gray-600 uppercase">Journey Coverage</p>
+                              <p className="text-sm text-gray-700 mt-1">
+                                Verizon reps interact with {persona.name} in <span className="font-semibold text-green-700">{persona.dialectLabel}</span> across <span className="font-semibold text-blue-700">{filteredActivities.length} multilingual touchpoints</span> spanning {persona.journey.length} journey stages.
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
