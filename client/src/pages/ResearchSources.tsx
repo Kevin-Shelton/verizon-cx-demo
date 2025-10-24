@@ -30,6 +30,9 @@ export default function ResearchSources() {
 
   // Brand-name sources to highlight
   const brandNameSources = [
+    'Verizon',
+    'AT&T',
+    'T-Mobile',
     'Common Sense Advisory',
     'Accenture',
     'Nielsen',

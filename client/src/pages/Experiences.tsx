@@ -76,37 +76,9 @@ export default function Experiences() {
             <Layers className="w-12 h-12" />
             <h1 className="text-5xl font-bold">Experience Modules</h1>
           </div>
-          <p className="text-2xl text-blue-100 max-w-3xl mb-8">
+          <p className="text-2xl text-blue-100 max-w-3xl">
             Explore how multilingual translation works across every customer touchpoint
           </p>
-          
-          {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <Layers className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Experience Modules</div>
-              </div>
-              <div className="text-5xl font-bold">6</div>
-              <div className="text-sm text-blue-200 mt-1">Interactive demonstrations</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <Globe className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Channels Covered</div>
-              </div>
-              <div className="text-5xl font-bold">100%</div>
-              <div className="text-sm text-blue-200 mt-1">Complete omnichannel coverage</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <MessageSquare className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Real-Time Translation</div>
-              </div>
-              <div className="text-5xl font-bold">Yes</div>
-              <div className="text-sm text-blue-200 mt-1">Instant dialect-specific translation</div>
-            </div>
-          </div>
         </div>
       </div>
 
