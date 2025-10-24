@@ -10,6 +10,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import PersonaJourney from "./pages/PersonaJourney";
 
@@ -27,7 +28,9 @@ import Admin from "./pages/Admin";
 
 function Router() {
   return (
-    <Switch>
+    <>
+      <ScrollToTop />
+      <Switch>
       {/* Public route - Login page */}
       <Route path="/login" component={Login} />
       
@@ -58,6 +61,7 @@ function Router() {
         </ProtectedRoute>
       </Route>
     </Switch>
+    </>
   );
 }
 
