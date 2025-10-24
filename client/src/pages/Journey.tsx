@@ -69,14 +69,24 @@ export default function Journey() {
   };
 
   const scrollToSection = (sectionId: string) => {
-    if (activeSection === sectionId) {
-      setActiveSection('');
-    } else {
-      setActiveSection(sectionId);
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    // Collapse all sections first
+    setFullCoverageExpanded(false);
+    setJourneyMapExpanded(false);
+    setPersonasExpanded(false);
+    
+    // Expand the clicked section
+    if (sectionId === 'journey-map') {
+      setJourneyMapExpanded(true);
+    } else if (sectionId === 'full-coverage') {
+      setFullCoverageExpanded(true);
+    } else if (sectionId === 'personas') {
+      setPersonasExpanded(true);
+    }
+    
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
