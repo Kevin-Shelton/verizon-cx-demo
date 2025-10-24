@@ -612,7 +612,7 @@ export default function Journey() {
 
                     {/* Center: Horizontal Flow grouped by Parent Activity */}
                     <div className="flex-1 overflow-x-auto overflow-y-hidden px-4">
-                      <div className="flex items-center gap-4 pb-4">
+                      <div className="flex items-start gap-4 pb-4">
                         {(() => {
                           // Group activities by parent activity
                           type ActivityType = typeof filteredActivities[0];
@@ -628,9 +628,9 @@ export default function Journey() {
                           return Object.entries(parentGroups).map(([parentName, activities], groupIndex) => {
                             const stageColor = journeyData.stages.find(s => s.id === activities[0].stageId)?.color || '#6B7280';
                             return (
-                              <div key={parentName} className="flex-shrink-0">
+                              <div key={parentName} className="flex-shrink-0 flex items-start gap-2">
                                 {/* Parent Activity Card */}
-                                <div className="bg-white rounded-lg border-2 shadow-md" style={{ borderColor: stageColor, minWidth: '200px', maxWidth: '220px' }}>
+                                <div className="bg-white rounded-lg border-2 shadow-md relative" style={{ borderColor: stageColor, minWidth: '200px', maxWidth: '220px', minHeight: '400px' }}>
                                   {/* Parent Header */}
                                   <div className="px-3 py-2 border-b" style={{ backgroundColor: `${stageColor}15`, borderColor: stageColor }}>
                                     <div className="font-semibold text-sm text-gray-900">{parentName}</div>
@@ -665,10 +665,10 @@ export default function Journey() {
                                     })}
                                   </div>
                                 </div>
-                                {/* Arrow to next parent - inline between cards */}
+                                {/* Arrow on right edge of card */}
                                 {groupIndex < Object.keys(parentGroups).length - 1 && (
-                                  <div className="flex-shrink-0">
-                                    <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <div className="flex items-center" style={{ marginTop: '180px' }}>
+                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
                                   </div>
