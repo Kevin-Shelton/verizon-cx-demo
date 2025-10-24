@@ -23,6 +23,10 @@ interface ExtendedActivity extends Activity {
 export default function Journey() {
   const [, setLocation] = useLocation();
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [activeSection, setActiveSection] = useState<string>('');
+  const [fullCoverageExpanded, setFullCoverageExpanded] = useState(false);
+  const [journeyMapExpanded, setJourneyMapExpanded] = useState(false);
+  const [personasExpanded, setPersonasExpanded] = useState(false);
 
 
   // Get all activities with full coverage
@@ -64,6 +68,30 @@ export default function Journey() {
     setLocation(demoPath);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    if (activeSection === sectionId) {
+      setActiveSection('');
+    } else {
+      setActiveSection(sectionId);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
+  const expandAll = () => {
+    setFullCoverageExpanded(true);
+    setJourneyMapExpanded(true);
+    setPersonasExpanded(true);
+  };
+
+  const collapseAll = () => {
+    setFullCoverageExpanded(false);
+    setJourneyMapExpanded(false);
+    setPersonasExpanded(false);
+  };
+
   const getCoverageIcon = (coverage: Coverage) => {
     switch (coverage) {
       case "full":
@@ -88,49 +116,85 @@ export default function Journey() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-16 px-8 shadow-lg">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 mb-6">
-            <Map className="w-12 h-12" />
-            <h1 className="text-5xl font-bold">Journey Coverage Map</h1>
+      {/* Sticky Header with Navigation */}
+      <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-3 md:px-8">
+          {/* Top Row: Title and Quick Actions */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 py-2 md:py-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-1">
+                <Map className="w-6 h-6 md:w-8 md:h-8" />
+                <h1 className="text-lg md:text-2xl font-bold">Journey Coverage Map</h1>
+              </div>
+              <p className="text-blue-100 text-xs md:text-base">
+                {overallCoverage}% overall coverage across {fullCoverageActivities.length} translation-ready touchpoints with {personasData.personas.length} multilingual personas
+              </p>
+            </div>
+            <div className="flex gap-2 md:gap-3">
+              <button
+                onClick={expandAll}
+                className="px-2 py-1 md:px-3 md:py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"
+              >
+                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 rotate-90" />
+                Expand All
+              </button>
+              <button
+                onClick={collapseAll}
+                className="px-2 py-1 md:px-3 md:py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"
+              >
+                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 -rotate-90" />
+                Collapse All
+              </button>
+            </div>
           </div>
-          <p className="text-2xl text-blue-100 max-w-3xl mb-8">
-            Comprehensive analysis of multilingual solution coverage across the entire customer journey
-          </p>
           
-          {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Overall Coverage</div>
-              </div>
-              <div className="text-5xl font-bold">{overallCoverage}%</div>
-              <div className="text-sm text-blue-200 mt-1">Across all journey stages</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <CheckCircle2 className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Full Coverage Activities</div>
-              </div>
-              <div className="text-5xl font-bold">{fullCoverageActivities.length}</div>
-              <div className="text-sm text-blue-200 mt-1">Translation-ready touchpoints</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-2">
-                <Globe className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Customer Personas</div>
-              </div>
-              <div className="text-5xl font-bold">{personasData.personas.length}</div>
-              <div className="text-sm text-blue-200 mt-1">Multilingual customer profiles</div>
-            </div>
-          </div>
+          {/* Bottom Row: Section Navigation */}
+          <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8">
+            <button
+              onClick={() => scrollToSection('full-coverage')}
+              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'full-coverage'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+              }`}
+            >
+              Full Coverage Activities
+            </button>
+            <button
+              onClick={() => scrollToSection('journey-map')}
+              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'journey-map'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+              }`}
+            >
+              R2B Journey Map
+            </button>
+            <button
+              onClick={() => scrollToSection('personas')}
+              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+                activeSection === 'personas'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+              }`}
+            >
+              Customer Personas
+            </button>
+          </nav>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
         {/* FULL COVERAGE ACTIVITIES VISUALIZATION */}
+        <div id="full-coverage" className="mb-8">
+          <button
+            onClick={() => setFullCoverageExpanded(!fullCoverageExpanded)}
+            className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors rounded-lg border border-gray-200 mb-4"
+          >
+            <span className="font-semibold text-gray-900 text-lg">Full Coverage Activities</span>
+            <ChevronRight className={`w-5 h-5 text-gray-600 transition-transform ${fullCoverageExpanded ? 'rotate-90' : ''}`} />
+          </button>
+          {fullCoverageExpanded && (
         <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-4 border-green-400 rounded-2xl mb-12 p-12 shadow-2xl">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -259,8 +323,19 @@ export default function Journey() {
             </div>
           </div>
         </div>
+          )}
+        </div>
 
         {/* R2B Rep Journey Map */}
+        <div id="journey-map" className="mb-8">
+          <button
+            onClick={() => setJourneyMapExpanded(!journeyMapExpanded)}
+            className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors rounded-lg border border-gray-200 mb-4"
+          >
+            <span className="font-semibold text-gray-900 text-lg">R2B Rep Journey Map</span>
+            <ChevronRight className={`w-5 h-5 text-gray-600 transition-transform ${journeyMapExpanded ? 'rotate-90' : ''}`} />
+          </button>
+          {journeyMapExpanded && (
         <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
           <h1 className="text-4xl font-bold text-red-700 mb-8">R2B Rep Journey Map</h1>
           
@@ -382,6 +457,8 @@ export default function Journey() {
               </div>
             </div>
           </div>
+        </div>
+          )}
         </div>
 
         {/* Workflow Sections Component */}
