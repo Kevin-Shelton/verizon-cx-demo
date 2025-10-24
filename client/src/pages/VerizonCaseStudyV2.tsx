@@ -780,7 +780,7 @@ export default function VerizonCaseStudyV2() {
                   ></div>
                 </div>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+              <div className="bg-purple-100 rounded-lg p-4 border border-purple-300">
                 <p className="text-sm text-purple-900">
                   <strong>Growth:</strong> +{(scenario.newMarketShare - marketData.competitiveLandscape.verizon.marketShare).toFixed(1)} percentage points = {scenario.newSubscribers}M new subscribers = ${scenario.annualRevenue}B annual revenue (${scenario.fiveYearRevenue}B over 5 years)
                 </p>

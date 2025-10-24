@@ -401,7 +401,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                   <DialogTitle>T-Mobile's Winning Playbook: How They Captured 50.2% Market Share</DialogTitle>
                 </DialogHeader>
                 <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div className="bg-purple-100 rounded-lg p-4 border border-purple-300">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                       <div>
@@ -415,7 +415,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div className="bg-purple-100 rounded-lg p-4 border border-purple-300">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                       <div>
@@ -429,7 +429,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div className="bg-purple-100 rounded-lg p-4 border border-purple-300">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                       <div>
@@ -443,7 +443,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div className="bg-purple-100 rounded-lg p-4 border border-purple-300">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                       <div>
@@ -569,11 +569,11 @@ const ExecutiveIntroductionV2: React.FC = () => {
                 <div className="mb-4">
                   <h4 className="font-bold text-gray-900 mb-3">Current Market Position</h4>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <div className="bg-blue-100 p-3 rounded-lg border border-blue-300">
                       <div className="text-sm text-gray-700"><strong>26.9% market share</strong></div>
                       <div className="text-xs text-gray-600">17.4M Hispanic subscribers</div>
                     </div>
-                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <div className="bg-blue-100 p-3 rounded-lg border border-blue-300">
                       <div className="text-sm text-gray-700"><strong>$9.7B annual revenue</strong></div>
                       <div className="text-xs text-gray-600">From Hispanic segment</div>
                     </div>
@@ -582,19 +582,19 @@ const ExecutiveIntroductionV2: React.FC = () => {
                 <div>
                   <h4 className="font-bold text-gray-900 mb-3">Growth Opportunities</h4>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                    <div className="bg-green-100 p-3 rounded-lg border border-green-300">
                       <div className="text-xs text-gray-700"><strong>Dialect-specific translation</strong></div>
                       <div className="text-xs text-gray-600">First-mover advantage in authentic localization</div>
                     </div>
-                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                    <div className="bg-green-100 p-3 rounded-lg border border-green-300">
                       <div className="text-xs text-gray-700"><strong>Premium network positioning</strong></div>
                       <div className="text-xs text-gray-600">Leverage superior 5G infrastructure</div>
                     </div>
-                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                    <div className="bg-green-100 p-3 rounded-lg border border-green-300">
                       <div className="text-xs text-gray-700"><strong>AI-powered personalization</strong></div>
                       <div className="text-xs text-gray-600">Culturally relevant customer experience</div>
                     </div>
-                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                    <div className="bg-green-100 p-3 rounded-lg border border-green-300">
                       <div className="text-xs text-gray-700"><strong>Strategic partnerships</strong></div>
                       <div className="text-xs text-gray-600">Community engagement and cultural investment</div>
                     </div>

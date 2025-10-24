@@ -797,9 +797,9 @@ export default function Journey() {
                   </h3>
                   <ul className="space-y-2">
                     {selectedPersonaDetail.needs.map((need, idx) => (
-                      <li key={idx} className="flex items-start gap-2 bg-green-50 p-3 rounded-lg border border-green-200">
-                        <span className="text-green-600 mt-0.5">✓</span>
-                        <span className="text-gray-800">{need}</span>
+                      <li key={idx} className="flex items-start gap-2 bg-green-100 p-3 rounded-lg border border-green-300">
+                        <span className="text-green-700 mt-0.5">✓</span>
+                        <span className="text-green-900 font-medium">{need}</span>
                       </li>
                     ))}
                   </ul>
@@ -815,9 +815,9 @@ export default function Journey() {
                   </h3>
                   <ul className="space-y-2">
                     {selectedPersonaDetail.painPoints?.map((pain, idx) => (
-                      <li key={idx} className="flex items-start gap-2 bg-red-50 p-3 rounded-lg border border-red-200">
-                        <span className="text-red-600 mt-0.5">⚠</span>
-                        <span className="text-gray-800">{pain}</span>
+                      <li key={idx} className="flex items-start gap-2 bg-red-100 p-3 rounded-lg border border-red-300">
+                        <span className="text-red-700 mt-0.5">⚠</span>
+                        <span className="text-red-900 font-medium">{pain}</span>
                       </li>
                     ))}
                   </ul>
@@ -833,9 +833,9 @@ export default function Journey() {
                   </h3>
                   <ul className="space-y-2">
                     {selectedPersonaDetail.interactionNeeds?.map((need, idx) => (
-                      <li key={idx} className="flex items-start gap-2 bg-blue-50 p-3 rounded-lg border border-blue-200">
-                        <span className="text-blue-600 mt-0.5">→</span>
-                        <span className="text-gray-800">{need}</span>
+                      <li key={idx} className="flex items-start gap-2 bg-blue-100 p-3 rounded-lg border border-blue-300">
+                        <span className="text-blue-700 mt-0.5">→</span>
+                        <span className="text-blue-900 font-medium">{need}</span>
                       </li>
                     ))}
                   </ul>
