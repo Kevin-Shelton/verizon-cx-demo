@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useLocation } from "wouter";
-import { Download, Filter, ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe } from "lucide-react";
+import { Download, Filter, ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe, ChevronDown, ChevronUp, Star, Users, UserCircle, MessageSquare, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import journeyData from "../../../data/journey.json";
 import categoriesData from "../../../data/categories.json";
@@ -19,6 +19,7 @@ export default function Journey() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [showOutboundProspecting, setShowOutboundProspecting] = useState(false);
   const [filters, setFilters] = useState({
     pillar: null as Pillar | null,
     coverage: [] as Coverage[],
@@ -171,6 +172,158 @@ export default function Journey() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Outbound Prospecting Workflow - Collapsible */}
+        <div className="bg-[#E8DCC8] border-2 border-orange-600 rounded-lg mb-12 overflow-hidden">
+          <button
+            onClick={() => setShowOutboundProspecting(!showOutboundProspecting)}
+            className="w-full px-6 py-4 flex items-center justify-between hover:bg-[#DDD0BA] transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              <div className="text-4xl font-bold text-red-700">Outbound Prospecting</div>
+              <div className="text-xl font-bold text-red-700 italic">(12 hrs per week)</div>
+            </div>
+            {showOutboundProspecting ? (
+              <ChevronUp className="w-8 h-8 text-red-700" />
+            ) : (
+              <ChevronDown className="w-8 h-8 text-red-700" />
+            )}
+          </button>
+          
+          {showOutboundProspecting && (
+            <div className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {/* Workflow 1: Engage Top Leads */}
+                <div className="flex flex-col">
+                  <div className="bg-orange-600 text-white px-4 py-3 rounded-t-lg">
+                    <div className="text-sm font-semibold mb-1">55 min per wk</div>
+                    <div className="font-bold text-lg">Engage Top Leads</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-100 to-orange-50 border-l-4 border-r-4 border-b-4 border-orange-600 rounded-b-lg shadow-lg pb-4">
+                    {[
+                      { name: 'Research Account', complete: false, multiple: true },
+                      { name: 'Verify Customer Info', complete: false, multiple: true },
+                      { name: 'Engage (Call)', complete: true, multiple: true },
+                      { name: 'Engage (Email)', complete: true, multiple: true },
+                      { name: 'Set Appointment', complete: true, multiple: true },
+                      { name: 'Log Activity', complete: false, multiple: true },
+                    ].map((task, idx) => (
+                      <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{task.name}</span>
+                        <div className="flex items-center gap-1">
+                          <div className={`w-6 h-6 rounded-full ${task.complete ? 'bg-green-600' : 'bg-blue-600'} border-2 border-gray-800`} />
+                          {task.multiple && <div className={`w-5 h-5 rounded-full ${task.complete ? 'bg-orange-600' : 'bg-blue-600'} border-2 border-gray-800`} />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Workflow 2: Engage Leads from Homegrown List */}
+                <div className="flex flex-col">
+                  <div className="bg-orange-600 text-white px-4 py-3 rounded-t-lg">
+                    <div className="text-sm font-semibold mb-1">225 min per wk</div>
+                    <div className="font-bold text-lg">Engage Leads from Homegrown List</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-100 to-orange-50 border-l-4 border-r-4 border-b-4 border-orange-600 rounded-b-lg shadow-lg pb-4">
+                    {[
+                      { name: 'Research Account', complete: false, multiple: true },
+                      { name: 'Verify Customer Info', complete: false, multiple: true },
+                      { name: 'Engage (Call)', complete: true, multiple: true },
+                      { name: 'Engage (Email)', complete: true, multiple: true },
+                      { name: 'Set Appointment', complete: true, multiple: true },
+                      { name: 'Log Activity', complete: false, multiple: true },
+                    ].map((task, idx) => (
+                      <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{task.name}</span>
+                        <div className="flex items-center gap-1">
+                          <div className={`w-6 h-6 rounded-full ${task.complete ? 'bg-green-600' : 'bg-blue-600'} border-2 border-gray-800`} />
+                          {task.multiple && <div className={`w-5 h-5 rounded-full ${task.complete ? 'bg-orange-600' : 'bg-blue-600'} border-2 border-gray-800`} />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Workflow 3: Sequence Battlecard Contacts */}
+                <div className="flex flex-col">
+                  <div className="bg-orange-600 text-white px-4 py-3 rounded-t-lg">
+                    <div className="text-sm font-semibold mb-1">90 min per wk</div>
+                    <div className="font-bold text-lg">Sequence Battlecard Contacts</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-100 to-orange-50 border-l-4 border-r-4 border-b-4 border-orange-600 rounded-b-lg shadow-lg pb-4">
+                    {[
+                      { name: 'Select Lead', complete: false, multiple: true },
+                      { name: 'Research Account', complete: false, multiple: true },
+                      { name: 'Select Sequence', complete: false, multiple: false },
+                      { name: 'Enroll', complete: false, multiple: true },
+                      { name: 'Log Activity', complete: false, multiple: true },
+                    ].map((task, idx) => (
+                      <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{task.name}</span>
+                        <div className="flex items-center gap-1">
+                          <div className={`w-6 h-6 rounded-full ${task.complete ? 'bg-green-600' : 'bg-blue-600'} border-2 border-gray-800`} />
+                          {task.multiple && <div className="w-5 h-5 rounded-full bg-blue-600 border-2 border-gray-800" />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Workflow 4: Manage Outreach Task List */}
+                <div className="flex flex-col">
+                  <div className="bg-orange-600 text-white px-4 py-3 rounded-t-lg">
+                    <div className="text-sm font-semibold mb-1">265 min per wk</div>
+                    <div className="font-bold text-lg">Manage Outreach Task List</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-100 to-orange-50 border-l-4 border-r-4 border-b-4 border-orange-600 rounded-b-lg shadow-lg pb-4">
+                    {[
+                      { name: 'Identify Hand Raisers', complete: false, multiple: false },
+                      { name: 'Engage Hand Raisers', complete: false, multiple: false },
+                      { name: 'Select Template(s)', complete: false, multiple: true },
+                      { name: 'Engage Other (Email)', complete: true, multiple: true },
+                      { name: 'Set Appointment', complete: true, multiple: true },
+                      { name: 'Log Activity', complete: false, multiple: true },
+                    ].map((task, idx) => (
+                      <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{task.name}</span>
+                        <div className="flex items-center gap-1">
+                          <div className={`w-6 h-6 rounded-full ${task.complete ? 'bg-green-600' : 'bg-blue-600'} border-2 border-gray-800`} />
+                          {task.multiple && <div className={`w-5 h-5 rounded-full ${task.complete ? 'bg-orange-600' : 'bg-blue-600'} border-2 border-gray-800`} />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Workflow 5: Check my Customers Detail */}
+                <div className="flex flex-col">
+                  <div className="bg-orange-600 text-white px-4 py-3 rounded-t-lg">
+                    <div className="text-sm font-semibold mb-1">75 min per wk</div>
+                    <div className="font-bold text-lg">Check my Customers Detail</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-100 to-orange-50 border-l-4 border-r-4 border-b-4 border-orange-600 rounded-b-lg shadow-lg pb-4">
+                    {[
+                      { name: 'Select Customer + Promo', complete: false, multiple: false },
+                      { name: 'Engage (call)', complete: true, multiple: false },
+                      { name: 'Engage (mail)', complete: true, multiple: true },
+                      { name: 'Set Appointment', complete: true, multiple: true },
+                      { name: 'Log Activity', complete: false, multiple: true },
+                    ].map((task, idx) => (
+                      <div key={idx} className="mx-3 mt-3 bg-white px-4 py-3 rounded shadow-sm border border-gray-200 flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{task.name}</span>
+                        <div className="flex items-center gap-1">
+                          <div className={`w-6 h-6 rounded-full ${task.complete ? 'bg-green-600' : 'bg-blue-600'} border-2 border-gray-800`} />
+                          {task.multiple && <div className={`w-5 h-5 rounded-full ${task.complete ? 'bg-orange-600' : 'bg-blue-600'} border-2 border-gray-800`} />}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Category Filter Tabs */}
