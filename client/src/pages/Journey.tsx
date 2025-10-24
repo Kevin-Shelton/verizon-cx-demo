@@ -147,9 +147,9 @@ export default function Journey() {
           
           <div className="relative">
             {/* Coverage Trend Line Overlay */}
-            <div className="absolute -top-12 left-0 w-full pointer-events-none" style={{zIndex: 10}}>
-              <div className="text-xs font-semibold text-gray-600 mb-1 text-center">Multilingual Solution Coverage</div>
-              <svg className="w-full" height="60" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{zIndex: 10}}>
+              <div className="text-xs font-semibold text-gray-700 mb-2 text-center bg-white/90 py-1 rounded">Multilingual Solution Coverage</div>
+              <svg className="w-full" height="80" viewBox="0 0 1000 120" preserveAspectRatio="none">
                 {/* Grid lines for reference */}
                 <line x1="0" y1="80" x2="1000" y2="80" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
                 <line x1="0" y1="60" x2="1000" y2="60" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
