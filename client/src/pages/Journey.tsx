@@ -10,10 +10,17 @@ import { useLocation } from "wouter";
 import { Download, Filter, ChevronRight, TrendingUp, CheckCircle2, AlertCircle, XCircle, Map, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import journeyData from "../../../data/journey.json";
+import personasData from "../../../data/personas.json";
 import categoriesData from "../../../data/categories.json";
 import { calculateStageCoverage, calculateOverallCoverage, getCoverageDot, getCoverageColor } from "@shared/journeyUtils";
 import type { Activity, Coverage, Pillar } from "@shared/types";
 import WorkflowSections from "@/components/WorkflowSections";
+
+// Extended activity type with stage info
+interface ExtendedActivity extends Activity {
+  stageName: string;
+  stageId: string;
+}
 
 export default function Journey() {
   const [, setLocation] = useLocation();
@@ -25,6 +32,30 @@ export default function Journey() {
     coverage: [] as Coverage[],
     onlyGaps: false,
   });
+
+  // Get all activities with full coverage
+  const fullCoverageActivities = useMemo(() => {
+    const activities: ExtendedActivity[] = [];
+    journeyData.stages.forEach(stage => {
+      stage.activities.forEach(activity => {
+        if (activity.coverage === 'full') {
+          activities.push({
+            ...activity,
+            stageName: stage.name,
+            stageId: stage.id
+          } as ExtendedActivity);
+        }
+      });
+    });
+    return activities;
+  }, []);
+
+  // Map personas to activities based on journey stages
+  const getPersonasForActivity = (stageId: string) => {
+    return personasData.personas.filter(persona => 
+      persona.journey.includes(stageId)
+    );
+  };
 
   const overallCoverage = useMemo(
     () => calculateOverallCoverage(journeyData.stages as any),
@@ -95,15 +126,6 @@ export default function Journey() {
     }
   };
 
-  // Coverage data for the 5 workflow stages
-  const coverageData = [
-    { stage: "Outbound\nProspecting", coverage: 65, color: "#f97316", hours: "12 hr/wk" },
-    { stage: "Selling", coverage: 92, color: "#dc2626", hours: "13 hr/wk" },
-    { stage: "Churn\nMitigation", coverage: 78, color: "#ca8a04", hours: "4 hr/wk" },
-    { stage: "Service &\nPost Sales", coverage: 85, color: "#16a34a", hours: "4.5 hr/wk" },
-    { stage: "Operational\nTasking", coverage: 45, color: "#2563eb", hours: "6 hr/wk" }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
@@ -129,128 +151,145 @@ export default function Journey() {
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <div className="flex items-center gap-3 mb-2">
-                <Map className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Journey Stages</div>
+                <CheckCircle2 className="w-6 h-6 text-blue-200" />
+                <div className="text-sm font-medium text-blue-200">Full Coverage Activities</div>
               </div>
-              <div className="text-5xl font-bold">{journeyData.stages.length}</div>
-              <div className="text-sm text-blue-200 mt-1">From awareness to advocacy</div>
+              <div className="text-5xl font-bold">{fullCoverageActivities.length}</div>
+              <div className="text-sm text-blue-200 mt-1">Translation-ready touchpoints</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <div className="flex items-center gap-3 mb-2">
                 <Globe className="w-6 h-6 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Touchpoints</div>
+                <div className="text-sm font-medium text-blue-200">Customer Personas</div>
               </div>
-              <div className="text-5xl font-bold">
-                {journeyData.stages.reduce((sum, stage) => sum + stage.activities.length, 0)}
-              </div>
-              <div className="text-sm text-blue-200 mt-1">Customer interaction points</div>
+              <div className="text-5xl font-bold">{personasData.personas.length}</div>
+              <div className="text-sm text-blue-200 mt-1">Multilingual customer profiles</div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
-        {/* PROMINENT COVERAGE TREND VISUALIZATION */}
-        <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-4 border-blue-300 rounded-2xl mb-12 p-12 shadow-2xl">
+        {/* FULL COVERAGE ACTIVITIES VISUALIZATION */}
+        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-4 border-green-400 rounded-2xl mb-12 p-12 shadow-2xl">
           <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-3">Multilingual Solution Coverage Trend</h2>
-            <p className="text-xl text-gray-600">Coverage percentage across R2B workflow stages</p>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <CheckCircle2 className="w-12 h-12 text-green-600" />
+              <h2 className="text-4xl font-bold text-gray-900">Full Coverage Activities</h2>
+            </div>
+            <p className="text-xl text-gray-600">Translation-ready customer touchpoints with persona interactions</p>
+            <p className="text-sm text-gray-500 mt-2">Only activities with complete multilingual support (excluding out-of-scope items)</p>
           </div>
           
-          {/* Large Coverage Chart */}
-          <div className="bg-white rounded-xl p-8 shadow-lg">
-            <svg className="w-full" height="400" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
-              {/* Y-axis labels and grid lines */}
-              <line x1="80" y1="50" x2="80" y2="300" stroke="#9ca3af" strokeWidth="2" />
-              <line x1="80" y1="300" x2="950" y2="300" stroke="#9ca3af" strokeWidth="2" />
-              
-              {/* Horizontal grid lines */}
-              <line x1="80" y1="50" x2="950" y2="50" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <text x="60" y="55" textAnchor="end" fontSize="16" fill="#6b7280" fontWeight="600">100%</text>
-              
-              <line x1="80" y1="112.5" x2="950" y2="112.5" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <text x="60" y="117.5" textAnchor="end" fontSize="16" fill="#6b7280" fontWeight="600">75%</text>
-              
-              <line x1="80" y1="175" x2="950" y2="175" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <text x="60" y="180" textAnchor="end" fontSize="16" fill="#6b7280" fontWeight="600">50%</text>
-              
-              <line x1="80" y1="237.5" x2="950" y2="237.5" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <text x="60" y="242.5" textAnchor="end" fontSize="16" fill="#6b7280" fontWeight="600">25%</text>
-              
-              <line x1="80" y1="300" x2="950" y2="300" stroke="#9ca3af" strokeWidth="2" />
-              <text x="60" y="305" textAnchor="end" fontSize="16" fill="#6b7280" fontWeight="600">0%</text>
-              
-              {/* Gradient for the trend line */}
-              <defs>
-                <linearGradient id="trendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 1}} />
-                  <stop offset="25%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
-                  <stop offset="50%" style={{stopColor: '#ca8a04', stopOpacity: 1}} />
-                  <stop offset="75%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
-                  <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 1}} />
-                </linearGradient>
-                <filter id="shadow">
-                  <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3"/>
-                </filter>
-              </defs>
-              
-              {/* Coverage trend line - BOLD and PROMINENT */}
-              {/* Points: 65% at x=206, 92% at x=380, 78% at x=554, 85% at x=728, 45% at x=902 */}
-              {/* Y calculation: 300 - (coverage * 2.5) */}
-              <path 
-                d="M 206 137.5 L 380 70 L 554 105 L 728 87.5 L 902 187.5"
-                stroke="url(#trendGradient)"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                filter="url(#shadow)"
-              />
-              
-              {/* Data points - LARGE circles */}
-              <circle cx="206" cy="137.5" r="14" fill="#f97316" stroke="white" strokeWidth="4" filter="url(#shadow)" />
-              <circle cx="380" cy="70" r="16" fill="#dc2626" stroke="white" strokeWidth="4" filter="url(#shadow)" />
-              <circle cx="554" cy="105" r="14" fill="#ca8a04" stroke="white" strokeWidth="4" filter="url(#shadow)" />
-              <circle cx="728" cy="87.5" r="14" fill="#16a34a" stroke="white" strokeWidth="4" filter="url(#shadow)" />
-              <circle cx="902" cy="187.5" r="14" fill="#2563eb" stroke="white" strokeWidth="4" filter="url(#shadow)" />
-              
-              {/* Percentage labels - LARGE and BOLD */}
-              <text x="206" y="120" textAnchor="middle" fontSize="24" fill="#f97316" fontWeight="bold">65%</text>
-              <text x="380" y="53" textAnchor="middle" fontSize="28" fill="#dc2626" fontWeight="bold">92%</text>
-              <text x="554" y="88" textAnchor="middle" fontSize="24" fill="#ca8a04" fontWeight="bold">78%</text>
-              <text x="728" y="70" textAnchor="middle" fontSize="24" fill="#16a34a" fontWeight="bold">85%</text>
-              <text x="902" y="170" textAnchor="middle" fontSize="24" fill="#2563eb" fontWeight="bold">45%</text>
-              
-              {/* Stage labels */}
-              <text x="206" y="330" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Outbound</text>
-              <text x="206" y="348" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Prospecting</text>
-              <text x="206" y="366" textAnchor="middle" fontSize="12" fill="#6b7280">(12 hr/wk)</text>
-              
-              <text x="380" y="330" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Selling</text>
-              <text x="380" y="348" textAnchor="middle" fontSize="12" fill="#6b7280">(13 hr/wk)</text>
-              
-              <text x="554" y="330" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Churn</text>
-              <text x="554" y="348" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Mitigation</text>
-              <text x="554" y="366" textAnchor="middle" fontSize="12" fill="#6b7280">(4 hr/wk)</text>
-              
-              <text x="728" y="330" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Service &</text>
-              <text x="728" y="348" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Post Sales</text>
-              <text x="728" y="366" textAnchor="middle" fontSize="12" fill="#6b7280">(4.5 hr/wk)</text>
-              
-              <text x="902" y="330" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Operational</text>
-              <text x="902" y="348" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="600">Tasking</text>
-              <text x="902" y="366" textAnchor="middle" fontSize="12" fill="#6b7280">(6 hr/wk)</text>
-            </svg>
+          {/* Activities Flow Chart */}
+          <div className="bg-white rounded-xl p-8 shadow-lg overflow-x-auto">
+            <div className="min-w-max">
+              {/* Activity Cards in Horizontal Flow */}
+              <div className="flex gap-4 items-start pb-4">
+                {fullCoverageActivities.map((activity, index) => {
+                  const personas = getPersonasForActivity(activity.stageId);
+                  return (
+                    <div key={activity.id} className="flex items-center gap-2">
+                      {/* Activity Card */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="relative"
+                      >
+                        <Card 
+                          className="w-64 border-2 border-green-300 bg-green-50 hover:bg-green-100 cursor-pointer transition-all hover:shadow-lg"
+                          onClick={() => handleActivityClick(activity)}
+                        >
+                          <CardHeader className="pb-3">
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                              <Badge variant="outline" className="text-xs bg-white">
+                                {activity.stageName}
+                              </Badge>
+                              <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+                            </div>
+                            <CardTitle className="text-sm leading-tight">
+                              {activity.label}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="pt-0">
+                            {/* Persona Icons */}
+                            {personas.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mb-3">
+                                {personas.map(persona => (
+                                  <div 
+                                    key={persona.id}
+                                    className="flex items-center gap-1 bg-white px-2 py-1 rounded-full border border-green-300"
+                                    title={`${persona.name} - ${persona.role}`}
+                                  >
+                                    <span className="text-lg">{persona.avatar}</span>
+                                    <span className="text-xs font-medium text-gray-700">{persona.name}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                            
+                            {/* Pillars */}
+                            <div className="flex flex-wrap gap-1 mb-3">
+                              {activity.pillars.slice(0, 3).map((pillar) => (
+                                <Badge
+                                  key={pillar}
+                                  variant="secondary"
+                                  className="text-xs"
+                                >
+                                  {pillar}
+                                </Badge>
+                              ))}
+                              {activity.pillars.length > 3 && (
+                                <Badge variant="secondary" className="text-xs">
+                                  +{activity.pillars.length - 3}
+                                </Badge>
+                              )}
+                            </div>
+                            
+                            {activity.demos && activity.demos.length > 0 && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="w-full text-xs"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenDemo(activity.demos[0]);
+                                }}
+                              >
+                                View Demo
+                              </Button>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                      
+                      {/* Arrow between cards */}
+                      {index < fullCoverageActivities.length - 1 && (
+                        <ChevronRight className="w-6 h-6 text-green-600 flex-shrink-0" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
           
           {/* Legend */}
-          <div className="mt-8 flex justify-center gap-8 flex-wrap">
-            {coverageData.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg shadow">
-                <div className="w-4 h-4 rounded-full" style={{backgroundColor: item.color}}></div>
-                <span className="text-sm font-semibold text-gray-700">{item.stage.replace('\n', ' ')}: {item.coverage}%</span>
-              </div>
-            ))}
+          <div className="mt-8 bg-white rounded-lg p-6 shadow">
+            <h3 className="font-semibold text-lg mb-4 text-gray-900">Customer Personas</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {personasData.personas.map(persona => (
+                <div key={persona.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                  <span className="text-3xl">{persona.avatar}</span>
+                  <div>
+                    <div className="font-semibold text-sm text-gray-900">{persona.name}</div>
+                    <div className="text-xs text-gray-600">{persona.role}</div>
+                    <div className="text-xs text-gray-500">{persona.dialectLabel}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
