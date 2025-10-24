@@ -146,36 +146,52 @@ export default function Journey() {
           <h1 className="text-4xl font-bold text-red-700 mb-8">R2B Rep Journey Map</h1>
           
           <div className="relative">
-            {/* Coverage Flow Line Overlay */}
-            <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{zIndex: 10}} viewBox="0 0 1000 600" preserveAspectRatio="none">
-              {/* Coverage flow line connecting stages */}
-              <path 
-                d="M 100 50 L 100 150 Q 100 180 130 180 L 270 180 Q 300 180 300 210 L 300 300 Q 300 330 330 330 L 470 330 Q 500 330 500 360 L 500 450 Q 500 480 530 480 L 670 480 Q 700 480 700 510 L 700 550"
-                stroke="url(#coverageGradient)"
-                strokeWidth="12"
-                fill="none"
-                strokeLinecap="round"
-                opacity="0.7"
-              />
-              
-              {/* Gradient definition */}
-              <defs>
-                <linearGradient id="coverageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 0.8}} />
-                  <stop offset="25%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
-                  <stop offset="50%" style={{stopColor: '#ca8a04', stopOpacity: 0.9}} />
-                  <stop offset="75%" style={{stopColor: '#16a34a', stopOpacity: 0.95}} />
-                  <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 0.6}} />
-                </linearGradient>
-              </defs>
-              
-              {/* Coverage intensity indicators at each stage */}
-              <circle cx="100" cy="100" r="8" fill="#f97316" opacity="0.8" stroke="white" strokeWidth="2" />
-              <circle cx="300" cy="250" r="12" fill="#dc2626" opacity="1" stroke="white" strokeWidth="2" />
-              <circle cx="500" cy="400" r="10" fill="#ca8a04" opacity="0.9" stroke="white" strokeWidth="2" />
-              <circle cx="700" cy="500" r="11" fill="#16a34a" opacity="0.95" stroke="white" strokeWidth="2" />
-              <circle cx="900" cy="550" r="6" fill="#2563eb" opacity="0.6" stroke="white" strokeWidth="2" />
-            </svg>
+            {/* Coverage Trend Line Overlay */}
+            <div className="absolute -top-12 left-0 w-full pointer-events-none" style={{zIndex: 10}}>
+              <div className="text-xs font-semibold text-gray-600 mb-1 text-center">Multilingual Solution Coverage</div>
+              <svg className="w-full" height="60" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                {/* Grid lines for reference */}
+                <line x1="0" y1="80" x2="1000" y2="80" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
+                <line x1="0" y1="60" x2="1000" y2="60" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
+                <line x1="0" y1="40" x2="1000" y2="40" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
+                <line x1="0" y1="20" x2="1000" y2="20" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
+                
+                {/* Coverage trend line - horizontal left to right */}
+                {/* 65% at Outbound, 92% at Selling, 78% at Churn, 85% at Service, 45% at Operational */}
+                <path 
+                  d="M 0 45 L 100 45 Q 150 45 200 15 L 400 15 Q 450 15 500 30 L 600 30 Q 650 30 700 22 L 800 22 Q 850 22 900 65 L 1000 65"
+                  stroke="url(#coverageGradient)"
+                  strokeWidth="4"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+                
+                {/* Gradient definition */}
+                <defs>
+                  <linearGradient id="coverageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 0.8}} />
+                    <stop offset="25%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
+                    <stop offset="50%" style={{stopColor: '#ca8a04', stopOpacity: 0.9}} />
+                    <stop offset="75%" style={{stopColor: '#16a34a', stopOpacity: 0.95}} />
+                    <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 0.6}} />
+                  </linearGradient>
+                </defs>
+                
+                {/* Coverage data points */}
+                <circle cx="100" cy="45" r="5" fill="#f97316" stroke="white" strokeWidth="2" />
+                <circle cx="300" cy="15" r="6" fill="#dc2626" stroke="white" strokeWidth="2" />
+                <circle cx="500" cy="30" r="5" fill="#ca8a04" stroke="white" strokeWidth="2" />
+                <circle cx="700" cy="22" r="5" fill="#16a34a" stroke="white" strokeWidth="2" />
+                <circle cx="900" cy="65" r="4" fill="#2563eb" stroke="white" strokeWidth="2" />
+                
+                {/* Percentage labels */}
+                <text x="100" y="40" textAnchor="middle" fontSize="10" fill="#f97316" fontWeight="bold">65%</text>
+                <text x="300" y="10" textAnchor="middle" fontSize="12" fill="#dc2626" fontWeight="bold">92%</text>
+                <text x="500" y="25" textAnchor="middle" fontSize="10" fill="#ca8a04" fontWeight="bold">78%</text>
+                <text x="700" y="17" textAnchor="middle" fontSize="11" fill="#16a34a" fontWeight="bold">85%</text>
+                <text x="900" y="60" textAnchor="middle" fontSize="10" fill="#2563eb" fontWeight="bold">45%</text>
+              </svg>
+            </div>
             
             <div className="grid grid-cols-5 gap-4">
             {/* Outbound Prospecting */}
