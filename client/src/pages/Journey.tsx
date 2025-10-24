@@ -145,10 +145,48 @@ export default function Journey() {
         <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
           <h1 className="text-4xl font-bold text-red-700 mb-8">R2B Rep Journey Map</h1>
           
+          {/* Coverage Flow Line */}
+          <div className="relative mb-8">
+            <div className="text-sm font-semibold text-gray-700 mb-2">Multilingual Solution Coverage</div>
+            <svg className="w-full h-12" viewBox="0 0 1000 50" preserveAspectRatio="none">
+              {/* Background line */}
+              <line x1="0" y1="25" x2="1000" y2="25" stroke="#e5e7eb" strokeWidth="2" />
+              
+              {/* Coverage flow line with varying thickness */}
+              <path 
+                d="M 0 25 Q 100 25 200 25 Q 300 20 400 15 Q 500 10 600 15 Q 700 20 800 22 Q 900 24 1000 25"
+                stroke="url(#coverageGradient)"
+                strokeWidth="8"
+                fill="none"
+                strokeLinecap="round"
+              />
+              
+              {/* Gradient definition */}
+              <defs>
+                <linearGradient id="coverageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 0.6}} />
+                  <stop offset="20%" style={{stopColor: '#f97316', stopOpacity: 0.7}} />
+                  <stop offset="40%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
+                  <stop offset="60%" style={{stopColor: '#ca8a04', stopOpacity: 0.8}} />
+                  <stop offset="80%" style={{stopColor: '#16a34a', stopOpacity: 0.9}} />
+                  <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 0.5}} />
+                </linearGradient>
+              </defs>
+              
+              {/* Coverage intensity indicators */}
+              <circle cx="100" cy="25" r="4" fill="#f97316" opacity="0.7" />
+              <circle cx="300" cy="25" r="6" fill="#dc2626" opacity="1" />
+              <circle cx="500" cy="25" r="5" fill="#ca8a04" opacity="0.8" />
+              <circle cx="700" cy="25" r="5" fill="#16a34a" opacity="0.9" />
+              <circle cx="900" cy="25" r="3" fill="#2563eb" opacity="0.5" />
+            </svg>
+          </div>
+          
           <div className="grid grid-cols-5 gap-4">
             {/* Outbound Prospecting */}
             <div className="border-2 border-orange-600 rounded-lg overflow-hidden">
-              <div className="bg-orange-600 text-white px-4 py-2 text-center">
+              <div className="bg-orange-600 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-orange-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">65%</div>
                 <div className="text-sm font-semibold">12 hr/wk</div>
                 <div className="font-bold">Outbound Prospecting</div>
               </div>
@@ -167,7 +205,8 @@ export default function Journey() {
 
             {/* Selling */}
             <div className="border-2 border-red-600 rounded-lg overflow-hidden">
-              <div className="bg-red-600 text-white px-4 py-2 text-center">
+              <div className="bg-red-600 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">92%</div>
                 <div className="text-sm font-semibold">13 hr/wk</div>
                 <div className="font-bold">Selling</div>
               </div>
@@ -199,7 +238,8 @@ export default function Journey() {
 
             {/* Churn Mitigation */}
             <div className="border-2 border-yellow-600 rounded-lg overflow-hidden">
-              <div className="bg-yellow-600 text-white px-4 py-2 text-center">
+              <div className="bg-yellow-600 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-yellow-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">78%</div>
                 <div className="text-sm font-semibold">4 hr/wk</div>
                 <div className="font-bold">Churn Mitigation</div>
               </div>
@@ -220,7 +260,8 @@ export default function Journey() {
 
             {/* Service & Post Sales */}
             <div className="border-2 border-green-600 rounded-lg overflow-hidden">
-              <div className="bg-green-600 text-white px-4 py-2 text-center">
+              <div className="bg-green-600 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-green-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">85%</div>
                 <div className="text-sm font-semibold">4.5 hr/wk</div>
                 <div className="font-bold">Service & Post Sales</div>
               </div>
@@ -241,7 +282,8 @@ export default function Journey() {
 
             {/* Operational Tasking */}
             <div className="border-2 border-blue-600 rounded-lg overflow-hidden">
-              <div className="bg-blue-600 text-white px-4 py-2 text-center">
+              <div className="bg-blue-600 text-white px-4 py-2 text-center relative">
+                <div className="absolute top-2 right-2 bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full shadow-md">45%</div>
                 <div className="text-sm font-semibold">6 hr/wk</div>
                 <div className="font-bold">Operational Tasking</div>
               </div>
