@@ -41,6 +41,7 @@ interface Persona {
   journey: string[];
   painPoints?: string[];
   interactionNeeds?: string[];
+  narrative?: string;
 }
 
 export default function Journey() {
@@ -59,61 +60,72 @@ export default function Journey() {
   const itemsPerPage = 10;
 
   // Persona details with pain points and interaction needs
-  const personaDetails: Record<string, { painPoints: string[]; interactionNeeds: string[] }> = {
+  const personaDetails: Record<string, { painPoints: string[]; interactionNeeds: string[]; narrative: string }> = {
     carlos: {
+      narrative: "Carlos runs a small retail shop in Mexico City and needs to expand his business phone lines. He starts by browsing the Verizon Business website in Mexican Spanish, comparing plans and pricing. When he has questions, he calls the IVR system and navigates in Spanish to reach a sales representative. A Verizon field sales rep visits his store with a tablet showing the in-field app, walking him through device options and the number porting process in his dialect. Carlos receives a translated contract document in Mexican Spanish via email, reviews it, and signs electronically. Throughout onboarding, he receives SMS updates and can access the customer portal in his preferred language to track his order status and manage his account.",
       painPoints: [
-        "Language barriers when discussing technical details",
-        "Confusion about porting process and timelines",
-        "Difficulty understanding pricing structures and contract terms",
-        "Concerns about business downtime during transition"
+        "Language barriers when discussing technical details on website and with reps",
+        "Confusion about porting process and timelines in IVR and documentation",
+        "Difficulty understanding pricing structures in contracts and emails",
+        "Concerns about business downtime during transition communicated via multiple channels"
       ],
       interactionNeeds: [
-        "Clear explanations in Mexican Spanish with business terminology",
-        "Step-by-step guidance through porting process",
-        "Transparent pricing breakdown with no hidden fees",
-        "Dedicated support during business hours (9am-6pm CST)"
+        "Website navigation and product pages in Mexican Spanish with business terminology",
+        "IVR menu options and prompts in his dialect for quick issue resolution",
+        "In-field sales app with Mexican Spanish interface for in-person consultations",
+        "Translated contract documents and emails with clear pricing breakdowns",
+        "SMS notifications in Spanish for order updates and account alerts"
       ]
     },
     maria: {
+      narrative: "María manages field service technicians across Puerto Rico and needs to swap devices for her team. She visits a Verizon retail store where an associate uses the in-store tablet to check her account and promo eligibility in Caribbean Spanish. When she needs technical support, she uses the live chat feature on the website, communicating in Puerto Rican Spanish with real-time translation. She receives a translated promo redemption document via email explaining the trade-in process. When she calls the IVR to check on her device swap status, she navigates the menu in her dialect. The field sales rep follows up with her team on-site, using the mobile app to demonstrate new device features in Caribbean Spanish and providing training materials in her preferred dialect.",
       painPoints: [
-        "Technical jargon that doesn't translate well to Caribbean Spanish",
-        "Frustration with long wait times for device support",
-        "Uncertainty about promo eligibility and redemption process",
-        "Need for quick resolution to keep field teams operational"
+        "Technical jargon in chat, IVR, and documentation that doesn't translate well to Caribbean Spanish",
+        "Frustration with long wait times when calling support or visiting stores",
+        "Uncertainty about promo eligibility when browsing website or receiving emails",
+        "Need for quick resolution across all channels to keep field teams operational"
       ],
       interactionNeeds: [
-        "Technical support in Puerto Rican Spanish with local context",
-        "Priority handling for field service disruptions",
-        "Clear promo eligibility criteria and simple redemption",
-        "Proactive updates on device swap status and timelines"
+        "Live chat support with Caribbean Spanish translation and technical context",
+        "IVR system with Puerto Rican Spanish dialect recognition and menu options",
+        "In-store tablets with Caribbean Spanish interface for account management",
+        "Translated promo documents and emails with clear eligibility criteria",
+        "In-field mobile app for on-site training and device setup in her dialect"
       ]
     },
     lucia: {
+      narrative: "Lucía administers a healthcare clinic in Bogotá and receives a fraud alert via email in Colombian Spanish. She immediately calls the IVR system, which recognizes her dialect and routes her to security support. She visits the Verizon website to open a support case, navigating the authenticated portal in Latin American Spanish. A field sales rep visits her clinic with a tablet to review her account security settings and provide HIPAA-compliant documentation in Spanish. She receives a translated incident report document via email, along with step-by-step instructions for securing her account. Throughout the resolution process, she uses the live chat feature to ask questions and receives SMS updates in Colombian Spanish about her case status.",
       painPoints: [
-        "Anxiety about fraud alerts and account security",
-        "Compliance concerns with healthcare regulations (HIPAA)",
-        "Difficulty navigating support case management system",
-        "Need for documentation in Spanish for staff training"
+        "Anxiety about fraud alerts received via email and SMS in unclear language",
+        "Compliance concerns when reviewing documents and website terms (HIPAA)",
+        "Difficulty navigating support case system on website and via IVR",
+        "Need for documentation in Colombian Spanish for staff training and compliance"
       ],
       interactionNeeds: [
-        "Security-focused communication in Colombian Spanish",
-        "Healthcare-compliant solutions and documentation",
-        "Simplified case tracking with email/SMS updates",
-        "Bilingual support materials for clinic staff"
+        "Security-focused email communications in Colombian Spanish with clear action steps",
+        "IVR system with fraud alert priority routing and dialect-specific prompts",
+        "Website portal with Colombian Spanish interface for case management and tracking",
+        "Translated HIPAA-compliant documents and incident reports via email",
+        "In-field visits with tablets showing security settings and training materials in her dialect",
+        "Live chat and SMS updates in Colombian Spanish for real-time case resolution"
       ]
     },
     diego: {
+      narrative: "Diego manages construction projects across the US Southwest and needs to provision 50 devices for his crew. He starts on the Verizon Business website, browsing bulk device options in US Spanish. He calls the IVR to speak with a business sales specialist, navigating the menu in Spanish. A Verizon field sales rep visits his job site with a tablet, using the in-field app to configure a fleet management solution in US Spanish. Diego receives a detailed quote document via email, translated into his dialect with flexible payment terms. He visits a Verizon store to pick up devices, where associates use in-store tablets to activate and configure each device in Spanish. Throughout the deployment, he receives SMS updates and can access the fleet management portal on the website in US Spanish to monitor usage, manage billing, and request support via live chat.",
       painPoints: [
-        "Complexity of managing large device fleets",
-        "Coordination challenges across multiple job sites",
-        "Budget constraints and need for cost-effective solutions",
-        "Limited time to handle telecom issues during projects"
+        "Complexity of managing large device fleets across website portal and in-field app",
+        "Coordination challenges across multiple job sites when calling IVR or using chat",
+        "Budget constraints requiring clear pricing in documents and emails",
+        "Limited time to handle telecom issues via phone, website, or in-person visits"
       ],
       interactionNeeds: [
-        "Bulk ordering and provisioning support in US Spanish",
-        "Fleet management tools with Spanish interface",
-        "Flexible payment options for project-based work",
-        "Dedicated account manager familiar with construction industry"
+        "Website fleet management portal with US Spanish interface and bulk ordering tools",
+        "IVR system with business account priority routing and Spanish menu options",
+        "In-field mobile app for on-site device provisioning and configuration in US Spanish",
+        "In-store tablets for bulk device activation and setup assistance",
+        "Translated quote documents and contracts via email with flexible payment options",
+        "Live chat support in US Spanish for quick troubleshooting and account management",
+        "SMS notifications for usage alerts, billing reminders, and service updates"
       ]
     }
   };
@@ -196,6 +208,7 @@ export default function Journey() {
     const details = personaDetails[persona.id];
     setSelectedPersonaDetail({
       ...persona,
+      narrative: details?.narrative || '',
       painPoints: details?.painPoints || [],
       interactionNeeds: details?.interactionNeeds || []
     });
@@ -719,15 +732,59 @@ export default function Journey() {
               </DialogHeader>
 
               <div className="space-y-6 mt-4">
-                {/* Narrative */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border-2 border-blue-200">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                {/* Omnichannel Journey Narrative */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-5 border-2 border-blue-200">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    Customer Profile
+                    Customer Journey Story
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">{selectedPersonaDetail.description}</p>
+                  <p className="text-gray-700 leading-relaxed text-base">{selectedPersonaDetail.narrative || selectedPersonaDetail.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-blue-700 border border-blue-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                      </svg>
+                      Website
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-purple-700 border border-purple-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      IVR
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-green-700 border border-green-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                      </svg>
+                      Live Chat
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-orange-700 border border-orange-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Email
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-red-700 border border-red-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Documents
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-teal-700 border border-teal-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                      In-Field App
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-semibold text-indigo-700 border border-indigo-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                      In-Store
+                    </span>
+                  </div>
                 </div>
 
                 {/* Key Needs */}
