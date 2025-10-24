@@ -31,6 +31,8 @@ export default function Journey() {
   const [personasExpanded, setPersonasExpanded] = useState(false);
   const [selectedPersona, setSelectedPersona] = useState<string>('all');
   const [selectedStage, setSelectedStage] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'visual'>('grid');
+  const [showVisualPopup, setShowVisualPopup] = useState(false);
 
 
   // Get all subprocesses with full coverage from the hierarchical structure
@@ -406,10 +408,34 @@ export default function Journey() {
                   ))}
                 </select>
               </div>
-              <div className="flex items-end">
+              <div className="flex items-end gap-2">
                 <div className="text-sm text-gray-600">
                   Showing {filteredActivities.length} of {fullCoverageActivities.length} activities
                 </div>
+              </div>
+              <div className="flex items-end gap-2 ml-auto">
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setViewMode('grid')}
+                  className="flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                  Table View
+                </Button>
+                <Button
+                  variant={viewMode === 'visual' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => { setViewMode('visual'); setShowVisualPopup(true); }}
+                  className="flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  Visual Flow
+                </Button>
               </div>
             </div>
           </div>
@@ -421,8 +447,8 @@ export default function Journey() {
                 <tr>
                   <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Stage</th>
                   <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Parent Activity</th>
-                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Subprocess</th>
-                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Personas</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Subprocess (Verizon Rep Action)</th>
+                  <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Customer Personas</th>
                   <th className="text-left px-4 py-3 text-sm font-semibold text-gray-700">Channels</th>
                 </tr>
               </thead>
@@ -525,6 +551,97 @@ export default function Journey() {
         </div>
           )}
         </div>
+
+        {/* Visual Flow Popup */}
+        {showVisualPopup && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setShowVisualPopup(false)}>
+            <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Customer Journey Visual Flow</h2>
+                  <p className="text-sm text-gray-600 mt-1">Verizon Rep ↔ Customer interactions across touchpoints</p>
+                </div>
+                <button
+                  onClick={() => setShowVisualPopup(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="p-8">
+                {/* Visual Flow Diagram */}
+                <div className="space-y-6">
+                  {filteredActivities.map((activity, index) => {
+                    const personas = activity.personas ? 
+                      personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
+                    return (
+                      <div key={`visual-${activity.id}-${index}`} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        {/* Verizon Rep */}
+                        <div className="flex flex-col items-center gap-2 w-32">
+                          <div className="w-16 h-16 rounded-full bg-blue-100 border-2 border-blue-500 flex items-center justify-center">
+                            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <div className="text-xs font-semibold text-blue-700 text-center">Verizon Rep</div>
+                        </div>
+
+                        {/* Interaction Arrow */}
+                        <div className="flex-1 flex flex-col items-center gap-2">
+                          <div className="w-full flex items-center gap-2">
+                            <div className="flex-1 h-0.5 bg-gradient-to-r from-blue-500 to-green-500"></div>
+                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </div>
+                          <div className="text-center">
+                            <div className="font-semibold text-sm text-gray-900 mb-1">{activity.label}</div>
+                            <div className="text-xs text-gray-600 mb-2">{activity.parentActivity}</div>
+                            <div className="flex flex-wrap gap-1 justify-center">
+                              {activity.pillars.map((pillar) => (
+                                <Badge key={pillar} variant="secondary" className="text-xs">
+                                  {pillar}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Customer Personas */}
+                        <div className="flex flex-col items-center gap-2 w-32">
+                          {personas.length > 0 ? (
+                            personas.map(persona => (
+                              <div key={persona.id} className="flex flex-col items-center gap-1">
+                                <div className="w-16 h-16 rounded-full bg-green-100 border-2 border-green-500 flex items-center justify-center text-3xl">
+                                  {persona.avatar}
+                                </div>
+                                <div className="text-xs font-semibold text-green-700 text-center">{persona.name}</div>
+                                <div className="text-[10px] text-gray-600 text-center">{persona.role}</div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="w-16 h-16 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center">
+                              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {filteredActivities.length === 0 && (
+                    <div className="text-center py-12 text-gray-500">
+                      No activities match the selected filters. Please adjust your persona or stage selection.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Workflow Sections Component */}
         <WorkflowSections />
