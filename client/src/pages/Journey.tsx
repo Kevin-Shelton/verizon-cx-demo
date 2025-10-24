@@ -141,34 +141,114 @@ export default function Journey() {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
-        {/* Introduction */}
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
-            Understanding Journey Coverage
-          </h2>
-          <p className="text-lg text-gray-700 mb-4">
-            This interactive journey map shows how multilingual translation coverage spans across every stage of the customer lifecycle. Filter by business category to see coverage for specific workflows, or use advanced filters to identify gaps and opportunities.
-          </p>
-          <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Full Coverage</div>
-                <div className="text-sm text-gray-600">Complete multilingual support</div>
+        {/* R2B Rep Journey Map */}
+        <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
+          <h1 className="text-4xl font-bold text-red-700 mb-8">R2B Rep Journey Map</h1>
+          
+          <div className="grid grid-cols-5 gap-4">
+            {/* Outbound Prospecting */}
+            <div className="border-2 border-orange-600 rounded-lg overflow-hidden">
+              <div className="bg-orange-600 text-white px-4 py-2 text-center">
+                <div className="text-sm font-semibold">12 hr/wk</div>
+                <div className="font-bold">Outbound Prospecting</div>
+              </div>
+              <div className="bg-orange-50 p-4 space-y-2">
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-orange-200">Engage Top Leads</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-orange-200">Engage Leads from Homegrown Lists</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-orange-200">Sequence Battlecard Contacts</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-orange-200">Manage Outreach Task List</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-orange-200">Check My Customer Detail</div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <AlertCircle className="h-6 w-6 text-yellow-600 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Partial Coverage</div>
-                <div className="text-sm text-gray-600">Limited or channel-specific</div>
+
+            {/* Selling */}
+            <div className="border-2 border-red-600 rounded-lg overflow-hidden">
+              <div className="bg-red-600 text-white px-4 py-2 text-center">
+                <div className="text-sm font-semibold">13 hr/wk</div>
+                <div className="font-bold">Selling</div>
+              </div>
+              <div className="bg-red-50 p-4">
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">Virtual</div>
+                  <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">In Store</div>
+                  <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">Footblitz</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
+                  <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Plan Route</div>
+                  <div className="flex justify-center my-2"><ChevronRight className="w-5 h-5 text-red-600" /></div>
+                  <div className="bg-red-700 text-white text-sm font-bold text-center py-2 rounded">Core Sales Process</div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Manage Funnel</div>
+                  <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Qualify Prospects</div>
+                  <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Engage in Discovery Process</div>
+                  <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Manage Opportunity</div>
+                  <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Build and Share Quote</div>
+                  <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                  <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Close & Follow Up</div>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <XCircle className="h-6 w-6 text-red-600 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Not Covered</div>
-                <div className="text-sm text-gray-600">Gap or opportunity area</div>
+
+            {/* Churn Mitigation */}
+            <div className="border-2 border-yellow-600 rounded-lg overflow-hidden">
+              <div className="bg-yellow-600 text-white px-4 py-2 text-center">
+                <div className="text-sm font-semibold">4 hr/wk</div>
+                <div className="font-bold">Churn Mitigation</div>
+              </div>
+              <div className="bg-yellow-50 p-4 space-y-2">
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Engage in Quarterly Business Review (QBR)</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Walk Through Artemis Churn List</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Review and Engage High Risk Accounts</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Manage Intraday Sales Alerts</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Account Migration & Handoffs</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-yellow-200">Contact Scheduled Disconnects</div>
+              </div>
+            </div>
+
+            {/* Service & Post Sales */}
+            <div className="border-2 border-green-600 rounded-lg overflow-hidden">
+              <div className="bg-green-600 text-white px-4 py-2 text-center">
+                <div className="text-sm font-semibold">4.5 hr/wk</div>
+                <div className="font-bold">Service & Post Sales</div>
+              </div>
+              <div className="bg-green-50 p-4 space-y-2">
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Hand Off to White Glove Service Team</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Setup Support Cases</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Port Support Cases</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Mange Promo & Trade-in Support Cases</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Manage Post-Sale Fraud Cases</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-green-200">Call for Post-sale Welcome</div>
+              </div>
+            </div>
+
+            {/* Operational Tasking */}
+            <div className="border-2 border-blue-600 rounded-lg overflow-hidden">
+              <div className="bg-blue-600 text-white px-4 py-2 text-center">
+                <div className="text-sm font-semibold">6 hr/wk</div>
+                <div className="font-bold">Operational Tasking</div>
+              </div>
+              <div className="bg-blue-50 p-4 space-y-2">
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Train & Upskill</div>
+                <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
+                <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Participate in Internal Meetings</div>
               </div>
             </div>
           </div>
