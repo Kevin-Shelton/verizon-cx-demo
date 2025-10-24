@@ -588,84 +588,74 @@ export default function Journey() {
                       <div className="text-sm font-bold text-blue-700 text-center">Verizon<br/>Rep</div>
                     </div>
 
-                    {/* Center: Horizontal Timeline with Touchpoints */}
-                    <div className="flex-1 overflow-x-auto overflow-y-hidden">
-                      <div className="flex items-center gap-3 pb-4">
+                    {/* Center: Horizontal Flow grouped by Parent Activity */}
+                    <div className="flex-1 overflow-x-auto overflow-y-hidden px-4">
+                      <div className="flex items-start gap-6 pb-4">
                         {(() => {
-                          // Group activities by stage
-                          const stageGroups = journeyData.stages.map(stage => ({
-                            stage,
-                            activities: filteredActivities.filter(a => a.stageId === stage.id)
-                          })).filter(g => g.activities.length > 0);
+                          // Group activities by parent activity
+                          type ActivityType = typeof filteredActivities[0];
+                          const parentGroups: Record<string, ActivityType[]> = {};
+                          filteredActivities.forEach(activity => {
+                            const key = activity.parentActivity || 'Other';
+                            if (!parentGroups[key]) {
+                              parentGroups[key] = [];
+                            }
+                            parentGroups[key].push(activity);
+                          });
 
-                          return stageGroups.map((group, groupIndex) => (
-                            <div key={group.stage.id} className="flex items-center gap-3">
-                              {/* Stage Section */}
-                              <div className="flex flex-col items-center gap-2">
-                                {/* Stage Label */}
-                                <div 
-                                  className="text-xs font-semibold px-3 py-1 rounded-full text-white mb-2"
-                                  style={{ backgroundColor: group.stage.color }}
-                                >
-                                  {group.stage.name}
-                                </div>
-                                {/* Touchpoint Nodes */}
-                                <div className="flex gap-2">
-                                  {group.activities.map((activity, actIndex) => {
-                                    const personas = activity.personas ? 
-                                      personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
-                                    return (
-                                      <div key={`node-${activity.id}-${actIndex}`} className="group relative">
-                                        {/* Compact Node */}
-                                        <div 
-                                          className="w-12 h-12 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all hover:scale-110 shadow-md"
-                                          style={{ 
-                                            backgroundColor: `${group.stage.color}20`,
-                                            borderColor: group.stage.color
-                                          }}
-                                          title={`${activity.label} - ${activity.parentActivity}`}
-                                        >
-                                          <span className="text-xs font-bold" style={{ color: group.stage.color }}>
-                                            {actIndex + 1}
-                                          </span>
-                                        </div>
-                                        {/* Hover Tooltip */}
-                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10 w-48">
-                                          <div className="bg-gray-900 text-white text-xs rounded-lg p-2 shadow-xl">
-                                            <div className="font-semibold mb-1">{activity.label}</div>
-                                            <div className="text-gray-300 text-[10px] mb-1">{activity.parentActivity}</div>
-                                            <div className="flex flex-wrap gap-1">
-                                              {activity.pillars.map(p => (
-                                                <span key={p} className="bg-gray-700 px-1 py-0.5 rounded text-[9px]">{p}</span>
-                                              ))}
-                                            </div>
-                                            {personas.length > 0 && (
-                                              <div className="mt-1 pt-1 border-t border-gray-700 text-[10px]">
-                                                {personas.map(p => p.avatar).join(' ')}
+                          return Object.entries(parentGroups).map(([parentName, activities], groupIndex) => {
+                            const stageColor = journeyData.stages.find(s => s.id === activities[0].stageId)?.color || '#6B7280';
+                            return (
+                              <div key={parentName} className="flex-shrink-0">
+                                {/* Parent Activity Card */}
+                                <div className="bg-white rounded-lg border-2 shadow-md" style={{ borderColor: stageColor, minWidth: '200px', maxWidth: '220px' }}>
+                                  {/* Parent Header */}
+                                  <div className="px-3 py-2 border-b" style={{ backgroundColor: `${stageColor}15`, borderColor: stageColor }}>
+                                    <div className="font-semibold text-sm text-gray-900">{parentName}</div>
+                                    <div className="text-[10px] text-gray-600 mt-0.5">{activities[0].stageId.replace(/-/g, ' ')}</div>
+                                  </div>
+                                  {/* Subprocess List */}
+                                  <div className="p-2 space-y-2">
+                                    {activities.map((activity: ActivityType, idx: number) => {
+                                      const personas = activity.personas ? 
+                                        personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
+                                      return (
+                                        <div key={`${activity.id}-${idx}`} className="bg-gray-50 rounded p-2 border border-gray-200">
+                                          <div className="flex items-start gap-2">
+                                            <div className="flex-1">
+                                              <div className="font-medium text-xs text-gray-900 mb-1">{activity.label}</div>
+                                              <div className="flex flex-wrap gap-1 mb-1">
+                                                {activity.pillars.map((pillar: string) => (
+                                                  <Badge key={pillar} variant="secondary" className="text-[9px] px-1 py-0">
+                                                    {pillar}
+                                                  </Badge>
+                                                ))}
                                               </div>
-                                            )}
+                                              {personas.length > 0 && (
+                                                <div className="flex gap-1 mt-1">
+                                                  {personas.map(p => (
+                                                    <span key={p.id} className="text-xs" title={p.name}>{p.avatar}</span>
+                                                  ))}
+                                                </div>
+                                              )}
+                                            </div>
                                           </div>
                                         </div>
-                                        {/* Connection Line to Next Node */}
-                                        {actIndex < group.activities.length - 1 && (
-                                          <div 
-                                            className="absolute top-1/2 left-full w-2 h-0.5"
-                                            style={{ backgroundColor: group.stage.color }}
-                                          />
-                                        )}
-                                      </div>
-                                    );
-                                  })}
+                                      );
+                                    })}
+                                  </div>
                                 </div>
+                                {/* Arrow to next parent */}
+                                {groupIndex < Object.keys(parentGroups).length - 1 && (
+                                  <div className="flex justify-center mt-4">
+                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                  </div>
+                                )}
                               </div>
-                              {/* Arrow to Next Stage */}
-                              {groupIndex < stageGroups.length - 1 && (
-                                <svg className="w-6 h-6 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                              )}
-                            </div>
-                          ));
+                            );
+                          });
                         })()}
                       </div>
                     </div>
