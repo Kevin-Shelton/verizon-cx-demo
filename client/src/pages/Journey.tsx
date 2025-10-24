@@ -665,9 +665,9 @@ export default function Journey() {
                                     })}
                                   </div>
                                 </div>
-                                {/* Arrow on right edge of card */}
+                                {/* Arrow between cards - centered at 50% card height */}
                                 {groupIndex < Object.keys(parentGroups).length - 1 && (
-                                  <div className="flex items-center" style={{ marginTop: '180px' }}>
+                                  <div className="flex items-center self-start" style={{ marginTop: '200px' }}>
                                     <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
