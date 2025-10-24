@@ -8,17 +8,17 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-24 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-16 overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         
-        <div className="container relative z-10">
+        <div className="max-w-7xl mx-auto px-8 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-5xl mx-auto text-center"
+            className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
               Culturally Aware
               <span className="block bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">
                 Multilingual CX
@@ -28,15 +28,15 @@ export default function Home() {
               Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/personas">
+              <Link href="/journey">
                 <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-6 shadow-xl">
-                  Explore Personas
+                  View Coverage Map
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/journey">
+              <Link href="/experiences">
                 <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
-                  View Coverage Map
+                  Explore Experiences
                 </Button>
               </Link>
             </div>
@@ -46,7 +46,7 @@ export default function Home() {
 
       {/* Coverage Statement */}
       <section className="py-16 bg-white border-b border-gray-200">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ export default function Home() {
 
       {/* Experience Modules */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Multilingual Experiences
@@ -112,7 +112,7 @@ export default function Home() {
 
       {/* Why Invictus Wins */}
       <section className="py-20 bg-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Why Dialect-Specific Translation Wins
@@ -165,7 +165,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
