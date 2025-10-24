@@ -555,7 +555,7 @@ export default function Journey() {
         {/* Visual Flow Popup */}
         {showVisualPopup && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setShowVisualPopup(false)}>
-            <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
               <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Customer Journey Visual Flow</h2>
@@ -617,8 +617,12 @@ export default function Journey() {
                                   {/* Subprocess List */}
                                   <div className="p-2 space-y-2">
                                     {activities.map((activity: ActivityType, idx: number) => {
+                                      // Filter personas based on selected persona filter
                                       const personas = activity.personas ? 
-                                        personasData.personas.filter(p => activity.personas?.includes(p.id)) : [];
+                                        personasData.personas.filter(p => {
+                                          const personaMatch = selectedPersona === 'all' || p.id === selectedPersona;
+                                          return activity.personas?.includes(p.id) && personaMatch;
+                                        }) : [];
                                       return (
                                         <div key={`${activity.id}-${idx}`} className="bg-gray-50 rounded p-2 border border-gray-200">
                                           <div className="flex items-start gap-2">
@@ -645,11 +649,11 @@ export default function Journey() {
                                     })}
                                   </div>
                                 </div>
-                                {/* Arrow to next parent */}
+                                {/* Arrow to next parent - positioned between cards */}
                                 {groupIndex < Object.keys(parentGroups).length - 1 && (
-                                  <div className="flex justify-center mt-4">
-                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                  <div className="flex items-center justify-center" style={{ marginTop: '120px' }}>
+                                    <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
                                   </div>
                                 )}
