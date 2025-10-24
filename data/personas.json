@@ -13,7 +13,7 @@
         "Add new business lines",
         "Understand pricing and plans"
       ],
-      "journey": ["outbound", "qualification", "proposal", "negotiation"]
+      "journey": ["outbound", "selling", "service"]
     },
     {
       "id": "maria",
@@ -28,7 +28,7 @@
         "Check promo eligibility",
         "Technical support"
       ],
-      "journey": ["support", "expansion"]
+      "journey": ["service"]
     },
     {
       "id": "lucia",
@@ -43,7 +43,7 @@
         "Open support cases",
         "Account security"
       ],
-      "journey": ["support", "onboarding"]
+      "journey": ["service", "churn"]
     },
     {
       "id": "diego",
@@ -58,7 +58,7 @@
         "Fleet management",
         "Field worker connectivity"
       ],
-      "journey": ["proposal", "negotiation", "onboarding", "expansion"]
+      "journey": ["outbound", "selling", "service"]
     }
   ]
 }
