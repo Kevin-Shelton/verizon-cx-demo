@@ -158,75 +158,61 @@ export default function Journey() {
                         className="relative"
                       >
                         <Card 
-                          className="w-64 border-2 border-green-300 bg-green-50 hover:bg-green-100 cursor-pointer transition-all hover:shadow-lg"
+                          className="w-48 border-2 border-green-300 bg-green-50 hover:bg-green-100 cursor-pointer transition-all hover:shadow-lg"
                           onClick={() => handleActivityClick(activity)}
                         >
-                          <CardHeader className="pb-3">
-                            <div className="flex items-start justify-between gap-2 mb-2">
-                              <Badge variant="outline" className="text-xs bg-white">
+                          <CardHeader className="pb-2 pt-3 px-3">
+                            <div className="flex items-start justify-between gap-1 mb-1">
+                              <Badge variant="outline" className="text-[10px] px-1 py-0 bg-white">
                                 {activity.stageName}
                               </Badge>
-                              <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+                              <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
                             </div>
-                            <CardTitle className="text-sm leading-tight">
+                            <CardTitle className="text-xs leading-tight">
                               {activity.label}
                             </CardTitle>
                           </CardHeader>
-                          <CardContent className="pt-0">
+                          <CardContent className="pt-0 px-3 pb-3">
                             {/* Persona Icons */}
                             {personas.length > 0 && (
-                              <div className="flex flex-wrap gap-2 mb-3">
+                              <div className="flex flex-wrap gap-1 mb-2">
                                 {personas.map(persona => (
                                   <div 
                                     key={persona.id}
-                                    className="flex items-center gap-1 bg-white px-2 py-1 rounded-full border border-green-300"
+                                    className="flex items-center gap-0.5 bg-white px-1.5 py-0.5 rounded-full border border-green-300"
                                     title={`${persona.name} - ${persona.role}`}
                                   >
-                                    <span className="text-lg">{persona.avatar}</span>
-                                    <span className="text-xs font-medium text-gray-700">{persona.name}</span>
+                                    <span className="text-sm">{persona.avatar}</span>
+                                    <span className="text-[10px] font-medium text-gray-700">{persona.name}</span>
                                   </div>
                                 ))}
                               </div>
                             )}
                             
                             {/* Pillars */}
-                            <div className="flex flex-wrap gap-1 mb-3">
+                            <div className="flex flex-wrap gap-1">
                               {activity.pillars.slice(0, 3).map((pillar) => (
                                 <Badge
                                   key={pillar}
                                   variant="secondary"
-                                  className="text-xs"
+                                  className="text-[10px] px-1 py-0"
                                 >
                                   {pillar}
                                 </Badge>
                               ))}
                               {activity.pillars.length > 3 && (
-                                <Badge variant="secondary" className="text-xs">
+                                <Badge variant="secondary" className="text-[10px] px-1 py-0">
                                   +{activity.pillars.length - 3}
                                 </Badge>
                               )}
                             </div>
-                            
-                            {activity.demos && activity.demos.length > 0 && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="w-full text-xs"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenDemo(activity.demos[0]);
-                                }}
-                              >
-                                View Demo
-                              </Button>
-                            )}
                           </CardContent>
                         </Card>
                       </motion.div>
                       
                       {/* Arrow between cards */}
                       {index < fullCoverageActivities.length - 1 && (
-                        <ChevronRight className="w-6 h-6 text-green-600 flex-shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-green-600 flex-shrink-0" />
                       )}
                     </div>
                   );
@@ -239,16 +225,37 @@ export default function Journey() {
           <div className="mt-8 bg-white rounded-lg p-6 shadow">
             <h3 className="font-semibold text-lg mb-4 text-gray-900">Customer Personas</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {personasData.personas.map(persona => (
-                <div key={persona.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <span className="text-3xl">{persona.avatar}</span>
-                  <div>
-                    <div className="font-semibold text-sm text-gray-900">{persona.name}</div>
-                    <div className="text-xs text-gray-600">{persona.role}</div>
-                    <div className="text-xs text-gray-500">{persona.dialectLabel}</div>
+              {personasData.personas.map(persona => {
+                // Get activities for this persona
+                const personaActivities = fullCoverageActivities.filter(activity => 
+                  getPersonasForActivity(activity.stageId).some(p => p.id === persona.id)
+                );
+                // Get first demo from persona's activities
+                const firstDemo = personaActivities.find(a => a.demos && a.demos.length > 0)?.demos[0];
+                
+                return (
+                  <div key={persona.id} className="flex flex-col gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{persona.avatar}</span>
+                      <div>
+                        <div className="font-semibold text-sm text-gray-900">{persona.name}</div>
+                        <div className="text-xs text-gray-600">{persona.role}</div>
+                        <div className="text-xs text-gray-500">{persona.dialectLabel}</div>
+                      </div>
+                    </div>
+                    {firstDemo && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full text-xs"
+                        onClick={() => handleOpenDemo(firstDemo)}
+                      >
+                        View Demo
+                      </Button>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
