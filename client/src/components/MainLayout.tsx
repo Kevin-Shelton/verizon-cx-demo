@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE } from "@/const";
 import {
   Home,
-  Users,
   Map,
   Sparkles,
   MessageSquare,
@@ -31,7 +30,6 @@ const executiveInsights = [
 
 // Demo Experience - Second group
 const demoExperience = [
-  { name: "Personas", href: "/personas", icon: Users },
   { name: "Journey", href: "/journey", icon: Map },
   { name: "Experiences", href: "/experiences", icon: Sparkles },
   { name: "Feedback", href: "/feedback", icon: MessageSquare },

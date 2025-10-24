@@ -12,7 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import PersonaJourney from "./pages/PersonaJourney";
-import Personas from "./pages/Personas";
+
 import Journey from "./pages/Journey";
 import Experiences from "./pages/Experiences";
 import Chat from "./pages/experiences/Chat";
@@ -40,7 +40,7 @@ function Router() {
               <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
               <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
               <Route path="/outbound-prospecting" component={OutboundProspecting} />
-              <Route path="/personas" component={Personas} />
+
               <Route path="/persona-journey" component={PersonaJourney} />
               <Route path="/journey" component={Journey} />
               <Route path="/experiences" component={Experiences} />
