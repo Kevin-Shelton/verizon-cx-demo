@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, Zap, Target, Shield, Map, Briefcase, BookOpen, TrendingUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, Zap, Target, Shield, Map, Briefcase, BookOpen, TrendingUp, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
