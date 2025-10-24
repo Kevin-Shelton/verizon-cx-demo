@@ -145,44 +145,39 @@ export default function Journey() {
         <div className="bg-white border-2 border-gray-200 rounded-lg mb-12 p-8">
           <h1 className="text-4xl font-bold text-red-700 mb-8">R2B Rep Journey Map</h1>
           
-          {/* Coverage Flow Line */}
-          <div className="relative mb-8">
-            <div className="text-sm font-semibold text-gray-700 mb-2">Multilingual Solution Coverage</div>
-            <svg className="w-full h-12" viewBox="0 0 1000 50" preserveAspectRatio="none">
-              {/* Background line */}
-              <line x1="0" y1="25" x2="1000" y2="25" stroke="#e5e7eb" strokeWidth="2" />
-              
-              {/* Coverage flow line with varying thickness */}
+          <div className="relative">
+            {/* Coverage Flow Line Overlay */}
+            <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{zIndex: 10}} viewBox="0 0 1000 600" preserveAspectRatio="none">
+              {/* Coverage flow line connecting stages */}
               <path 
-                d="M 0 25 Q 100 25 200 25 Q 300 20 400 15 Q 500 10 600 15 Q 700 20 800 22 Q 900 24 1000 25"
+                d="M 100 50 L 100 150 Q 100 180 130 180 L 270 180 Q 300 180 300 210 L 300 300 Q 300 330 330 330 L 470 330 Q 500 330 500 360 L 500 450 Q 500 480 530 480 L 670 480 Q 700 480 700 510 L 700 550"
                 stroke="url(#coverageGradient)"
-                strokeWidth="8"
+                strokeWidth="12"
                 fill="none"
                 strokeLinecap="round"
+                opacity="0.7"
               />
               
               {/* Gradient definition */}
               <defs>
                 <linearGradient id="coverageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 0.6}} />
-                  <stop offset="20%" style={{stopColor: '#f97316', stopOpacity: 0.7}} />
-                  <stop offset="40%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
-                  <stop offset="60%" style={{stopColor: '#ca8a04', stopOpacity: 0.8}} />
-                  <stop offset="80%" style={{stopColor: '#16a34a', stopOpacity: 0.9}} />
-                  <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 0.5}} />
+                  <stop offset="0%" style={{stopColor: '#f97316', stopOpacity: 0.8}} />
+                  <stop offset="25%" style={{stopColor: '#dc2626', stopOpacity: 1}} />
+                  <stop offset="50%" style={{stopColor: '#ca8a04', stopOpacity: 0.9}} />
+                  <stop offset="75%" style={{stopColor: '#16a34a', stopOpacity: 0.95}} />
+                  <stop offset="100%" style={{stopColor: '#2563eb', stopOpacity: 0.6}} />
                 </linearGradient>
               </defs>
               
-              {/* Coverage intensity indicators */}
-              <circle cx="100" cy="25" r="4" fill="#f97316" opacity="0.7" />
-              <circle cx="300" cy="25" r="6" fill="#dc2626" opacity="1" />
-              <circle cx="500" cy="25" r="5" fill="#ca8a04" opacity="0.8" />
-              <circle cx="700" cy="25" r="5" fill="#16a34a" opacity="0.9" />
-              <circle cx="900" cy="25" r="3" fill="#2563eb" opacity="0.5" />
+              {/* Coverage intensity indicators at each stage */}
+              <circle cx="100" cy="100" r="8" fill="#f97316" opacity="0.8" stroke="white" strokeWidth="2" />
+              <circle cx="300" cy="250" r="12" fill="#dc2626" opacity="1" stroke="white" strokeWidth="2" />
+              <circle cx="500" cy="400" r="10" fill="#ca8a04" opacity="0.9" stroke="white" strokeWidth="2" />
+              <circle cx="700" cy="500" r="11" fill="#16a34a" opacity="0.95" stroke="white" strokeWidth="2" />
+              <circle cx="900" cy="550" r="6" fill="#2563eb" opacity="0.6" stroke="white" strokeWidth="2" />
             </svg>
-          </div>
-          
-          <div className="grid grid-cols-5 gap-4">
+            
+            <div className="grid grid-cols-5 gap-4">
             {/* Outbound Prospecting */}
             <div className="border-2 border-orange-600 rounded-lg overflow-hidden">
               <div className="bg-orange-600 text-white px-4 py-2 text-center relative">
@@ -293,6 +288,7 @@ export default function Journey() {
                 <div className="text-sm font-medium text-center py-2 bg-white rounded border border-blue-200">Participate in Internal Meetings</div>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
