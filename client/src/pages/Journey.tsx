@@ -280,7 +280,7 @@ export default function Journey() {
           <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8 gap-1">
             <button
               onClick={() => scrollToSection('journey-map')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'journey-map'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -290,7 +290,7 @@ export default function Journey() {
             </button>
             <button
               onClick={() => scrollToSection('personas')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'personas'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -300,7 +300,7 @@ export default function Journey() {
             </button>
             <button
               onClick={() => scrollToSection('full-coverage')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'full-coverage'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'

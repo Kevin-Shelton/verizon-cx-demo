@@ -121,7 +121,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
           <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8 gap-1">
             <button
               onClick={() => scrollToSection('market-overview')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'market-overview'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -131,7 +131,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </button>
             <button
               onClick={() => scrollToSection('winning-strategy')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'winning-strategy'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -141,7 +141,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </button>
             <button
               onClick={() => scrollToSection('super-consumer')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'super-consumer'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -151,7 +151,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </button>
             <button
               onClick={() => scrollToSection('differentiation')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'differentiation'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
@@ -161,7 +161,7 @@ const ExecutiveIntroductionV2: React.FC = () => {
             </button>
             <button
               onClick={() => scrollToSection('growth-scenarios')}
-              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
+              className={`px-3 md:px-5 py-2.5 text-sm md:text-base font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'growth-scenarios'
                   ? 'border-white text-white bg-white/20 shadow-lg'
                   : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'

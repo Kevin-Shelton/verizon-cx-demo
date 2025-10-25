@@ -129,25 +129,24 @@ export default function WorkflowSections() {
       color: 'indigo',
       workflows: [
         {
-          title: 'Plan Route',
-          timePerWeek: '45 min per wk',
+          title: 'Virtual',
+          timePerWeek: '',
           tasks: [
-            { name: 'Built Foot Blitz List', complete: false },
-            { name: 'Trim, Vet, & Filter List', complete: false },
-            { name: 'Plan Route', complete: false },
-            { name: 'Core Sales Process', complete: true },
+            { name: 'Participate in Sales Blitz', complete: false },
           ],
         },
         {
-          title: 'Participate Sales Blitz',
-          timePerWeek: '90 min per wk',
+          title: 'In Store',
+          timePerWeek: '',
           tasks: [
-            { name: 'Build List', complete: false },
-            { name: 'Engage (call)', complete: true },
-            { name: 'Engage (mail)', complete: true },
-            { name: 'Validate (not on DNC list)', complete: false },
-            { name: 'Engage (SMS)', complete: true },
-            { name: 'Core Sales Process', complete: true },
+            { name: 'Participate in Sales Blitz', complete: false },
+          ],
+        },
+        {
+          title: 'Footblitz',
+          timePerWeek: '',
+          tasks: [
+            { name: 'Plan Route', complete: false },
           ],
         },
       ],
@@ -158,42 +157,15 @@ export default function WorkflowSections() {
       color: 'violet',
       workflows: [
         {
-          title: 'Prepare for Appointment',
-          timePerWeek: '90 min per wk',
+          title: 'Core Sales Process',
+          timePerWeek: '13 hrs per wk',
           tasks: [
-            { name: 'Review Customer Info', complete: false },
-            { name: 'Prepare Presentation', complete: false },
-            { name: 'Gather Materials', complete: false },
-          ],
-        },
-        {
-          title: 'Conduct Discovery',
-          timePerWeek: '180 min per wk',
-          tasks: [
-            { name: 'Understand Business Needs', complete: true },
-            { name: 'Identify Pain Points', complete: true },
-            { name: 'Assess Current Solutions', complete: true },
-            { name: 'Document Requirements', complete: true },
-          ],
-        },
-        {
-          title: 'Present Solution',
-          timePerWeek: '120 min per wk',
-          tasks: [
-            { name: 'Tailor Presentation', complete: true },
-            { name: 'Demonstrate Features', complete: true },
-            { name: 'Address Objections', complete: true },
-            { name: 'Provide Pricing', complete: true },
-          ],
-        },
-        {
-          title: 'Close Deal',
-          timePerWeek: '90 min per wk',
-          tasks: [
-            { name: 'Negotiate Terms', complete: true },
-            { name: 'Finalize Contract', complete: true },
-            { name: 'Process Order', complete: true },
-            { name: 'Schedule Implementation', complete: true },
+            { name: 'Manage Funnel', complete: true },
+            { name: 'Qualify Prospects', complete: true },
+            { name: 'Engage in Discovery Process', complete: true },
+            { name: 'Manage Opportunity', complete: true },
+            { name: 'Build and Share Quote', complete: true },
+            { name: 'Close & Follow Up', complete: true },
           ],
         },
       ],
@@ -429,11 +401,34 @@ export default function WorkflowSections() {
 
                 {show && (
                   <div className="p-5 bg-white">
-                    <div className={`grid grid-cols-1 ${section.workflows.length <= 2 ? 'md:grid-cols-2' : section.workflows.length <= 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-5'} gap-4`}>
-                      {section.workflows.map((workflow, wIdx) => (
-                        <WorkflowColumn key={wIdx} workflow={workflow} color={colors.headerBg} />
-                      ))}
-                    </div>
+                    {/* Special layout for Selling section with convergence to Core Sales Process */}
+                    {section.title === 'Selling' ? (
+                      <div className="flex flex-col items-center gap-4">
+                        {/* Three parallel channels */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                          {section.workflows.map((workflow, wIdx) => (
+                            <WorkflowColumn key={wIdx} workflow={workflow} color={colors.headerBg} />
+                          ))}
+                        </div>
+                        {/* Convergence arrows */}
+                        <div className="flex items-center justify-center gap-2 my-2">
+                          <div className="text-indigo-600 text-2xl">↓</div>
+                          <div className="text-indigo-600 text-2xl">↓</div>
+                          <div className="text-indigo-600 text-2xl">↓</div>
+                        </div>
+                        {/* Arrow pointing to Core Sales Process */}
+                        <div className="text-violet-600 text-3xl font-bold">↓</div>
+                        <div className="text-center text-sm font-semibold text-gray-600 bg-violet-100 px-4 py-2 rounded-lg border-2 border-violet-300">
+                          Converges into Core Sales Process
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={`grid grid-cols-1 ${section.workflows.length <= 2 ? 'md:grid-cols-2' : section.workflows.length <= 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-5'} gap-4`}>
+                        {section.workflows.map((workflow, wIdx) => (
+                          <WorkflowColumn key={wIdx} workflow={workflow} color={colors.headerBg} />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

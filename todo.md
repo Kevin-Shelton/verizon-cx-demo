@@ -13,3 +13,18 @@
   - Enhanced font weight to semibold
   - Added smooth transition animations
 
+
+
+## New Tasks
+
+- [x] Increase tab navigation font size for better visibility and distinction
+  - Changed from text-xs md:text-sm to text-sm md:text-base
+  - Updated Executive Summary page tabs
+  - Updated Journey page tabs
+- [x] Restructure R2B Journey Map Selling section
+  - Show three parallel channels: Virtual, In Store, Footblitz
+  - Each channel has initial activities (Participate in Sales Blitz, Plan Route)
+  - All three channels converge into Core Sales Process with visual arrows
+  - Core Sales Process continues as single vertical path with 6 tasks
+  - Added convergence label and arrows
+
