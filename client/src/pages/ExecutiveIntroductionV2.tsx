@@ -118,56 +118,56 @@ const ExecutiveIntroductionV2: React.FC = () => {
           </div>
           
           {/* Bottom Row: Section Navigation */}
-          <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8">
+          <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8 gap-1">
             <button
               onClick={() => scrollToSection('market-overview')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'market-overview'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Market Overview
+              📊 Market Overview
             </button>
             <button
               onClick={() => scrollToSection('winning-strategy')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'winning-strategy'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Winning Strategy
+              🎯 Winning Strategy
             </button>
             <button
               onClick={() => scrollToSection('super-consumer')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'super-consumer'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Super Consumer
+              ⚡ Super Consumer
             </button>
             <button
               onClick={() => scrollToSection('differentiation')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'differentiation'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Differentiation
+              🛡️ Differentiation
             </button>
             <button
               onClick={() => scrollToSection('growth-scenarios')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'growth-scenarios'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Growth Scenarios
+              📈 Growth Scenarios
             </button>
           </nav>
         </div>

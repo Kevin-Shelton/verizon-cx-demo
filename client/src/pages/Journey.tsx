@@ -277,36 +277,36 @@ export default function Journey() {
           </div>
           
           {/* Bottom Row: Section Navigation */}
-          <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8">
+          <nav className="flex overflow-x-auto border-t border-white/20 -mx-3 md:-mx-8 px-3 md:px-8 gap-1">
             <button
               onClick={() => scrollToSection('journey-map')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'journey-map'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              R2B Journey Map
+              🗺️ R2B Journey Map
             </button>
             <button
               onClick={() => scrollToSection('personas')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'personas'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Customer Personas
+              👥 Customer Personas
             </button>
             <button
               onClick={() => scrollToSection('full-coverage')}
-              className={`px-2 md:px-4 py-2 text-xs md:text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
+              className={`px-3 md:px-5 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-3 rounded-t-lg cursor-pointer ${
                 activeSection === 'full-coverage'
-                  ? 'border-white text-white'
-                  : 'border-transparent text-blue-100 hover:text-white hover:border-white/50'
+                  ? 'border-white text-white bg-white/20 shadow-lg'
+                  : 'border-transparent text-blue-100 hover:text-white hover:bg-white/10 hover:border-white/50'
               }`}
             >
-              Full Coverage Activities
+              📋 Full Coverage Activities
             </button>
           </nav>
         </div>
