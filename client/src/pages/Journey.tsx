@@ -355,15 +355,29 @@ export default function Journey() {
                 <div className="font-bold">Selling</div>
               </div>
               <div className="bg-red-50 p-4">
-                <div className="grid grid-cols-3 gap-2 mb-4">
+                {/* Three parallel channels at top */}
+                <div className="grid grid-cols-3 gap-2 mb-3">
                   <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">Virtual</div>
                   <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">In Store</div>
                   <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">Footblitz</div>
                 </div>
+                
+                {/* Activities for each channel */}
+                <div className="grid grid-cols-3 gap-2 mb-2">
+                  <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
+                  <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
+                  <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Plan Route</div>
+                </div>
+                
+                {/* Convergence arrows */}
+                <div className="flex justify-center items-center gap-4 my-2">
+                  <div className="text-red-600 text-lg">↓</div>
+                  <div className="text-red-600 text-lg">↓</div>
+                  <div className="text-red-600 text-lg">↓</div>
+                </div>
+                
+                {/* Core Sales Process */}
                 <div className="space-y-2">
-                  <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
-                  <div className="text-sm font-medium text-center py-2 bg-white rounded border border-red-200">Plan Route</div>
-                  <div className="flex justify-center my-2"><ChevronRight className="w-5 h-5 text-red-600" /></div>
                   <div className="bg-red-700 text-white text-sm font-bold text-center py-2 rounded">Core Sales Process</div>
                   <div className="text-xs text-center py-2 bg-white rounded border border-red-200">Manage Funnel</div>
                   <div className="flex justify-center"><ChevronRight className="w-4 h-4 rotate-90 text-red-600" /></div>
