@@ -28,3 +28,7 @@
   - Core Sales Process continues as single vertical path with 6 tasks
   - Added convergence label and arrows
 
+
+
+- [x] Remove activity box under "In Store" channel in Selling section visual diagram
+

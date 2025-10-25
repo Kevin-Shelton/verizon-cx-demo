@@ -362,10 +362,10 @@ export default function Journey() {
                   <div className="text-xs font-semibold text-center py-1 bg-red-200 rounded">Footblitz</div>
                 </div>
                 
-                {/* Activities for each channel */}
+                {/* Activities for Virtual and Footblitz channels only */}
                 <div className="grid grid-cols-3 gap-2 mb-2">
                   <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
-                  <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Participate in Sales Blitz</div>
+                  <div></div>
                   <div className="text-xs text-center py-1.5 bg-white rounded border border-red-200">Plan Route</div>
                 </div>
                 
