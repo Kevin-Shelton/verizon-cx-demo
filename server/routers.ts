@@ -2,6 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 
 export const appRouter = router({
   system: systemRouter,
@@ -70,6 +71,16 @@ export const appRouter = router({
       return getAllTranscripts();
     }),
   }),
+
+  video: router({
+    getAccess: publicProcedure.query(async () => {
+      return await getIkoneWorldVideoAccess();
+    }),
+    getMetadata: publicProcedure.query(async () => {
+      return await getVideoMetadata();
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
+

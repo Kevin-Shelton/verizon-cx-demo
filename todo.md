@@ -22,6 +22,8 @@
 - [x] Implement video hosting for portal
   - [x] Determined video hosting strategy: S3 storage (proprietary content)
   - [x] Created video player section on home page
-  - [ ] Integrate S3 video URLs when provided by user
+  - [x] Integrated Ikoneworld video service with secure backend authentication
+  - [x] Created VideoPlayer component with loading and error states
+  - [x] Stored credentials securely as environment variables
   - [ ] Test video playback across browsers
 
