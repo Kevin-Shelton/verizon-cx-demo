@@ -17,6 +17,11 @@
 
 - [ ] Test all external links open correctly in new windows
 
+- [x] Fix video player tRPC endpoint error
+  - [x] Simplified VideoPlayer component to use direct video URL
+  - [x] Removed tRPC call that was causing HTML response error
+  - [x] Video now opens directly in new window with authentication dialog
+
 - [ ] Verify deployment readiness
 
 - [x] Implement video hosting for portal

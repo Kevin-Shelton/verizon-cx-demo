@@ -1,33 +1,20 @@
-import { useState, useEffect } from "react";
-import { Play, Lock, AlertCircle } from "lucide-react";
+import { useState } from "react";
+import { Play, Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { trpc } from "@/lib/trpc";
 
 export default function VideoPlayer() {
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch video access from backend
-  const { data: accessData, isLoading: accessLoading } = trpc.video.getAccess.useQuery();
-  const { data: metadata } = trpc.video.getMetadata.useQuery();
-
-  useEffect(() => {
-    if (accessData?.success && accessData.videoUrl) {
-      setVideoUrl(accessData.videoUrl);
-      setError(null);
-    } else if (accessData && !accessData.success) {
-      setError(accessData.error || "Failed to load video");
-    }
-    setIsLoading(accessLoading);
-  }, [accessData, accessLoading]);
+  // Video URL from Ikoneworld (requires authentication)
+  const videoUrl = "https://store.ikoneworld.com/vz-val/";
 
   const handlePlayClick = () => {
-    if (videoUrl) {
-      // Open video in new window/tab
-      window.open(videoUrl, "_blank", "noopener,noreferrer");
-    }
+    setIsLoading(true);
+    // Open video in new window/tab
+    // The browser will handle authentication via the Ikoneworld login dialog
+    window.open(videoUrl, "_blank", "noopener,noreferrer");
+    setIsLoading(false);
   };
 
   return (
@@ -45,41 +32,24 @@ export default function VideoPlayer() {
           {/* Background gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-indigo-700/20" />
 
-          {/* Loading state */}
-          {isLoading && (
-            <div className="relative z-10 flex flex-col items-center gap-4">
-              <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
-              <p className="text-white text-sm font-medium">Loading video...</p>
+          {/* Play button */}
+          <div className="relative z-10 flex flex-col items-center gap-4">
+            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-all">
+              <Play className="h-10 w-10 text-white fill-white" />
             </div>
-          )}
-
-          {/* Error state */}
-          {error && !isLoading && (
-            <div className="relative z-10 flex flex-col items-center gap-4">
-              <AlertCircle className="h-12 w-12 text-red-400" />
-              <p className="text-white text-sm font-medium text-center">{error}</p>
-            </div>
-          )}
-
-          {/* Play button - visible when loaded */}
-          {!isLoading && !error && (
-            <div className="relative z-10 flex flex-col items-center gap-4">
-              <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-all">
-                <Play className="h-10 w-10 text-white fill-white" />
-              </div>
-              <p className="text-white text-lg font-semibold">Click to play video</p>
-            </div>
-          )}
+            <p className="text-white text-lg font-semibold">
+              {isLoading ? "Opening video..." : "Click to play video"}
+            </p>
+          </div>
         </div>
 
         {/* Video Information */}
         <div className="space-y-4">
-          <h3 className="text-2xl font-bold text-gray-900">
-            {metadata?.title || "Complete Solution Overview"}
-          </h3>
+          <h3 className="text-2xl font-bold text-gray-900">Complete Solution Overview</h3>
           <p className="text-gray-600 leading-relaxed">
-            {metadata?.description ||
-              "See how our dialect-specific translation technology works across all customer touchpoints. This comprehensive demo showcases real-world scenarios, cultural insights, and the competitive advantage of authentic multilingual communication."}
+            See how our dialect-specific translation technology works across all customer
+            touchpoints. This comprehensive demo showcases real-world scenarios, cultural
+            insights, and the competitive advantage of authentic multilingual communication.
           </p>
 
           {/* Proprietary Content Notice */}
@@ -87,8 +57,8 @@ export default function VideoPlayer() {
             <Lock className="h-5 w-5 text-blue-600 flex-shrink-0" />
             <p className="text-sm text-gray-700">
               <span className="font-semibold">Proprietary Content:</span> This video contains
-              confidential information and is for authorized viewers only. Authentication is
-              required to access the content.
+              confidential information and is for authorized viewers only. You will be prompted
+              to authenticate with your Ikoneworld credentials.
             </p>
           </div>
 
