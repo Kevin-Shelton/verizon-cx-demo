@@ -9,7 +9,8 @@ export default function Experiences() {
       icon: Globe,
       title: "Website Translation",
       description: "Public and authenticated site translation with dialect support",
-      href: "/experiences/web",
+      href: "https://explore.ikoneworld.com/site-translate/",
+      external: true,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
       borderColor: "border-blue-200",
@@ -29,7 +30,8 @@ export default function Experiences() {
       icon: MessageSquare,
       title: "Live Chat",
       description: "Real-time chat translation with sentiment analysis",
-      href: "/experiences/chat",
+      href: "https://explore.ikoneworld.com/live-chat/",
+      external: true,
       color: "text-green-600",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
@@ -49,7 +51,8 @@ export default function Experiences() {
       icon: FileText,
       title: "Document Translation",
       description: "Upload and translate documents with bilingual preview",
-      href: "/experiences/documents",
+      href: "https://explore.ikoneworld.com/document-translate/",
+      external: true,
       color: "text-red-600",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
@@ -135,27 +138,51 @@ export default function Experiences() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link href={experience.href}>
-                  <Card className={`h-full hover:shadow-xl transition-all cursor-pointer group border-2 ${experience.borderColor} ${experience.hoverBg}`}>
-                    <CardHeader className={experience.bgColor}>
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className={`p-4 rounded-lg ${experience.bgColor} ${experience.color} group-hover:scale-110 transition-transform`}>
-                          <Icon className="h-10 w-10" />
+                {experience.external ? (
+                  <a href={experience.href} target="_blank" rel="noopener noreferrer">
+                    <Card className={`h-full hover:shadow-xl transition-all cursor-pointer group border-2 ${experience.borderColor} ${experience.hoverBg}`}>
+                      <CardHeader className={experience.bgColor}>
+                        <div className="flex items-center gap-4 mb-3">
+                          <div className={`p-4 rounded-lg ${experience.bgColor} ${experience.color} group-hover:scale-110 transition-transform`}>
+                            <Icon className="h-10 w-10" />
+                          </div>
+                          <CardTitle className="text-2xl text-gray-900">{experience.title}</CardTitle>
                         </div>
-                        <CardTitle className="text-2xl text-gray-900">{experience.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                      <CardDescription className="text-base text-gray-700 mb-6 leading-relaxed">
-                        {experience.description}
-                      </CardDescription>
-                      <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
-                        <span>Explore Module</span>
-                        <ArrowRight className="h-5 w-5" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+                      </CardHeader>
+                      <CardContent className="pt-6">
+                        <CardDescription className="text-base text-gray-700 mb-6 leading-relaxed">
+                          {experience.description}
+                        </CardDescription>
+                        <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
+                          <span>Explore Module</span>
+                          <ArrowRight className="h-5 w-5" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </a>
+                ) : (
+                  <Link href={experience.href}>
+                    <Card className={`h-full hover:shadow-xl transition-all cursor-pointer group border-2 ${experience.borderColor} ${experience.hoverBg}`}>
+                      <CardHeader className={experience.bgColor}>
+                        <div className="flex items-center gap-4 mb-3">
+                          <div className={`p-4 rounded-lg ${experience.bgColor} ${experience.color} group-hover:scale-110 transition-transform`}>
+                            <Icon className="h-10 w-10" />
+                          </div>
+                          <CardTitle className="text-2xl text-gray-900">{experience.title}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pt-6">
+                        <CardDescription className="text-base text-gray-700 mb-6 leading-relaxed">
+                          {experience.description}
+                        </CardDescription>
+                        <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
+                          <span>Explore Module</span>
+                          <ArrowRight className="h-5 w-5" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )}
               </motion.div>
             );
           })}
