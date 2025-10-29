@@ -19,3 +19,9 @@
 
 - [ ] Verify deployment readiness
 
+- [x] Implement video hosting for portal
+  - [x] Determined video hosting strategy: S3 storage (proprietary content)
+  - [x] Created video player section on home page
+  - [ ] Integrate S3 video URLs when provided by user
+  - [ ] Test video playback across browsers
+
