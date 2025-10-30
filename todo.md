@@ -113,12 +113,13 @@
   - [x] All 4 personas now use database-managed sequences
   - [x] Easy to modify sequences without code changes
 
-- [ ] Fetch persona experiences from Supabase table
+- [x] Fetch persona experiences from Supabase table
   - [x] persona_experiences table created in Supabase
   - [x] All 4 personas with 3 steps each populated
-  - [ ] Update ExperienceViewer to fetch from Supabase
-  - [ ] Remove hardcoded persona data
-  - [ ] Test carousel with Supabase data
+  - [x] Updated ExperienceViewer to fetch from Supabase
+  - [x] Removed hardcoded persona data
+  - [x] Carousel now loads sequences from Supabase database
+  - [x] Easy to modify sequences without code changes
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
