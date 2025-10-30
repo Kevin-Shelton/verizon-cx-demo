@@ -29,6 +29,7 @@ export default function ExperienceCarousel({
   personaDescription,
   steps,
 }: ExperienceCarouselProps) {
+  const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
 
   const goToStep = (index: number) => {
@@ -42,7 +43,7 @@ export default function ExperienceCarousel({
   const restart = () => goToStep(0);
 
   const handleBackToPersonas = () => {
-    window.location.href = "/personas";
+    setLocation("/personas");
   };
 
   const currentStepData = steps[currentStep];
