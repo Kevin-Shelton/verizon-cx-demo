@@ -113,11 +113,12 @@
   - [x] All 4 personas now use database-managed sequences
   - [x] Easy to modify sequences without code changes
 
-- [ ] Fix tRPC experiences endpoint error
-  - [ ] experiences.getPersonaExperiences returning HTML instead of JSON
-  - [ ] Database query may be failing
-  - [ ] Check database connection and query syntax
-  - [ ] Verify tRPC endpoint is properly registered
+- [ ] Fetch persona experiences from Supabase table
+  - [x] persona_experiences table created in Supabase
+  - [x] All 4 personas with 3 steps each populated
+  - [ ] Update ExperienceViewer to fetch from Supabase
+  - [ ] Remove hardcoded persona data
+  - [ ] Test carousel with Supabase data
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
