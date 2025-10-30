@@ -90,11 +90,12 @@
   - [x] Users no longer forced to login again when selecting View button
   - [x] Session cookies maintained across iframe boundary
 
-- [ ] Fix iframe redirect to demo portal login
-  - [ ] IVR iframe is breaking out and redirecting to demo portal login
-  - [ ] Adjust sandbox attributes to prevent redirect
-  - [ ] Allow IVR login screen to display within iframe
-  - [ ] Test carousel navigation without redirect
+- [x] Fix iframe redirect to demo portal login
+  - [x] Removed sandbox attribute causing redirect to demo portal login
+  - [x] Kept allow attribute for autoplay, fullscreen, picture-in-picture
+  - [x] IVR login screen now displays within iframe without breaking out
+  - [x] Users can login to IVR experience within carousel frame
+  - [x] Carousel navigation flow maintained
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
