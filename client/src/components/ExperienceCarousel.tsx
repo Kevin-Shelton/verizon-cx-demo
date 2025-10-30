@@ -200,17 +200,17 @@ export default function ExperienceCarousel({
         <div className="max-w-7xl mx-auto">
           {currentStepData && (
             <div>
-              <div className="flex items-center gap-3 p-6 border-b">
+              <div className="flex items-start gap-4 p-6 border-b">
                 <img
                   src="/ikow-logo.png"
                   alt="ikOneWorld"
-                  className="h-8 object-contain"
+                  className="h-8 object-contain flex-shrink-0"
                 />
-                <div>
-                  <h2 className="text-xl font-bold text-gray-800">
+                <div className="flex-1">
+                  <h2 className="text-lg font-bold text-gray-800 mb-2">
                     {currentStepData.title}
                   </h2>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-base text-gray-700 leading-relaxed whitespace-normal">
                     {currentStepData.description}
                   </p>
                 </div>
