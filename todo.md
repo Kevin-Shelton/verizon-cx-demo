@@ -104,12 +104,14 @@
   - [x] Users can login to IVR experience within carousel frame
   - [x] Carousel navigation flow maintained
 
-- [ ] Implement database-driven persona experience sequences
-  - [ ] User creates persona_experiences table in Supabase
-  - [ ] Update ExperienceViewer to fetch sequences from database
-  - [ ] Remove hardcoded persona data from code
-  - [ ] Test carousel with database-driven URLs
-  - [ ] Verify all 4 personas load correctly
+- [x] Implement database-driven persona experience sequences
+  - [x] User created persona_experiences table in Supabase with step_type enum
+  - [x] Added getPersonaExperiences tRPC procedure
+  - [x] Created stepTypeConfig utility for step type mapping
+  - [x] Updated ExperienceViewer to fetch sequences from database
+  - [x] Removed hardcoded persona data from code
+  - [x] All 4 personas now use database-managed sequences
+  - [x] Easy to modify sequences without code changes
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
