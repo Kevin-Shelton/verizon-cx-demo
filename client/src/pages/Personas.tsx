@@ -167,7 +167,7 @@ export default function Personas() {
                         className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.location.href = `/experience-viewer/${persona.id}`;
+                          setLocation(`/experience-viewer/${persona.id}`);
                         }}
                       >
                         <span className="flex items-center gap-2">
