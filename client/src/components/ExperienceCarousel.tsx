@@ -102,8 +102,8 @@ export default function ExperienceCarousel({
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
-              src="/ikow-logo.png"
-              alt="ikOneWorld"
+              src="/invictus-logo.png"
+              alt="Invictus"
               className="h-8 object-contain"
             />
             <div>
