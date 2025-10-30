@@ -14,6 +14,8 @@ import {
   Briefcase,
   FileText,
   LogOut,
+  Play,
+  ChevronDown,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,23 +25,17 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-// Executive Insights - First group
-const executiveInsights = [
-  { name: "Executive Intro", href: "/executive-intro", icon: Briefcase },
-  { name: "Research Sources", href: "/research-sources", icon: BookOpen },
-];
-
-// Demo Experience - Second group
-const demoExperience = [
-  { name: "Personas", href: "/personas", icon: Users },
-  { name: "Journey", href: "/journey", icon: Map },
+// More dropdown items
+const moreItems = [
+  { name: "Sales Flow Journey", href: "/journey", icon: Map },
   { name: "Experiences", href: "/experiences", icon: Sparkles },
-  { name: "Feedback", href: "/feedback", icon: MessageSquare },
+  { name: "Research & Feedback", href: "/research-sources", icon: BookOpen },
 ];
 
 export default function MainLayout({ children }: MainLayoutProps) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { logout, user, isAdmin } = useAuth();
 
@@ -55,6 +51,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
     if (href === "/") return location === "/";
     return location.startsWith(href);
   };
+
+  const isMoreActive = moreItems.some(item => isActive(item.href));
 
   return (
     <div className="min-h-screen bg-background">
@@ -76,7 +74,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {/* Home Button - First */}
+            {/* Home Button */}
             <Link href="/">
               <Button
                 variant={isActive("/") ? "default" : "ghost"}
@@ -91,53 +89,75 @@ export default function MainLayout({ children }: MainLayoutProps) {
             {/* Vertical Separator */}
             <div className="h-8 w-px bg-gradient-to-b from-transparent via-border to-transparent mx-3" />
 
-            {/* Executive Insights Section */}
-            <div className="flex items-center gap-1 px-2">
-              <span className="text-xs font-semibold text-muted-foreground mr-2 hidden xl:block">
-                Executive Insights
-              </span>
-              {executiveInsights.map((item) => {
-                const Icon = item.icon;
-                const active = isActive(item.href);
-                return (
-                  <Link key={item.href} href={item.href}>
-                    <Button
-                      variant={active ? "default" : "ghost"}
-                      size="sm"
-                      className="gap-2"
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span className="hidden xl:inline">{item.name}</span>
-                    </Button>
-                  </Link>
-                );
-              })}
-            </div>
+            {/* Exec Summary Button */}
+            <Link href="/executive-intro">
+              <Button
+                variant={isActive("/executive-intro") ? "default" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <Briefcase className="h-4 w-4" />
+                <span className="hidden xl:inline">Exec Summary</span>
+              </Button>
+            </Link>
+
+            {/* Video Button */}
+            <Link href="/videos">
+              <Button
+                variant={isActive("/videos") ? "default" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <Play className="h-4 w-4" />
+                <span className="hidden xl:inline">Video</span>
+              </Button>
+            </Link>
+
+            {/* Personas Button */}
+            <Link href="/personas">
+              <Button
+                variant={isActive("/personas") ? "default" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <Users className="h-4 w-4" />
+                <span className="hidden xl:inline">Personas</span>
+              </Button>
+            </Link>
 
             {/* Vertical Separator */}
             <div className="h-8 w-px bg-gradient-to-b from-transparent via-border to-transparent mx-3" />
 
-            {/* Demo Experience Section - Second */}
-            <div className="flex items-center gap-1 px-2">
-              <span className="text-xs font-semibold text-muted-foreground mr-2 hidden xl:block">
-                Demo Experience
-              </span>
-              {demoExperience.map((item) => {
-                const Icon = item.icon;
-                const active = isActive(item.href);
-                return (
-                  <Link key={item.href} href={item.href}>
-                    <Button
-                      variant={active ? "default" : "ghost"}
-                      size="sm"
-                      className="gap-2"
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span className="hidden xl:inline">{item.name}</span>
-                    </Button>
-                  </Link>
-                );
-              })}
+            {/* More Dropdown */}
+            <div className="relative group">
+              <Button
+                variant={isMoreActive ? "default" : "ghost"}
+                size="sm"
+                className="gap-2"
+              >
+                <span className="hidden xl:inline">More</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+              
+              {/* Dropdown Menu */}
+              <div className="absolute left-0 mt-0 w-48 bg-card border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2 z-50">
+                {moreItems.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActive(item.href);
+                  return (
+                    <Link key={item.href} href={item.href}>
+                      <Button
+                        variant={active ? "default" : "ghost"}
+                        size="sm"
+                        className="w-full justify-start gap-2 rounded-none px-4"
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.name}
+                      </Button>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </nav>
 
@@ -193,7 +213,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               className="lg:hidden border-t border-border overflow-hidden bg-card"
             >
               <nav className="container py-4 flex flex-col gap-2">
-                {/* Home Button - First */}
+                {/* Home Button */}
                 <Link href="/">
                   <Button
                     variant={isActive("/") ? "default" : "ghost"}
@@ -208,35 +228,50 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 {/* Separator */}
                 <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
 
-                {/* Executive Insights Section */}
-                <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
-                  Executive Insights
-                </div>
-                {executiveInsights.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.href);
-                  return (
-                    <Link key={item.href} href={item.href}>
-                      <Button
-                        variant={active ? "default" : "ghost"}
-                        className="w-full justify-start gap-2"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {item.name}
-                      </Button>
-                    </Link>
-                  );
-                })}
+                {/* Exec Summary Button */}
+                <Link href="/executive-intro">
+                  <Button
+                    variant={isActive("/executive-intro") ? "default" : "ghost"}
+                    className="w-full justify-start gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Briefcase className="h-4 w-4" />
+                    Exec Summary
+                  </Button>
+                </Link>
+
+                {/* Video Button */}
+                <Link href="/videos">
+                  <Button
+                    variant={isActive("/videos") ? "default" : "ghost"}
+                    className="w-full justify-start gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Play className="h-4 w-4" />
+                    Video
+                  </Button>
+                </Link>
+
+                {/* Personas Button */}
+                <Link href="/personas">
+                  <Button
+                    variant={isActive("/personas") ? "default" : "ghost"}
+                    className="w-full justify-start gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Users className="h-4 w-4" />
+                    Personas
+                  </Button>
+                </Link>
 
                 {/* Separator */}
                 <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
 
-                {/* Demo Experience Section - Second */}
+                {/* More Section */}
                 <div className="text-xs font-semibold text-muted-foreground px-3 py-2">
-                  Demo Experience
+                  More
                 </div>
-                {demoExperience.map((item) => {
+                {moreItems.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (

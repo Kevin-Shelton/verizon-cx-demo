@@ -17,7 +17,7 @@ import Journey from "./pages/Journey";
 import Experiences from "./pages/Experiences";
 import Chat from "./pages/experiences/Chat";
 import ROICalculator from "./pages/ROICalculator";
-
+import Videos from "./pages/Videos";
 
 import ResearchSources from "./pages/ResearchSources";
 import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
@@ -40,6 +40,7 @@ function Router() {
               <Route path="/executive-intro" component={ExecutiveIntroductionV2} />
               <Route path="/executive-intro-old" component={ExecutiveIntroduction} />
               <Route path="/outbound-prospecting" component={OutboundProspecting} />
+              <Route path="/videos" component={Videos} />
               <Route path="/personas" component={Personas} />
               <Route path="/persona-journey" component={PersonaJourney} />
               <Route path="/journey" component={Journey} />

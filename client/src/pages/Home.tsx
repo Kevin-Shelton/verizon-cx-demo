@@ -1,15 +1,14 @@
-import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, Zap, Target, Shield, TrendingUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, Zap, Target, Shield } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import VideoPlayer from "@/components/VideoPlayer";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-24 md:py-32 overflow-hidden">
+      {/* Hero Section - Reduced height by 40% */}
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-14 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         
@@ -19,13 +18,13 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-5xl mx-auto text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
               Culturally Aware
               <span className="block bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">
                 Multilingual CX
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 mb-6 leading-relaxed max-w-3xl mx-auto">
               Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -111,24 +110,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Video Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Proprietary Demo Videos
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Watch in-depth demonstrations of our dialect-specific translation technology in action
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <VideoPlayer />
-          </div>
-        </div>
-      </section>
-
       {/* Why Invictus Wins */}
       <section className="py-20 bg-white">
         <div className="container">
@@ -198,9 +179,9 @@ export default function Home() {
               Explore our demo to see how dialect-specific translation creates authentic connections with Hispanic customers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/translation-demo">
+              <Link href="/videos">
                 <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-6 shadow-xl">
-                  Try Translation Demo
+                  Watch Demo Videos
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>

@@ -22,6 +22,16 @@
   - [x] Removed tRPC call that was causing HTML response error
   - [x] Video now opens directly in new window with authentication dialog
 
+- [x] Restructure navigation
+  - [x] Updated navigation component with new order: Home, Exec Summary, Video, Personas
+  - [x] Created "More" dropdown for: Sales Flow Journey, Experiences, Research and Feedback
+  - [x] Created new multi-video page at /videos
+  - [x] Removed video section from home page
+  - [x] Reduced hero section height by 40% (py-14 md:py-20)
+  - [x] Updated all routing and links
+  - [x] Added Videos route to App.tsx
+  - [x] Updated MainLayout with dropdown menu
+
 - [ ] Verify deployment readiness
 
 - [x] Implement video hosting for portal
