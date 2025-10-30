@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-16 md:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-10 md:py-12 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         
@@ -18,24 +18,21 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              Culturally Aware
-              <span className="block bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">
-                Multilingual CX
-              </span>
+            <h1 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
+              <span className="bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">Culturally Aware Multilingual CX</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base md:text-lg text-white/90 mb-6 leading-relaxed max-w-3xl mx-auto">
               Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/personas">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-6 shadow-xl">
+                <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-2 shadow-xl">
                   Explore Personas
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/journey">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
+                <Button variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-6 py-2">
                   View Coverage Map
                 </Button>
               </Link>
@@ -45,10 +42,10 @@ export default function Home() {
       </section>
 
       {/* Why Dialect-Specific Translation Wins */}
-      <section className="py-20 bg-white">
+      <section className="py-16 bg-white">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Dialect-Specific Translation Wins
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -98,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
+      <section className="py-16 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
         <div className="container">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -106,7 +103,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Transform Your Customer Experience?
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
