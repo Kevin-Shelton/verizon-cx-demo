@@ -9,9 +9,11 @@
       "description": "Small business owner who needs to order new lines and port existing numbers",
       "avatar": "👨‍💼",
       "needs": [
-        "Port existing phone numbers",
-        "Add new business lines",
-        "Understand pricing and plans"
+        "Email communication in Spanish",
+        "Live chat assistance",
+        "Website translation support",
+        "On-site services",
+        "Document translation"
       ],
       "journey": ["outbound", "qualification", "proposal", "negotiation"]
     },
@@ -25,8 +27,10 @@
       "avatar": "👩‍🔧",
       "needs": [
         "Device swap assistance",
+        "Technical support",
         "Check promo eligibility",
-        "Technical support"
+        "On-site services",
+        "Fleet management"
       ],
       "journey": ["support", "expansion"]
     },
@@ -40,8 +44,10 @@
       "avatar": "👩‍⚕️",
       "needs": [
         "Resolve fraud alerts",
+        "Account security",
         "Open support cases",
-        "Account security"
+        "On-site services",
+        "Compliance documentation"
       ],
       "journey": ["support", "onboarding"]
     },
@@ -55,8 +61,10 @@
       "avatar": "👷",
       "needs": [
         "Bulk device orders",
+        "Field worker connectivity",
         "Fleet management",
-        "Field worker connectivity"
+        "On-site services",
+        "Bulk provisioning"
       ],
       "journey": ["proposal", "negotiation", "onboarding", "expansion"]
     }
