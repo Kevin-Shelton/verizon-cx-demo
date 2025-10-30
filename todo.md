@@ -63,4 +63,7 @@
   - [x] Implemented embedded iframe player with autoplay
   - [x] Video muted by default for autoplay compliance
   - [x] Public URL hidden from users - secure within portal
+  - [x] Added second video (Carlos Demo) to Videos page
+  - [x] Updated grid layout to 2-column for side-by-side display
+  - [x] Both videos autoplay and muted
 
