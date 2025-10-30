@@ -52,6 +52,12 @@
   - [x] Both videos now visible without scrolling on desktop
   - [x] Cleaner, more efficient use of space
 
+- [ ] Fix session persistence and iframe centering
+  - [ ] Investigate logout on page refresh issue
+  - [ ] Ensure authentication tokens persist across refreshes
+  - [ ] Fix iframe video centering within container
+  - [ ] Test session persistence in dev and production
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive

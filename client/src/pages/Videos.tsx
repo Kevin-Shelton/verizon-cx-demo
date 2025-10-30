@@ -71,19 +71,20 @@ export default function Videos() {
               >
                 <Card className="p-6 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
                   {/* Embedded Video Player Container */}
-                  <div className="relative w-full bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center">
+                  <div className="relative w-full bg-black rounded-lg overflow-hidden mb-6 aspect-video">
                     <iframe
                       src={`${video.url}?autoplay=1&muted=1`}
                       title={video.title}
-                      className="w-full h-full border-0 absolute inset-0"
+                      className="w-full h-full border-0"
                       allow="autoplay; fullscreen; picture-in-picture"
                       allowFullScreen
                       style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
+                        display: "block",
                         width: "100%",
                         height: "100%",
+                        margin: 0,
+                        padding: 0,
+                        border: "none",
                       }}
                     />
                   </div>
