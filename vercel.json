@@ -4,14 +4,7 @@
   "devCommand": "pnpm run dev",
   "installCommand": "pnpm install",
   "framework": null,
-  "api": {
-    "baseUrl": "/api"
-  },
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*.js"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
