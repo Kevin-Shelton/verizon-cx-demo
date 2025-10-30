@@ -42,8 +42,10 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
 const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
   carlos: [
     { step_type: "email-viewer", url: "/experiences/email/carlos" },
+    { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
+    { step_type: "live-chat", url: "https://explore.ikoneworld.com/live-chat/" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services/carlos" },
+    { step_type: "document-translation", url: "https://explore.ikoneworld.com/document-translate/" },
   ],
   maria: [
     { step_type: "email-viewer", url: "/experiences/email/maria" },

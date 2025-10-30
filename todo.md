@@ -216,3 +216,20 @@
     - [ ] Progress bar accurate throughout journey
 
 
+
+
+- [ ] Fix regression: Restore Carlos's 5-step journey
+  - [ ] Add Step 4: Website Translation (https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/)
+  - [ ] Add Step 5: Document Translation (https://explore.ikoneworld.com/document-translate/)
+  - [ ] Update ExperienceViewer hardcodedExperiences for Carlos
+  - [ ] Verify all 5 steps display in carousel
+
+- [ ] Fix header and font sizing in ExperienceCarousel
+  - [ ] Reduce header padding (p-6 → p-4)
+  - [ ] Reduce logo size (h-12 → h-8)
+  - [ ] Reduce title font size (text-2xl → text-lg)
+  - [ ] Reduce description font size (text-blue-100 → text-sm)
+  - [ ] Reduce step description from text-base back to text-sm
+  - [ ] Compact overall header layout
+
+

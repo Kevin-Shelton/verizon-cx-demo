@@ -84,17 +84,17 @@ export default function ExperienceCarousel({
   return (
     <div className="fixed inset-0 bg-black/95 z-50 flex flex-col">
       {/* Header with Logo and Controls */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 border-b-2 border-blue-700">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-3 border-b-2 border-blue-700">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <img
               src="/ikow-logo.png"
               alt="ikOneWorld"
-              className="h-12 object-contain"
+              className="h-8 object-contain"
             />
             <div>
-              <h1 className="text-2xl font-bold">{personaName}'s Experience Journey</h1>
-              <p className="text-blue-100">{personaDescription}</p>
+              <h1 className="text-sm font-bold">{personaName}'s Experience Journey</h1>
+              <p className="text-xs text-blue-100">{personaDescription}</p>
             </div>
           </div>
           <button
@@ -136,17 +136,17 @@ export default function ExperienceCarousel({
         <div className="max-w-7xl mx-auto">
           {currentStepData && (
             <div>
-              <div className="flex items-start gap-4 p-6 border-b">
+              <div className="flex items-start gap-3 p-4 border-b">
                 <img
                   src="/ikow-logo.png"
                   alt="ikOneWorld"
-                  className="h-8 object-contain flex-shrink-0"
+                  className="h-6 object-contain flex-shrink-0 mt-1"
                 />
                 <div className="flex-1">
-                  <h2 className="text-lg font-bold text-gray-800 mb-2">
+                  <h2 className="text-sm font-bold text-gray-800 mb-1">
                     {currentStepData.title}
                   </h2>
-                  <p className="text-base text-gray-700 leading-relaxed whitespace-normal">
+                  <p className="text-xs text-gray-700 leading-relaxed whitespace-normal">
                     {currentStepData.description}
                   </p>
                 </div>
