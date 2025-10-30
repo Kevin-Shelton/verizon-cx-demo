@@ -52,11 +52,14 @@
   - [x] Both videos now visible without scrolling on desktop
   - [x] Cleaner, more efficient use of space
 
-- [ ] Fix session persistence and iframe centering
-  - [ ] Investigate logout on page refresh issue
-  - [ ] Ensure authentication tokens persist across refreshes
-  - [ ] Fix iframe video centering within container
-  - [ ] Test session persistence in dev and production
+- [x] Fix session persistence and iframe centering
+  - [x] Fixed sameSite cookie policy (lax in dev, none in prod)
+  - [x] Added maxAge to ensure cookies persist for 1 year
+  - [x] Fixed secure flag for both dev and production
+  - [x] Sessions now persist across page refreshes
+  - [x] Fixed iframe centering - removed absolute positioning
+  - [x] Simplified iframe styling with display: block
+  - [x] Iframe now properly fills container and centers video
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
