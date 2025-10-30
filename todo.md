@@ -137,6 +137,23 @@
   - [x] All 6 experience types supported (website-translation, email-viewer, live-chat, ivr-voice, document-translation, field-services)
   - [x] Code properly handles database errors and missing data
 
+- [x] Fix React app rendering and tRPC integration
+  - [x] React app now renders properly on login page
+  - [x] Fixed tRPC input validation using zod.string()
+  - [x] Added app_users table to schema for username/password authentication
+  - [x] Login form functional and displaying validation errors
+  - [x] All form elements working correctly (username, password, sign in button)
+  - [ ] Run database migration to create app_users table (pending database connection)
+  - [ ] Add test user credentials to app_users table
+  - [ ] Test end-to-end login and persona experience loading flow
+
+- [ ] Complete database setup and testing
+  - [ ] Run pnpm db:push to create app_users table
+  - [ ] Add test credentials (demo/demo) to app_users
+  - [ ] Test login flow with valid credentials
+  - [ ] Verify persona experience loading from database
+  - [ ] Test all 4 personas (carlos, maria, lucia, diego)
+
 - [x] Implement video hosting for portal
   - [x] Determined video hosting strategy: S3 storage (proprietary content)
   - [x] Created video player section on home page
