@@ -189,3 +189,30 @@
   - [x] Added margin between title and description for visual hierarchy
   - [x] Description now more prominent and easier to read
 
+
+
+- [x] Implement hybrid demo delivery system (Option 3)
+  - [x] Refactor ExperienceCarousel to support hybrid content rendering
+    - [x] Add content type detection (internal vs external)
+    - [x] Create hybrid rendering logic based on demo type
+    - [x] Preserve carousel state while user navigates external demos
+  - [x] Implement internal experience components
+    - [x] Create EmailViewerComponent for embedded email demo
+    - [x] Create FieldServicesComponent for embedded field services demo
+    - [x] Style components to match carousel aesthetic
+  - [x] Implement external demo launcher
+    - [x] Create LaunchDemoButton component for external URLs
+    - [x] Add "Launch Demo" button to carousel for external experiences
+    - [x] Open external demos in new window (target="_blank")
+    - [x] Add "Return to Demo" instructions in carousel
+  - [ ] Test all 4 personas with hybrid demo flow
+    - [ ] Carlos: 3-step journey with mixed internal/external demos
+    - [ ] María: 3-step journey with mixed demos
+    - [ ] Lucía: 3-step journey with mixed demos
+    - [ ] Diego: 3-step journey with mixed demos
+  - [ ] Verify carousel state preservation
+    - [ ] Current step maintained when user opens external demo
+    - [ ] Navigation buttons functional after returning from external demo
+    - [ ] Progress bar accurate throughout journey
+
+

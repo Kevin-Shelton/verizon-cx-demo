@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import LaunchDemoButton from "./LaunchDemoButton";
+import EmailViewerComponent from "./EmailViewerComponent";
+import FieldServicesComponent from "./FieldServicesComponent";
 
 export interface ExperienceStep {
   id: string;
@@ -17,14 +20,16 @@ interface ExperienceCarouselProps {
   steps: ExperienceStep[];
 }
 
+// Content type classification
+const INTERNAL_EXPERIENCES = ["email-viewer", "field-services"];
+const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation"];
+
 export default function ExperienceCarousel({
   personaName,
   personaDescription,
   steps,
 }: ExperienceCarouselProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [contentHtml, setContentHtml] = useState<string>('');
-  const [loading, setLoading] = useState(false);
 
   const goToStep = (index: number) => {
     if (index >= 0 && index < steps.length) {
@@ -40,109 +45,40 @@ export default function ExperienceCarousel({
     window.location.href = "/personas";
   };
 
-  const handleHome = () => {
-    window.location.href = "/";
-  };
-
   const currentStepData = steps[currentStep];
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === steps.length - 1;
 
-  // Fetch content for internal URLs
-  const fetchContentHtml = async (url: string) => {
-    if (url.startsWith('/experiences/')) {
-      setLoading(true);
-      try {
-        console.log('Fetching content from:', url, 'for persona:', personaName);
-        // Add cache-busting parameter to ensure fresh content
-        const urlWithCache = `${url}?t=${Date.now()}`;
-        const response = await fetch(urlWithCache, {
-          method: 'GET',
-          headers: {
-            'Accept': 'text/html',
-            'Cache-Control': 'no-cache',
-          },
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const html = await response.text();
-        console.log('Received HTML, length:', html.length);
-        // Extract the inner content from the HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const container = doc.querySelector('.container');
-        if (container) {
-          console.log('Found container, setting content');
-          const newContent = container.innerHTML;
-          console.log('New content preview:', newContent.substring(0, 100));
-          setContentHtml(newContent);
-        } else {
-          console.error('Container not found in HTML');
-          console.log('HTML body:', doc.body.innerHTML.substring(0, 500));
-          // Try to find any main content area
-          const main = doc.querySelector('main') || doc.querySelector('[role="main"]') || doc.body;
-          if (main && main !== doc.body) {
-            setContentHtml(main.innerHTML);
-          } else {
-            setContentHtml('<p>Error: Container not found</p>');
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch content:', error);
-        setContentHtml(`<p>Error loading content: ${error instanceof Error ? error.message : 'Unknown error'}</p>`);
-      } finally {
-        setLoading(false);
+  // Determine if current step is internal or external
+  const isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  const isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
+
+  // Render content based on type
+  const renderContent = () => {
+    if (!currentStepData) return null;
+
+    // Internal experiences - render as embedded components
+    if (isInternalExperience) {
+      if (currentStepData.type === "email-viewer") {
+        return <EmailViewerComponent personaName={personaName} />;
+      }
+      if (currentStepData.type === "field-services") {
+        return <FieldServicesComponent personaName={personaName} />;
       }
     }
-  };
-  
-  // Fetch content when step changes or persona changes
-  useEffect(() => {
-    if (currentStepData && currentStepData.url.startsWith('/experiences/')) {
-      // Reset content before fetching new content
-      setContentHtml('');
-      fetchContentHtml(currentStepData.url);
-    }
-  }, [currentStep, currentStepData?.url, personaName]);
-  
-  // Render embedded content for internal URLs
-  const renderEmbeddedContent = () => {
-    if (currentStepData.url.startsWith('/experiences/')) {
+
+    // External experiences - show launch button
+    if (isExternalExperience) {
       return (
-        <div className="p-8 overflow-y-auto max-h-[calc(100vh-400px)]">
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <p className="text-gray-600">Loading experience...</p>
-            </div>
-          ) : contentHtml ? (
-            <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
-          ) : (
-            <div className="flex items-center justify-center h-64">
-              <p className="text-gray-600">No content available</p>
-            </div>
-          )}
-        </div>
+        <LaunchDemoButton
+          url={currentStepData.url}
+          title={currentStepData.title}
+          description={currentStepData.description}
+        />
       );
     }
-    
-    // External URL - open in new window
-    return (
-      <div className="h-full flex items-center justify-center p-8">
-        <div className="text-center">
-          <p className="text-gray-600 mb-4">This experience opens in a new window</p>
-          <a
-            href={currentStepData.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded"
-          >
-            Open Experience
-          </a>
-        </div>
-      </div>
-    );
+
+    return null;
   };
 
   return (
@@ -215,7 +151,7 @@ export default function ExperienceCarousel({
                   </p>
                 </div>
               </div>
-              {renderEmbeddedContent()}
+              {renderContent()}
             </div>
           )}
         </div>
