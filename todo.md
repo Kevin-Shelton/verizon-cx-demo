@@ -52,4 +52,7 @@
   - [x] Created VideoPlayer component with loading and error states
   - [x] Stored credentials securely as environment variables
   - [x] Video playback functional with authentication
+  - [x] Implemented embedded iframe player with autoplay
+  - [x] Video muted by default for autoplay compliance
+  - [x] Public URL hidden from users - secure within portal
 
