@@ -182,3 +182,10 @@
   - [x] Updated grid layout to 2-column for side-by-side display
   - [x] Both videos autoplay and muted
 
+- [x] Improve step description styling in ExperienceCarousel
+  - [x] Increased font size from text-sm to text-base for better readability
+  - [x] Added whitespace-normal and leading-relaxed for natural text wrapping
+  - [x] Adjusted layout to allow description to flow to the right of logo
+  - [x] Added margin between title and description for visual hierarchy
+  - [x] Description now more prominent and easier to read
+
