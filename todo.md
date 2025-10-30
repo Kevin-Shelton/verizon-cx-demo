@@ -104,6 +104,13 @@
   - [x] Users can login to IVR experience within carousel frame
   - [x] Carousel navigation flow maintained
 
+- [ ] Implement database-driven persona experience sequences
+  - [ ] User creates persona_experiences table in Supabase
+  - [ ] Update ExperienceViewer to fetch sequences from database
+  - [ ] Remove hardcoded persona data from code
+  - [ ] Test carousel with database-driven URLs
+  - [ ] Verify all 4 personas load correctly
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive

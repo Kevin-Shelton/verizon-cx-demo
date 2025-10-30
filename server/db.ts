@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { InsertUser, users, feedback, InsertFeedback, transcripts, InsertTranscript } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { sql } from "drizzle-orm";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -129,5 +130,22 @@ export async function getTranscriptById(id: string) {
   if (!db) return undefined;
   const result = await db.select().from(transcripts).where(eq(transcripts.id, id)).limit(1);
   return result.length > 0 ? result[0] : undefined;
+}
+
+
+
+// Persona Experiences queries
+export async function getPersonaExperiences(personaId: string) {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    const result = await db.execute(
+      sql`SELECT id, persona_id, step_order, step_type, url FROM persona_experiences WHERE persona_id = ${personaId} ORDER BY step_order ASC`
+    );
+    return result as any[] || [];
+  } catch (error) {
+    console.error("Error fetching persona experiences:", error);
+    return [];
+  }
 }
 

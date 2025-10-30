@@ -3,6 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
+import { sql } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -79,6 +80,23 @@ export const appRouter = router({
     getMetadata: publicProcedure.query(async () => {
       return await getVideoMetadata();
     }),
+  }),
+
+  experiences: router({
+    getPersonaExperiences: publicProcedure
+      .input((val: unknown) => {
+        if (typeof val !== "string") throw new Error("Input must be a string");
+        return val;
+      })
+      .query(async ({ input: personaId }) => {
+        try {
+          const { getPersonaExperiences } = await import("./db");
+          return await getPersonaExperiences(personaId);
+        } catch (error) {
+          console.error("Error fetching persona experiences:", error);
+          return [];
+        }
+      }),
   }),
 });
 
