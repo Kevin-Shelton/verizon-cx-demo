@@ -1,6 +1,7 @@
-import { Play, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface VideoItem {
   id: string;
@@ -31,9 +32,7 @@ const videos: VideoItem[] = [
 ];
 
 export default function Videos() {
-  const handlePlayClick = (videoUrl: string) => {
-    window.open(videoUrl, "_blank", "noopener,noreferrer");
-  };
+  const [expandedVideo, setExpandedVideo] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -72,21 +71,15 @@ export default function Videos() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card className="p-6 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
-                  {/* Video Player Container */}
-                  <div
-                    className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center group cursor-pointer"
-                    onClick={() => handlePlayClick(video.url)}
-                  >
-                    {/* Background gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-indigo-700/20" />
-
-                    {/* Play button */}
-                    <div className="relative z-10 flex flex-col items-center gap-3">
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-all">
-                        <Play className="h-8 w-8 text-white fill-white" />
-                      </div>
-                      <p className="text-white text-sm font-semibold">Click to play</p>
-                    </div>
+                  {/* Embedded Video Player */}
+                  <div className="relative bg-black rounded-lg overflow-hidden mb-6 aspect-video">
+                    <iframe
+                      src={`${video.url}?autoplay=1&muted=1`}
+                      title={video.title}
+                      className="w-full h-full border-0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    />
                   </div>
 
                   {/* Video Information */}
@@ -125,8 +118,8 @@ export default function Videos() {
                   <h3 className="font-semibold text-blue-900 mb-2">Proprietary Content</h3>
                   <p className="text-sm text-blue-800 leading-relaxed">
                     These videos contain confidential information and are for authorized viewers
-                    only. When you click to play, you will be prompted to authenticate with your
-                    Ikoneworld credentials. Access is restricted to authorized personnel only.
+                    only. Videos are embedded securely within this portal and will not display the
+                    public URL. Access is restricted to authenticated portal users only.
                   </p>
                 </div>
               </div>
