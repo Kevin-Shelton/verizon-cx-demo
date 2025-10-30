@@ -109,21 +109,23 @@ export default function Personas() {
                     <div className="flex items-start gap-4">
                       <div className="text-5xl flex-shrink-0">{persona.avatar}</div>
                       <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <CardTitle className="text-2xl text-gray-900">{persona.name}</CardTitle>
-                            <CardDescription className="text-base text-gray-600 mt-0.5">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <CardTitle className="text-2xl text-gray-900">{persona.name}</CardTitle>
+                              <Badge className={`text-sm font-semibold ${colors.badge}`}>
+                                {persona.dialectLabel}
+                              </Badge>
+                            </div>
+                            <CardDescription className="text-base text-gray-600">
                               {persona.role}
                             </CardDescription>
+                            <p className="text-gray-700 leading-relaxed text-sm mt-1">{persona.description}</p>
                           </div>
                           {isSelected && (
                             <CheckCircle2 className="h-7 w-7 text-blue-600 flex-shrink-0" />
                           )}
                         </div>
-                        <Badge className={`text-sm font-semibold ${colors.badge} mb-3`}>
-                          {persona.dialectLabel}
-                        </Badge>
-                        <p className="text-gray-700 leading-relaxed text-sm">{persona.description}</p>
                       </div>
                     </div>
                   </CardHeader>
