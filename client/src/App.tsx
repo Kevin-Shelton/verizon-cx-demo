@@ -18,6 +18,7 @@ import Experiences from "./pages/Experiences";
 import Chat from "./pages/experiences/Chat";
 import ROICalculator from "./pages/ROICalculator";
 import Videos from "./pages/Videos";
+import ExperienceViewer from "./pages/ExperienceViewer";
 
 import ResearchSources from "./pages/ResearchSources";
 import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
@@ -46,6 +47,7 @@ function Router() {
               <Route path="/journey" component={Journey} />
               <Route path="/experiences" component={Experiences} />
               <Route path={"/experiences/chat"} component={Chat} />
+              <Route path={"/experience-viewer/:personaId"} component={ExperienceViewer} />
               <Route path={"/roi-calculator"} component={ROICalculator} />
 
               <Route path={'/research-sources'} component={ResearchSources} />

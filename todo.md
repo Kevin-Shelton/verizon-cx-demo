@@ -61,6 +61,17 @@
   - [x] Simplified iframe styling with display: block
   - [x] Iframe now properly fills container and centers video
 
+- [ ] Implement Persona-Based Experience Carousel Viewer
+  - [ ] Create carousel component with full-page viewer
+  - [ ] Build persona experience data (4 personas × 3 experiences)
+  - [ ] Create placeholder pages for Email and Field Services
+  - [ ] Add "View" button to each Persona card
+  - [ ] Design frame with ikOneWorld logo and Invictus branding
+  - [ ] Implement navigation (Previous/Next/Restart/Exit)
+  - [ ] Ensure responsive design with best practices
+  - [ ] Create new /experience-viewer/:personaId route
+  - [ ] Test carousel functionality
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive

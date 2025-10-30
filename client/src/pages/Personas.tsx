@@ -148,22 +148,34 @@ export default function Personas() {
                         ))}
                       </ul>
                     </div>
-
-                    {/* Action Button */}
-                    <Button
-                      className={`w-full mt-4 ${isSelected ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                      variant={isSelected ? "default" : "outline"}
-                    >
-                      {isSelected ? (
+                    {/* Action Buttons */}
+                    <div className="space-y-2 mt-4">
+                      <Button
+                        className={`w-full ${isSelected ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+                        variant={isSelected ? "default" : "outline"}
+                      >
+                        {isSelected ? (
+                          <span className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" />
+                            Selected - View Journey
+                          </span>
+                        ) : (
+                          "Select Persona"
+                        )}
+                      </Button>
+                      <Button
+                        className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.location.href = `/experience-viewer/${persona.id}`;
+                        }}
+                      >
                         <span className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4" />
-                          Selected - View Journey
+                          View
                           <ArrowRight className="w-4 h-4" />
                         </span>
-                      ) : (
-                        "Select Persona"
-                      )}
-                    </Button>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
