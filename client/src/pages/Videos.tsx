@@ -61,7 +61,7 @@ export default function Videos() {
       {/* Videos Grid */}
       <section className="py-20 bg-white">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-8 max-w-4xl mx-auto">
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -71,14 +71,21 @@ export default function Videos() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card className="p-6 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
-                  {/* Embedded Video Player */}
-                  <div className="relative bg-black rounded-lg overflow-hidden mb-6 aspect-video">
+                  {/* Embedded Video Player Container */}
+                  <div className="relative w-full bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center">
                     <iframe
                       src={`${video.url}?autoplay=1&muted=1`}
                       title={video.title}
-                      className="w-full h-full border-0"
+                      className="w-full h-full border-0 absolute inset-0"
                       allow="autoplay; fullscreen; picture-in-picture"
                       allowFullScreen
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
                   </div>
 
@@ -109,7 +116,7 @@ export default function Videos() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-5xl mx-auto mt-12"
+            className="max-w-4xl mx-auto mt-12"
           >
             <Card className="p-6 border-2 border-blue-200 bg-blue-50">
               <div className="flex items-start gap-4">

@@ -37,6 +37,12 @@
   - [x] Removed CheckCircle2 import
   - [x] Home page now flows directly from hero to experiences
 
+- [ ] Fix iframe video player positioning
+  - [ ] Adjust iframe URL to load video directly
+  - [ ] Ensure video player is properly centered and sized
+  - [ ] Test video autoplay and muted settings
+  - [ ] Verify responsive design on mobile
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive
