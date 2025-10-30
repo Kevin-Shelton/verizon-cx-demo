@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useRoute } from "wouter";
 import ExperienceCarousel, { ExperienceStep } from "@/components/ExperienceCarousel";
-import { trpc } from "@/lib/trpc";
 
 // Persona metadata
 const personaMetadata: Record<string, { name: string; description: string }> = {
@@ -39,50 +38,70 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
   },
 };
 
+// Hardcoded persona experiences
+const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
+  carlos: [
+    { step_type: "website-translation", url: "https://example.com/website-translation" },
+    { step_type: "email-viewer", url: "https://example.com/email-viewer" },
+    { step_type: "live-chat", url: "https://example.com/live-chat" },
+  ],
+  maria: [
+    { step_type: "ivr-voice", url: "https://example.com/ivr-voice" },
+    { step_type: "document-translation", url: "https://example.com/document-translation" },
+    { step_type: "live-chat", url: "https://example.com/live-chat" },
+  ],
+  lucia: [
+    { step_type: "field-services", url: "https://example.com/field-services" },
+    { step_type: "website-translation", url: "https://example.com/website-translation" },
+    { step_type: "email-viewer", url: "https://example.com/email-viewer" },
+  ],
+  diego: [
+    { step_type: "live-chat", url: "https://example.com/live-chat" },
+    { step_type: "ivr-voice", url: "https://example.com/ivr-voice" },
+    { step_type: "document-translation", url: "https://example.com/document-translation" },
+  ],
+};
+
 export default function ExperienceViewer() {
   const [, params] = useRoute("/experience-viewer/:personaId");
   const personaId = params?.personaId as string;
   const [steps, setSteps] = useState<ExperienceStep[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [queryError, setQueryError] = useState<Error | null>(null);
-
-  const { data: experiences, isLoading, error: tRPCError } = trpc.experiences.getPersonaExperiences.useQuery(personaId, {
-    enabled: !!personaId,
-  });
 
   useEffect(() => {
-    if (tRPCError) {
-      setQueryError(new Error(tRPCError.message));
+    if (!personaId) {
+      setLoading(false);
+      return;
     }
-  }, [tRPCError]);
 
-  useEffect(() => {
-    if (isLoading) {
-      setLoading(true);
-    } else if (tRPCError) {
-      setError(tRPCError.message);
-      setLoading(false);
-    } else if (experiences && experiences.length > 0) {
-      const transformedSteps: ExperienceStep[] = experiences.map((exp: any, index: number) => {
-        const config = stepTypeConfig[exp.step_type] || {
-          title: exp.step_type,
-          description: "",
-        };
-        return {
-          id: `step-${index}`,
-          title: config.title,
-          description: config.description,
-          url: exp.url,
-          type: exp.step_type,
-        };
-      });
-      setSteps(transformedSteps);
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }, [experiences, isLoading, tRPCError]);
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      const experiences = hardcodedExperiences[personaId];
+      if (experiences) {
+        const transformedSteps: ExperienceStep[] = experiences.map((exp, index) => {
+          const config = stepTypeConfig[exp.step_type] || {
+            title: exp.step_type,
+            description: "",
+          };
+          return {
+            id: `step-${index}`,
+            title: config.title,
+            description: config.description,
+            url: exp.url,
+            type: exp.step_type as "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation",
+          };
+        });
+        setSteps(transformedSteps);
+        setLoading(false);
+      } else {
+        setError("No experiences found for this persona");
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [personaId]);
 
   if (!personaId) {
     return <div className="text-center py-12">Persona not found</div>;
