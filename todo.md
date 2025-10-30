@@ -90,6 +90,13 @@
   - [x] Users no longer forced to login again when selecting View button
   - [x] Session cookies maintained across iframe boundary
 
+- [x] Fix View button redirect to login on carousel
+  - [x] Found bug: window.location.href was causing full page reload
+  - [x] Changed to setLocation for smooth router navigation
+  - [x] Prevents localStorage from being cleared
+  - [x] Authentication state now preserved when navigating to carousel
+  - [x] Users no longer redirected to login when clicking View button
+
 - [x] Fix iframe redirect to demo portal login
   - [x] Removed sandbox attribute causing redirect to demo portal login
   - [x] Kept allow attribute for autoplay, fullscreen, picture-in-picture
