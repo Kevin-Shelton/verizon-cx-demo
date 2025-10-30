@@ -12,6 +12,7 @@ export interface ExperienceStep {
   description: string;
   url: string;
   type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation";
+  narrative?: string;
 }
 
 interface ExperienceCarouselProps {
@@ -150,20 +151,20 @@ export default function ExperienceCarousel({
         <div className="max-w-7xl mx-auto">
           {currentStepData && (
             <div>
-              <div className="flex items-start gap-3 p-4 border-b">
-                <img
-                  src="/ikow-logo.png"
-                  alt="ikOneWorld"
-                  className="h-6 object-contain flex-shrink-0 mt-1"
-                />
-                <div className="flex-1">
-                  <h2 className="text-sm font-bold text-gray-800 mb-1">
-                    {currentStepData.title}
-                  </h2>
-                  <p className="text-xs text-gray-700 leading-relaxed whitespace-normal">
-                    {currentStepData.description}
-                  </p>
-                </div>
+              <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  {currentStepData.title}
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                  {currentStepData.description}
+                </p>
+                {currentStepData.narrative && (
+                  <div className="bg-white rounded-lg p-4 border-l-4 border-blue-500 mt-4">
+                    <p className="text-base text-gray-800 leading-relaxed">
+                      {currentStepData.narrative}
+                    </p>
+                  </div>
+                )}
               </div>
               {renderContent()}
             </div>

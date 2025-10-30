@@ -10,6 +10,36 @@ const personaMetadata: Record<string, { name: string; description: string }> = {
   diego: { name: "Diego", description: "Construction Project Manager - US Spanish" },
 };
 
+// Narratives aligned with persona key needs
+const getNarrativeForStep = (personaId: string, stepType: string, stepIndex: number): string => {
+  const narratives: Record<string, Record<string, string>> = {
+    carlos: {
+      "email-viewer": "Carlos receives a customer service email in Mexican Spanish. Watch how dialect-specific translation ensures his retail business gets authentic, culturally-aware communication that builds trust with his customers.",
+      "website-translation": "Carlos needs to translate his website for Spanish-speaking customers. See how dialect-specific translation captures regional preferences and improves conversion rates.",
+      "live-chat": "Real-time chat support in Mexican Spanish helps Carlos respond quickly to customer inquiries. Experience how cultural context improves customer satisfaction.",
+      "field-services": "Carlos's retail store needs on-site technical support. Watch how technicians communicate in his dialect, respecting business formality while solving problems efficiently.",
+      "document-translation": "Important business documents are translated with cultural accuracy. Carlos can confidently share contracts and agreements with Spanish-speaking partners.",
+    },
+    maria: {
+      "ivr-voice": "María calls for device swap assistance. Experience how IVR systems with Caribbean Spanish dialect recognition make it easy to get technical support without language barriers.",
+      "live-chat": "María uses live chat to get technical support for her field team. See how real-time translation with cultural context speeds up problem resolution.",
+      "website-translation": "María checks promo eligibility on a translated website. Watch how dialect-specific translation ensures she understands all the details clearly.",
+      "field-services": "María's field service team needs on-site support. Experience how technicians communicate in Caribbean Spanish, respecting local customs and business practices.",
+    },
+    lucia: {
+      "ivr-voice": "Lucía calls to resolve fraud alerts on her healthcare clinic's account. Experience how IVR with Colombian Spanish dialect recognition helps her quickly reach the right support team.",
+    },
+    diego: {
+      "website-translation": "Diego needs to order bulk devices for his construction crew. See how dialect-specific translation ensures he understands all technical specifications and pricing clearly.",
+      "ivr-voice": "Diego calls to check on field worker connectivity solutions. Experience how IVR with US Spanish dialect recognition connects him with the right technical team.",
+      "live-chat": "Diego uses live chat to manage his fleet of devices. Watch how real-time translation with cultural context helps him coordinate with his team efficiently.",
+      "field-services": "Diego's construction site needs on-site technical support. Experience how technicians communicate in US Spanish, respecting job site safety protocols and business needs.",
+    },
+  };
+
+  return narratives[personaId]?.[stepType] || "";
+};
+
 // Step type to title/description mapping
 const stepTypeConfig: Record<string, { title: string; description: string }> = {
   "email-viewer": {
@@ -86,12 +116,14 @@ export default function ExperienceViewer() {
             title: exp.step_type,
             description: "",
           };
+          const narrative = getNarrativeForStep(personaId, exp.step_type, index);
           return {
             id: `step-${index}`,
             title: config.title,
             description: config.description,
             url: exp.url,
             type: exp.step_type as "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation",
+            narrative,
           };
         });
         setSteps(transformedSteps);
