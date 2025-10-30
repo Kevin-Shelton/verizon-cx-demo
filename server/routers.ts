@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
+import { z } from "zod";
 
 export const appRouter = router({
   system: systemRouter,
@@ -84,14 +85,13 @@ export const appRouter = router({
 
   experiences: router({
     getPersonaExperiences: publicProcedure
-      .input((val: unknown) => {
-        if (typeof val !== "string") throw new Error("Input must be a string");
-        return val;
-      })
+      .input(z.string())
       .query(async ({ input: personaId }) => {
         try {
           const { getPersonaExperiences } = await import("./db");
-          return await getPersonaExperiences(personaId);
+          const experiences = await getPersonaExperiences(personaId);
+          console.log(`Fetched ${experiences.length} experiences for persona: ${personaId}`);
+          return experiences;
         } catch (error) {
           console.error("Error fetching persona experiences:", error);
           return [];

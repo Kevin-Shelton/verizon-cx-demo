@@ -62,3 +62,15 @@ export const transcripts = pgTable("transcripts", {
 export type Transcript = typeof transcripts.$inferSelect;
 export type InsertTranscript = typeof transcripts.$inferInsert;
 
+
+// Application users table for username/password authentication
+export const appUsers = pgTable("app_users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  password: varchar("password", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type AppUser = typeof appUsers.$inferSelect;
+export type InsertAppUser = typeof appUsers.$inferInsert;
+
