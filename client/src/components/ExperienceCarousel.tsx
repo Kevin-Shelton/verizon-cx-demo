@@ -43,6 +43,86 @@ export default function ExperienceCarousel({
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === steps.length - 1;
 
+  // Render embedded content for internal URLs
+  const renderEmbeddedContent = () => {
+    if (currentStepData.url === '/experiences/email') {
+      return (
+        <div className="p-8">
+          <h1 className="text-2xl font-bold mb-4">Email Experience - Dialect-Specific Communication</h1>
+          <p className="text-gray-600 mb-6">This is a demonstration of how dialect-specific Spanish translation enhances email communication with customers.</p>
+          
+          <div className="bg-gray-50 border border-gray-300 p-4 rounded mb-6">
+            <div className="font-bold text-blue-600 mb-3">Asunto: Tu nuevo plan de servicio esta listo</div>
+            <div className="text-gray-700 space-y-3">
+              <p>Hola Carlos!</p>
+              <p>Nos complace informarte que tu nuevo plan de servicio ha sido activado exitosamente. Como propietario de negocio, entendemos la importancia de mantener tu operacion funcionando sin interrupciones.</p>
+              <p className="font-semibold">Tu nuevo plan incluye:</p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>5 lineas de negocio con datos ilimitados</li>
+                <li>Soporte prioritario 24/7</li>
+                <li>Descuento especial para pequenos negocios</li>
+              </ul>
+              <p>Si tienes alguna pregunta, nuestro equipo de soporte esta disponible en espanol.</p>
+              <p>Gracias por confiar en Verizon!</p>
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-500 italic">This email demonstrates culturally-aware Spanish translation tailored to Mexican Spanish dialect preferences.</p>
+        </div>
+      );
+    }
+    
+    if (currentStepData.url === '/experiences/field-services') {
+      return (
+        <div className="p-8">
+          <h1 className="text-2xl font-bold mb-4">Field Services Experience - On-Site Support</h1>
+          <p className="text-gray-600 mb-6">This demonstrates how field service representatives communicate with customers using dialect-specific Spanish.</p>
+          
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+            <div className="font-bold text-blue-600 mb-3">Servicio de Instalacion - Installation Service</div>
+            <div className="text-gray-700 space-y-3">
+              <p>El tecnico de Verizon llegara a tu ubicacion entre las 2:00 PM y 5:00 PM.</p>
+              <p>Verizon technician will arrive at your location between 2:00 PM and 5:00 PM.</p>
+              <p className="font-semibold">Lo que necesitas saber:</p>
+              <ul className="list-disc list-inside space-y-1 ml-2">
+                <li>Tiempo estimado: 1-2 horas</li>
+                <li>Se instalaran 5 lineas de negocio</li>
+                <li>El tecnico llevara todos los equipos necesarios</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+            <div className="font-bold text-blue-600 mb-3">Soporte Tecnico - Technical Support</div>
+            <div className="text-gray-700 space-y-3">
+              <p>Nuestro equipo de soporte esta disponible para ayudarte en espanol durante y despues de la instalacion.</p>
+              <p>Our support team is available to assist you in Spanish during and after installation.</p>
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-500 italic">This experience demonstrates culturally-aware field service communication in Spanish.</p>
+        </div>
+      );
+    }
+    
+    // External URL - open in new window
+    return (
+      <div className="h-full flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">This experience opens in a new window</p>
+          <a
+            href={currentStepData.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded"
+          >
+            Open Experience
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="fixed inset-0 bg-black/95 z-50 flex flex-col">
       {/* Header with Logo and Controls */}
@@ -119,15 +199,8 @@ export default function ExperienceCarousel({
                 </div>
 
                 {/* Embedded Experience */}
-                <div className="flex-1 overflow-hidden">
-                  <iframe
-                    src={currentStepData.url}
-                    title={currentStepData.title}
-                    className="w-full h-full border-0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-cookies"
-                  />
+                <div className="flex-1 overflow-auto">
+                  {renderEmbeddedContent()}
                 </div>
               </div>
             </motion.div>
