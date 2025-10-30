@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, RotateCcw, X } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface ExperienceStep {
   id: string;
@@ -125,6 +126,7 @@ export default function ExperienceCarousel({
                     className="w-full h-full border-0"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-cookies"
                   />
                 </div>
               </div>

@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -33,8 +32,103 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Experience routes - serve demo content
+  app.get("/experiences/email", (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Email Experience</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+          .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+          h1 { color: #333; }
+          .email-preview { background: #fafafa; border: 1px solid #ddd; padding: 15px; margin: 15px 0; border-radius: 4px; }
+          .subject { font-weight: bold; color: #0066cc; margin-bottom: 10px; }
+          .body { color: #666; line-height: 1.6; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Email Experience - Dialect-Specific Communication</h1>
+          <p>This is a demonstration of how dialect-specific Spanish translation enhances email communication with customers.</p>
+          
+          <div class="email-preview">
+            <div class="subject">Asunto: Tu nuevo plan de servicio esta listo</div>
+            <div class="body">
+              <p>Hola Carlos!</p>
+              <p>Nos complace informarte que tu nuevo plan de servicio ha sido activado exitosamente. Como propietario de negocio, entendemos la importancia de mantener tu operacion funcionando sin interrupciones.</p>
+              <p>Tu nuevo plan incluye:</p>
+              <ul>
+                <li>5 lineas de negocio con datos ilimitados</li>
+                <li>Soporte prioritario 24/7</li>
+                <li>Descuento especial para pequenos negocios</li>
+              </ul>
+              <p>Si tienes alguna pregunta, nuestro equipo de soporte esta disponible en espanol.</p>
+              <p>Gracias por confiar en Verizon!</p>
+            </div>
+          </div>
+          
+          <p><em>This email demonstrates culturally-aware Spanish translation tailored to Mexican Spanish dialect preferences.</em></p>
+        </div>
+      </body>
+      </html>
+    `);
+  });
+
+  app.get("/experiences/field-services", (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Field Services Experience</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+          .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+          h1 { color: #333; }
+          .service-card { background: #f0f8ff; border-left: 4px solid #0066cc; padding: 15px; margin: 15px 0; border-radius: 4px; }
+          .service-title { font-weight: bold; color: #0066cc; margin-bottom: 10px; }
+          .service-desc { color: #666; line-height: 1.6; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Field Services Experience - On-Site Support</h1>
+          <p>This demonstrates how field service representatives communicate with customers using dialect-specific Spanish.</p>
+          
+          <div class="service-card">
+            <div class="service-title">Servicio de Instalacion - Installation Service</div>
+            <div class="service-desc">
+              <p>El tecnico de Verizon llegara a tu ubicacion entre las 2:00 PM y 5:00 PM.</p>
+              <p>Verizon technician will arrive at your location between 2:00 PM and 5:00 PM.</p>
+              <p><strong>Lo que necesitas saber:</strong></p>
+              <ul>
+                <li>Tiempo estimado: 1-2 horas</li>
+                <li>Se instalaran 5 lineas de negocio</li>
+                <li>El tecnico llevara todos los equipos necesarios</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-title">Soporte Tecnico - Technical Support</div>
+            <div class="service-desc">
+              <p>Nuestro equipo de soporte esta disponible para ayudarte en espanol durante y despues de la instalacion.</p>
+              <p>Our support team is available to assist you in Spanish during and after installation.</p>
+            </div>
+          </div>
+          
+          <p><em>This experience demonstrates culturally-aware field service communication in Spanish.</em></p>
+        </div>
+      </body>
+      </html>
+    `);
+  });
+  
   // tRPC API
   app.use(
     "/api/trpc",
@@ -43,6 +137,7 @@ async function startServer() {
       createContext,
     })
   );
+  
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development" && process.env.VITE_DEV_SERVER === "true") {
     console.log("Setting up Vite development server...");
@@ -64,3 +159,4 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+

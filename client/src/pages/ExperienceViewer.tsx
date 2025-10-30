@@ -38,27 +38,27 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
   },
 };
 
-// Hardcoded persona experiences
+// Hardcoded persona experiences - from persona_experiences table
 const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
   carlos: [
-    { step_type: "website-translation", url: "https://example.com/website-translation" },
-    { step_type: "email-viewer", url: "https://example.com/email-viewer" },
-    { step_type: "live-chat", url: "https://example.com/live-chat" },
+    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "field-services", url: "/experiences/field-services" },
   ],
   maria: [
-    { step_type: "ivr-voice", url: "https://example.com/ivr-voice" },
-    { step_type: "document-translation", url: "https://example.com/document-translation" },
-    { step_type: "live-chat", url: "https://example.com/live-chat" },
+    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "field-services", url: "/experiences/field-services" },
   ],
   lucia: [
-    { step_type: "field-services", url: "https://example.com/field-services" },
-    { step_type: "website-translation", url: "https://example.com/website-translation" },
-    { step_type: "email-viewer", url: "https://example.com/email-viewer" },
+    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "field-services", url: "/experiences/field-services" },
   ],
   diego: [
-    { step_type: "live-chat", url: "https://example.com/live-chat" },
-    { step_type: "ivr-voice", url: "https://example.com/ivr-voice" },
-    { step_type: "document-translation", url: "https://example.com/document-translation" },
+    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "field-services", url: "/experiences/field-services" },
   ],
 };
 
