@@ -19,41 +19,43 @@ export default function Personas() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-16 px-8 shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-10 px-8 shadow-lg">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 mb-6">
-            <Users className="w-12 h-12" />
-            <h1 className="text-5xl font-bold">Customer Personas</h1>
-          </div>
-          <p className="text-2xl text-blue-100 max-w-3xl">
-            Experience the multilingual journey through the eyes of Spanish-speaking customers across different dialects and use cases
-          </p>
-          
-          {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-6 mt-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <Globe className="w-5 h-5 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Dialects Covered</div>
+          <div className="flex items-start justify-between gap-8">
+            {/* Left side: Title and description */}
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <Users className="w-8 h-8" />
+                <h1 className="text-3xl font-bold">Customer Personas</h1>
               </div>
-              <div className="text-3xl font-bold">4</div>
-              <div className="text-sm text-blue-200 mt-1">Mexican, Caribbean, Central American, South American</div>
+              <p className="text-base text-blue-100">
+                Experience the multilingual journey through the eyes of Spanish-speaking customers across different dialects and use cases
+              </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <MessageCircle className="w-5 h-5 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Journey Touchpoints</div>
+            
+            {/* Right side: Stats Bar (inline) */}
+            <div className="flex-1 grid grid-cols-3 gap-3">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <Globe className="w-4 h-4 text-blue-200" />
+                  <div className="text-xs font-medium text-blue-200">Dialects</div>
+                </div>
+                <div className="text-2xl font-bold">4</div>
               </div>
-              <div className="text-3xl font-bold">5+</div>
-              <div className="text-sm text-blue-200 mt-1">Email, Web, Chat, IVR, Documents</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <Users className="w-5 h-5 text-blue-200" />
-                <div className="text-sm font-medium text-blue-200">Customer Segments</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <MessageCircle className="w-4 h-4 text-blue-200" />
+                  <div className="text-xs font-medium text-blue-200">Touchpoints</div>
+                </div>
+                <div className="text-2xl font-bold">5+</div>
               </div>
-              <div className="text-3xl font-bold">4</div>
-              <div className="text-sm text-blue-200 mt-1">Business owner, family, student, professional</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <Users className="w-4 h-4 text-blue-200" />
+                  <div className="text-xs font-medium text-blue-200">Segments</div>
+                </div>
+                <div className="text-2xl font-bold">4</div>
+              </div>
             </div>
           </div>
         </div>
