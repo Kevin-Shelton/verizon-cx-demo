@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
 import { useRoute } from "wouter";
 import ExperienceCarousel, { ExperienceStep } from "@/components/ExperienceCarousel";
-import { createClient } from "@supabase/supabase-js";
-
-// Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "";
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { trpc } from "@/lib/trpc";
 
 // Persona metadata
 const personaMetadata: Record<string, { name: string; description: string }> = {
@@ -50,49 +45,44 @@ export default function ExperienceViewer() {
   const [steps, setSteps] = useState<ExperienceStep[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [queryError, setQueryError] = useState<Error | null>(null);
+
+  const { data: experiences, isLoading, error: tRPCError } = trpc.experiences.getPersonaExperiences.useQuery(personaId, {
+    enabled: !!personaId,
+  });
 
   useEffect(() => {
-    const fetchPersonaExperiences = async () => {
-      if (!personaId) return;
+    if (tRPCError) {
+      setQueryError(new Error(tRPCError.message));
+    }
+  }, [tRPCError]);
 
-      try {
-        const { data, error: supabaseError } = await supabase
-          .from("persona_experiences")
-          .select("*")
-          .eq("persona_id", personaId)
-          .order("step_order", { ascending: true });
-
-        if (supabaseError) {
-          setError(supabaseError.message);
-          setLoading(false);
-          return;
-        }
-
-        if (data && data.length > 0) {
-          const transformedSteps: ExperienceStep[] = data.map((exp: any, index: number) => {
-            const config = stepTypeConfig[exp.step_type] || {
-              title: exp.step_type,
-              description: "",
-            };
-            return {
-              id: `step-${index}`,
-              title: config.title,
-              description: config.description,
-              url: exp.url,
-              type: exp.step_type,
-            };
-          });
-          setSteps(transformedSteps);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPersonaExperiences();
-  }, [personaId]);
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(true);
+    } else if (tRPCError) {
+      setError(tRPCError.message);
+      setLoading(false);
+    } else if (experiences && experiences.length > 0) {
+      const transformedSteps: ExperienceStep[] = experiences.map((exp: any, index: number) => {
+        const config = stepTypeConfig[exp.step_type] || {
+          title: exp.step_type,
+          description: "",
+        };
+        return {
+          id: `step-${index}`,
+          title: config.title,
+          description: config.description,
+          url: exp.url,
+          type: exp.step_type,
+        };
+      });
+      setSteps(transformedSteps);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [experiences, isLoading, tRPCError]);
 
   if (!personaId) {
     return <div className="text-center py-12">Persona not found</div>;
@@ -111,8 +101,12 @@ export default function ExperienceViewer() {
     return <div className="text-center py-12 text-red-600">Error: {error}</div>;
   }
 
-  if (steps.length === 0) {
+  if (steps.length === 0 && !loading) {
     return <div className="text-center py-12">No experiences found for this persona</div>;
+  }
+
+  if (!steps || steps.length === 0) {
+    return <div className="text-center py-12">Loading...</div>;
   }
 
   return (
