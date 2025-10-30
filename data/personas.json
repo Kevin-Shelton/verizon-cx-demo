@@ -29,8 +29,7 @@
         "Device swap assistance",
         "Technical support",
         "Check promo eligibility",
-        "On-site services",
-        "Fleet management"
+        "On-site services"
       ],
       "journey": ["support", "expansion"]
     },
@@ -43,13 +42,9 @@
       "description": "Healthcare administrator dealing with fraud alerts and support cases",
       "avatar": "👩‍⚕️",
       "needs": [
-        "Resolve fraud alerts",
-        "Account security",
-        "Open support cases",
-        "On-site services",
-        "Compliance documentation"
+        "Resolve fraud alerts"
       ],
-      "journey": ["support", "onboarding"]
+      "journey": ["support"]
     },
     {
       "id": "diego",
@@ -63,8 +58,7 @@
         "Bulk device orders",
         "Field worker connectivity",
         "Fleet management",
-        "On-site services",
-        "Bulk provisioning"
+        "On-site services"
       ],
       "journey": ["proposal", "negotiation", "onboarding", "expansion"]
     }
