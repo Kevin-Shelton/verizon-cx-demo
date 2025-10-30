@@ -21,14 +21,14 @@ const videos: VideoItem[] = [
     url: "https://store.ikoneworld.com/vz-val/",
     duration: "12:45",
   },
-  // Add more videos here as needed
-  // {
-  //   id: "video-2",
-  //   title: "Feature Walkthrough",
-  //   description: "Detailed walkthrough of key features...",
-  //   url: "https://example.com/video2",
-  //   duration: "8:30",
-  // },
+  {
+    id: "carlos-demo",
+    title: "Carlos Demo",
+    description:
+      "Discover how our dialect-specific translation technology delivers authentic multilingual customer experiences. This demo showcases real-world applications and the competitive advantage of culturally-aware communication.",
+    url: "https://store.ikoneworld.com/vz-carlos/",
+    duration: "10:30",
+  },
 ];
 
 export default function Videos() {
@@ -61,7 +61,7 @@ export default function Videos() {
       {/* Videos Grid */}
       <section className="py-20 bg-white">
         <div className="container">
-          <div className="grid md:grid-cols-1 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -116,7 +116,7 @@ export default function Videos() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto mt-12"
+            className="max-w-6xl mx-auto mt-12"
           >
             <Card className="p-6 border-2 border-blue-200 bg-blue-50">
               <div className="flex items-start gap-4">
