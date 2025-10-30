@@ -123,9 +123,8 @@ export default function ExperienceCarousel({
                     src={currentStepData.url}
                     title={currentStepData.title}
                     className="w-full h-full border-0"
-                    allow="autoplay; fullscreen; picture-in-picture; payment"
+                    allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-cookies"
                   />
                 </div>
               </div>
