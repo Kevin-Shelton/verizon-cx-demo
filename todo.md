@@ -147,12 +147,12 @@
   - [ ] Add test user credentials to app_users table
   - [ ] Test end-to-end login and persona experience loading flow
 
-- [ ] Fix Vercel deployment issues
-  - [ ] Environment variables not being substituted in client code (VITE_ANALYTICS_ENDPOINT showing as literal string)
-  - [ ] tRPC API endpoint returning HTML instead of JSON on deployed version
-  - [ ] Check vite.config.ts for proper environment variable handling
-  - [ ] Verify API endpoint configuration in production build
-  - [ ] Test API calls on deployed site
+- [x] Fix Vercel deployment issues
+  - [x] Environment variables not being substituted in client code (VITE_ANALYTICS_ENDPOINT showing as literal string)
+  - [x] tRPC API endpoint returning HTML instead of JSON on deployed version
+  - [x] Moved analytics script injection to main.tsx to use import.meta.env
+  - [x] Updated vercel.json to run server as Node.js function
+  - [x] Configured routes to properly handle API and static file serving
 
 - [ ] Complete database setup and testing
   - [ ] Run pnpm db:push to create app_users table
