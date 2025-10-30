@@ -1,0 +1,8 @@
+{
+  "query": "SELECT COUNT(*) as count FROM persona_experiences;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 6MVCBCxAmvAnmX1.root --database jBTMCQpLLcG5K2Jo52RrL9 --execute SELECT COUNT(*) as count FROM persona_experiences;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'jbtmcqpllcg5k2jo52rrl9.persona_experiences' doesn't exist"
+  ]
+}

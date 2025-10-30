@@ -8,7 +8,7 @@ export interface ExperienceStep {
   title: string;
   description: string;
   url: string;
-  type: "email" | "ivr" | "field-services";
+  type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation";
 }
 
 interface ExperienceCarouselProps {

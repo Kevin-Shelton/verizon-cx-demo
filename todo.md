@@ -113,6 +113,12 @@
   - [x] All 4 personas now use database-managed sequences
   - [x] Easy to modify sequences without code changes
 
+- [ ] Fix tRPC experiences endpoint error
+  - [ ] experiences.getPersonaExperiences returning HTML instead of JSON
+  - [ ] Database query may be failing
+  - [ ] Check database connection and query syntax
+  - [ ] Verify tRPC endpoint is properly registered
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive
