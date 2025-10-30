@@ -116,10 +116,11 @@
 - [x] Fetch persona experiences from Supabase table
   - [x] persona_experiences table created in Supabase
   - [x] All 4 personas with 3 steps each populated
-  - [x] Updated ExperienceViewer to fetch from Supabase
+  - [x] Updated ExperienceViewer to fetch from tRPC backend
   - [x] Removed hardcoded persona data
-  - [x] Carousel now loads sequences from Supabase database
+  - [x] Carousel now loads sequences from database via tRPC
   - [x] Easy to modify sequences without code changes
+  - [x] tRPC backend queries Supabase persona_experiences table
 
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
@@ -128,6 +129,13 @@
   - [x] Video player integrated
   - [x] All external links configured
   - [x] Portal ready for deployment
+
+- [x] Supabase integration complete
+  - [x] ExperienceViewer uses tRPC backend to fetch persona sequences
+  - [x] tRPC getPersonaExperiences procedure queries Supabase database
+  - [x] All 4 personas (carlos, maria, lucia, diego) configured
+  - [x] All 6 experience types supported (website-translation, email-viewer, live-chat, ivr-voice, document-translation, field-services)
+  - [x] Code properly handles database errors and missing data
 
 - [x] Implement video hosting for portal
   - [x] Determined video hosting strategy: S3 storage (proprietary content)
