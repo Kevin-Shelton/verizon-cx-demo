@@ -138,11 +138,11 @@ export default function Personas() {
                       <p className="text-sm font-bold text-gray-900 uppercase tracking-wide">
                         Key Needs:
                       </p>
-                      <ul className="space-y-2">
+                      <ul className="grid grid-cols-2 gap-3">
                         {persona.needs.map((need, i) => (
                           <li
                             key={i}
-                            className="text-sm text-gray-700 flex items-start gap-3"
+                            className="text-sm text-gray-700 flex items-start gap-2"
                           >
                             <CheckCircle2 className={`w-4 h-4 mt-0.5 ${colors.text} flex-shrink-0`} />
                             <span>{need}</span>
@@ -151,20 +151,7 @@ export default function Personas() {
                       </ul>
                     </div>
                     {/* Action Buttons */}
-                    <div className="space-y-2 mt-4">
-                      <Button
-                        className={`w-full ${isSelected ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                        variant={isSelected ? "default" : "outline"}
-                      >
-                        {isSelected ? (
-                          <span className="flex items-center gap-2">
-                            <CheckCircle2 className="w-4 h-4" />
-                            Selected - View Journey
-                          </span>
-                        ) : (
-                          "Select Persona"
-                        )}
-                      </Button>
+                    <div className="mt-6">
                       <Button
                         className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold"
                         onClick={(e) => {
