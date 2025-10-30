@@ -48,18 +48,21 @@ const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | 
     { step_type: "document-translation", url: "https://explore.ikoneworld.com/document-translate/" },
   ],
   maria: [
-    { step_type: "email-viewer", url: "/experiences/email/maria" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "live-chat", url: "https://explore.ikoneworld.com/live-chat/" },
+    { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "field-services", url: "https://explore.ikoneworld.com/field-service/" },
   ],
   lucia: [
     { step_type: "email-viewer", url: "/experiences/email/lucia" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "live-chat", url: "https://explore.ikoneworld.com/live-chat/" },
     { step_type: "field-services", url: "https://explore.ikoneworld.com/field-service/" },
   ],
   diego: [
-    { step_type: "email-viewer", url: "/experiences/email/diego" },
+    { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
+    { step_type: "live-chat", url: "https://explore.ikoneworld.com/live-chat/" },
     { step_type: "field-services", url: "https://explore.ikoneworld.com/field-service/" },
   ],
 };
