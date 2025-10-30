@@ -105,35 +105,32 @@ export default function Personas() {
                   }`}
                   onClick={() => handleSelectPersona(persona)}
                 >
-                  <CardHeader className={colors.bg}>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="text-5xl">{persona.avatar}</div>
-                        <div>
-                          <CardTitle className="text-2xl text-gray-900">{persona.name}</CardTitle>
-                          <CardDescription className="text-base text-gray-600 mt-1">
-                            {persona.role}
-                          </CardDescription>
+                  <CardHeader className={`${colors.bg} pb-4`}>
+                    <div className="flex items-start gap-4">
+                      <div className="text-5xl flex-shrink-0">{persona.avatar}</div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <CardTitle className="text-2xl text-gray-900">{persona.name}</CardTitle>
+                            <CardDescription className="text-base text-gray-600 mt-0.5">
+                              {persona.role}
+                            </CardDescription>
+                          </div>
+                          {isSelected && (
+                            <CheckCircle2 className="h-7 w-7 text-blue-600 flex-shrink-0" />
+                          )}
                         </div>
+                        <Badge className={`text-sm font-semibold ${colors.badge} mb-3`}>
+                          {persona.dialectLabel}
+                        </Badge>
+                        <p className="text-gray-700 leading-relaxed text-sm">{persona.description}</p>
                       </div>
-                      {isSelected && (
-                        <CheckCircle2 className="h-7 w-7 text-blue-600" />
-                      )}
                     </div>
                   </CardHeader>
 
-                  <CardContent className="pt-6 space-y-5">
-                    {/* Dialect Badge */}
-                    <div>
-                      <Badge className={`text-sm font-semibold ${colors.badge}`}>
-                        {persona.dialectLabel}
-                      </Badge>
-                    </div>
+                  <CardContent className="pt-4 space-y-5">
 
-                    {/* Description */}
-                    <p className="text-gray-700 leading-relaxed">{persona.description}</p>
-
-                    {/* Needs */}
+                    {/* Key Needs */}
                     <div className="space-y-3">
                       <p className="text-sm font-bold text-gray-900 uppercase tracking-wide">
                         Key Needs:
