@@ -21,8 +21,13 @@ interface ExperienceCarouselProps {
 }
 
 // Content type classification
-const INTERNAL_EXPERIENCES = ["email-viewer", "field-services"];
-const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation"];
+const INTERNAL_EXPERIENCES = ["email-viewer"];
+const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services"];
+
+// Helper function to check if URL is external
+const isExternalUrl = (url: string): boolean => {
+  return url.startsWith("http://") || url.startsWith("https://");
+};
 
 export default function ExperienceCarousel({
   personaName,
@@ -51,8 +56,14 @@ export default function ExperienceCarousel({
   const isLastStep = currentStep === steps.length - 1;
 
   // Determine if current step is internal or external
-  const isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
-  const isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  // For field-services, check if URL is external
+  let isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  let isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  
+  if (currentStepData?.type === "field-services" && isExternalUrl(currentStepData?.url)) {
+    isInternalExperience = false;
+    isExternalExperience = true;
+  }
 
   // Render content based on type
   const renderContent = () => {
@@ -63,13 +74,10 @@ export default function ExperienceCarousel({
       if (currentStepData.type === "email-viewer") {
         return <EmailViewerComponent personaName={personaName} />;
       }
-      if (currentStepData.type === "field-services") {
-        return <FieldServicesComponent personaName={personaName} />;
-      }
     }
 
     // External experiences - show launch button
-    if (isExternalExperience) {
+    if (isExternalExperience && isExternalUrl(currentStepData.url)) {
       return (
         <LaunchDemoButton
           url={currentStepData.url}
@@ -77,6 +85,11 @@ export default function ExperienceCarousel({
           description={currentStepData.description}
         />
       );
+    }
+    
+    // Fallback for internal field-services (local URL)
+    if (currentStepData.type === "field-services") {
+      return <FieldServicesComponent personaName={personaName} />;
     }
 
     return null;
