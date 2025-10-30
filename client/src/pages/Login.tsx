@@ -31,15 +31,7 @@ export default function Login() {
     }
   };
 
-  // Demo mode - quick access for testing
-  const handleDemoLogin = async () => {
-    const success = await login('demo', 'demo');
-    if (success) {
-      setLocation('/');
-    } else {
-      setError('Demo login failed');
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -135,14 +127,7 @@ export default function Login() {
                 Sign In
               </Button>
 
-              {/* Demo Button */}
-              <Button
-                type="button"
-                onClick={handleDemoLogin}
-                className="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-lg font-medium transition-colors"
-              >
-                Quick Demo Access
-              </Button>
+
             </form>
 
 
