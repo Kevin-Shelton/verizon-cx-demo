@@ -32,6 +32,11 @@
   - [x] Added Videos route to App.tsx
   - [x] Updated MainLayout with dropdown menu
 
+- [x] Remove 90% coverage badge from home page
+  - [x] Removed coverage statement section
+  - [x] Removed CheckCircle2 import
+  - [x] Home page now flows directly from hero to experiences
+
 - [ ] Verify deployment readiness
 
 - [x] Implement video hosting for portal

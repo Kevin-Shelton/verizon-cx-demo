@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2, Globe, MessageSquare, PhoneCall, Zap, Target, Shield } from "lucide-react";
+import { ArrowRight, Globe, MessageSquare, PhoneCall, Zap, Target, Shield } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -40,29 +40,6 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Coverage Statement */}
-      <section className="py-16 bg-white border-b border-gray-200">
-        <div className="container">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-full px-8 py-4 mb-6 shadow-lg">
-              <CheckCircle2 className="h-8 w-8 text-green-600" />
-              <span className="text-3xl font-bold text-green-700">90% Coverage</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Comprehensive Translation Across the Customer Journey
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              From outbound prospecting to post-sales support, our culturally-aware translation solution covers 90% of customer interactions with dialect-specific Spanish for Mexican, Puerto Rican, Colombian, and US Hispanic markets.
-            </p>
           </motion.div>
         </div>
       </section>
