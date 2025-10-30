@@ -74,6 +74,15 @@
   - [x] Integrated IVR experience URL
   - [x] All 4 personas configured (Carlos, Maria, Juan, Amara)
 
+- [ ] Update all experience URLs with correct links
+  - [ ] Website Translation: https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/
+  - [ ] Live Chat: https://explore.ikoneworld.com/live-chat/
+  - [ ] IVR & Voice: https://qa-web.ikunnect.com/auth/login
+  - [ ] Document Translation: https://explore.ikoneworld.com/document-translate/
+  - [ ] Update Experiences page links
+  - [ ] Update Experience Carousel IVR step
+  - [ ] Test all URLs
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive

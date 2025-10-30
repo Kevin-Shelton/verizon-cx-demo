@@ -18,7 +18,7 @@ const personaExperiences: Record<string, { name: string; description: string; st
         id: "ivr",
         title: "IVR & Voice Experience",
         description: "Real-time voice interaction with dialect awareness",
-        url: "https://store.ikoneworld.com/vz-val/",
+        url: "https://qa-web.ikunnect.com/auth/login",
         type: "ivr",
       },
       {
@@ -45,7 +45,7 @@ const personaExperiences: Record<string, { name: string; description: string; st
         id: "ivr",
         title: "IVR & Voice Experience",
         description: "Real-time voice interaction with dialect awareness",
-        url: "https://store.ikoneworld.com/vz-val/",
+        url: "https://qa-web.ikunnect.com/auth/login",
         type: "ivr",
       },
       {
@@ -72,7 +72,7 @@ const personaExperiences: Record<string, { name: string; description: string; st
         id: "ivr",
         title: "IVR & Voice Experience",
         description: "Real-time voice interaction with dialect awareness",
-        url: "https://store.ikoneworld.com/vz-val/",
+        url: "https://qa-web.ikunnect.com/auth/login",
         type: "ivr",
       },
       {
@@ -99,7 +99,7 @@ const personaExperiences: Record<string, { name: string; description: string; st
         id: "ivr",
         title: "IVR & Voice Experience",
         description: "Real-time voice interaction with dialect awareness",
-        url: "https://store.ikoneworld.com/vz-val/",
+        url: "https://qa-web.ikunnect.com/auth/login",
         type: "ivr",
       },
       {
