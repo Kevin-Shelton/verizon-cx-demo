@@ -37,7 +37,7 @@ export default function Videos() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-16 md:py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-8 md:py-12 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
@@ -47,19 +47,18 @@ export default function Videos() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 leading-tight">
               Proprietary Demo Videos
             </h1>
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              Watch in-depth demonstrations of our dialect-specific translation technology in
-              action across all customer touchpoints
+            <p className="text-base md:text-lg text-white/90 leading-relaxed">
+              Watch in-depth demonstrations of our dialect-specific translation technology
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Videos Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-8 md:py-12 bg-white">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {videos.map((video, index) => (

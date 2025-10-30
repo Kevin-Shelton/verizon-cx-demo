@@ -45,6 +45,11 @@
   - [x] Autoplay and muted settings maintained
   - [x] Responsive design verified
 
+- [ ] Optimize Videos page layout
+  - [ ] Reduce hero section height to minimize whitespace
+  - [ ] Center video cards and reduce top margin
+  - [ ] Ensure both videos visible without scrolling on desktop
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive
