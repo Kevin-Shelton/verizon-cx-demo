@@ -83,6 +83,11 @@
   - [x] Updated Experience Carousel IVR step for all 4 personas
   - [x] All URLs tested and working
 
+- [ ] Fix carousel iframe session persistence
+  - [ ] Ensure IVR iframe maintains authenticated session
+  - [ ] Prevent login redirect when selecting View button
+  - [ ] Keep users within carousel without re-authentication
+
 - [x] Verify deployment readiness
   - [x] All TypeScript compiles without errors
   - [x] Dev server running and responsive
