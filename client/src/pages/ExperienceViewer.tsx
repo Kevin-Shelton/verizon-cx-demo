@@ -4,10 +4,10 @@ import ExperienceCarousel, { ExperienceStep } from "@/components/ExperienceCarou
 
 // Persona metadata
 const personaMetadata: Record<string, { name: string; description: string }> = {
-  carlos: { name: "Carlos", description: "Spanish-speaking customer seeking multilingual support" },
-  maria: { name: "Maria", description: "Portuguese-speaking customer with specific regional dialect" },
-  lucia: { name: "Juan", description: "Central American Spanish speaker with unique dialect needs" },
-  diego: { name: "Amara", description: "South American Spanish speaker with regional preferences" },
+  carlos: { name: "Carlos", description: "SMB Retail Owner - Mexican Spanish" },
+  maria: { name: "María", description: "Field Services Manager - Caribbean Spanish (Puerto Rico)" },
+  lucia: { name: "Lucía", description: "Healthcare Clinic Administrator - Latin American Spanish (Colombia)" },
+  diego: { name: "Diego", description: "Construction Project Manager - US Spanish" },
 };
 
 // Step type to title/description mapping
@@ -41,24 +41,24 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
 // Hardcoded persona experiences - from persona_experiences table
 const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
   carlos: [
-    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "email-viewer", url: "/experiences/email/carlos" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services" },
+    { step_type: "field-services", url: "/experiences/field-services/carlos" },
   ],
   maria: [
-    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "email-viewer", url: "/experiences/email/maria" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services" },
+    { step_type: "field-services", url: "/experiences/field-services/maria" },
   ],
   lucia: [
-    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "email-viewer", url: "/experiences/email/lucia" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services" },
+    { step_type: "field-services", url: "/experiences/field-services/lucia" },
   ],
   diego: [
-    { step_type: "email-viewer", url: "/experiences/email" },
+    { step_type: "email-viewer", url: "/experiences/email/diego" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services" },
+    { step_type: "field-services", url: "/experiences/field-services/diego" },
   ],
 };
 
