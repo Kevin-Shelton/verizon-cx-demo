@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { useRoute } from "wouter";
 import ExperienceCarousel, { ExperienceStep } from "@/components/ExperienceCarousel";
+import { trpc } from "@/lib/trpc";
 
 // Persona metadata
 const personaMetadata: Record<string, { name: string; description: string }> = {
-  carlos: { name: "Carlos", description: "SMB Retail Owner - Mexican Spanish" },
-  maria: { name: "María", description: "Field Services Manager - Caribbean Spanish (Puerto Rico)" },
-  lucia: { name: "Lucía", description: "Healthcare Clinic Administrator - Latin American Spanish (Colombia)" },
-  diego: { name: "Diego", description: "Construction Project Manager - US Spanish" },
+  carlos: { name: "Carlos", description: "Spanish-speaking customer seeking multilingual support" },
+  maria: { name: "Maria", description: "Portuguese-speaking customer with specific regional dialect" },
+  lucia: { name: "Juan", description: "Central American Spanish speaker with unique dialect needs" },
+  diego: { name: "Amara", description: "South American Spanish speaker with regional preferences" },
 };
 
 // Step type to title/description mapping
@@ -38,70 +39,50 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
   },
 };
 
-// Hardcoded persona experiences - from persona_experiences table
-const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
-  carlos: [
-    { step_type: "email-viewer", url: "/experiences/email/carlos" },
-    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services/carlos" },
-  ],
-  maria: [
-    { step_type: "email-viewer", url: "/experiences/email/maria" },
-    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services/maria" },
-  ],
-  lucia: [
-    { step_type: "email-viewer", url: "/experiences/email/lucia" },
-    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services/lucia" },
-  ],
-  diego: [
-    { step_type: "email-viewer", url: "/experiences/email/diego" },
-    { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "field-services", url: "/experiences/field-services/diego" },
-  ],
-};
-
 export default function ExperienceViewer() {
   const [, params] = useRoute("/experience-viewer/:personaId");
   const personaId = params?.personaId as string;
   const [steps, setSteps] = useState<ExperienceStep[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [queryError, setQueryError] = useState<Error | null>(null);
+
+  const { data: experiences, isLoading, error: tRPCError } = trpc.experiences.getPersonaExperiences.useQuery(personaId, {
+    enabled: !!personaId,
+  });
 
   useEffect(() => {
-    if (!personaId) {
-      setLoading(false);
-      return;
+    if (tRPCError) {
+      setQueryError(new Error(tRPCError.message));
     }
+  }, [tRPCError]);
 
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      const experiences = hardcodedExperiences[personaId];
-      if (experiences) {
-        const transformedSteps: ExperienceStep[] = experiences.map((exp, index) => {
-          const config = stepTypeConfig[exp.step_type] || {
-            title: exp.step_type,
-            description: "",
-          };
-          return {
-            id: `step-${index}`,
-            title: config.title,
-            description: config.description,
-            url: exp.url,
-            type: exp.step_type as "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation",
-          };
-        });
-        setSteps(transformedSteps);
-        setLoading(false);
-      } else {
-        setError("No experiences found for this persona");
-        setLoading(false);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [personaId]);
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(true);
+    } else if (tRPCError) {
+      setError(tRPCError.message);
+      setLoading(false);
+    } else if (experiences && experiences.length > 0) {
+      const transformedSteps: ExperienceStep[] = experiences.map((exp: any, index: number) => {
+        const config = stepTypeConfig[exp.step_type] || {
+          title: exp.step_type,
+          description: "",
+        };
+        return {
+          id: `step-${index}`,
+          title: config.title,
+          description: config.description,
+          url: exp.url,
+          type: exp.step_type,
+        };
+      });
+      setSteps(transformedSteps);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [experiences, isLoading, tRPCError]);
 
   if (!personaId) {
     return <div className="text-center py-12">Persona not found</div>;
