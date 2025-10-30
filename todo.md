@@ -154,12 +154,19 @@
   - [x] Updated vercel.json to run server as Node.js function
   - [x] Configured routes to properly handle API and static file serving
 
-- [ ] Complete database setup and testing
-  - [ ] Run pnpm db:push to create app_users table
-  - [ ] Add test credentials (demo/demo) to app_users
-  - [ ] Test login flow with valid credentials
-  - [ ] Verify persona experience loading from database
-  - [ ] Test all 4 personas (carlos, maria, lucia, diego)
+- [x] Complete database setup and testing
+  - [x] Run pnpm db:push to create app_users table
+  - [x] Add test credentials (demo/demo) to app_users
+  - [x] Test login flow with valid credentials
+  - [x] Verify persona experience loading from database
+  - [x] Test all 4 personas (carlos, maria, lucia, diego)
+
+- [x] Remove Quick Demo Access button from login page
+  - [x] Removed handleDemoLogin function from Login.tsx
+  - [x] Removed Quick Demo Access button from UI
+  - [x] Dev server rebuilt and tested
+  - [x] Verified button no longer appears in browser
+  - [x] All 4 personas still accessible via normal login flow
 
 - [x] Implement video hosting for portal
   - [x] Determined video hosting strategy: S3 storage (proprietary content)
