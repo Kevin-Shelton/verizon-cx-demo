@@ -14,26 +14,26 @@ const personaMetadata: Record<string, { name: string; description: string }> = {
 const getNarrativeForStep = (personaId: string, stepType: string, stepIndex: number): string => {
   const narratives: Record<string, Record<string, string>> = {
     carlos: {
-      "email-viewer": "Carlos receives a customer service email in Mexican Spanish. Watch how dialect-specific translation ensures his retail business gets authentic, culturally-aware communication that builds trust with his customers.",
-      "website-translation": "Carlos needs to translate his website for Spanish-speaking customers. See how dialect-specific translation captures regional preferences and improves conversion rates.",
-      "live-chat": "Real-time chat support in Mexican Spanish helps Carlos respond quickly to customer inquiries. Experience how cultural context improves customer satisfaction.",
-      "field-services": "Carlos's retail store needs on-site technical support. Watch how technicians communicate in his dialect, respecting business formality while solving problems efficiently.",
-      "document-translation": "Important business documents are translated with cultural accuracy. Carlos can confidently share contracts and agreements with Spanish-speaking partners.",
+      "email-viewer": "Carlos receives a customer service email from Verizon in Mexican Spanish. Verizon's dialect-specific system ensures authentic communication that respects his business needs and builds trust with his retail customers.",
+      "website-translation": "Carlos accesses Verizon's website in Mexican Spanish. Verizon's dialect-aware translation captures regional preferences, making it easy for Carlos to understand service offerings and manage his business account.",
+      "live-chat": "Carlos contacts Verizon support via live chat in Mexican Spanish. Verizon's real-time translation with cultural context helps Carlos quickly resolve issues and get the support his retail business needs.",
+      "field-services": "Carlos meets with a Verizon sales representative at his retail store to discuss ordering new services. The Verizon rep communicates in Mexican Spanish, ensuring Carlos fully understands service options, pricing, and how Verizon can support his growing retail business.",
+      "document-translation": "Carlos receives important Verizon service documents in Mexican Spanish. Verizon's culturally-accurate translation ensures Carlos fully understands contracts and service terms in his preferred dialect.",
     },
     maria: {
-      "ivr-voice": "María calls for device swap assistance. Experience how IVR systems with Caribbean Spanish dialect recognition make it easy to get technical support without language barriers.",
-      "live-chat": "María uses live chat to get technical support for her field team. See how real-time translation with cultural context speeds up problem resolution.",
-      "website-translation": "María checks promo eligibility on a translated website. Watch how dialect-specific translation ensures she understands all the details clearly.",
-      "field-services": "María's field service team needs on-site support. Experience how technicians communicate in Caribbean Spanish, respecting local customs and business practices.",
+      "ivr-voice": "María calls Verizon's support line for device swap assistance. Verizon's IVR system recognizes Caribbean Spanish dialect, routing her quickly to the right team without language barriers.",
+      "live-chat": "María contacts Verizon via live chat for technical support for her field team. Verizon's real-time translation with Caribbean Spanish dialect ensures quick problem resolution and keeps her team productive.",
+      "website-translation": "María logs into her Verizon account to check promo eligibility for her field services team. Verizon's website in Caribbean Spanish ensures María understands all promotion details and service options clearly.",
+      "field-services": "María schedules on-site technical support from Verizon for her field operations. Verizon technicians communicate in Caribbean Spanish, respecting local business practices and ensuring seamless service delivery.",
     },
     lucia: {
-      "ivr-voice": "Lucía calls to resolve fraud alerts on her healthcare clinic's account. Experience how IVR with Colombian Spanish dialect recognition helps her quickly reach the right support team.",
+      "ivr-voice": "Lucía calls Verizon's fraud resolution team about her healthcare clinic's account. Verizon's IVR system recognizes Colombian Spanish dialect, connecting her quickly to specialized support for healthcare providers.",
     },
     diego: {
-      "website-translation": "Diego needs to order bulk devices for his construction crew. See how dialect-specific translation ensures he understands all technical specifications and pricing clearly.",
-      "ivr-voice": "Diego calls to check on field worker connectivity solutions. Experience how IVR with US Spanish dialect recognition connects him with the right technical team.",
-      "live-chat": "Diego uses live chat to manage his fleet of devices. Watch how real-time translation with cultural context helps him coordinate with his team efficiently.",
-      "field-services": "Diego's construction site needs on-site technical support. Experience how technicians communicate in US Spanish, respecting job site safety protocols and business needs.",
+      "website-translation": "Diego accesses Verizon's website to order bulk devices for his construction crew. Verizon's website in US Spanish ensures Diego understands all technical specifications, pricing, and service options for his project needs.",
+      "ivr-voice": "Diego calls Verizon to check on field worker connectivity solutions for his construction site. Verizon's IVR system recognizes US Spanish dialect, connecting him to the right technical team without language barriers.",
+      "live-chat": "Diego contacts Verizon via live chat to manage his fleet of devices for his construction crew. Verizon's real-time translation with US Spanish dialect helps Diego coordinate efficiently with his team.",
+      "field-services": "Diego schedules on-site technical support from Verizon at his construction site. Verizon technicians communicate in US Spanish, respecting job site safety protocols while ensuring his team stays connected.",
     },
   };
 
