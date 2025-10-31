@@ -71,7 +71,7 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
 // Hardcoded persona experiences - from persona_experiences table
 const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
   carlos: [
-    { step_type: "email-viewer", url: "/experiences/email/carlos" },
+    { step_type: "email-viewer", url: "https://explore.ikoneworld.com/email-translate/" },
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "live-chat", url: "https://explore.ikoneworld.com/live-chat/" },
     { step_type: "field-services", url: "https://explore.ikoneworld.com/field-service/" },

@@ -61,7 +61,7 @@ export default function ExperienceCarousel({
   let isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
   let isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
   
-  if (currentStepData?.type === "field-services" && isExternalUrl(currentStepData?.url)) {
+  if ((currentStepData?.type === "field-services" || currentStepData?.type === "email-viewer") && isExternalUrl(currentStepData?.url)) {
     isInternalExperience = false;
     isExternalExperience = true;
   }
@@ -71,7 +71,7 @@ export default function ExperienceCarousel({
     if (!currentStepData) return null;
 
     // Internal experiences - render as embedded components
-    if (isInternalExperience) {
+    if (isInternalExperience && !isExternalUrl(currentStepData.url)) {
       if (currentStepData.type === "email-viewer") {
         return <EmailViewerComponent personaName={personaName} />;
       }
