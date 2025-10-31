@@ -24,7 +24,7 @@ export default function Login() {
 
     const success = await login(username, password);
     if (success) {
-      setLocation('/');
+      setLocation('/videos');
     } else {
       setError('Invalid username or password');
       setPassword('');
