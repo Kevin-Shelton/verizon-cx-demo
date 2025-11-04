@@ -114,13 +114,8 @@ export default function ExperienceViewer() {
   const [steps, setSteps] = useState<ExperienceStep[]>([]);
   const [personaData, setPersonaData] = useState<any>(null);
 
-  // Fetch persona data
-  const { data: personaExperiences } = trpc.experiences.getPersonaExperiences.useQuery(personaId || "", {
-    enabled: !!personaId,
-  });
-
   useEffect(() => {
-    if (!personaId || !personaExperiences) return;
+    if (!personaId) return;
 
     const persona = { name: personaId, role: "" };
 
@@ -148,7 +143,7 @@ export default function ExperienceViewer() {
     });
 
     setSteps(mappedSteps);
-  }, [personaId, personaExperiences]);
+  }, [personaId]);
 
   if (!personaData || steps.length === 0) {
     return (
