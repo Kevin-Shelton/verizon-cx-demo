@@ -272,13 +272,14 @@
   - [x] Modified isExternalUrl() function to handle relative URLs for live-chat type
   - [x] Added live-chat type check in URL detection logic
 
-- [x] Fix auth token generation error in field services
+- [ ] Fix auth token generation error in field services
   - [x] Error: "Failed to generate auth token" when clicking Launch Demo
   - [x] Found root cause: HTTP 405 error - /api/generate-auth-token caught by tRPC middleware
   - [x] Moved token generation to tRPC endpoint (auth.generateAuthToken mutation)
   - [x] Updated LaunchDemoButton to use tRPC instead of fetch
   - [x] Restarted dev server to recompile tRPC router with new procedure
-  - [x] Verified tRPC endpoint returns valid token
-  - [x] Token generation now works correctly via tRPC router
-  - [x] Pushed fix to GitHub
+  - [x] Verified tRPC endpoint returns valid token via curl
+  - [ ] Debugging: tRPC client call returns "Unexpected end of JSON input" error
+  - [ ] Issue: Response appears empty when called from browser
+  - [ ] Added detailed logging to identify exact error point
 
