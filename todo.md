@@ -277,6 +277,8 @@
   - [x] Found root cause: HTTP 405 error - /api/generate-auth-token caught by tRPC middleware
   - [x] Moved token generation to tRPC endpoint (auth.generateAuthToken mutation)
   - [x] Updated LaunchDemoButton to use tRPC instead of fetch
+  - [x] Restarted dev server to recompile tRPC router with new procedure
+  - [x] Verified tRPC endpoint returns valid token
   - [x] Token generation now works correctly via tRPC router
   - [x] Pushed fix to GitHub
 
