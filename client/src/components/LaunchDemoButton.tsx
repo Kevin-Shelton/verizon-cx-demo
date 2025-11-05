@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { trpc } from "@/lib/trpc";
 
 interface LaunchDemoButtonProps {
   url: string;
@@ -15,45 +14,14 @@ export default function LaunchDemoButton({
   description,
 }: LaunchDemoButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const generateTokenMutation = trpc.auth.generateAuthToken.useMutation();
 
   const handleLaunchDemo = async () => {
     try {
       setIsLoading(true);
-      setError(null);
-
-      console.log("Starting token generation mutation...");
-      
-      // Call the mutation with no input (it's a mutation with no input parameters)
-      const result = await generateTokenMutation.mutateAsync(undefined);
-      
-      console.log("Mutation result:", result);
-      console.log("Result type:", typeof result);
-      console.log("Result keys:", result ? Object.keys(result) : "null");
-
-      if (!result || !result.token) {
-        console.error("Invalid result structure:", result);
-        throw new Error("Invalid token response");
-      }
-
-      const { token } = result;
-      console.log("Token extracted:", token ? "yes" : "no");
-
-      // Append token to URL
-      const separator = url.includes("?") ? "&" : "?";
-      const demoUrl = `${url}${separator}auth=${encodeURIComponent(token)}`;
-
-      console.log("Opening demo URL:", demoUrl);
-      // Open demo in new window
-      window.open(demoUrl, "_blank", "noopener,noreferrer");
+      // Simply open the external URL in a new window
+      window.open(url, "_blank", "noopener,noreferrer");
     } catch (err) {
       console.error("Error launching demo:", err);
-      if (err instanceof Error) {
-        console.error("Error message:", err.message);
-        console.error("Error stack:", err.stack);
-      }
-      setError("Failed to launch demo. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -81,15 +49,9 @@ export default function LaunchDemoButton({
           <ExternalLink className="w-5 h-5" />
         </motion.button>
 
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-600">{error}</p>
-          </div>
-        )}
-
         <div className="mt-8 p-4 bg-white rounded-lg border border-blue-200">
           <p className="text-sm text-gray-600">
-            💡 <strong>Tip:</strong> The demo will open in a new window with automatic authentication. You can reference this carousel while using the demo, then return here to continue.
+            💡 <strong>Tip:</strong> The demo will open in a new window. You can reference this carousel while using the demo, then return here to continue.
           </p>
         </div>
       </div>

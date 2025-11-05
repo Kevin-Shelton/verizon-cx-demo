@@ -28,14 +28,7 @@ const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "
 // Helper function to check if URL is external
 const isExternalUrl = (url: string, stepType?: string): boolean => {
   // Absolute URLs are always external
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return true;
-  }
-  // Relative URLs like /dual-pane-chat.html are external for live-chat
-  if (stepType === "live-chat" && url.startsWith("/")) {
-    return true;
-  }
-  return false;
+  return url.startsWith("http://") || url.startsWith("https://");
 };
 
 export default function ExperienceCarousel({
