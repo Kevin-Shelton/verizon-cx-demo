@@ -233,3 +233,17 @@
   - [ ] Compact overall header layout
 
 
+
+- [x] Implement SSO token passing for seamless demo authentication
+  - [x] Install jsonwebtoken and @types/jsonwebtoken packages
+  - [x] Create /api/generate-auth-token endpoint with 5-minute JWT expiration
+  - [x] Add /api/verify-auth-token endpoint for token validation
+  - [x] Update LaunchDemoButton component to fetch and append auth tokens
+  - [x] Token includes user email, name, and portalUserId
+  - [x] Tokens appended as ?auth=TOKEN query parameter to demo URLs
+  - [x] Tested token generation - working correctly with demo user fallback
+  - [x] All demo types supported (ikoneworld, chat, field services, IVR, website, email)
+  - [x] LaunchDemoButton shows loading state during token generation
+  - [x] Error handling for failed token generation
+  - [x] Maintains hybrid demo delivery architecture (external launches in new windows)
+

@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import jwt from "jsonwebtoken";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
@@ -35,6 +36,42 @@ async function startServer() {
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Generate auth token for SSO
+  app.post("/api/generate-auth-token", (req: express.Request, res: express.Response) => {
+    try {
+      // Get current user from session
+      let user = (req as any).user;
+
+      // If no user, create a demo user for testing
+      if (!user) {
+        user = {
+          id: "demo-user",
+          email: "demo@verizon.com",
+          name: "Demo User",
+        };
+      }
+
+      // Generate JWT token
+      const token = jwt.sign(
+        {
+          email: user.email || "demo@verizon.com",
+          name: user.name || "Demo User",
+          portalUserId: user.id,
+        },
+        process.env.AUTH_TOKEN_SECRET || "default-secret-key",
+        { expiresIn: "5m" }
+      );
+
+      return res.json({
+        token,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+      });
+    } catch (error) {
+      console.error("Error generating auth token:", error);
+      return res.status(500).json({ error: "Failed to generate auth token" });
+    }
+  });
   
   // Email experience content for each persona
   const emailContent: Record<string, string> = {
@@ -288,6 +325,27 @@ async function startServer() {
   // Legacy route for backward compatibility
   app.get("/experiences/field-services", (req, res) => {
     res.redirect("/experiences/field-services/carlos");
+  });
+  
+  // Verify token endpoint for demo apps
+  app.post("/api/verify-auth-token", (req: express.Request, res: express.Response) => {
+    try {
+      const { token } = req.body;
+      
+      if (!token) {
+        return res.status(400).json({ error: "Token required" });
+      }
+      
+      const decoded = jwt.verify(
+        token,
+        process.env.AUTH_TOKEN_SECRET || "default-secret-key"
+      );
+      
+      return res.json({ valid: true, data: decoded });
+    } catch (error) {
+      console.error("Error verifying auth token:", error);
+      return res.status(401).json({ error: "Invalid or expired token" });
+    }
   });
 
   
