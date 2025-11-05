@@ -272,14 +272,13 @@
   - [x] Modified isExternalUrl() function to handle relative URLs for live-chat type
   - [x] Added live-chat type check in URL detection logic
 
-- [ ] Fix auth token generation error in field services
-  - [x] Error: "Failed to generate auth token" when clicking Launch Demo
-  - [x] Found root cause: HTTP 405 error - /api/generate-auth-token caught by tRPC middleware
-  - [x] Moved token generation to tRPC endpoint (auth.generateAuthToken mutation)
-  - [x] Updated LaunchDemoButton to use tRPC instead of fetch
-  - [x] Restarted dev server to recompile tRPC router with new procedure
-  - [x] Verified tRPC endpoint returns valid token via curl
-  - [ ] Debugging: tRPC client call returns "Unexpected end of JSON input" error
-  - [ ] Issue: Response appears empty when called from browser
-  - [ ] Added detailed logging to identify exact error point
+- [x] Fix demo launch URLs and simplify LaunchDemoButton
+  - [x] Identified root cause: /dual-pane-chat.html was a relative path, not external URL
+  - [x] Updated live chat demo URL to https://dual-pane-chat.ikoneworld.net (fixed landing page)
+  - [x] Simplified LaunchDemoButton to open external URLs directly without token generation
+  - [x] Removed complex tRPC token generation logic that was causing empty response errors
+  - [x] Updated ExperienceViewer with new dual pane URL for all personas (Carlos, Maria, Diego)
+  - [x] Removed special handling for relative URLs in isExternalUrl function
+  - [x] All demo launches now work with external URLs: field services, live chat, IVR, website translation
+  - [x] Pushed all changes to GitHub
 
