@@ -71,15 +71,16 @@ export default function ExperienceCarousel({
   const renderContent = () => {
     if (!currentStepData) return null;
 
+    // Check if URL is external
+    const urlIsExternal = isExternalUrl(currentStepData.url);
+
     // Internal experiences - render as embedded components
-    if (isInternalExperience && !isExternalUrl(currentStepData.url)) {
-      if (currentStepData.type === "email-viewer") {
-        return <EmailViewerComponent personaName={personaName} />;
-      }
+    if (currentStepData.type === "email-viewer" && !urlIsExternal) {
+      return <EmailViewerComponent personaName={personaName} />;
     }
 
     // External experiences - show launch button
-    if (isExternalExperience && isExternalUrl(currentStepData.url, currentStepData.type)) {
+    if (EXTERNAL_EXPERIENCES.includes(currentStepData.type) && urlIsExternal) {
       return (
         <LaunchDemoButton
           url={currentStepData.url}
@@ -90,7 +91,7 @@ export default function ExperienceCarousel({
     }
     
     // Fallback for internal field-services (local URL)
-    if (currentStepData.type === "field-services") {
+    if (currentStepData.type === "field-services" && !urlIsExternal) {
       return <FieldServicesComponent personaName={personaName} />;
     }
 
