@@ -26,8 +26,16 @@ const INTERNAL_EXPERIENCES = ["email-viewer"];
 const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services"];
 
 // Helper function to check if URL is external
-const isExternalUrl = (url: string): boolean => {
-  return url.startsWith("http://") || url.startsWith("https://");
+const isExternalUrl = (url: string, stepType?: string): boolean => {
+  // Absolute URLs are always external
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return true;
+  }
+  // Relative URLs like /dual-pane-chat.html are external for live-chat
+  if (stepType === "live-chat" && url.startsWith("/")) {
+    return true;
+  }
+  return false;
 };
 
 export default function ExperienceCarousel({
@@ -61,7 +69,7 @@ export default function ExperienceCarousel({
   let isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
   let isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
   
-  if ((currentStepData?.type === "field-services" || currentStepData?.type === "email-viewer") && isExternalUrl(currentStepData?.url)) {
+  if ((currentStepData?.type === "field-services" || currentStepData?.type === "email-viewer" || currentStepData?.type === "live-chat") && isExternalUrl(currentStepData?.url, currentStepData?.type)) {
     isInternalExperience = false;
     isExternalExperience = true;
   }
@@ -78,7 +86,7 @@ export default function ExperienceCarousel({
     }
 
     // External experiences - show launch button
-    if (isExternalExperience && isExternalUrl(currentStepData.url)) {
+    if (isExternalExperience && isExternalUrl(currentStepData.url, currentStepData.type)) {
       return (
         <LaunchDemoButton
           url={currentStepData.url}

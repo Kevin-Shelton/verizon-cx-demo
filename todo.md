@@ -264,3 +264,18 @@
   - [x] All URL changes deployed locally
   - [x] Ready for testing
 
+
+
+- [x] Fix missing Launch Demo button in live chat experience
+  - [x] LaunchDemoButton not rendering for /dual-pane-chat.html URL
+  - [x] Updated ExperienceCarousel to recognize /dual-pane-chat.html as external URL
+  - [x] Modified isExternalUrl() function to handle relative URLs for live-chat type
+  - [x] Added live-chat type check in URL detection logic
+
+- [x] Fix auth token generation error in field services
+  - [x] Error: "Failed to generate auth token" when clicking Launch Demo
+  - [x] Found issue: server/api/generate-auth-token.ts was returning 401 for unauthenticated users
+  - [x] Updated endpoint to allow demo user fallback (matching _core/index.ts behavior)
+  - [x] Token generation now works with demo user credentials
+  - [x] Both endpoints now consistent with demo user fallback
+
