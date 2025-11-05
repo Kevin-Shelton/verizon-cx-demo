@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { trpc } from "@/lib/trpc";
 
 interface LaunchDemoButtonProps {
   url: string;
@@ -14,14 +15,26 @@ export default function LaunchDemoButton({
   description,
 }: LaunchDemoButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const generateTokenMutation = trpc.auth.generateAuthToken.useMutation();
 
   const handleLaunchDemo = async () => {
     try {
       setIsLoading(true);
-      // Simply open the external URL in a new window
-      window.open(url, "_blank", "noopener,noreferrer");
+      
+      // Generate auth token
+      const response = await generateTokenMutation.mutateAsync();
+      const token = response.token;
+      
+      // Append token to URL
+      const separator = url.includes("?") ? "&" : "?";
+      const urlWithToken = `${url}${separator}auth=${encodeURIComponent(token)}`;
+      
+      // Open in new window
+      window.open(urlWithToken, "_blank", "noopener,noreferrer");
     } catch (err) {
       console.error("Error launching demo:", err);
+      // Fallback: open without token
+      window.open(url, "_blank", "noopener,noreferrer");
     } finally {
       setIsLoading(false);
     }
