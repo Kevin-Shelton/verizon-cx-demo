@@ -23,23 +23,22 @@ export default function LaunchDemoButton({
       setIsLoading(true);
       setError(null);
 
-      console.log("Starting token generation...");
+      console.log("Starting token generation mutation...");
       
-      // Request auth token via tRPC
-      const response = await generateTokenMutation.mutateAsync();
+      // Call the mutation with no input (it's a mutation with no input parameters)
+      const result = await generateTokenMutation.mutateAsync(undefined);
       
-      console.log("Token response received:", response);
-      console.log("Response type:", typeof response);
-      console.log("Response keys:", Object.keys(response || {}));
+      console.log("Mutation result:", result);
+      console.log("Result type:", typeof result);
+      console.log("Result keys:", result ? Object.keys(result) : "null");
 
-      const token = response?.token;
-      
-      if (!token) {
-        console.error("No token found in response:", response);
-        throw new Error("No token in response");
+      if (!result || !result.token) {
+        console.error("Invalid result structure:", result);
+        throw new Error("Invalid token response");
       }
 
-      console.log("Token obtained successfully");
+      const { token } = result;
+      console.log("Token extracted:", token ? "yes" : "no");
 
       // Append token to URL
       const separator = url.includes("?") ? "&" : "?";
@@ -50,6 +49,10 @@ export default function LaunchDemoButton({
       window.open(demoUrl, "_blank", "noopener,noreferrer");
     } catch (err) {
       console.error("Error launching demo:", err);
+      if (err instanceof Error) {
+        console.error("Error message:", err.message);
+        console.error("Error stack:", err.stack);
+      }
       setError("Failed to launch demo. Please try again.");
     } finally {
       setIsLoading(false);
