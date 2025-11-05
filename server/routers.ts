@@ -5,6 +5,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
+import jwt from "jsonwebtoken";
 
 export const appRouter = router({
   system: systemRouter,
@@ -17,6 +18,44 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+    generateAuthToken: publicProcedure.mutation(({ ctx }) => {
+      try {
+        // Get current user from session
+        let user = ctx.user;
+
+        // If no user, create a demo user for testing
+        if (!user) {
+          user = {
+            id: "demo-user",
+            email: "demo@verizon.com",
+            name: "Demo User",
+            role: "user" as const,
+            createdAt: new Date(),
+            lastSignedIn: new Date(),
+            loginMethod: "demo",
+          };
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+          {
+            email: user.email || "demo@verizon.com",
+            name: user.name || "Demo User",
+            portalUserId: user.id,
+          },
+          process.env.AUTH_TOKEN_SECRET || "default-secret-key",
+          { expiresIn: "5m" }
+        );
+
+        return {
+          token,
+          expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+        };
+      } catch (error) {
+        console.error("Error generating auth token:", error);
+        throw new Error("Failed to generate auth token");
+      }
     }),
   }),
 

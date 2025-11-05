@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { trpc } from "@/lib/trpc";
 
 interface LaunchDemoButtonProps {
   url: string;
@@ -15,34 +16,16 @@ export default function LaunchDemoButton({
 }: LaunchDemoButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const generateTokenMutation = trpc.auth.generateAuthToken.useMutation();
 
   const handleLaunchDemo = async () => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // Request auth token from portal
-      const response = await fetch("/api/generate-auth-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      // Request auth token via tRPC
+      const { token } = await generateTokenMutation.mutateAsync();
 
-      console.log("Token response status:", response.status);
-      console.log("Token response ok:", response.ok);
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error("Token error response:", errorData);
-        throw new Error(`Failed to generate auth token: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Token response data:", data);
-      
-      const { token } = data;
-      
       if (!token) {
         throw new Error("No token in response");
       }
