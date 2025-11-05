@@ -29,16 +29,29 @@ export default function LaunchDemoButton({
         },
       });
 
+      console.log("Token response status:", response.status);
+      console.log("Token response ok:", response.ok);
+
       if (!response.ok) {
-        throw new Error("Failed to generate auth token");
+        const errorData = await response.text();
+        console.error("Token error response:", errorData);
+        throw new Error(`Failed to generate auth token: ${response.status}`);
       }
 
-      const { token } = await response.json();
+      const data = await response.json();
+      console.log("Token response data:", data);
+      
+      const { token } = data;
+      
+      if (!token) {
+        throw new Error("No token in response");
+      }
 
       // Append token to URL
       const separator = url.includes("?") ? "&" : "?";
       const demoUrl = `${url}${separator}auth=${encodeURIComponent(token)}`;
 
+      console.log("Opening demo URL:", demoUrl);
       // Open demo in new window
       window.open(demoUrl, "_blank", "noopener,noreferrer");
     } catch (err) {
