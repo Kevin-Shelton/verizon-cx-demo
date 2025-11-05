@@ -23,12 +23,23 @@ export default function LaunchDemoButton({
       setIsLoading(true);
       setError(null);
 
+      console.log("Starting token generation...");
+      
       // Request auth token via tRPC
-      const { token } = await generateTokenMutation.mutateAsync();
+      const response = await generateTokenMutation.mutateAsync();
+      
+      console.log("Token response received:", response);
+      console.log("Response type:", typeof response);
+      console.log("Response keys:", Object.keys(response || {}));
 
+      const token = response?.token;
+      
       if (!token) {
+        console.error("No token found in response:", response);
         throw new Error("No token in response");
       }
+
+      console.log("Token obtained successfully");
 
       // Append token to URL
       const separator = url.includes("?") ? "&" : "?";
