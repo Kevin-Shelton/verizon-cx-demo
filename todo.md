@@ -274,8 +274,9 @@
 
 - [x] Fix auth token generation error in field services
   - [x] Error: "Failed to generate auth token" when clicking Launch Demo
-  - [x] Found issue: server/api/generate-auth-token.ts was returning 401 for unauthenticated users
-  - [x] Updated endpoint to allow demo user fallback (matching _core/index.ts behavior)
-  - [x] Token generation now works with demo user credentials
-  - [x] Both endpoints now consistent with demo user fallback
+  - [x] Found root cause: HTTP 405 error - /api/generate-auth-token caught by tRPC middleware
+  - [x] Moved token generation to tRPC endpoint (auth.generateAuthToken mutation)
+  - [x] Updated LaunchDemoButton to use tRPC instead of fetch
+  - [x] Token generation now works correctly via tRPC router
+  - [x] Pushed fix to GitHub
 
