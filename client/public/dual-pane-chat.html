@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verizon Dual Pane Chat - Employee & Customer View</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        h1 {
+            color: #1a202c;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .features {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .features h3 {
+            color: #2d3748;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            color: #4a5568;
+            font-size: 14px;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .info-box {
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            border-radius: 4px;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box strong {
+            color: #2d3748;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="24" fill="url(#gradient)" stroke="#667eea" stroke-width="2"/>
+                <path d="M20 18C20 16.9 20.9 16 22 16H28C29.1 16 30 16.9 30 18V32C30 33.1 29.1 34 28 34H22C20.9 34 20 33.1 20 32V18Z" fill="white"/>
+                <circle cx="25" cy="28" r="2" fill="#667eea"/>
+                <defs>
+                    <linearGradient id="gradient" x1="0" y1="0" x2="50" y2="50">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <h1>Dual Pane Chat Demo</h1>
+        <p class="subtitle">Experience real-time translation with simultaneous Employee and Customer views. Perfect for demonstrating dialect-specific communication capabilities.</p>
+
+        <div class="features">
+            <h3>Features</h3>
+            <ul>
+                <li>Real-time dual pane interface</li>
+                <li>Employee view (English)</li>
+                <li>Customer view (Dialect-specific Spanish)</li>
+                <li>Live translation and sentiment analysis</li>
+                <li>Cultural context awareness</li>
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="launchChat()">
+                Launch Dual Pane Chat
+            </button>
+            <button class="btn btn-secondary" onclick="openDocumentation()">
+                Learn More
+            </button>
+        </div>
+
+        <div class="info-box">
+            <p><strong>How it works:</strong> This demo launches a new dual pane chat session where you can see both the employee interface (English) and customer interface (Spanish) side-by-side. Perfect for training and demonstrations.</p>
+        </div>
+
+        <div class="loading" id="loadingState">
+            <div class="spinner"></div>
+            <p class="loading-text">Initializing chat session...</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration for the dual pane chat app
+        const DUAL_PANE_CHAT_BASE_URL = 'https://i-koneworld-in-field-yd98dbeo-kevin-sheltons-projects-045452e9.vercel.app';
+        const DEMO_ENDPOINT = '/demo/110'; // Default demo endpoint
+
+        function launchChat() {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            
+            // Show loading state
+            document.getElementById('loadingState').style.display = 'block';
+            btn.disabled = true;
+            btn.textContent = 'Launching...';
+
+            // Construct the full URL with authentication token if available
+            const chatUrl = DUAL_PANE_CHAT_BASE_URL + DEMO_ENDPOINT;
+            
+            // Get auth token from parent portal if available
+            if (window.parent && window.parent.location.origin !== window.location.origin) {
+                // Cross-origin: use the URL as-is
+                window.open(chatUrl, '_blank', 'noopener,noreferrer');
+            } else {
+                // Same origin or no parent: open with token if available
+                fetch('/api/generate-auth-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const urlWithToken = chatUrl + (chatUrl.includes('?') ? '&' : '?') + 'auth=' + encodeURIComponent(data.token);
+                    window.open(urlWithToken, '_blank', 'noopener,noreferrer');
+                })
+                .catch(error => {
+                    console.log('Opening chat without token:', error);
+                    window.open(chatUrl, '_blank', 'noopener,noreferrer');
+                })
+                .finally(() => {
+                    document.getElementById('loadingState').style.display = 'none';
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                });
+            }
+        }
+
+        function openDocumentation() {
+            // Open documentation or help page
+            window.open('https://docs.ikoneworld.com/dual-pane-chat', '_blank');
+        }
+
+        // Auto-launch if 'auto' parameter is present
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('auto') === 'true') {
+            setTimeout(() => {
+                launchChat();
+            }, 500);
+        }
+    </script>
+</body>
+</html>
+

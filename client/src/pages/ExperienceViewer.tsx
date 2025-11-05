@@ -1,5 +1,5 @@
-import { useRoute } from "wouter";
 import { useState, useEffect } from "react";
+import { useRoute } from "wouter";
 import { trpc } from "@/lib/trpc";
 import ExperienceCarousel from "@/components/ExperienceCarousel";
 
@@ -61,15 +61,15 @@ const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | 
   carlos: [
     { step_type: "email-viewer", url: "https://explore.ikoneworld.com/email-translate/" },
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
-    { step_type: "live-chat", url: "https://ikoneworld-demo.vercel.app/demo/101" },
-    { step_type: "field-services", url: "https://ikoneworld-demo.vercel.app/select-language" },
+    { step_type: "live-chat", url: "/dual-pane-chat.html" },
+    { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
     { step_type: "document-translation", url: "https://explore.ikoneworld.com/document-translate/" },
   ],
   maria: [
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "live-chat", url: "https://ikoneworld-demo.vercel.app/demo/101" },
+    { step_type: "live-chat", url: "/dual-pane-chat.html" },
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
-    { step_type: "field-services", url: "https://ikoneworld-demo.vercel.app/select-language" },
+    { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
   ],
   lucia: [
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
@@ -77,8 +77,8 @@ const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | 
   diego: [
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "live-chat", url: "https://ikoneworld-demo.vercel.app/demo/101" },
-    { step_type: "field-services", url: "https://ikoneworld-demo.vercel.app/select-language" },
+    { step_type: "live-chat", url: "/dual-pane-chat.html" },
+    { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
   ],
 };
 
@@ -148,9 +148,9 @@ export default function ExperienceViewer() {
   if (!personaData || steps.length === 0) {
     return (
       <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center">
-        <div className="text-white text-center">
-          <div className="text-2xl font-bold mb-2">Loading experience...</div>
-          <div className="text-gray-400">Please wait</div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading experience...</p>
         </div>
       </div>
     );

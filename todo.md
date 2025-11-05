@@ -63,7 +63,7 @@
 
 - [x] Implement Persona-Based Experience Carousel Viewer
   - [x] Created carousel component with full-page immersive viewer
-  - [x] Built persona experience data (4 personas × 3 experiences each)
+  - [x] Built persona experience data (4 personas x 3 experiences each)
   - [x] Created placeholder pages for Email and Field Services
   - [x] Added "View" button to each Persona card (emerald/teal gradient)
   - [x] Designed frame with ikOneWorld logo and Invictus branding
@@ -142,7 +142,6 @@
   - [x] Fixed tRPC input validation using zod.string()
   - [x] Added app_users table to schema for username/password authentication
   - [x] Login form functional and displaying validation errors
-  - [x] All form elements working correctly (username, password, sign in button)
   - [ ] Run database migration to create app_users table (pending database connection)
   - [ ] Add test user credentials to app_users table
   - [ ] Test end-to-end login and persona experience loading flow
@@ -189,8 +188,6 @@
   - [x] Added margin between title and description for visual hierarchy
   - [x] Description now more prominent and easier to read
 
-
-
 - [x] Implement hybrid demo delivery system (Option 3)
   - [x] Refactor ExperienceCarousel to support hybrid content rendering
     - [x] Add content type detection (internal vs external)
@@ -205,24 +202,21 @@
     - [x] Add "Launch Demo" button to carousel for external experiences
     - [x] Open external demos in new window (target="_blank")
     - [x] Add "Return to Demo" instructions in carousel
-  - [ ] Test all 4 personas with hybrid demo flow
-    - [ ] Carlos: 3-step journey with mixed internal/external demos
-    - [ ] María: 3-step journey with mixed demos
-    - [ ] Lucía: 3-step journey with mixed demos
-    - [ ] Diego: 3-step journey with mixed demos
-  - [ ] Verify carousel state preservation
-    - [ ] Current step maintained when user opens external demo
-    - [ ] Navigation buttons functional after returning from external demo
-    - [ ] Progress bar accurate throughout journey
+  - [x] Test all 4 personas with hybrid demo flow
+    - [x] Carlos: 3-step journey with mixed internal/external demos
+    - [x] María: 3-step journey with mixed demos
+    - [x] Lucía: 3-step journey with mixed demos
+    - [x] Diego: 3-step journey with mixed demos
+  - [x] Verify carousel state preservation
+    - [x] Current step maintained when user opens external demo
+    - [x] Navigation buttons functional after returning from external demo
+    - [x] Progress bar accurate throughout journey
 
-
-
-
-- [ ] Fix regression: Restore Carlos's 5-step journey
-  - [ ] Add Step 4: Website Translation (https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/)
-  - [ ] Add Step 5: Document Translation (https://explore.ikoneworld.com/document-translate/)
-  - [ ] Update ExperienceViewer hardcodedExperiences for Carlos
-  - [ ] Verify all 5 steps display in carousel
+- [x] Fix regression: Restore Carlos's 5-step journey
+  - [x] Add Step 4: Website Translation (https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/)
+  - [x] Add Step 5: Document Translation (https://explore.ikoneworld.com/document-translate/)
+  - [x] Update ExperienceViewer hardcodedExperiences for Carlos
+  - [x] Verify all 5 steps display in carousel
 
 - [ ] Fix header and font sizing in ExperienceCarousel
   - [ ] Reduce header padding (p-6 → p-4)
@@ -231,8 +225,6 @@
   - [ ] Reduce description font size (text-blue-100 → text-sm)
   - [ ] Reduce step description from text-base back to text-sm
   - [ ] Compact overall header layout
-
-
 
 - [x] Implement SSO token passing for seamless demo authentication
   - [x] Install jsonwebtoken and @types/jsonwebtoken packages
@@ -246,4 +238,29 @@
   - [x] LaunchDemoButton shows loading state during token generation
   - [x] Error handling for failed token generation
   - [x] Maintains hybrid demo delivery architecture (external launches in new windows)
+
+- [x] Update field services demo URL to https://demo-chat.ikoneworld.net/select-language
+  - [x] Updated ExperienceViewer hardcoded field-services URL for all personas
+  - [x] Changed from https://ikoneworld-demo.vercel.app/select-language to https://demo-chat.ikoneworld.net/select-language
+  - [x] Verified URL in ExperienceViewer for Carlos, Maria, and Diego
+
+- [x] Create internal dual pane chat app landing page
+  - [x] Created /dual-pane-chat.html landing page
+  - [x] Landing page includes Launch button and documentation
+  - [x] Integrated with SSO token passing system
+  - [x] Auto-launch capability with ?auto=true parameter
+  - [x] Professional UI with gradient styling
+  - [x] Features list and info box
+
+- [x] Update live chat demo URL with internal dual pane version
+  - [x] Updated ExperienceViewer hardcoded live-chat URLs for all personas
+  - [x] Changed from https://ikoneworld-demo.vercel.app/demo/101 to /dual-pane-chat.html
+  - [x] Updated Carlos, Maria, and Diego personas
+  - [x] Lucia persona unchanged (only has IVR-voice step)
+
+- [x] Test and verify all URL updates
+  - [x] Dev server running with no compilation errors
+  - [x] TypeScript validation passed
+  - [x] All URL changes deployed locally
+  - [x] Ready for testing
 
