@@ -61,13 +61,13 @@ const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | 
   carlos: [
     { step_type: "email-viewer", url: "https://explore.ikoneworld.com/email-translate/" },
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
-    { step_type: "live-chat", url: "/dual-pane-chat.html" },
+    { step_type: "live-chat", url: "https://dual-pane-chat.ikoneworld.net" },
     { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
     { step_type: "document-translation", url: "https://explore.ikoneworld.com/document-translate/" },
   ],
   maria: [
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "live-chat", url: "/dual-pane-chat.html" },
+    { step_type: "live-chat", url: "https://dual-pane-chat.ikoneworld.net" },
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
   ],
@@ -77,7 +77,7 @@ const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | 
   diego: [
     { step_type: "website-translation", url: "https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/" },
     { step_type: "ivr-voice", url: "https://qa-web.ikunnect.com/auth/login" },
-    { step_type: "live-chat", url: "/dual-pane-chat.html" },
+    { step_type: "live-chat", url: "https://dual-pane-chat.ikoneworld.net" },
     { step_type: "field-services", url: "https://demo-chat.ikoneworld.net/select-language" },
   ],
 };
