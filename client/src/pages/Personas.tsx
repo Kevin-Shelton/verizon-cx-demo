@@ -76,7 +76,7 @@ export default function Personas() {
         </div>
 
         {/* Personas Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {personasData.personas.map((persona, index) => {
             const isSelected = selectedPersona?.id === persona.id;
 
