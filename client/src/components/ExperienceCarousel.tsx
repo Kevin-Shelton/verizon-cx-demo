@@ -23,7 +23,7 @@ interface ExperienceCarouselProps {
 
 // Content type classification
 const INTERNAL_EXPERIENCES: string[] = [];
-const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services", "email-viewer", "document-translation"];
+const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services", "email-viewer"];
 
 // Helper function to check if URL is external
 const isExternalUrl = (url: string, stepType?: string): boolean => {
