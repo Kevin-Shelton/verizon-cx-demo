@@ -98,35 +98,32 @@ export default function Personas() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Card
-                  className={`h-full flex flex-col transition-all cursor-pointer hover:shadow-xl ${
+                  className={`h-full flex flex-col transition-all cursor-pointer hover:shadow-xl relative ${
                     isSelected
                       ? `ring-2 ring-blue-600 shadow-lg ${colors.border} border-2`
                       : `${colors.border} border-2 hover:shadow-md`
                   }`}
                   onClick={() => handleSelectPersona(persona)}
                 >
-                  <CardHeader className={`${colors.bg} pb-2`}>
-                    <div className="flex items-start gap-3">
-                      <div className="text-4xl flex-shrink-0">{persona.avatar}</div>
+                  <div className="absolute -top-2 -left-2 text-5xl">{persona.avatar}</div>
+                  
+                  <CardHeader className={`${colors.bg} pb-2 pt-6`}>
+                    <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-0.5">
-                              <CardTitle className="text-lg text-gray-900">{persona.name}</CardTitle>
-                              <Badge className={`text-xs font-semibold ${colors.badge}`}>
-                                {persona.dialectLabel}
-                              </Badge>
-                            </div>
-                            <CardDescription className="text-sm text-gray-600">
-                              {persona.role}
-                            </CardDescription>
-                            <p className="text-gray-700 leading-relaxed text-xs mt-0.5">{persona.description}</p>
-                          </div>
-                          {isSelected && (
-                            <CheckCircle2 className="h-7 w-7 text-blue-600 flex-shrink-0" />
-                          )}
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <CardTitle className="text-lg text-gray-900">{persona.name}</CardTitle>
+                          <Badge className={`text-xs font-semibold ${colors.badge}`}>
+                            {persona.dialectLabel}
+                          </Badge>
                         </div>
+                        <CardDescription className="text-sm text-gray-600">
+                          {persona.role}
+                        </CardDescription>
+                        <p className="text-gray-700 leading-relaxed text-xs mt-0.5">{persona.description}</p>
                       </div>
+                      {isSelected && (
+                        <CheckCircle2 className="h-7 w-7 text-blue-600 flex-shrink-0" />
+                      )}
                     </div>
                   </CardHeader>
 
