@@ -13,21 +13,70 @@ export default function Login() {
   const { login } = useAuth();
   const [, setLocation] = useLocation();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [requiresRecaptcha, setRequiresRecaptcha] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     if (!username || !password) {
       setError('Please enter both username and password');
+      setIsLoading(false);
       return;
     }
 
-    const success = await login(username, password);
-    if (success) {
-      setLocation('/videos');
-    } else {
-      setError('Invalid username or password');
-      setPassword('');
+    try {
+      // Try to call backend API first
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: username,
+          password: password,
+          recaptchaToken: recaptchaToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Backend authentication successful
+        // Store token and user info
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        // Redirect to videos
+        setLocation('/videos');
+      } else if (response.status === 403 && data.requiresRecaptcha) {
+        // reCAPTCHA required
+        setRequiresRecaptcha(true);
+        setError('Too many login attempts. Please complete the reCAPTCHA verification.');
+      } else {
+        // Backend authentication failed, try demo credentials as fallback
+        const success = await login(username, password);
+        if (success) {
+          setLocation('/videos');
+        } else {
+          setError(data.error || 'Invalid username or password');
+          setPassword('');
+        }
+      }
+    } catch (err) {
+      // Network error or API not available, fall back to demo credentials
+      console.warn('Backend API unavailable, using demo credentials');
+      const success = await login(username, password);
+      if (success) {
+        setLocation('/videos');
+      } else {
+        setError('Invalid username or password');
+        setPassword('');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,10 +118,10 @@ export default function Login() {
                 </div>
               )}
 
-              {/* Username Field */}
+              {/* Email/Username Field */}
               <div className="space-y-2">
                 <label htmlFor="username" className="text-sm font-medium text-gray-700">
-                  Username
+                  Email or Username
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -122,10 +171,20 @@ export default function Login() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+                disabled={isLoading}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white py-2 rounded-lg font-medium transition-colors"
               >
-                Sign In
+                {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
+
+              {/* reCAPTCHA Notice */}
+              {requiresRecaptcha && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm text-yellow-800">
+                    reCAPTCHA verification required. Please refresh and try again.
+                  </p>
+                </div>
+              )}
 
 
             </form>
