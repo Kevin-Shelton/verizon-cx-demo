@@ -23,7 +23,8 @@ export default function LaunchDemoButton({
       
       // Generate auth token
       const response = await generateTokenMutation.mutateAsync();
-      const token = response.token;
+      console.log("Token response:", response);
+      const token = response?.token;
       
       // For live-chat type, use the demo-infield URL with token parameter
       const demoUrl = "https://demo-infield.ikoneworld.net/demo-start";
