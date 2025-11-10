@@ -107,7 +107,7 @@ export default function Personas() {
                 >
                   <div className="absolute -top-2 -left-2 text-5xl">{persona.avatar}</div>
                   
-                  <CardHeader className={`${colors.bg} pb-2 pt-6`}>
+                  <CardHeader className={`${colors.bg} pb-2 pt-6 px-3`}>
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-0.5">
