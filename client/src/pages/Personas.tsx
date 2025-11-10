@@ -19,16 +19,16 @@ export default function Personas() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-10 px-8 shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-8 shadow-lg">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-start justify-between gap-8">
             {/* Left side: Title and description */}
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
-                <Users className="w-8 h-8" />
-                <h1 className="text-3xl font-bold">Customer Personas</h1>
+              <div className="flex items-center gap-2 mb-2">
+                <Users className="w-6 h-6" />
+                <h1 className="text-2xl font-bold">Customer Personas</h1>
               </div>
-              <p className="text-base text-blue-100">
+              <p className="text-sm text-blue-100">
                 Experience the multilingual journey through the eyes of Spanish-speaking customers across different dialects and use cases
               </p>
             </div>
@@ -63,11 +63,11 @@ export default function Personas() {
 
       <div className="max-w-7xl mx-auto px-8 py-12">
         {/* Introduction */}
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-lg mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
             Why Personas Matter for Multilingual CX
           </h2>
-          <p className="text-lg text-gray-700 mb-4">
+          <p className="text-base text-gray-700 mb-3">
             Each persona represents a distinct segment of the U.S. Hispanic market with unique linguistic preferences, cultural expectations, and communication needs. By experiencing their journeys, you'll see how dialect-specific translation drives trust, reduces friction, and improves conversion rates.
           </p>
           <p className="text-gray-600">
@@ -98,29 +98,29 @@ export default function Personas() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Card
-                  className={`h-full transition-all cursor-pointer hover:shadow-xl ${
+                  className={`h-full flex flex-col transition-all cursor-pointer hover:shadow-xl ${
                     isSelected
                       ? `ring-2 ring-blue-600 shadow-lg ${colors.border} border-2`
                       : `${colors.border} border-2 hover:shadow-md`
                   }`}
                   onClick={() => handleSelectPersona(persona)}
                 >
-                  <CardHeader className={`${colors.bg} pb-4`}>
-                    <div className="flex items-start gap-4">
-                      <div className="text-5xl flex-shrink-0">{persona.avatar}</div>
+                  <CardHeader className={`${colors.bg} pb-2`}>
+                    <div className="flex items-start gap-3">
+                      <div className="text-4xl flex-shrink-0">{persona.avatar}</div>
                       <div className="flex-1">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <CardTitle className="text-2xl text-gray-900">{persona.name}</CardTitle>
-                              <Badge className={`text-sm font-semibold ${colors.badge}`}>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <CardTitle className="text-lg text-gray-900">{persona.name}</CardTitle>
+                              <Badge className={`text-xs font-semibold ${colors.badge}`}>
                                 {persona.dialectLabel}
                               </Badge>
                             </div>
-                            <CardDescription className="text-base text-gray-600">
+                            <CardDescription className="text-sm text-gray-600">
                               {persona.role}
                             </CardDescription>
-                            <p className="text-gray-700 leading-relaxed text-sm mt-1">{persona.description}</p>
+                            <p className="text-gray-700 leading-relaxed text-xs mt-0.5">{persona.description}</p>
                           </div>
                           {isSelected && (
                             <CheckCircle2 className="h-7 w-7 text-blue-600 flex-shrink-0" />
@@ -130,27 +130,27 @@ export default function Personas() {
                     </div>
                   </CardHeader>
 
-                  <CardContent className="pt-4 space-y-5">
+                  <CardContent className="pt-3 pb-0 flex-1 flex flex-col space-y-3">
 
                     {/* Key Needs */}
-                    <div className="space-y-3">
-                      <p className="text-sm font-bold text-gray-900 uppercase tracking-wide">
+                    <div className="space-y-2 flex-1">
+                      <p className="text-xs font-bold text-gray-900 uppercase tracking-wide">
                         Key Needs:
                       </p>
-                      <ul className="grid grid-cols-2 gap-3">
+                      <ul className="grid grid-cols-2 gap-2">
                         {persona.needs.map((need, i) => (
                           <li
                             key={i}
-                            className="text-sm text-gray-700 flex items-start gap-2"
+                            className="text-xs text-gray-700 flex items-start gap-1.5"
                           >
-                            <CheckCircle2 className={`w-4 h-4 mt-0.5 ${colors.text} flex-shrink-0`} />
+                            <CheckCircle2 className={`w-3 h-3 mt-0.5 ${colors.text} flex-shrink-0`} />
                             <span>{need}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     {/* Action Buttons */}
-                    <div className="mt-6">
+                    <div className="mt-auto pt-2">
                       <Button
                         className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold"
                         onClick={(e) => {
