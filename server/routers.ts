@@ -6,6 +6,8 @@ import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
+import { verifyPassword, generateToken } from "./auth";
+import { getAppUserByEmail } from "./db";
 
 export const appRouter = router({
   system: systemRouter,
@@ -19,6 +21,38 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+    login: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { email, password } = input;
+          const user = await getAppUserByEmail(email);
+          if (!user) {
+            throw new Error('Invalid credentials');
+          }
+          const passwordValid = await verifyPassword(password, user.password_hash);
+          if (!passwordValid) {
+            throw new Error('Invalid credentials');
+          }
+          const token = generateToken(user.id, user.email, user.name, user.role);
+          return {
+            success: true,
+            token,
+            user: {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              role: user.role,
+            },
+          };
+        } catch (error) {
+          console.error('Login error:', error);
+          throw new Error(error instanceof Error ? error.message : 'Authentication failed');
+        }
+      }),
     generateAuthToken: publicProcedure
       .input(z.void().optional())
       .output(z.object({

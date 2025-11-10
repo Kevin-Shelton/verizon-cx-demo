@@ -29,45 +29,50 @@ export default function Login() {
     }
 
     try {
-      // Try to call backend API first
-      const response = await fetch('/api/auth/login', {
+      // Call tRPC login endpoint
+      const response = await fetch('/api/trpc/auth.login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: username,
-          password: password,
-          recaptchaToken: recaptchaToken,
+          json: {
+            email: username,
+            password: password,
+          },
         }),
       });
 
       const data = await response.json();
 
-      if (response.ok && data.success) {
+      if (response.ok && data.result?.data?.success) {
         // Backend authentication successful
-        // Store token and user info
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        // Redirect to videos
+        localStorage.setItem('authToken', data.result.data.token);
+        localStorage.setItem('user', JSON.stringify(data.result.data.user));
         setLocation('/videos');
-      } else if (response.status === 403 && data.requiresRecaptcha) {
-        // reCAPTCHA required
-        setRequiresRecaptcha(true);
-        setError('Too many login attempts. Please complete the reCAPTCHA verification.');
-      } else {
+      } else if (data.error) {
         // Backend authentication failed, try demo credentials as fallback
+        console.warn('Backend login failed:', data.error);
         const success = await login(username, password);
         if (success) {
           setLocation('/videos');
         } else {
-          setError(data.error || 'Invalid username or password');
+          setError(data.error?.message || 'Invalid username or password');
+          setPassword('');
+        }
+      } else {
+        // Unexpected response, try demo credentials
+        const success = await login(username, password);
+        if (success) {
+          setLocation('/videos');
+        } else {
+          setError('Invalid username or password');
           setPassword('');
         }
       }
     } catch (err) {
       // Network error or API not available, fall back to demo credentials
-      console.warn('Backend API unavailable, using demo credentials');
+      console.warn('Backend API unavailable, using demo credentials', err);
       const success = await login(username, password);
       if (success) {
         setLocation('/videos');

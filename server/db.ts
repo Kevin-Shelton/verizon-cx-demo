@@ -134,6 +134,21 @@ export async function getTranscriptById(id: string) {
 
 
 
+// App Users queries (for authentication)
+export async function getAppUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  try {
+    const result = await db.execute(
+      sql`SELECT id, email, password_hash, name, role FROM app_users WHERE email = ${email} LIMIT 1`
+    );
+    return (result as any[])?.[0] || undefined;
+  } catch (error) {
+    console.error("Error fetching app user:", error);
+    return undefined;
+  }
+}
+
 // Persona Experiences queries
 export async function getPersonaExperiences(personaId: string) {
   const db = await getDb();
