@@ -59,7 +59,7 @@ export default function LaunchDemoButton({
           whileHover={{ scale: isLoading ? 1 : 1.05 }}
           whileTap={{ scale: isLoading ? 1 : 0.95 }}
         >
-          <span>{isLoading ? "Launching..." : "Launch Demo"}</span>
+          <span>{isLoading ? "Launching..." : "Let's Go!"}</span>
           <ExternalLink className="w-5 h-5" />
         </motion.button>
 

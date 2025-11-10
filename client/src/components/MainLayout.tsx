@@ -28,7 +28,7 @@ interface MainLayoutProps {
 // More dropdown items
 const moreItems = [
   { name: "Sales Flow Journey", href: "/journey", icon: Map },
-  { name: "Experiences", href: "/experiences", icon: Sparkles },
+  { name: "Experiences", href: "https://demo-chat.ikoneworld.net/dashboard", icon: Sparkles },
   { name: "Research & Feedback", href: "/research-sources", icon: BookOpen },
 ];
 
