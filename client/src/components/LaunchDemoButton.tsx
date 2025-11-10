@@ -26,9 +26,9 @@ export default function LaunchDemoButton({
       console.log("Token response:", response);
       const token = response?.token;
       
-      // For live-chat type, use the demo-infield URL with token parameter
-      const demoUrl = "https://demo-infield.ikoneworld.net/demo-start";
-      const urlWithToken = `${demoUrl}?token=${encodeURIComponent(token)}`;
+      // Append token to the actual URL passed in
+      const separator = url.includes('?') ? '&' : '?';
+      const urlWithToken = `${url}${separator}token=${encodeURIComponent(token)}`;
       
       // Open in new window
       window.open(urlWithToken, "_blank", "noopener,noreferrer");
