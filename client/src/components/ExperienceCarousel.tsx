@@ -22,8 +22,8 @@ interface ExperienceCarouselProps {
 }
 
 // Content type classification
-const INTERNAL_EXPERIENCES = ["email-viewer"];
-const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services"];
+const INTERNAL_EXPERIENCES: string[] = [];
+const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services", "email-viewer", "document-translation"];
 
 // Helper function to check if URL is external
 const isExternalUrl = (url: string, stepType?: string): boolean => {
@@ -74,11 +74,6 @@ export default function ExperienceCarousel({
     // Check if URL is external
     const urlIsExternal = isExternalUrl(currentStepData.url);
 
-    // Internal experiences - render as embedded components
-    if (currentStepData.type === "email-viewer" && !urlIsExternal) {
-      return <EmailViewerComponent personaName={personaName} />;
-    }
-
     // External experiences - show launch button
     if (EXTERNAL_EXPERIENCES.includes(currentStepData.type) && urlIsExternal) {
       return (
@@ -88,6 +83,11 @@ export default function ExperienceCarousel({
           description={currentStepData.description}
         />
       );
+    }
+    
+    // Internal experiences - render as embedded components
+    if (currentStepData.type === "email-viewer" && !urlIsExternal) {
+      return <EmailViewerComponent personaName={personaName} />;
     }
     
     // Fallback for internal field-services (local URL)
