@@ -149,20 +149,20 @@ export default function ExperienceCarousel({
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 overflow-y-auto bg-white">
-        <div className="max-w-7xl mx-auto">
+      <div className="overflow-y-auto bg-white">
+        <div className="max-w-7xl mx-auto w-full">
           {currentStepData && (
             <div>
-              <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+              <div className="p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <h2 className="text-xl font-bold text-gray-900 mb-2">
                   {currentStepData.title}
                 </h2>
-                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                <p className="text-base text-gray-700 leading-relaxed mb-3">
                   {currentStepData.description}
                 </p>
                 {currentStepData.narrative && (
-                  <div className="bg-white rounded-lg p-4 border-l-4 border-blue-500 mt-4">
-                    <p className="text-base text-gray-800 leading-relaxed">
+                  <div className="bg-white rounded-lg p-3 border-l-4 border-blue-500 mt-3">
+                    <p className="text-sm text-gray-800 leading-relaxed">
                       {currentStepData.narrative}
                     </p>
                   </div>
