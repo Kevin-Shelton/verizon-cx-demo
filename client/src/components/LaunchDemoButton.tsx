@@ -42,33 +42,24 @@ export default function LaunchDemoButton({
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-4">
-      {/* Compact content section */}
-      <div className="space-y-2 sm:space-y-3">
-        {/* Title and Button Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
-          <div className="flex-1">
-            <h3 className="text-base sm:text-lg font-bold text-gray-900">{title}</h3>
-            <p className="text-xs sm:text-sm text-gray-600 mt-0.5">{description}</p>
-          </div>
-          <motion.button
-            onClick={handleLaunchDemo}
-            disabled={isLoading}
-            className="inline-flex items-center gap-1 sm:gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition-all shadow-lg text-xs sm:text-sm flex-shrink-0 whitespace-nowrap"
-            whileHover={{ scale: isLoading ? 1 : 1.05 }}
-            whileTap={{ scale: isLoading ? 1 : 0.95 }}
-          >
-            <span>{isLoading ? "Launching..." : "Let's Go!"}</span>
-            <ExternalLink className="w-3 sm:w-4 h-3 sm:h-4" />
-          </motion.button>
-        </div>
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:p-6 flex flex-col items-center gap-3 sm:gap-4">
+      {/* Centered Button */}
+      <motion.button
+        onClick={handleLaunchDemo}
+        disabled={isLoading}
+        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition-all shadow-lg text-sm sm:text-base"
+        whileHover={{ scale: isLoading ? 1 : 1.05 }}
+        whileTap={{ scale: isLoading ? 1 : 0.95 }}
+      >
+        <span>{isLoading ? "Launching..." : "Let's Go!"}</span>
+        <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
+      </motion.button>
 
-        {/* Tip box - compact inline */}
-        <div className="bg-white rounded-lg p-2 sm:p-3 border border-blue-200 text-xs sm:text-xs">
-          <p className="text-gray-600">
-            <span className="font-semibold">💡 Tip:</span> Demo opens in a new window. Reference this carousel while using it, then return here to continue.
-          </p>
-        </div>
+      {/* Tip box */}
+      <div className="bg-white rounded-lg p-2 sm:p-3 border border-blue-200 text-xs sm:text-sm max-w-md">
+        <p className="text-gray-600">
+          <span className="font-semibold">💡 Tip:</span> Demo opens in a new window. Reference this carousel while using it, then return here to continue.
+        </p>
       </div>
     </div>
   );
