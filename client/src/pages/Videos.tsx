@@ -1,7 +1,7 @@
 import { Lock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface VideoItem {
   id: string;
@@ -33,6 +33,17 @@ const videos: VideoItem[] = [
 
 export default function Videos() {
   const [expandedVideo, setExpandedVideo] = useState<string | null>(null);
+  const videosGridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll to videos section on page load
+    const timer = setTimeout(() => {
+      if (videosGridRef.current) {
+        videosGridRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -58,7 +69,7 @@ export default function Videos() {
       </section>
 
       {/* Videos Grid */}
-      <section className="py-6 md:py-8 bg-white">
+      <section className="py-6 md:py-8 bg-white" ref={videosGridRef}>
         <div className="container">
           <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {videos.map((video, index) => (
@@ -69,7 +80,7 @@ export default function Videos() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col relative -top-12">
+                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
                   {/* Embedded Video Player Container */}
                   <div className="relative w-full bg-black rounded-lg overflow-hidden mb-4 aspect-video">
                     <iframe
