@@ -61,9 +61,11 @@ export type InsertTranscript = typeof transcripts.$inferInsert;
 export const appUsers = mysqlTable("app_users", {
   id: varchar("id", { length: 64 }).primaryKey(),
   email: varchar("email", { length: 320 }).notNull().unique(),
-  password_hash: varchar("password_hash", { length: 255 }).notNull(),
+  password_hash: varchar("password_hash", { length: 255 }),
   name: text("name"),
   role: varchar("role", { length: 64 }).default("user").notNull(),
+  password_status: varchar("password_status", { length: 32 }).default("temporary"), // 'temporary' or 'set'
+  created_by: varchar("created_by", { length: 320 }),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
