@@ -27,17 +27,15 @@ export default function Login() {
     try {
       console.log('Calling tRPC login endpoint with email:', email);
       
-      // Call the tRPC login endpoint
-      const response = await fetch('/api/trpc/auth.login', {
+      // Call the Vercel API endpoint
+      const response = await fetch('/api/trpc', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          json: {
-            email: email,
-            password: password,
-          },
+          email: email,
+          password: password,
         }),
       });
 
@@ -66,8 +64,8 @@ export default function Login() {
       console.log('Response data:', responseData);
 
       // Check if we got a successful response
-      // tRPC format: { result: { data: { json: { success, token, user } } } }
-      const successData = responseData.result?.data?.json;
+      // Vercel API format: { success, token, user }
+      const successData = responseData;
       
       if (successData?.success && successData?.token) {
         console.log('Login successful, storing token and redirecting');
