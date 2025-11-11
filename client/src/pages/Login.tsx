@@ -27,8 +27,8 @@ export default function Login() {
     try {
       console.log('Calling tRPC login endpoint with email:', email);
       
-      // Call the Vercel API endpoint
-      const response = await fetch('/api/trpc', {
+      // Call the dedicated login API endpoint
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
