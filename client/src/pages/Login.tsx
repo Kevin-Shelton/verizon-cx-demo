@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { APP_LOGO, APP_TITLE } from '@/const';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+  const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,8 +77,18 @@ export default function Login() {
         localStorage.setItem('verizon_cx_user', email);
         localStorage.setItem('verizon_cx_auth', 'true');
         
-        // Redirect to videos page
-        setLocation('/videos');
+        // Update AuthContext with the authenticated user
+        const loginSuccess = await authLogin(email, password);
+        if (loginSuccess) {
+          console.log('AuthContext updated, redirecting to videos');
+          // Redirect to videos page
+          setLocation('/videos');
+        } else {
+          console.error('AuthContext login failed');
+          setError('Authentication context failed. Please try again.');
+          setPassword('');
+          setIsLoading(false);
+        }
         return;
       }
 
