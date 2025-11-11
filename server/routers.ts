@@ -6,7 +6,7 @@ import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { verifyPassword, generateToken, hashPassword } from "./auth";
+import { verifyPassword, generateToken } from "./auth";
 import { getAppUserByEmail } from "./db";
 
 export const appRouter = router({
@@ -110,6 +110,7 @@ export const appRouter = router({
         try {
           const { email, password } = input;
           const { createAppUser } = await import("./db");
+          const { hashPassword } = await import("./auth");
           
           const passwordHash = await hashPassword(password);
           const userId = crypto.randomUUID();
