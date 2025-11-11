@@ -29,6 +29,7 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         try {
           const { email, password } = input;
+          console.log('[LOGIN] Received login request for email:', email);
           
           // Hardcoded admin user for testing
           const ADMIN_EMAIL = 'kevin.shelton@invictusbpo.com';
@@ -64,7 +65,8 @@ export const appRouter = router({
           }
           
           const token = generateToken(user.id, user.email, user.name, user.role);
-          return {
+          console.log('[LOGIN] Authentication successful for:', email);
+          const response = {
             success: true,
             token,
             user: {
@@ -74,6 +76,8 @@ export const appRouter = router({
               role: user.role,
             },
           };
+          console.log('[LOGIN] Returning response:', JSON.stringify(response).substring(0, 100));
+          return response;
         } catch (error) {
           console.error('Login error:', error);
           throw new Error(error instanceof Error ? error.message : 'Authentication failed');

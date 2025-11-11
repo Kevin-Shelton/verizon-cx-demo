@@ -51,11 +51,18 @@ export default function Login() {
       const responseText = await response.text();
       console.log('Response text:', responseText.substring(0, 500));
       
-      if (!responseText) {
+      if (!responseText || responseText.trim().length === 0) {
         throw new Error('Empty response from server');
       }
       
-      const responseData = JSON.parse(responseText);
+      let responseData;
+      try {
+        responseData = JSON.parse(responseText);
+      } catch (parseErr) {
+        console.error('Failed to parse response as JSON:', parseErr);
+        console.error('Raw response:', responseText);
+        throw new Error('Invalid JSON response from server');
+      }
       console.log('Response data:', responseData);
 
       // Check if we got a successful response
