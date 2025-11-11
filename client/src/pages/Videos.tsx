@@ -37,7 +37,7 @@ export default function Videos() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-8 md:py-12 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-6 md:py-8 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
@@ -47,10 +47,10 @@ export default function Videos() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 leading-tight">
+            <h1 className="text-2xl md:text-3xl font-bold mb-1 leading-tight">
               Proprietary Demo Videos
             </h1>
-            <p className="text-base md:text-lg text-white/90 leading-relaxed">
+            <p className="text-sm md:text-base text-white/90 leading-relaxed">
               Watch in-depth demonstrations of our dialect-specific translation technology
             </p>
           </motion.div>
@@ -58,9 +58,9 @@ export default function Videos() {
       </section>
 
       {/* Videos Grid */}
-      <section className="py-8 md:py-12 bg-white">
+      <section className="py-6 md:py-8 bg-white">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -69,9 +69,9 @@ export default function Videos() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-6 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
+                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
                   {/* Embedded Video Player Container */}
-                  <div className="relative w-full bg-black rounded-lg overflow-hidden mb-6 aspect-video">
+                  <div className="relative w-full bg-black rounded-lg overflow-hidden mb-4 aspect-video">
                     <iframe
                       src={`${video.url}?autoplay=1&muted=1`}
                       title={video.title}
@@ -90,14 +90,14 @@ export default function Videos() {
                   </div>
 
                   {/* Video Information */}
-                  <div className="flex-grow flex flex-col gap-3">
+                  <div className="flex-grow flex flex-col gap-2">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{video.title}</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">{video.description}</p>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">{video.title}</h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">{video.description}</p>
                     </div>
 
                     {/* Video Metadata */}
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-200 mt-auto">
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-200 mt-auto">
                       <div className="flex items-center gap-2 text-xs text-gray-500">
                         <span className="font-semibold">Proprietary Content</span>
                       </div>
@@ -116,7 +116,7 @@ export default function Videos() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-6xl mx-auto mt-12"
+            className="max-w-6xl mx-auto mt-8"
           >
             <Card className="p-6 border-2 border-blue-200 bg-blue-50">
               <div className="flex items-start gap-4">
@@ -136,7 +136,7 @@ export default function Videos() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
+      <section className="py-12 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,10 +144,10 @@ export default function Videos() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
               Ready to See It In Action?
             </h2>
-            <p className="text-lg text-white/90">
+            <p className="text-base text-white/90">
               Explore our comprehensive demo to understand how dialect-specific translation
               transforms customer experience across every touchpoint.
             </p>
