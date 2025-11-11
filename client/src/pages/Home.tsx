@@ -1,4 +1,4 @@
-import { ArrowRight, Globe, MessageSquare, PhoneCall, Zap, Target, Shield } from "lucide-react";
+import { ArrowRight, Target, Zap, Shield } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section - Reduced height by 40% */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-14 md:py-20 overflow-hidden">
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-10 md:py-12 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         
@@ -16,26 +16,23 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-5xl mx-auto text-center"
+            className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              Culturally Aware
-              <span className="block bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">
-                Multilingual CX
-              </span>
+            <h1 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
+              <span className="bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">Culturally Aware Multilingual CX</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-6 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base md:text-lg text-white/90 mb-6 leading-relaxed max-w-3xl mx-auto">
               Experience how dialect-specific Spanish translation transforms customer engagement across every touchpoint
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/personas">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-6 shadow-xl">
+                <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-2 shadow-xl">
                   Explore Personas
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/journey">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
+                <Button variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-6 py-2">
                   View Coverage Map
                 </Button>
               </Link>
@@ -44,54 +41,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experience Modules */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* Why Dialect-Specific Translation Wins */}
+      <section className="py-16 bg-white">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Multilingual Experiences
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              See real-time translation in action across every customer touchpoint
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {[
-              { icon: Globe, title: "Web", desc: "Bilingual website with dynamic content translation", href: "/experiences/web", gradient: "from-blue-500 to-blue-600" },
-              { icon: MessageSquare, title: "Email", desc: "Automated email translation with cultural nuances", href: "/experiences/email", gradient: "from-purple-500 to-purple-600" },
-              { icon: MessageSquare, title: "Chat", desc: "Real-time dual-pane chat translation", href: "/experiences/chat", gradient: "from-green-500 to-green-600" },
-              { icon: PhoneCall, title: "IVR", desc: "Voice-enabled multilingual phone system", href: "/experiences/ivr", gradient: "from-orange-500 to-orange-600" },
-              { icon: Globe, title: "Documents", desc: "Translated contracts and legal documents", href: "/experiences/documents", gradient: "from-red-500 to-red-600" },
-              { icon: Globe, title: "Field Services", desc: "Mobile translation for field technicians", href: "/experiences/field", gradient: "from-teal-500 to-teal-600" },
-            ].map((module, index) => (
-              <motion.div
-                key={module.href}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link href={module.href}>
-                  <Card className="p-6 hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-blue-400 bg-white group h-full">
-                    <div className={`bg-gradient-to-br ${module.gradient} w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
-                      <module.icon className="h-7 w-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{module.title}</h3>
-                    <p className="text-gray-600">{module.desc}</p>
-                  </Card>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Invictus Wins */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Dialect-Specific Translation Wins
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -141,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
+      <section className="py-16 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">
         <div className="container">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -149,7 +103,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Transform Your Customer Experience?
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">

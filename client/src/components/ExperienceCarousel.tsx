@@ -1,7 +1,10 @@
-import { ChevronLeft, ChevronRight, RotateCcw, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
+import LaunchDemoButton from "./LaunchDemoButton";
+import EmailViewerComponent from "./EmailViewerComponent";
+import FieldServicesComponent from "./FieldServicesComponent";
 
 export interface ExperienceStep {
   id: string;
@@ -9,6 +12,7 @@ export interface ExperienceStep {
   description: string;
   url: string;
   type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation";
+  narrative?: string;
 }
 
 interface ExperienceCarouselProps {
@@ -17,13 +21,23 @@ interface ExperienceCarouselProps {
   steps: ExperienceStep[];
 }
 
+// Content type classification
+const INTERNAL_EXPERIENCES: string[] = [];
+const EXTERNAL_EXPERIENCES = ["ivr-voice", "website-translation", "live-chat", "document-translation", "field-services", "email-viewer"];
+
+// Helper function to check if URL is external
+const isExternalUrl = (url: string, stepType?: string): boolean => {
+  // Absolute URLs are always external
+  return url.startsWith("http://") || url.startsWith("https://");
+};
+
 export default function ExperienceCarousel({
   personaName,
   personaDescription,
   steps,
 }: ExperienceCarouselProps) {
+  const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
-
 
   const goToStep = (index: number) => {
     if (index >= 0 && index < steps.length) {
@@ -34,52 +48,98 @@ export default function ExperienceCarousel({
   const goNext = () => goToStep(currentStep + 1);
   const goPrev = () => goToStep(currentStep - 1);
   const restart = () => goToStep(0);
-  const handleExit = () => {
-    window.location.href = "/personas";
+
+  const handleBackToPersonas = () => {
+    setLocation("/personas");
   };
 
   const currentStepData = steps[currentStep];
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === steps.length - 1;
 
+  // Determine if current step is internal or external
+  // For field-services, check if URL is external
+  let isInternalExperience = INTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  let isExternalExperience = EXTERNAL_EXPERIENCES.includes(currentStepData?.type);
+  
+  if ((currentStepData?.type === "field-services" || currentStepData?.type === "email-viewer" || currentStepData?.type === "live-chat") && isExternalUrl(currentStepData?.url, currentStepData?.type)) {
+    isInternalExperience = false;
+    isExternalExperience = true;
+  }
+
+  // Render content based on type
+  const renderContent = () => {
+    if (!currentStepData) return null;
+
+    // Check if URL is external
+    const urlIsExternal = isExternalUrl(currentStepData.url);
+
+    // External experiences - show launch button
+    if (EXTERNAL_EXPERIENCES.includes(currentStepData.type) && urlIsExternal) {
+      return (
+        <LaunchDemoButton
+          url={currentStepData.url}
+          title={currentStepData.title}
+          description={currentStepData.description}
+        />
+      );
+    }
+    
+    // Internal experiences - render as embedded components
+    if (currentStepData.type === "email-viewer" && !urlIsExternal) {
+      return <EmailViewerComponent personaName={personaName} />;
+    }
+    
+    // Fallback for internal field-services (local URL)
+    if (currentStepData.type === "field-services" && !urlIsExternal) {
+      return <FieldServicesComponent personaName={personaName} />;
+    }
+
+    return null;
+  };
+
   return (
     <div className="fixed inset-0 bg-black/95 z-50 flex flex-col">
       {/* Header with Logo and Controls */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 border-b-2 border-blue-700">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-2 sm:p-3 border-b-2 border-blue-700">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <img
-              src="/ikow-logo.png"
-              alt="ikOneWorld"
-              className="h-12 object-contain"
+              src="/invictus-logo.png"
+              alt="Invictus"
+              className="h-8 object-contain"
             />
             <div>
-              <h1 className="text-2xl font-bold">{personaName}'s Experience Journey</h1>
-              <p className="text-blue-100">{personaDescription}</p>
+              <h1 className="text-xs sm:text-sm font-bold">{personaName}'s Experience Journey</h1>
+              <p className="text-xs text-blue-100 hidden sm:block">{personaDescription}</p>
             </div>
           </div>
           <button
-            onClick={handleExit}
-            className="p-2 hover:bg-blue-800 rounded-lg transition-colors"
+            onClick={handleBackToPersonas}
             title="Exit carousel"
+            className="text-white hover:text-red-400 transition-colors"
           >
-            <X className="h-6 w-6" />
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="bg-blue-800 px-6 py-3">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 px-3 sm:px-6 py-1 sm:py-3">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-blue-100 text-sm font-medium">
+          <div className="flex items-center justify-between mb-1 sm:mb-2">
+            <span className="text-white text-xs sm:text-sm font-semibold">
               Step {currentStep + 1} of {steps.length}
             </span>
-            <span className="text-blue-100 text-sm font-medium">{currentStepData.title}</span>
+            <span className="text-white text-xs sm:text-sm font-semibold hidden sm:inline">
+              {currentStepData?.title}
+            </span>
           </div>
-          <div className="w-full bg-blue-900 rounded-full h-2">
+          <div className="w-full bg-blue-800 rounded-full h-1.5 sm:h-2">
             <motion.div
-              className="bg-gradient-to-r from-green-400 to-blue-400 h-2 rounded-full"
+              className="bg-gradient-to-r from-green-400 to-blue-500 h-1.5 sm:h-2 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
               transition={{ duration: 0.5 }}
@@ -88,117 +148,110 @@ export default function ExperienceCarousel({
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="flex-1 relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0"
-            >
-              {/* Frame with Logo */}
-              <div className="h-full flex flex-col bg-white">
-                {/* Frame Header */}
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b-2 border-gray-200 p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="/ikow-logo.png"
-                      alt="ikOneWorld"
-                      className="h-8 object-contain"
-                    />
-                    <div>
-                      <h2 className="text-lg font-bold text-gray-900">{currentStepData.title}</h2>
-                      <p className="text-sm text-gray-600">{currentStepData.description}</p>
-                    </div>
+      {/* Content Area */}
+      <div className="overflow-y-auto bg-white flex-1">
+        <div className="max-w-7xl mx-auto w-full">
+          {currentStepData && (
+            <div>
+              <div className="p-3 sm:p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-3 sm:mb-3">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex-shrink-0 whitespace-nowrap">
+                    {currentStepData.title}
+                  </h2>
+                  <p className="text-xs sm:text-base text-gray-700 leading-relaxed">
+                    {currentStepData.description}
+                  </p>
+                </div>
+                {currentStepData.narrative && (
+                  <div className="bg-white rounded-lg p-3 sm:p-3 border-l-4 border-blue-500 mt-3 sm:mt-3 max-h-24 sm:max-h-none overflow-y-auto">
+                    <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
+                      {currentStepData.narrative}
+                    </p>
                   </div>
-                </div>
-
-                {/* Embedded Experience */}
-                <div className="flex-1 overflow-hidden">
-                  <iframe
-                    src={currentStepData.url}
-                    title={currentStepData.title}
-                    className="w-full h-full border-0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
+                )}
               </div>
-            </motion.div>
-          </AnimatePresence>
+              {renderContent()}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Navigation Footer */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 border-t-2 border-blue-700">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 border-t-2 border-blue-700 p-2 sm:p-6 flex-shrink-0">
         <div className="max-w-7xl mx-auto">
           {/* Step Indicators */}
-          <div className="flex justify-center gap-2 mb-6">
-            {steps.map((step, idx) => (
-              <button
-                key={step.id}
-                onClick={() => goToStep(idx)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
-                  idx === currentStep
-                    ? "bg-white text-blue-900 scale-105"
-                    : "bg-blue-700 text-white hover:bg-blue-600"
+          <div className="flex justify-center gap-2 sm:gap-3 mb-3 sm:mb-6">
+            {steps.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => goToStep(index)}
+                className={`w-8 sm:w-10 h-8 sm:h-10 rounded-full font-bold transition-all text-xs sm:text-base ${
+                  index === currentStep
+                    ? 'bg-white text-blue-900 scale-110'
+                    : 'bg-blue-700 text-white hover:bg-blue-600'
                 }`}
-                title={step.title}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {idx + 1}
-              </button>
+                {index + 1}
+              </motion.button>
             ))}
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between">
-            <button
+          <div className="flex items-center justify-between gap-1 sm:gap-4">
+            <motion.button
               onClick={goPrev}
               disabled={isFirstStep}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 rounded font-semibold transition-all text-xs sm:text-base ${
                 isFirstStep
-                  ? "bg-blue-800 text-blue-400 cursor-not-allowed opacity-50"
-                  : "bg-blue-700 text-white hover:bg-blue-600 active:scale-95"
+                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
               }`}
+              whileHover={!isFirstStep ? { scale: 1.05 } : {}}
+              whileTap={!isFirstStep ? { scale: 0.95 } : {}}
             >
-              <ChevronLeft className="h-5 w-5" />
-              Previous
-            </button>
+              <span className="hidden sm:inline">← Previous</span>
+              <span className="sm:hidden">←</span>
+            </motion.button>
 
-            <div className="flex gap-3">
-              <button
-                onClick={restart}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium bg-amber-600 text-white hover:bg-amber-700 transition-all active:scale-95"
-                title="Restart from first step"
-              >
-                <RotateCcw className="h-5 w-5" />
-                Restart
-              </button>
-            </div>
+            <motion.button
+              onClick={restart}
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold transition-all text-xs sm:text-base"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-3 sm:w-5 h-3 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span className="hidden sm:inline">Restart</span>
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={goNext}
               disabled={isLastStep}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 rounded font-semibold transition-all text-xs sm:text-base ${
                 isLastStep
-                  ? "bg-blue-800 text-blue-400 cursor-not-allowed opacity-50"
-                  : "bg-blue-700 text-white hover:bg-blue-600 active:scale-95"
+                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
               }`}
+              whileHover={!isLastStep ? { scale: 1.05 } : {}}
+              whileTap={!isLastStep ? { scale: 0.95 } : {}}
             >
-              Next
-              <ChevronRight className="h-5 w-5" />
-            </button>
+              <span className="hidden sm:inline">Next →</span>
+              <span className="sm:hidden">→</span>
+            </motion.button>
           </div>
 
-          {/* Info Text */}
+          {/* Completion Message */}
           {isLastStep && (
-            <p className="text-center text-blue-100 text-sm mt-4">
-              You've completed {personaName}'s experience journey. Click "Restart" to begin again or exit to return to personas.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-3 sm:mt-6 text-center text-white text-xs sm:text-sm"
+            >
+              <p>You've completed {personaName}'s experience journey. Click "Restart" to begin again or exit to return to personas.</p>
+            </motion.div>
           )}
         </div>
       </div>

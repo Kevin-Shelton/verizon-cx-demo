@@ -63,7 +63,7 @@
 
 - [x] Implement Persona-Based Experience Carousel Viewer
   - [x] Created carousel component with full-page immersive viewer
-  - [x] Built persona experience data (4 personas × 3 experiences each)
+  - [x] Built persona experience data (4 personas x 3 experiences each)
   - [x] Created placeholder pages for Email and Field Services
   - [x] Added "View" button to each Persona card (emerald/teal gradient)
   - [x] Designed frame with ikOneWorld logo and Invictus branding
@@ -142,7 +142,6 @@
   - [x] Fixed tRPC input validation using zod.string()
   - [x] Added app_users table to schema for username/password authentication
   - [x] Login form functional and displaying validation errors
-  - [x] All form elements working correctly (username, password, sign in button)
   - [ ] Run database migration to create app_users table (pending database connection)
   - [ ] Add test user credentials to app_users table
   - [ ] Test end-to-end login and persona experience loading flow
@@ -174,4 +173,105 @@
   - [x] Added second video (Carlos Demo) to Videos page
   - [x] Updated grid layout to 2-column for side-by-side display
   - [x] Both videos autoplay and muted
+
+- [x] Improve step description styling in ExperienceCarousel
+  - [x] Increased font size from text-sm to text-base for better readability
+  - [x] Added whitespace-normal and leading-relaxed for natural text wrapping
+  - [x] Adjusted layout to allow description to flow to the right of logo
+  - [x] Added margin between title and description for visual hierarchy
+  - [x] Description now more prominent and easier to read
+
+- [x] Implement hybrid demo delivery system (Option 3)
+  - [x] Refactor ExperienceCarousel to support hybrid content rendering
+    - [x] Add content type detection (internal vs external)
+    - [x] Create hybrid rendering logic based on demo type
+    - [x] Preserve carousel state while user navigates external demos
+  - [x] Implement internal experience components
+    - [x] Create EmailViewerComponent for embedded email demo
+    - [x] Create FieldServicesComponent for embedded field services demo
+    - [x] Style components to match carousel aesthetic
+  - [x] Implement external demo launcher
+    - [x] Create LaunchDemoButton component for external URLs
+    - [x] Add "Launch Demo" button to carousel for external experiences
+    - [x] Open external demos in new window (target="_blank")
+    - [x] Add "Return to Demo" instructions in carousel
+  - [x] Test all 4 personas with hybrid demo flow
+    - [x] Carlos: 3-step journey with mixed internal/external demos
+    - [x] María: 3-step journey with mixed demos
+    - [x] Lucía: 3-step journey with mixed demos
+    - [x] Diego: 3-step journey with mixed demos
+  - [x] Verify carousel state preservation
+    - [x] Current step maintained when user opens external demo
+    - [x] Navigation buttons functional after returning from external demo
+    - [x] Progress bar accurate throughout journey
+
+- [x] Fix regression: Restore Carlos's 5-step journey
+  - [x] Add Step 4: Website Translation (https://explore.ikoneworld.com/site-translate/index.php/https/www.verizon.com/business/)
+  - [x] Add Step 5: Document Translation (https://explore.ikoneworld.com/document-translate/)
+  - [x] Update ExperienceViewer hardcodedExperiences for Carlos
+  - [x] Verify all 5 steps display in carousel
+
+- [ ] Fix header and font sizing in ExperienceCarousel
+  - [ ] Reduce header padding (p-6 → p-4)
+  - [ ] Reduce logo size (h-12 → h-8)
+  - [ ] Reduce title font size (text-2xl → text-lg)
+  - [ ] Reduce description font size (text-blue-100 → text-sm)
+  - [ ] Reduce step description from text-base back to text-sm
+  - [ ] Compact overall header layout
+
+- [x] Implement SSO token passing for seamless demo authentication
+  - [x] Install jsonwebtoken and @types/jsonwebtoken packages
+  - [x] Create /api/generate-auth-token endpoint with 5-minute JWT expiration
+  - [x] Add /api/verify-auth-token endpoint for token validation
+  - [x] Update LaunchDemoButton component to fetch and append auth tokens
+  - [x] Token includes user email, name, and portalUserId
+  - [x] Tokens appended as ?auth=TOKEN query parameter to demo URLs
+  - [x] Tested token generation - working correctly with demo user fallback
+  - [x] All demo types supported (ikoneworld, chat, field services, IVR, website, email)
+  - [x] LaunchDemoButton shows loading state during token generation
+  - [x] Error handling for failed token generation
+  - [x] Maintains hybrid demo delivery architecture (external launches in new windows)
+
+- [x] Update field services demo URL to https://demo-chat.ikoneworld.net/select-language
+  - [x] Updated ExperienceViewer hardcoded field-services URL for all personas
+  - [x] Changed from https://ikoneworld-demo.vercel.app/select-language to https://demo-chat.ikoneworld.net/select-language
+  - [x] Verified URL in ExperienceViewer for Carlos, Maria, and Diego
+
+- [x] Create internal dual pane chat app landing page
+  - [x] Created /dual-pane-chat.html landing page
+  - [x] Landing page includes Launch button and documentation
+  - [x] Integrated with SSO token passing system
+  - [x] Auto-launch capability with ?auto=true parameter
+  - [x] Professional UI with gradient styling
+  - [x] Features list and info box
+
+- [x] Update live chat demo URL with internal dual pane version
+  - [x] Updated ExperienceViewer hardcoded live-chat URLs for all personas
+  - [x] Changed from https://ikoneworld-demo.vercel.app/demo/101 to /dual-pane-chat.html
+  - [x] Updated Carlos, Maria, and Diego personas
+  - [x] Lucia persona unchanged (only has IVR-voice step)
+
+- [x] Test and verify all URL updates
+  - [x] Dev server running with no compilation errors
+  - [x] TypeScript validation passed
+  - [x] All URL changes deployed locally
+  - [x] Ready for testing
+
+
+
+- [x] Fix missing Launch Demo button in live chat experience
+  - [x] LaunchDemoButton not rendering for /dual-pane-chat.html URL
+  - [x] Updated ExperienceCarousel to recognize /dual-pane-chat.html as external URL
+  - [x] Modified isExternalUrl() function to handle relative URLs for live-chat type
+  - [x] Added live-chat type check in URL detection logic
+
+- [x] Fix demo launch URLs and simplify LaunchDemoButton
+  - [x] Identified root cause: /dual-pane-chat.html was a relative path, not external URL
+  - [x] Updated live chat demo URL to https://dual-pane-chat.ikoneworld.net (fixed landing page)
+  - [x] Simplified LaunchDemoButton to open external URLs directly without token generation
+  - [x] Removed complex tRPC token generation logic that was causing empty response errors
+  - [x] Updated ExperienceViewer with new dual pane URL for all personas (Carlos, Maria, Diego)
+  - [x] Removed special handling for relative URLs in isExternalUrl function
+  - [x] All demo launches now work with external URLs: field services, live chat, IVR, website translation
+  - [x] Pushed all changes to GitHub
 

@@ -9,9 +9,11 @@
       "description": "Small business owner who needs to order new lines and port existing numbers",
       "avatar": "👨‍💼",
       "needs": [
-        "Port existing phone numbers",
-        "Add new business lines",
-        "Understand pricing and plans"
+        "Email communication in Spanish",
+        "Live chat assistance",
+        "Website translation support",
+        "On-site services",
+        "Document translation"
       ],
       "journey": ["outbound", "qualification", "proposal", "negotiation"]
     },
@@ -25,8 +27,9 @@
       "avatar": "👩‍🔧",
       "needs": [
         "Device swap assistance",
+        "Technical support",
         "Check promo eligibility",
-        "Technical support"
+        "On-site services"
       ],
       "journey": ["support", "expansion"]
     },
@@ -39,11 +42,9 @@
       "description": "Healthcare administrator dealing with fraud alerts and support cases",
       "avatar": "👩‍⚕️",
       "needs": [
-        "Resolve fraud alerts",
-        "Open support cases",
-        "Account security"
+        "Resolve fraud alerts"
       ],
-      "journey": ["support", "onboarding"]
+      "journey": ["support"]
     },
     {
       "id": "diego",
@@ -55,8 +56,9 @@
       "avatar": "👷",
       "needs": [
         "Bulk device orders",
+        "Field worker connectivity",
         "Fleet management",
-        "Field worker connectivity"
+        "On-site services"
       ],
       "journey": ["proposal", "negotiation", "onboarding", "expansion"]
     }

@@ -134,50 +134,33 @@ export async function getTranscriptById(id: string) {
 
 
 
-// Fallback persona experiences data
-const fallbackPersonaExperiences: Record<string, any[]> = {
-  carlos: [
-    { id: '1', persona_id: 'carlos', step_order: 1, step_type: 'email-viewer', url: 'https://demo-email.ikoneworld.net/email-init' },
-    { id: '2', persona_id: 'carlos', step_order: 2, step_type: 'live-chat', url: 'https://demo-chat.ikoneworld.net/chat-init' },
-    { id: '3', persona_id: 'carlos', step_order: 3, step_type: 'document-translation', url: 'https://demo-docs.ikoneworld.net/docs-init' },
-    { id: '4', persona_id: 'carlos', step_order: 4, step_type: 'website-translation', url: 'https://demo-web.ikoneworld.net/web-init' },
-    { id: '5', persona_id: 'carlos', step_order: 5, step_type: 'ivr-voice', url: 'https://demo-ivr.ikoneworld.net/ivr-init' },
-  ],
-  maria: [
-    { id: '6', persona_id: 'maria', step_order: 1, step_type: 'email-viewer', url: 'https://demo-email.ikoneworld.net/email-init' },
-    { id: '7', persona_id: 'maria', step_order: 2, step_type: 'live-chat', url: 'https://demo-chat.ikoneworld.net/chat-init' },
-    { id: '8', persona_id: 'maria', step_order: 3, step_type: 'website-translation', url: 'https://demo-web.ikoneworld.net/web-init' },
-    { id: '9', persona_id: 'maria', step_order: 4, step_type: 'field-services', url: 'https://demo-field.ikoneworld.net/field-init' },
-    { id: '10', persona_id: 'maria', step_order: 5, step_type: 'document-translation', url: 'https://demo-docs.ikoneworld.net/docs-init' },
-  ],
-  lucia: [
-    { id: '11', persona_id: 'lucia', step_order: 1, step_type: 'website-translation', url: 'https://demo-web.ikoneworld.net/web-init' },
-    { id: '12', persona_id: 'lucia', step_order: 2, step_type: 'live-chat', url: 'https://demo-chat.ikoneworld.net/chat-init' },
-    { id: '13', persona_id: 'lucia', step_order: 3, step_type: 'email-viewer', url: 'https://demo-email.ikoneworld.net/email-init' },
-    { id: '14', persona_id: 'lucia', step_order: 4, step_type: 'document-translation', url: 'https://demo-docs.ikoneworld.net/docs-init' },
-    { id: '15', persona_id: 'lucia', step_order: 5, step_type: 'ivr-voice', url: 'https://demo-ivr.ikoneworld.net/ivr-init' },
-  ],
-  diego: [
-    { id: '16', persona_id: 'diego', step_order: 1, step_type: 'email-viewer', url: 'https://demo-email.ikoneworld.net/email-init' },
-    { id: '17', persona_id: 'diego', step_order: 2, step_type: 'live-chat', url: 'https://demo-chat.ikoneworld.net/chat-init' },
-    { id: '18', persona_id: 'diego', step_order: 3, step_type: 'field-services', url: 'https://demo-field.ikoneworld.net/field-init' },
-    { id: '19', persona_id: 'diego', step_order: 4, step_type: 'website-translation', url: 'https://demo-web.ikoneworld.net/web-init' },
-    { id: '20', persona_id: 'diego', step_order: 5, step_type: 'document-translation', url: 'https://demo-docs.ikoneworld.net/docs-init' },
-  ],
-};
+// App Users queries (for authentication)
+export async function getAppUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  try {
+    const result = await db.execute(
+      sql`SELECT id, email, password_hash, name, role FROM app_users WHERE email = ${email} LIMIT 1`
+    );
+    return (result as any[])?.[0] || undefined;
+  } catch (error) {
+    console.error("Error fetching app user:", error);
+    return undefined;
+  }
+}
 
 // Persona Experiences queries
 export async function getPersonaExperiences(personaId: string) {
   const db = await getDb();
-  if (!db) return fallbackPersonaExperiences[personaId] || [];
+  if (!db) return [];
   try {
     const result = await db.execute(
       sql`SELECT id, persona_id, step_order, step_type, url FROM persona_experiences WHERE persona_id = ${personaId} ORDER BY step_order ASC`
     );
-    return result as any[] || fallbackPersonaExperiences[personaId] || [];
+    return result as any[] || [];
   } catch (error) {
     console.error("Error fetching persona experiences:", error);
-    return fallbackPersonaExperiences[personaId] || [];
+    return [];
   }
 }
 

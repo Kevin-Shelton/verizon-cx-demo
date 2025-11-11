@@ -28,7 +28,7 @@ interface MainLayoutProps {
 // More dropdown items
 const moreItems = [
   { name: "Sales Flow Journey", href: "/journey", icon: Map },
-  { name: "Experiences", href: "/experiences", icon: Sparkles },
+  { name: "Experiences", href: "https://demo-chat.ikoneworld.net/dashboard", icon: Sparkles },
   { name: "Research & Feedback", href: "/research-sources", icon: BookOpen },
 ];
 
@@ -144,6 +144,21 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 {moreItems.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
+                  const isExternal = item.href.startsWith('http://') || item.href.startsWith('https://');
+                  
+                  if (isExternal) {
+                    return (
+                      <button
+                        key={item.href}
+                        onClick={() => window.open(item.href, '_blank', 'noopener,noreferrer')}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent rounded-none text-left"
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.name}
+                      </button>
+                    );
+                  }
+                  
                   return (
                     <Link key={item.href} href={item.href}>
                       <Button

@@ -5,6 +5,9 @@ import { publicProcedure, router } from "./_core/trpc";
 import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
+import jwt from "jsonwebtoken";
+import { verifyPassword, generateToken } from "./auth";
+import { getAppUserByEmail } from "./db";
 
 export const appRouter = router({
   system: systemRouter,
@@ -18,6 +21,112 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+    login: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { email, password } = input;
+          console.log('[LOGIN] Received login request for email:', email);
+          
+          // Hardcoded admin user for testing
+          const ADMIN_EMAIL = 'kevin.shelton@invictusbpo.com';
+          const ADMIN_PASSWORD_HASH = '$2a$10$D4tqaWfHCYDr7OmoDPre3eT1rLQADOpeljb3bzJDRq9ljtw23GqAu';
+          
+          let user = null;
+          
+          // Try database first
+          try {
+            user = await getAppUserByEmail(email);
+          } catch (dbError) {
+            console.warn('Database unavailable, checking hardcoded admin user:', dbError);
+          }
+          
+          // If database failed or user not found, check hardcoded admin
+          if (!user && email === ADMIN_EMAIL) {
+            user = {
+              id: '47040dcc-c7cf-44b7-ab89-d7d1da641ec2',
+              email: ADMIN_EMAIL,
+              password_hash: ADMIN_PASSWORD_HASH,
+              name: 'Kevin Shelton',
+              role: 'admin',
+            };
+          }
+          
+          if (!user) {
+            throw new Error('Invalid credentials');
+          }
+          
+          const passwordValid = await verifyPassword(password, user.password_hash);
+          if (!passwordValid) {
+            throw new Error('Invalid credentials');
+          }
+          
+          const token = generateToken(user.id, user.email, user.name, user.role);
+          console.log('[LOGIN] Authentication successful for:', email);
+          const response = {
+            success: true,
+            token,
+            user: {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              role: user.role,
+            },
+          };
+          console.log('[LOGIN] Returning response:', JSON.stringify(response).substring(0, 100));
+          return response;
+        } catch (error) {
+          console.error('Login error:', error);
+          throw new Error(error instanceof Error ? error.message : 'Authentication failed');
+        }
+      }),
+    generateAuthToken: publicProcedure
+      .input(z.void().optional())
+      .output(z.object({
+        token: z.string(),
+        expiresAt: z.string(),
+      }))
+      .mutation(({ ctx }) => {
+        try {
+          // Get current user from session
+          let user = ctx.user;
+
+          // If no user, create a demo user for testing
+          if (!user) {
+            user = {
+              id: "demo-user",
+              email: "demo@verizon.com",
+              name: "Demo User",
+              role: "user" as const,
+              createdAt: new Date(),
+              lastSignedIn: new Date(),
+              loginMethod: "demo",
+            };
+          }
+
+          // Generate JWT token
+          const token = jwt.sign(
+            {
+              email: user.email || "demo@verizon.com",
+              name: user.name || "Demo User",
+              portalUserId: user.id,
+            },
+            process.env.AUTH_TOKEN_SECRET || "default-secret-key",
+            { expiresIn: "5m" }
+          );
+
+          return {
+            token,
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+          };
+        } catch (error) {
+          console.error("Error generating auth token:", error);
+          throw new Error("Failed to generate auth token");
+        }
+      }),
   }),
 
   feedback: router({

@@ -1,112 +1,186 @@
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Lock, User, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { APP_LOGO, APP_TITLE } from '@/const';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+  const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    if (!username || !password) {
-      setError('Please enter both username and password');
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      setIsLoading(false);
       return;
     }
 
-    const success = await login(username, password);
-    if (success) {
-      setLocation('/');
-    } else {
-      setError('Invalid username or password');
+    try {
+      console.log('Calling tRPC login endpoint with email:', email);
+      
+      // Call the dedicated login API endpoint
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', {
+        contentType: response.headers.get('content-type'),
+        contentLength: response.headers.get('content-length'),
+      });
+      
+      // Get response text first to debug
+      const responseText = await response.text();
+      console.log('Response text:', responseText.substring(0, 500));
+      
+      if (!responseText || responseText.trim().length === 0) {
+        throw new Error('Empty response from server');
+      }
+      
+      let responseData;
+      try {
+        responseData = JSON.parse(responseText);
+      } catch (parseErr) {
+        console.error('Failed to parse response as JSON:', parseErr);
+        console.error('Raw response:', responseText);
+        throw new Error('Invalid JSON response from server');
+      }
+      console.log('Response data:', responseData);
+
+      // Check if we got a successful response
+      // Vercel API format: { success, token, user }
+      const successData = responseData;
+      
+      if (successData?.success && successData?.token) {
+        console.log('Login successful, storing token and redirecting');
+        // Store the token and user info
+        localStorage.setItem('authToken', successData.token);
+        localStorage.setItem('user', JSON.stringify(successData.user));
+        localStorage.setItem('verizon_cx_user', email);
+        localStorage.setItem('verizon_cx_auth', 'true');
+        
+        // Update AuthContext with the authenticated user
+        const loginSuccess = await authLogin(email, password);
+        if (loginSuccess) {
+          console.log('AuthContext updated, redirecting to videos');
+          // Redirect to videos page
+          setLocation('/videos');
+        } else {
+          console.error('AuthContext login failed');
+          setError('Authentication context failed. Please try again.');
+          setPassword('');
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      // If we got an error response from tRPC
+      if (responseData.error) {
+        const errorMsg = responseData.error?.json?.message || 'Invalid credentials';
+        console.error('Login error from backend:', errorMsg);
+        setError(errorMsg);
+        setPassword('');
+        setIsLoading(false);
+        return;
+      }
+
+      // Unexpected response format
+      console.error('Unexpected response format:', responseData);
+      setError('Login failed. Please try again.');
       setPassword('');
+      setIsLoading(false);
+      
+    } catch (err) {
+      console.error('Error during login:', err);
+      const errorMsg = err instanceof Error ? err.message : 'Unable to connect to the server';
+      setError(errorMsg);
+      setPassword('');
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <img 
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/120250985/tIYLxxOFWqHZpwVA.png" 
-            alt="Invictus" 
-            className="h-16 w-auto mx-auto mb-4"
-          />
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Verizon CX Demo Portal
-          </h1>
-          <p className="text-gray-600">
-            Multilingual Customer Experience Platform
-          </p>
+          {APP_LOGO && (
+            <img src={APP_LOGO} alt="Logo" className="h-12 mx-auto mb-4" />
+          )}
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{APP_TITLE}</h1>
+          <p className="text-gray-600">Multilingual Customer Experience Platform</p>
         </div>
 
         {/* Login Card */}
-        <Card className="shadow-xl">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
-            <CardDescription className="text-center">
-              Enter your credentials to access the demo portal
-            </CardDescription>
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle>Sign In</CardTitle>
+            <CardDescription>Enter your credentials to access the portal</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Error Message */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
-                  <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-red-800">{error}</p>
+                <div className="flex items-start gap-3 p-3 bg-red-50 border border-red-200 rounded-md">
+                  <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-700">{error}</p>
                 </div>
               )}
 
-              {/* Username Field */}
+              {/* Email Input */}
               <div className="space-y-2">
-                <label htmlFor="username" className="text-sm font-medium text-gray-700">
-                  Username
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email Address
                 </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    id="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter username"
-                    autoComplete="username"
-                  />
-                </div>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isLoading}
+                />
               </div>
 
-              {/* Password Field */}
+              {/* Password Input */}
               <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium text-gray-700">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter password"
-                    autoComplete="current-password"
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    disabled={isLoading}
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" />
@@ -120,18 +194,17 @@ export default function Login() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+                disabled={isLoading}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors"
               >
-                Sign In
+                {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
             </form>
-
-
           </CardContent>
         </Card>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-600 mt-6">
+        <p className="text-center text-sm text-gray-600 mt-8">
           © 2024 Invictus BPO. All rights reserved.
         </p>
       </div>
