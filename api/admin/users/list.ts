@@ -34,10 +34,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Fetch all users, excluding password_hash for security
     // Include users with NULL emails (from old schema)
+    // Only select columns that exist in the database
     const { data: users, error: fetchError } = await supabase
       .from('app_users')
-      .select('id, email, name, role, password_status, created_by, createdAt')
-      .order('createdAt', { ascending: false });
+      .select('id, email, name, role')
+      .order('created_at', { ascending: false });
 
     if (fetchError) {
       console.error('Error fetching users:', fetchError);
