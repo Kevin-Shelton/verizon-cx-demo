@@ -6,7 +6,7 @@ import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { verifyPassword, generateToken } from "./auth";
+import { verifyPassword, generateToken, hashPassword } from "./auth";
 import { getAppUserByEmail } from "./db";
 
 export const appRouter = router({
@@ -90,6 +90,70 @@ export const appRouter = router({
           throw new Error(error instanceof Error ? error.message : 'Authentication failed');
         }
       }),
+    
+    listUsers: publicProcedure.query(async () => {
+      try {
+        const { getAllAppUsers } = await import("./db");
+        return await getAllAppUsers();
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
+      }
+    }),
+
+    addUser: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { email, password } = input;
+          const { createAppUser } = await import("./db");
+          
+          const passwordHash = await hashPassword(password);
+          const userId = crypto.randomUUID();
+          
+          await createAppUser({
+            id: userId,
+            email,
+            password_hash: passwordHash,
+            name: email.split('@')[0],
+            role: 'user',
+          });
+          
+          console.log('[USER] User added successfully:', email);
+          return { success: true };
+        } catch (error) {
+          console.error("Error adding user:", error);
+          throw new Error(error instanceof Error ? error.message : "Failed to add user");
+        }
+      }),
+
+    deleteUser: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { email } = input;
+          
+          // Prevent deleting the admin user
+          if (email === 'kevin.shelton@invictusbpo.com') {
+            throw new Error('Cannot delete admin user');
+          }
+          
+          const { deleteAppUser } = await import("./db");
+          await deleteAppUser(email);
+          
+          console.log('[USER] User deleted successfully:', email);
+          return { success: true };
+        } catch (error) {
+          console.error("Error deleting user:", error);
+          throw new Error(error instanceof Error ? error.message : "Failed to delete user");
+        }
+      }),
+
     generateAuthToken: publicProcedure
       .input(z.void().optional())
       .output(z.object({

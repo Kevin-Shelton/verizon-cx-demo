@@ -165,6 +165,53 @@ export async function getAppUserByEmail(email: string) {
   }
 }
 
+export async function getAllAppUsers() {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    const result = await db.execute(
+      sql`SELECT id, email, name, role FROM app_users ORDER BY email`
+    );
+    
+    const rows = (result as any[]) || [];
+    return rows.map(row => ({
+      id: row.id,
+      email: row.email,
+      name: row.name,
+      role: row.role,
+    }));
+  } catch (error) {
+    console.error("Error fetching app users:", error);
+    return [];
+  }
+}
+
+export async function createAppUser(user: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  try {
+    await db.execute(
+      sql`INSERT INTO app_users (id, email, password_hash, name, role, created_at, updated_at) VALUES (${user.id}, ${user.email}, ${user.password_hash}, ${user.name}, ${user.role}, NOW(), NOW())`
+    );
+  } catch (error) {
+    console.error("Error creating app user:", error);
+    throw error;
+  }
+}
+
+export async function deleteAppUser(email: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  try {
+    await db.execute(
+      sql`DELETE FROM app_users WHERE email = ${email}`
+    );
+  } catch (error) {
+    console.error("Error deleting app user:", error);
+    throw error;
+  }
+}
+
 // Persona Experiences queries
 export async function getPersonaExperiences(personaId: string) {
   const db = await getDb();
