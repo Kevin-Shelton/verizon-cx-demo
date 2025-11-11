@@ -2,8 +2,8 @@
   "buildCommand": "pnpm install && pnpm run build",
   "devCommand": "pnpm run dev",
   "installCommand": "pnpm install",
-  "outputDirectory": "dist",
   "framework": null,
+  "public": "dist/public",
   "routes": [
     {
       "src": "/api/(.*)",
@@ -15,4 +15,3 @@
     }
   ]
 }
-
