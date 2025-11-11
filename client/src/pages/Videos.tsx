@@ -1,8 +1,7 @@
 import { Lock, Play, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useRef } from "react";
 
 interface VideoItem {
   id: string;
@@ -34,6 +33,21 @@ const videos: VideoItem[] = [
 
 export default function Videos() {
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Handle fullscreen when modal opens
+  const handleVideoSelect = (video: VideoItem) => {
+    setSelectedVideo(video);
+    // Request fullscreen after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      const modalDiv = document.querySelector('[role="dialog"]');
+      if (modalDiv && modalDiv.parentElement) {
+        modalDiv.parentElement.requestFullscreen?.().catch(() => {
+          // Fullscreen request failed, but video will still play
+        });
+      }
+    }, 100);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -70,8 +84,10 @@ export default function Videos() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col cursor-pointer group"
-                  onClick={() => setSelectedVideo(video)}>
+                <Card
+                  className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col cursor-pointer group"
+                  onClick={() => handleVideoSelect(video)}
+                >
                   {/* Video Thumbnail with Play Button Overlay */}
                   <div className="relative w-full bg-black rounded-lg overflow-hidden mb-4 aspect-video">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 group-hover:from-blue-600/40 group-hover:to-purple-600/40 transition-all" />
@@ -85,8 +101,12 @@ export default function Videos() {
                   {/* Video Information */}
                   <div className="flex-grow flex flex-col gap-2">
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">{video.title}</h3>
-                      <p className="text-xs text-gray-600 leading-relaxed">{video.description}</p>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        {video.title}
+                      </h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {video.description}
+                      </p>
                     </div>
 
                     {/* Video Metadata */}
@@ -95,7 +115,9 @@ export default function Videos() {
                         <span className="font-semibold">Proprietary Content</span>
                       </div>
                       {video.duration && (
-                        <span className="text-xs font-medium text-gray-600">{video.duration}</span>
+                        <span className="text-xs font-medium text-gray-600">
+                          {video.duration}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -115,11 +137,14 @@ export default function Videos() {
               <div className="flex items-start gap-4">
                 <Lock className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-blue-900 mb-2">Proprietary Content</h3>
+                  <h3 className="font-semibold text-blue-900 mb-2">
+                    Proprietary Content
+                  </h3>
                   <p className="text-sm text-blue-800 leading-relaxed">
-                    These videos contain confidential information and are for authorized viewers
-                    only. Videos are embedded securely within this portal and will not display the
-                    public URL. Access is restricted to authenticated portal users only.
+                    These videos contain confidential information and are for authorized
+                    viewers only. Videos are embedded securely within this portal and will
+                    not display the public URL. Access is restricted to authenticated portal
+                    users only.
                   </p>
                 </div>
               </div>
@@ -148,68 +173,60 @@ export default function Videos() {
         </div>
       </section>
 
-      {/* Video Modal */}
+      {/* Video Modal - Fullscreen with Auto-Play */}
       <AnimatePresence>
         {selectedVideo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black z-50 flex items-center justify-center"
             onClick={() => setSelectedVideo(null)}
+            role="dialog"
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-lg overflow-hidden max-w-4xl w-full max-h-[90vh] flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-                <h2 className="text-xl font-bold text-gray-900">{selectedVideo.title}</h2>
-                <button
-                  onClick={() => setSelectedVideo(null)}
-                  className="p-1 hover:bg-gray-200 rounded-lg transition-colors"
-                >
-                  <X className="w-6 h-6 text-gray-600" />
-                </button>
+            <div className="relative w-full h-full flex flex-col">
+              {/* Close Button - Floating */}
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+
+              {/* Video Player - Full Screen */}
+              <div className="flex-grow relative w-full bg-black">
+                <iframe
+                  ref={iframeRef}
+                  src={`${selectedVideo.url}?autoplay=1&muted=1`}
+                  title={selectedVideo.title}
+                  className="w-full h-full border-0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    margin: 0,
+                    padding: 0,
+                    border: "none",
+                  }}
+                />
               </div>
 
-              {/* Video Player */}
-              <div className="flex-grow overflow-auto">
-                <div className="relative w-full bg-black aspect-video">
-                  <iframe
-                    src={`${selectedVideo.url}?autoplay=1&muted=1`}
-                    title={selectedVideo.title}
-                    className="w-full h-full border-0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    style={{
-                      display: "block",
-                      width: "100%",
-                      height: "100%",
-                      margin: 0,
-                      padding: 0,
-                      border: "none",
-                    }}
-                  />
+              {/* Video Info - Bottom Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-6 text-white">
+                <h2 className="text-2xl font-bold mb-2">{selectedVideo.title}</h2>
+                <p className="text-sm text-white/90 mb-3 max-w-2xl">
+                  {selectedVideo.description}
+                </p>
+                <div className="flex items-center gap-4 text-xs text-white/80">
+                  <span className="font-semibold">Proprietary Content</span>
+                  {selectedVideo.duration && (
+                    <span className="font-medium">{selectedVideo.duration}</span>
+                  )}
                 </div>
               </div>
-
-              {/* Modal Footer */}
-              <div className="p-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
-                <div className="flex flex-col">
-                  <p className="text-sm text-gray-600 leading-relaxed">{selectedVideo.description}</p>
-                  <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                    <span className="font-semibold">Proprietary Content</span>
-                    {selectedVideo.duration && (
-                      <span className="font-medium">{selectedVideo.duration}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
