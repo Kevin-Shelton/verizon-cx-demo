@@ -40,6 +40,7 @@ export const appRouter = router({
           // Try database first
           try {
             user = await getAppUserByEmail(email);
+            console.log('[LOGIN] Database query result for', email, ':', user ? { id: user.id, email: user.email, has_password_hash: !!user.password_hash } : 'null');
           } catch (dbError) {
             console.warn('Database unavailable, checking hardcoded admin user:', dbError);
           }
@@ -59,8 +60,14 @@ export const appRouter = router({
             throw new Error('Invalid credentials');
           }
           
+          console.log('[LOGIN] User found:', { id: user.id, email: user.email, password_hash_exists: !!user.password_hash, password_hash_length: user.password_hash ? user.password_hash.length : 0 });
+          console.log('[LOGIN] Submitted password length:', password.length);
+          
           const passwordValid = await verifyPassword(password, user.password_hash);
+          console.log('[LOGIN] Password verification result:', passwordValid);
+          
           if (!passwordValid) {
+            console.log('[LOGIN] Password mismatch for:', email);
             throw new Error('Invalid credentials');
           }
           
@@ -210,4 +217,3 @@ export const appRouter = router({
 });
 
 export type AppRouter = typeof appRouter;
-
