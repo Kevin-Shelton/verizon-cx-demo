@@ -30,6 +30,7 @@ export default function Login() {
 
     try {
       // Call tRPC login endpoint
+      console.log('Sending login request:', { email: username, passwordLength: password.length });
       const response = await fetch('/api/trpc/auth.login', {
         method: 'POST',
         headers: {
@@ -43,11 +44,14 @@ export default function Login() {
         }),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
 
       // Check for tRPC success response
       // tRPC returns: { result: { data: { json: { success, token, user } } } }
       const successData = data.result?.data?.json;
+      console.log('Success data:', successData);
       if (successData?.success && successData?.token) {
         // Backend authentication successful
         localStorage.setItem('authToken', successData.token);
