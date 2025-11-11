@@ -340,7 +340,7 @@ export default function Admin() {
                       <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className="font-medium text-gray-900 text-sm">{user.email}</p>
+                            <p className="font-medium text-gray-900 text-sm">{user.email || user.name || 'Unknown'}</p>
                             {user.role === 'admin' && (
                               <span className="px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">
                                 Admin
@@ -357,14 +357,14 @@ export default function Admin() {
                         {user.role !== 'admin' && (
                           <div className="flex gap-2">
                             <button
-                              onClick={() => handleResetPassword(user.id, user.email)}
+                              onClick={() => handleResetPassword(user.id, user.email || user.name || 'Unknown')}
                               className="p-2 text-orange-600 hover:bg-orange-50 rounded transition"
                               title="Reset password"
                             >
                               <RotateCcw className="w-4 h-4" />
                             </button>
                             <button
-                              onClick={() => handleDeleteUser(user.id, user.email)}
+                              onClick={() => handleDeleteUser(user.id, user.email || user.name || 'Unknown')}
                               className="p-2 text-red-600 hover:bg-red-50 rounded transition"
                               title="Delete user"
                             >

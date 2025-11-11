@@ -33,6 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Fetch all users, excluding password_hash for security
+    // Include users with NULL emails (from old schema)
     const { data: users, error: fetchError } = await supabase
       .from('app_users')
       .select('id, email, name, role, password_status, created_by, createdAt')
