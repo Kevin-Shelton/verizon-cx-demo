@@ -46,10 +46,12 @@ export default function Login() {
       const data = await response.json();
 
       // Check for tRPC success response
-      if (data.result?.data?.success) {
+      // tRPC returns: { result: { data: { json: { success, token, user } } } }
+      const successData = data.result?.data?.json;
+      if (successData?.success && successData?.token) {
         // Backend authentication successful
-        localStorage.setItem('authToken', data.result.data.token);
-        localStorage.setItem('user', JSON.stringify(data.result.data.user));
+        localStorage.setItem('authToken', successData.token);
+        localStorage.setItem('user', JSON.stringify(successData.user));
         setLocation('/videos');
       } else if (data.error) {
         // Backend authentication failed, try demo credentials as fallback
