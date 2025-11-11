@@ -154,12 +154,14 @@ export default function ExperienceCarousel({
           {currentStepData && (
             <div>
               <div className="p-3 sm:p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-2">
-                  {currentStepData.title}
-                </h2>
-                <p className="text-xs sm:text-base text-gray-700 leading-relaxed mb-3 sm:mb-3">
-                  {currentStepData.description}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-3 sm:mb-3">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex-shrink-0 whitespace-nowrap">
+                    {currentStepData.title}
+                  </h2>
+                  <p className="text-xs sm:text-base text-gray-700 leading-relaxed">
+                    {currentStepData.description}
+                  </p>
+                </div>
                 {currentStepData.narrative && (
                   <div className="bg-white rounded-lg p-3 sm:p-3 border-l-4 border-blue-500 mt-3 sm:mt-3 max-h-24 sm:max-h-none overflow-y-auto">
                     <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
