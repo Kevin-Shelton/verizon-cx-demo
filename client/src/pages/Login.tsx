@@ -42,7 +42,20 @@ export default function Login() {
       });
 
       console.log('Response status:', response.status);
-      const responseData = await response.json();
+      console.log('Response headers:', {
+        contentType: response.headers.get('content-type'),
+        contentLength: response.headers.get('content-length'),
+      });
+      
+      // Get response text first to debug
+      const responseText = await response.text();
+      console.log('Response text:', responseText.substring(0, 500));
+      
+      if (!responseText) {
+        throw new Error('Empty response from server');
+      }
+      
+      const responseData = JSON.parse(responseText);
       console.log('Response data:', responseData);
 
       // Check if we got a successful response
@@ -79,8 +92,9 @@ export default function Login() {
       setIsLoading(false);
       
     } catch (err) {
-      console.error('Network error during login:', err);
-      setError('Unable to connect to the server. Please try again.');
+      console.error('Error during login:', err);
+      const errorMsg = err instanceof Error ? err.message : 'Unable to connect to the server';
+      setError(errorMsg);
       setPassword('');
       setIsLoading(false);
     }
