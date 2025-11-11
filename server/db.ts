@@ -142,7 +142,23 @@ export async function getAppUserByEmail(email: string) {
     const result = await db.execute(
       sql`SELECT id, email, password_hash, name, role FROM app_users WHERE email = ${email} LIMIT 1`
     );
-    return (result as any[])?.[0] || undefined;
+    
+    // PostgreSQL returns results as an array of rows
+    // Each row is an object with the selected columns
+    const row = (result as any[])?.[0];
+    
+    if (!row) {
+      return undefined;
+    }
+    
+    // Ensure we have all required fields properly extracted
+    return {
+      id: row.id,
+      email: row.email,
+      password_hash: row.password_hash,
+      name: row.name,
+      role: row.role,
+    };
   } catch (error) {
     console.error("Error fetching app user:", error);
     return undefined;
@@ -163,4 +179,3 @@ export async function getPersonaExperiences(personaId: string) {
     return [];
   }
 }
-
