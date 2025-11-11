@@ -127,19 +127,19 @@ export default function ExperienceCarousel({
       </div>
 
       {/* Progress Bar */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 px-6 py-3">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 px-3 sm:px-6 py-1 sm:py-3">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-white text-sm font-semibold">
+          <div className="flex items-center justify-between mb-1 sm:mb-2">
+            <span className="text-white text-xs sm:text-sm font-semibold">
               Step {currentStep + 1} of {steps.length}
             </span>
-            <span className="text-white text-sm font-semibold">
+            <span className="text-white text-xs sm:text-sm font-semibold hidden sm:inline">
               {currentStepData?.title}
             </span>
           </div>
-          <div className="w-full bg-blue-800 rounded-full h-2">
+          <div className="w-full bg-blue-800 rounded-full h-1.5 sm:h-2">
             <motion.div
-              className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full"
+              className="bg-gradient-to-r from-green-400 to-blue-500 h-1.5 sm:h-2 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
               transition={{ duration: 0.5 }}
@@ -149,19 +149,19 @@ export default function ExperienceCarousel({
       </div>
 
       {/* Content Area */}
-      <div className="overflow-y-auto bg-white">
+      <div className="overflow-y-auto bg-white flex-1">
         <div className="max-w-7xl mx-auto w-full">
           {currentStepData && (
             <div>
-              <div className="p-2 sm:p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+              <div className="p-3 sm:p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-2">
                   {currentStepData.title}
                 </h2>
-                <p className="text-xs sm:text-base text-gray-700 leading-relaxed mb-2 sm:mb-3">
+                <p className="text-xs sm:text-base text-gray-700 leading-relaxed mb-3 sm:mb-3">
                   {currentStepData.description}
                 </p>
                 {currentStepData.narrative && (
-                  <div className="bg-white rounded-lg p-2 sm:p-3 border-l-4 border-blue-500 mt-2 sm:mt-3">
+                  <div className="bg-white rounded-lg p-3 sm:p-3 border-l-4 border-blue-500 mt-3 sm:mt-3 max-h-24 sm:max-h-none overflow-y-auto">
                     <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
                       {currentStepData.narrative}
                     </p>
@@ -175,15 +175,15 @@ export default function ExperienceCarousel({
       </div>
 
       {/* Navigation Footer */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 border-t-2 border-blue-700 p-6">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 border-t-2 border-blue-700 p-2 sm:p-6 flex-shrink-0">
         <div className="max-w-7xl mx-auto">
           {/* Step Indicators */}
-          <div className="flex justify-center gap-3 mb-6">
+          <div className="flex justify-center gap-2 sm:gap-3 mb-3 sm:mb-6">
             {steps.map((_, index) => (
               <motion.button
                 key={index}
                 onClick={() => goToStep(index)}
-                className={`w-10 h-10 rounded-full font-bold transition-all ${
+                className={`w-8 sm:w-10 h-8 sm:h-10 rounded-full font-bold transition-all text-xs sm:text-base ${
                   index === currentStep
                     ? 'bg-white text-blue-900 scale-110'
                     : 'bg-blue-700 text-white hover:bg-blue-600'
@@ -197,11 +197,11 @@ export default function ExperienceCarousel({
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-1 sm:gap-4">
             <motion.button
               onClick={goPrev}
               disabled={isFirstStep}
-              className={`flex items-center gap-2 px-6 py-3 rounded font-semibold transition-all ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 rounded font-semibold transition-all text-xs sm:text-base ${
                 isFirstStep
                   ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -209,25 +209,26 @@ export default function ExperienceCarousel({
               whileHover={!isFirstStep ? { scale: 1.05 } : {}}
               whileTap={!isFirstStep ? { scale: 0.95 } : {}}
             >
-              <span>← Previous</span>
+              <span className="hidden sm:inline">← Previous</span>
+              <span className="sm:hidden">←</span>
             </motion.button>
 
             <motion.button
               onClick={restart}
-              className="flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold transition-all"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold transition-all text-xs sm:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 sm:w-5 h-3 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              Restart
+              <span className="hidden sm:inline">Restart</span>
             </motion.button>
 
             <motion.button
               onClick={goNext}
               disabled={isLastStep}
-              className={`flex items-center gap-2 px-6 py-3 rounded font-semibold transition-all ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-1 sm:py-3 rounded font-semibold transition-all text-xs sm:text-base ${
                 isLastStep
                   ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -235,7 +236,8 @@ export default function ExperienceCarousel({
               whileHover={!isLastStep ? { scale: 1.05 } : {}}
               whileTap={!isLastStep ? { scale: 0.95 } : {}}
             >
-              <span>Next →</span>
+              <span className="hidden sm:inline">Next →</span>
+              <span className="sm:hidden">→</span>
             </motion.button>
           </div>
 
@@ -244,7 +246,7 @@ export default function ExperienceCarousel({
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 text-center text-white text-sm"
+              className="mt-3 sm:mt-6 text-center text-white text-xs sm:text-sm"
             >
               <p>You've completed {personaName}'s experience journey. Click "Restart" to begin again or exit to return to personas.</p>
             </motion.div>
