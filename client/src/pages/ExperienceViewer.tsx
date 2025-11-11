@@ -56,7 +56,7 @@ const stepTypeConfig: Record<string, { title: string; description: string }> = {
   },
 };
 
-// Hardcoded persona experiences - from persona_experiences table
+// Hardcoded persona experiences - from persona_experiences tables
 const hardcodedExperiences: Record<string, Array<{ step_type: "email" | "ivr" | "field-services" | "email-viewer" | "ivr-voice" | "website-translation" | "live-chat" | "document-translation"; url: string }>> = {
   carlos: [
     { step_type: "email-viewer", url: "https://demo-chat.ikoneworld.net/email" },
