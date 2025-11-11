@@ -101,7 +101,7 @@ export default function ExperienceCarousel({
   return (
     <div className="fixed inset-0 bg-black/95 z-50 flex flex-col">
       {/* Header with Logo and Controls */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-3 border-b-2 border-blue-700">
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-2 sm:p-3 border-b-2 border-blue-700">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
@@ -110,8 +110,8 @@ export default function ExperienceCarousel({
               className="h-8 object-contain"
             />
             <div>
-              <h1 className="text-sm font-bold">{personaName}'s Experience Journey</h1>
-              <p className="text-xs text-blue-100">{personaDescription}</p>
+              <h1 className="text-xs sm:text-sm font-bold">{personaName}'s Experience Journey</h1>
+              <p className="text-xs text-blue-100 hidden sm:block">{personaDescription}</p>
             </div>
           </div>
           <button
@@ -153,16 +153,16 @@ export default function ExperienceCarousel({
         <div className="max-w-7xl mx-auto w-full">
           {currentStepData && (
             <div>
-              <div className="p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">
+              <div className="p-2 sm:p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
                   {currentStepData.title}
                 </h2>
-                <p className="text-base text-gray-700 leading-relaxed mb-3">
+                <p className="text-xs sm:text-base text-gray-700 leading-relaxed mb-2 sm:mb-3">
                   {currentStepData.description}
                 </p>
                 {currentStepData.narrative && (
-                  <div className="bg-white rounded-lg p-3 border-l-4 border-blue-500 mt-3">
-                    <p className="text-sm text-gray-800 leading-relaxed">
+                  <div className="bg-white rounded-lg p-2 sm:p-3 border-l-4 border-blue-500 mt-2 sm:mt-3">
+                    <p className="text-xs sm:text-sm text-gray-800 leading-relaxed">
                       {currentStepData.narrative}
                     </p>
                   </div>
