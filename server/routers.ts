@@ -29,14 +29,40 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         try {
           const { email, password } = input;
-          const user = await getAppUserByEmail(email);
+          
+          // Hardcoded admin user for testing
+          const ADMIN_EMAIL = 'kevin.shelton@invictusbpo.com';
+          const ADMIN_PASSWORD_HASH = '$2a$10$D4tqaWfHCYDr7OmoDPre3eT1rLQADOpeljb3bzJDRq9ljtw23GqAu';
+          
+          let user = null;
+          
+          // Try database first
+          try {
+            user = await getAppUserByEmail(email);
+          } catch (dbError) {
+            console.warn('Database unavailable, checking hardcoded admin user:', dbError);
+          }
+          
+          // If database failed or user not found, check hardcoded admin
+          if (!user && email === ADMIN_EMAIL) {
+            user = {
+              id: '47040dcc-c7cf-44b7-ab89-d7d1da641ec2',
+              email: ADMIN_EMAIL,
+              password_hash: ADMIN_PASSWORD_HASH,
+              name: 'Kevin Shelton',
+              role: 'admin',
+            };
+          }
+          
           if (!user) {
             throw new Error('Invalid credentials');
           }
+          
           const passwordValid = await verifyPassword(password, user.password_hash);
           if (!passwordValid) {
             throw new Error('Invalid credentials');
           }
+          
           const token = generateToken(user.id, user.email, user.name, user.role);
           return {
             success: true,

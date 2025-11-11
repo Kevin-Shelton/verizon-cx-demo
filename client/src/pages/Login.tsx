@@ -45,19 +45,21 @@ export default function Login() {
 
       const data = await response.json();
 
-      if (response.ok && data.result?.data?.success) {
+      // Check for tRPC success response
+      if (data.result?.data?.success) {
         // Backend authentication successful
         localStorage.setItem('authToken', data.result.data.token);
         localStorage.setItem('user', JSON.stringify(data.result.data.user));
         setLocation('/videos');
       } else if (data.error) {
         // Backend authentication failed, try demo credentials as fallback
-        console.warn('Backend login failed:', data.error);
+        const errorMsg = data.error?.json?.message || 'Invalid credentials';
+        console.warn('Backend login failed:', errorMsg);
         const success = await login(username, password);
         if (success) {
           setLocation('/videos');
         } else {
-          setError(data.error?.message || 'Invalid username or password');
+          setError(errorMsg);
           setPassword('');
         }
       } else {
