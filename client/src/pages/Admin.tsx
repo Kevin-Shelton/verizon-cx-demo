@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, Users, UserPlus, Trash2, AlertCircle, CheckCircle, Eye, EyeOff, BarChart3, Lock } from 'lucide-react';
+import { Shield, Users, UserPlus, Trash2, AlertCircle, CheckCircle, Eye, EyeOff, BarChart3, Lock, RotateCcw } from 'lucide-react';
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  password_status: string;
+  created_by: string;
+  createdAt: string;
+}
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<'users' | 'metrics'>('users');
@@ -10,6 +20,40 @@ export default function Admin() {
   const [newPassword, setNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch all users on component mount
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('/api/admin/users/list', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+
+      const data = await response.json();
+      setUsers(data.users || []);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setMessage({ type: 'error', text: 'Failed to load users' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,10 +69,102 @@ export default function Admin() {
       return;
     }
 
-    // TODO: Call API to create user
-    setMessage({ type: 'success', text: `User "${newEmail}" added successfully` });
-    setNewEmail('');
-    setNewPassword('');
+    setIsSubmitting(true);
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('/api/admin/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          email: newEmail,
+          createdBy: 'admin',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage({ type: 'error', text: data.error || 'Failed to create user' });
+        return;
+      }
+
+      setMessage({ type: 'success', text: `User "${newEmail}" added successfully` });
+      setNewEmail('');
+      setNewPassword('');
+      
+      // Refresh user list
+      await fetchUsers();
+    } catch (error) {
+      console.error('Error creating user:', error);
+      setMessage({ type: 'error', text: 'Failed to create user' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string, userEmail: string) => {
+    if (!window.confirm(`Are you sure you want to delete ${userEmail}?`)) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('/api/admin/users/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage({ type: 'error', text: data.error || 'Failed to delete user' });
+        return;
+      }
+
+      setMessage({ type: 'success', text: `User ${userEmail} deleted successfully` });
+      await fetchUsers();
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      setMessage({ type: 'error', text: 'Failed to delete user' });
+    }
+  };
+
+  const handleResetPassword = async (userId: string, userEmail: string) => {
+    if (!window.confirm(`Reset password for ${userEmail}? They will need to set a new password on next login.`)) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('/api/admin/users/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage({ type: 'error', text: data.error || 'Failed to reset password' });
+        return;
+      }
+
+      setMessage({ type: 'success', text: `Password reset for ${userEmail}` });
+      await fetchUsers();
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      setMessage({ type: 'error', text: 'Failed to reset password' });
+    }
   };
 
   return (
@@ -129,12 +265,13 @@ export default function Admin() {
                       onChange={(e) => setNewEmail(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="user@example.com"
+                      disabled={isSubmitting}
                     />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                      Password
+                      Temporary Password
                     </label>
                     <div className="relative">
                       <input
@@ -144,11 +281,13 @@ export default function Admin() {
                         onChange={(e) => setNewPassword(e.target.value)}
                         className="w-full pr-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Minimum 8 characters"
+                        disabled={isSubmitting}
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                        disabled={isSubmitting}
                       >
                         {showPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -158,16 +297,17 @@ export default function Admin() {
                       </button>
                     </div>
                     <p className="text-xs text-gray-500">
-                      Password must be at least 8 characters with uppercase, lowercase, number, and special character
+                      User will be required to set their own password on first login
                     </p>
                   </div>
 
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
                   >
                     <UserPlus className="w-4 h-4 mr-2" />
-                    Add User
+                    {isSubmitting ? 'Adding...' : 'Add User'}
                   </Button>
                 </form>
               </CardContent>
@@ -181,27 +321,60 @@ export default function Admin() {
                   <CardTitle className="text-2xl">Current Users</CardTitle>
                 </div>
                 <CardDescription>
-                  Active portal users
+                  {isLoading ? 'Loading...' : `${users.length} active portal users`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-3 max-h-96 overflow-y-auto">
-                  <div className="flex items-center justify-between p-4 bg-purple-50 rounded-lg border border-purple-200">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-gray-900">kevin.shelton@invictusbpo.com</p>
-                        <span className="px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">
-                          Admin
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-500 mt-1">Administrator account</p>
+                  {isLoading ? (
+                    <div className="text-center py-8 text-gray-500">
+                      <p>Loading users...</p>
                     </div>
-                  </div>
-
-                  <div className="text-center py-8 text-gray-500">
-                    <Lock className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">No additional users yet</p>
-                  </div>
+                  ) : users.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500">
+                      <Lock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p className="text-sm">No users found</p>
+                    </div>
+                  ) : (
+                    users.map((user) => (
+                      <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium text-gray-900 text-sm">{user.email}</p>
+                            {user.role === 'admin' && (
+                              <span className="px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">
+                                Admin
+                              </span>
+                            )}
+                            {user.password_status === 'temporary' && (
+                              <span className="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full">
+                                Needs Password
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">{user.name || 'No name'}</p>
+                        </div>
+                        {user.role !== 'admin' && (
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleResetPassword(user.id, user.email)}
+                              className="p-2 text-orange-600 hover:bg-orange-50 rounded transition"
+                              title="Reset password"
+                            >
+                              <RotateCcw className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteUser(user.id, user.email)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded transition"
+                              title="Delete user"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
