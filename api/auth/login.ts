@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { verifyPassword, generateToken } from '../../server/auth';
-import { verifyRecaptcha, isRecaptchaRequired } from '../../server/_core/captcha';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -47,6 +47,38 @@ function getClientIp(req: VercelRequest): string {
   return req.socket.remoteAddress || 'unknown';
 }
 
+// Inline auth functions
+async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return bcrypt.compare(password, hash);
+}
+
+function generateToken(
+  userId: string,
+  email: string,
+  name: string | null,
+  role: string
+): string {
+  const secret = process.env.AUTH_TOKEN_SECRET || process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('AUTH_TOKEN_SECRET or JWT_SECRET environment variable not set');
+  }
+
+  return jwt.sign(
+    {
+      userId,
+      email,
+      name,
+      role,
+      iat: Math.floor(Date.now() / 1000),
+    },
+    secret,
+    {
+      expiresIn: '24h',
+      algorithm: 'HS256',
+    }
+  );
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -62,29 +94,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { email, password, recaptchaToken } = req.body;
+    const { email, password } = req.body;
     const clientIp = getClientIp(req);
-    const failedCount = getFailedAttempts(clientIp);
 
     console.log('[LOGIN] Received login request for:', email);
-
-    // Check if reCAPTCHA is required
-    if (isRecaptchaRequired(failedCount)) {
-      if (!recaptchaToken) {
-        return res.status(403).json({
-          error: 'reCAPTCHA verification required',
-          requiresRecaptcha: true,
-        });
-      }
-
-      const captchaResult = await verifyRecaptcha(recaptchaToken);
-      if (!captchaResult.success) {
-        return res.status(403).json({
-          error: 'reCAPTCHA verification failed',
-          requiresRecaptcha: true,
-        });
-      }
-    }
 
     // Validate input
     if (!email || !password) {
