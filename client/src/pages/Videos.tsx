@@ -35,18 +35,9 @@ export default function Videos() {
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // Handle fullscreen when modal opens
+  // Handle video selection
   const handleVideoSelect = (video: VideoItem) => {
     setSelectedVideo(video);
-    // Request fullscreen after a short delay to ensure DOM is ready
-    setTimeout(() => {
-      const modalDiv = document.querySelector('[role="dialog"]');
-      if (modalDiv && modalDiv.parentElement) {
-        modalDiv.parentElement.requestFullscreen?.().catch(() => {
-          // Fullscreen request failed, but video will still play
-        });
-      }
-    }, 100);
   };
 
   return (
@@ -197,7 +188,7 @@ export default function Videos() {
               <div className="flex-grow relative w-full bg-black">
                 <iframe
                   ref={iframeRef}
-                  src={`${selectedVideo.url}?autoplay=1&muted=1`}
+                  src={selectedVideo.url}
                   title={selectedVideo.title}
                   className="w-full h-full border-0"
                   allow="autoplay; fullscreen; picture-in-picture"
