@@ -32,12 +32,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const fetchUsers = async () => {
     try {
       const response = await fetch('/api/trpc/auth.listUsers', {
-        method: 'GET',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          json: {},
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        if (data.result?.data) {
+        if (data.result?.data && Array.isArray(data.result.data)) {
           setUsers(data.result.data);
         }
       } else {
