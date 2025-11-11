@@ -30,7 +30,7 @@ const DEMO_CREDENTIALS: Record<string, string> = {
   'maria': 'maria',
   'lucia': 'lucia',
   'diego': 'diego',
-  'kevin.shelton@invictusbpo.com': 'admin2024',
+  'kevin.shelton@invictusbpo.com': 'P6448sp2!P',
 };
 
 // Supabase Client
@@ -88,6 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(username);
       localStorage.setItem('verizon_cx_user', username);
       localStorage.setItem('verizon_cx_auth', 'true');
+      localStorage.setItem('authToken', 'demo-token-' + Date.now());
       return true;
     }
     console.log('Demo credentials not matched for:', username);
