@@ -69,7 +69,7 @@ export default function Videos() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col">
+                <Card className="p-4 border-2 border-gray-200 hover:border-blue-400 transition-all hover:shadow-2xl bg-white h-full flex flex-col relative -top-12">
                   {/* Embedded Video Player Container */}
                   <div className="relative w-full bg-black rounded-lg overflow-hidden mb-4 aspect-video">
                     <iframe
