@@ -28,31 +28,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]);
 
-  // Fetch users from tRPC endpoint
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('/api/trpc/auth.listUsers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          json: {},
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.result?.data && Array.isArray(data.result.data)) {
-          setUsers(data.result.data);
-        }
-      } else {
-        console.error('Error fetching users:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
 
   // Load users on mount and check session
   useEffect(() => {
