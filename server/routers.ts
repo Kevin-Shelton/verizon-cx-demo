@@ -74,15 +74,24 @@ export const appRouter = router({
           const token = generateToken(user.id, user.email, user.name, user.role);
           console.log('[LOGIN] Authentication successful for:', email);
           
-          // Create session cookie for subsequent requests
-          const { sdk } = await import("./_core/sdk.js");
-          const sessionToken = await sdk.createSessionToken(user.id, { name: user.name });
-          const cookieOptions = getSessionCookieOptions(ctx.req);
-          console.log('[LOGIN] Cookie options:', JSON.stringify(cookieOptions));
-          console.log('[LOGIN] Cookie name:', COOKIE_NAME);
-          console.log('[LOGIN] Session token length:', sessionToken.length);
-          (ctx.res as any).cookie(COOKIE_NAME, sessionToken, cookieOptions);
-          console.log('[LOGIN] Session cookie set for user:', user.id);
+          try {
+            // Create session cookie for subsequent requests
+            console.log('[LOGIN] Step 1: Importing SDK...');
+            const { sdk } = await import("./_core/sdk.js");
+            console.log('[LOGIN] Step 2: Creating session token...');
+            const sessionToken = await sdk.createSessionToken(user.id, { name: user.name });
+            console.log('[LOGIN] Step 3: Getting cookie options...');
+            const cookieOptions = getSessionCookieOptions(ctx.req);
+            console.log('[LOGIN] Cookie options:', JSON.stringify(cookieOptions));
+            console.log('[LOGIN] Cookie name:', COOKIE_NAME);
+            console.log('[LOGIN] Session token length:', sessionToken.length);
+            console.log('[LOGIN] Step 4: Setting cookie...');
+            (ctx.res as any).cookie(COOKIE_NAME, sessionToken, cookieOptions);
+            console.log('[LOGIN] Session cookie set for user:', user.id);
+          } catch (cookieError) {
+            console.error('[LOGIN] Error setting session cookie:', cookieError);
+            // Continue anyway - user can still use the token
+          }
           
           const response = {
             success: true,
