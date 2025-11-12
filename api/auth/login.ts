@@ -94,10 +94,58 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { email, password } = req.body;
+    const { email, password, recaptchaToken } = req.body;
     const clientIp = getClientIp(req);
+    const failedCount = getFailedAttempts(clientIp);
 
     console.log('[LOGIN] Received login request for:', email);
+    console.log('[LOGIN] Failed attempts for IP:', failedCount);
+
+    // Check if reCAPTCHA is required (after 3 failed attempts)
+    if (failedCount >= 3) {
+      console.log('[LOGIN] reCAPTCHA required (failed attempts:', failedCount + ')');
+      
+      if (!recaptchaToken) {
+        console.log('[LOGIN] reCAPTCHA token missing');
+        return res.status(403).json({
+          error: 'reCAPTCHA verification required',
+          requiresRecaptcha: true,
+        });
+      }
+
+      // Verify reCAPTCHA token
+      const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+      if (!secretKey) {
+        console.warn('[LOGIN] RECAPTCHA_SECRET_KEY not configured');
+        // Continue without verification if not configured
+      } else {
+        try {
+          const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+          const verifyResponse = await fetch(verifyUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(recaptchaToken)}`,
+          });
+          
+          const verifyData = await verifyResponse.json();
+          console.log('[LOGIN] reCAPTCHA verification result:', verifyData);
+          
+          if (!verifyData.success || (verifyData.score && verifyData.score < 0.5)) {
+            console.log('[LOGIN] reCAPTCHA verification failed');
+            recordFailedAttempt(clientIp);
+            return res.status(403).json({
+              error: 'reCAPTCHA verification failed',
+              requiresRecaptcha: true,
+            });
+          }
+          
+          console.log('[LOGIN] reCAPTCHA verification passed');
+        } catch (captchaError) {
+          console.error('[LOGIN] reCAPTCHA verification error:', captchaError);
+          // Continue without verification on error
+        }
+      }
+    }
 
     // Validate input
     if (!email || !password) {
