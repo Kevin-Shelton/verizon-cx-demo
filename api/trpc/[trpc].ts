@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { verifyPassword, generateToken } from '../../server/auth';
-import { verifyRecaptcha, isRecaptchaRequired } from '../../server/_core/captcha';
+import { verifyPassword, generateToken } from '../../server/auth.js';
+import { verifyRecaptcha, isRecaptchaRequired } from '../../server/_core/captcha.js';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
