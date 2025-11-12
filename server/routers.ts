@@ -78,6 +78,9 @@ export const appRouter = router({
           const { sdk } = await import("./_core/sdk.js");
           const sessionToken = await sdk.createSessionToken(user.id, { name: user.name });
           const cookieOptions = getSessionCookieOptions(ctx.req);
+          console.log('[LOGIN] Cookie options:', JSON.stringify(cookieOptions));
+          console.log('[LOGIN] Cookie name:', COOKIE_NAME);
+          console.log('[LOGIN] Session token length:', sessionToken.length);
           (ctx.res as any).cookie(COOKIE_NAME, sessionToken, cookieOptions);
           console.log('[LOGIN] Session cookie set for user:', user.id);
           
@@ -171,6 +174,10 @@ export const appRouter = router({
       }))
       .mutation(({ ctx }) => {
         try {
+          // Log cookie information for debugging
+          console.log('[Auth] Cookies received:', ctx.req.headers.cookie);
+          console.log('[Auth] User from context:', ctx.user ? { id: ctx.user.id, email: ctx.user.email } : 'null');
+          
           // Get current user from session
           let user = ctx.user;
 
