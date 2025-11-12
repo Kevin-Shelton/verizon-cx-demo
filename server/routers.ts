@@ -6,7 +6,6 @@ import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { verifyPassword, generateToken } from "./auth";
 import { getAppUserByEmail } from "./db";
 
 export const appRouter = router({
@@ -63,6 +62,7 @@ export const appRouter = router({
           console.log('[LOGIN] User found:', { id: user.id, email: user.email, password_hash_exists: !!user.password_hash, password_hash_length: user.password_hash ? user.password_hash.length : 0 });
           console.log('[LOGIN] Submitted password length:', password.length);
           
+          const { verifyPassword, generateToken } = await import("./auth");
           const passwordValid = await verifyPassword(password, user.password_hash);
           console.log('[LOGIN] Password verification result:', passwordValid);
           
