@@ -68,7 +68,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     }
 
     // PostgreSQL upsert
-    await db.insert(users).values(values).onConflictDoUpdate({
+    await db.insert(users as any).values(values).onConflictDoUpdate({
       target: users.id as any,
       set: updateSet,
     });
