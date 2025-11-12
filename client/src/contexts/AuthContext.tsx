@@ -78,48 +78,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // No longer saving users to localStorage, as they are managed in Supabase
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    console.log('Login attempt:', username, 'Password length:', password.length);
-    console.log('Available demo users:', Object.keys(DEMO_CREDENTIALS));
-    console.log('Checking if username exists in DEMO_CREDENTIALS:', username in DEMO_CREDENTIALS);
+    console.log('AuthContext login called for:', username);
     
-    // Check demo credentials first (for testing without database)
-    if (username in DEMO_CREDENTIALS && DEMO_CREDENTIALS[username] === password) {
-      console.log('Demo credentials matched for:', username);
-      setIsAuthenticated(true);
-      setUser(username);
-      localStorage.setItem('verizon_cx_user', username);
-      localStorage.setItem('verizon_cx_auth', 'true');
-      localStorage.setItem('authToken', 'demo-token-' + Date.now());
-      return true;
-    }
-    console.log('Demo credentials not matched for:', username);
-
-    // Try database authentication as fallback
-    try {
-      console.log('Attempting database login for:', username);
-      const lowerPassword = password.toLowerCase();
-      const { data, error } = await supabase.from('app_users').select('*').eq('username', username).eq('password', lowerPassword);
-
-      if (error) {
-        console.error('Supabase login error:', error.message);
-        return false;
-      }
-
-      if (data && data.length > 0) {
-        console.log('Database login successful for:', username);
-        setIsAuthenticated(true);
-        setUser(username);
-        localStorage.setItem('verizon_cx_user', username);
-        localStorage.setItem('verizon_cx_auth', 'true');
-        return true;
-      }
-    } catch (err) {
-      console.error('Database login error:', err);
-    }
-
-    console.log('Login failed for:', username);
-    console.log('Checking password match:', DEMO_CREDENTIALS[username], '===', password, '?', DEMO_CREDENTIALS[username] === password);
-    return false;
+    // At this point, the backend API has already validated credentials
+    // We just need to update the AuthContext state
+    // The token and user info are already stored in localStorage by Login.tsx
+    
+    setIsAuthenticated(true);
+    setUser(username);
+    console.log('AuthContext state updated successfully');
+    return true;
   }
 
   const logout = () => {
