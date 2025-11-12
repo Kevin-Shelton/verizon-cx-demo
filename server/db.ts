@@ -69,7 +69,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 
     // PostgreSQL upsert
     await db.insert(users).values(values).onConflictDoUpdate({
-      target: users.id,
+      target: users.id as any,
       set: updateSet,
     });
   } catch (error) {
@@ -85,7 +85,7 @@ export async function getUser(id: string) {
     return undefined;
   }
 
-  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  const result = await db.select().from(users as any).where(eq(users.id, id)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
 }
