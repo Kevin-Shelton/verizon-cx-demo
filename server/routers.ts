@@ -186,7 +186,7 @@ export const appRouter = router({
               name: user.name || "Demo User",
               portalUserId: user.id,
             },
-            process.env.AUTH_TOKEN_SECRET || "default-secret-key",
+            process.env.JWT_SECRET || process.env.AUTH_TOKEN_SECRET || "default-secret-key",
             { expiresIn: "5m" }
           );
 
