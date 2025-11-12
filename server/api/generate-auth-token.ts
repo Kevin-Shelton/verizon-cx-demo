@@ -25,7 +25,7 @@ router.post('/generate-auth-token', (req: Request, res: Response) => {
         name: user.name || 'Demo User',
         portalUserId: user.id,
       },
-      process.env.AUTH_TOKEN_SECRET || 'default-secret-key',
+      process.env.JWT_SECRET || 'default-secret-key',
       { expiresIn: '5m' }
     );
 

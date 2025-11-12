@@ -26,12 +26,26 @@ export default function LaunchDemoButton({
       console.log("Token response:", response);
       const token = response?.token;
       
-      // Append token to the actual URL passed in
-      const separator = url.includes('?') ? '&' : '?';
-      const urlWithToken = `${url}${separator}token=${encodeURIComponent(token)}`;
+      // Check if this is a demo-chat.ikoneworld.net URL
+      const isChatSite = url.includes('demo-chat.ikoneworld.net');
+      
+      let finalUrl: string;
+      
+      if (isChatSite) {
+        // Extract the path from the chat site URL
+        const urlObj = new URL(url);
+        const redirectPath = urlObj.pathname + urlObj.search;
+        
+        // Redirect through SSO login page
+        finalUrl = `https://demo-chat.ikoneworld.net/sso-login?token=${encodeURIComponent(token)}&redirect=${encodeURIComponent(redirectPath)}`;
+      } else {
+        // For non-chat URLs, append token directly
+        const separator = url.includes('?') ? '&' : '?';
+        finalUrl = `${url}${separator}token=${encodeURIComponent(token)}`;
+      }
       
       // Open in new window
-      window.open(urlWithToken, "_blank", "noopener,noreferrer");
+      window.open(finalUrl, "_blank", "noopener,noreferrer");
     } catch (err) {
       console.error("Error launching demo:", err);
       // Fallback: open without token
