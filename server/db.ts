@@ -143,22 +143,54 @@ export async function getAppUserByEmail(email: string) {
       sql`SELECT id, email, password_hash, name, role FROM app_users WHERE email = ${email} LIMIT 1`
     );
     
-    // PostgreSQL returns results as an array of rows
-    // Each row is an object with the selected columns
-    const row = (result as any[])?.[0];
+    // PostgreSQL execute returns results as an array
+    // The first element might be the rows array, or it might be directly an array of rows
+    let rows: any[] = [];
+    
+    if (Array.isArray(result)) {
+      // If result is already an array, use it directly
+      rows = result;
+    } else if (result && typeof result === 'object' && 'rows' in result) {
+      // If result has a 'rows' property, use that
+      rows = (result as any).rows;
+    } else if (result && typeof result === 'object' && Array.isArray((result as any)[0])) {
+      // If result[0] is an array, it might be the rows
+      rows = (result as any)[0];
+    }
+    
+    const row = rows[0];
     
     if (!row) {
+      console.log('[DB] No user found for email:', email);
       return undefined;
     }
     
-    // Ensure we have all required fields properly extracted
-    return {
-      id: row.id,
-      email: row.email,
-      password_hash: row.password_hash,
-      name: row.name,
-      role: row.role,
-    };
+    console.log('[DB] User found, row type:', typeof row, 'is array:', Array.isArray(row));
+    
+    // Handle both object and array formats
+    let user;
+    if (Array.isArray(row)) {
+      // If row is an array, map it to object based on column order: id, email, password_hash, name, role
+      user = {
+        id: row[0],
+        email: row[1],
+        password_hash: row[2],
+        name: row[3],
+        role: row[4],
+      };
+    } else if (typeof row === 'object') {
+      // If row is an object, extract fields directly
+      user = {
+        id: row.id,
+        email: row.email,
+        password_hash: row.password_hash,
+        name: row.name,
+        role: row.role,
+      };
+    }
+    
+    console.log('[DB] Returning user:', { id: user?.id, email: user?.email, has_password_hash: !!user?.password_hash });
+    return user;
   } catch (error) {
     console.error("Error fetching app user:", error);
     return undefined;
@@ -173,13 +205,32 @@ export async function getAllAppUsers() {
       sql`SELECT id, email, name, role FROM app_users ORDER BY email`
     );
     
-    const rows = (result as any[]) || [];
-    return rows.map(row => ({
-      id: row.id,
-      email: row.email,
-      name: row.name,
-      role: row.role,
-    }));
+    let rows: any[] = [];
+    if (Array.isArray(result)) {
+      rows = result;
+    } else if (result && typeof result === 'object' && 'rows' in result) {
+      rows = (result as any).rows;
+    } else if (result && typeof result === 'object' && Array.isArray((result as any)[0])) {
+      rows = (result as any)[0];
+    }
+    
+    return rows.map(row => {
+      if (Array.isArray(row)) {
+        return {
+          id: row[0],
+          email: row[1],
+          name: row[2],
+          role: row[3],
+        };
+      } else {
+        return {
+          id: row.id,
+          email: row.email,
+          name: row.name,
+          role: row.role,
+        };
+      }
+    });
   } catch (error) {
     console.error("Error fetching app users:", error);
     return [];
