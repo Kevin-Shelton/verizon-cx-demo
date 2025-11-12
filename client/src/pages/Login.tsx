@@ -29,6 +29,23 @@ export default function Login() {
     try {
       console.log('Calling tRPC login endpoint with email:', email);
       
+      // Generate reCAPTCHA token
+      let recaptchaToken = '';
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+      
+      if (siteKey && typeof window !== 'undefined' && (window as any).grecaptcha) {
+        try {
+          console.log('Generating reCAPTCHA token...');
+          recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: 'login' });
+          console.log('reCAPTCHA token generated');
+        } catch (recaptchaError) {
+          console.warn('reCAPTCHA token generation failed:', recaptchaError);
+          // Continue without token - backend will handle it
+        }
+      } else {
+        console.warn('reCAPTCHA not available');
+      }
+      
       // Call the dedicated login API endpoint
       const response = await fetch('/api/auth/login', {
         method: 'POST',
@@ -38,6 +55,7 @@ export default function Login() {
         body: JSON.stringify({
           email: email,
           password: password,
+          recaptchaToken: recaptchaToken || undefined,
         }),
       });
 
