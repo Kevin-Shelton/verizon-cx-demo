@@ -25,7 +25,7 @@ export const appRouter = router({
         email: z.string().email(),
         password: z.string(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
         try {
           const { email, password } = input;
           console.log('[LOGIN] Received login request for email:', email);
@@ -73,6 +73,14 @@ export const appRouter = router({
           
           const token = generateToken(user.id, user.email, user.name, user.role);
           console.log('[LOGIN] Authentication successful for:', email);
+          
+          // Create session cookie for subsequent requests
+          const { sdk } = await import("./_core/sdk.js");
+          const sessionToken = await sdk.createSessionToken(user.id, { name: user.name });
+          const cookieOptions = getSessionCookieOptions(ctx.req);
+          (ctx.res as any).cookie(COOKIE_NAME, sessionToken, cookieOptions);
+          console.log('[LOGIN] Session cookie set for user:', user.id);
+          
           const response = {
             success: true,
             token,
