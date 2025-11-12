@@ -15,6 +15,7 @@ interface AuthContextType {
   users: User[];
   addUser: (username: string, password: string) => Promise<boolean>;
   deleteUser: (username: string) => Promise<boolean>;
+  fetchUsers: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -188,7 +189,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAdmin,
       users,
       addUser,
-      deleteUser
+      deleteUser,
+      fetchUsers
     }}>
       {children}
     </AuthContext.Provider>
