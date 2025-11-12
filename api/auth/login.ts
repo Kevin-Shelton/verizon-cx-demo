@@ -13,30 +13,66 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 
-// In-memory store for failed login attempts
-const failedAttempts: Record<string, { count: number; lastAttempt: number }> = {};
+// Supabase-based persistent failed attempt tracking
 const ATTEMPT_RESET_TIME = 15 * 60 * 1000; // 15 minutes
 
-function getFailedAttempts(ip: string): number {
-  const record = failedAttempts[ip];
-  if (!record) return 0;
-  if (Date.now() - record.lastAttempt > ATTEMPT_RESET_TIME) {
-    delete failedAttempts[ip];
+async function getFailedAttempts(ip: string): Promise<number> {
+  try {
+    const { data, error } = await supabase
+      .from('login_attempts')
+      .select('count, last_attempt')
+      .eq('ip_address', ip)
+      .single();
+
+    if (error || !data) return 0;
+
+    const lastAttempt = new Date(data.last_attempt).getTime();
+    if (Date.now() - lastAttempt > ATTEMPT_RESET_TIME) {
+      await supabase.from('login_attempts').delete().eq('ip_address', ip);
+      return 0;
+    }
+
+    return data.count || 0;
+  } catch (error) {
+    console.error('[LOGIN] Error getting failed attempts:', error);
     return 0;
   }
-  return record.count;
 }
 
-function recordFailedAttempt(ip: string): void {
-  if (!failedAttempts[ip]) {
-    failedAttempts[ip] = { count: 0, lastAttempt: Date.now() };
+async function recordFailedAttempt(ip: string): Promise<void> {
+  try {
+    const { data: existing } = await supabase
+      .from('login_attempts')
+      .select('count')
+      .eq('ip_address', ip)
+      .single();
+
+    if (existing) {
+      await supabase
+        .from('login_attempts')
+        .update({
+          count: (existing.count || 0) + 1,
+          last_attempt: new Date().toISOString(),
+        })
+        .eq('ip_address', ip);
+    } else {
+      await supabase.from('login_attempts').insert({
+        ip_address: ip,
+        count: 1,
+        last_attempt: new Date().toISOString(),
+      });
+    }
+  } catch (error) {
+    console.error('[LOGIN] Error recording failed attempt:', error);
   }
-  failedAttempts[ip].count++;
-  failedAttempts[ip].lastAttempt = Date.now();
 }
 
-function clearFailedAttempts(ip: string): void {
-  delete failedAttempts[ip];
+async function clearFailedAttempts(ip: string): Promise<void> {
+  try {
+    await supabase.from('login_attempts').delete().eq('ip_address', ip);
+  } catch (error) {
+    console.error('[LOGIN] Error clearing failed attempts:', error);
+  }
 }
 
 function getClientIp(req: VercelRequest): string {
@@ -96,7 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { email, password, recaptchaToken } = req.body;
     const clientIp = getClientIp(req);
-    const failedCount = getFailedAttempts(clientIp);
+    const failedCount = await getFailedAttempts(clientIp);
 
     console.log('[LOGIN] Received login request for:', email);
     console.log('[LOGIN] Failed attempts for IP:', failedCount);
@@ -132,7 +168,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           
           if (!verifyData.success || (verifyData.score && verifyData.score < 0.5)) {
             console.log('[LOGIN] reCAPTCHA verification failed');
-            recordFailedAttempt(clientIp);
+            await recordFailedAttempt(clientIp);
             return res.status(403).json({
               error: 'reCAPTCHA verification failed',
               requiresRecaptcha: true,
@@ -149,7 +185,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Validate input
     if (!email || !password) {
-      recordFailedAttempt(clientIp);
+      await recordFailedAttempt(clientIp);
       return res.status(400).json({ error: 'Email and password required' });
     }
 
@@ -162,7 +198,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (queryError || !users || users.length === 0) {
       console.log('[LOGIN] User not found:', email);
-      recordFailedAttempt(clientIp);
+      await recordFailedAttempt(clientIp);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -172,12 +208,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const passwordValid = await verifyPassword(password, user.password_hash);
     if (!passwordValid) {
       console.log('[LOGIN] Password mismatch for:', email);
-      recordFailedAttempt(clientIp);
+      await recordFailedAttempt(clientIp);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Clear failed attempts on successful login
-    clearFailedAttempts(clientIp);
+    await clearFailedAttempts(clientIp);
 
     // Generate JWT token
     const token = generateToken(user.id, user.email, user.name, user.role);
