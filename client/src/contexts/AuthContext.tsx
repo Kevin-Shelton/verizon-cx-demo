@@ -1,21 +1,21 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createClient } from '@supabase/supabase-js';
 
 interface User {
-  id: string;
-  email: string;
-  name: string | null;
-  role: string;
+  username: string;
+  password: string;
 }
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   user: string | null;
   isAdmin: boolean;
   users: User[];
-  addUser: (email: string, password: string) => Promise<boolean>;
-  deleteUser: (email: string) => Promise<boolean>;
+  addUser: (username: string, password: string) => Promise<boolean>;
+  deleteUser: (username: string) => Promise<boolean>;
+  fetchUsers: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,13 +23,45 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Admin email - only this user can access admin panel
 const ADMIN_EMAIL = 'kevin.shelton@invictusbpo.com';
 
+// Demo credentials for testing without database
+const DEMO_CREDENTIALS: Record<string, string> = {
+  'demo': 'demo',
+  'test': 'test',
+  'carlos': 'carlos',
+  'maria': 'maria',
+  'lucia': 'lucia',
+  'diego': 'diego',
+  'kevin.shelton@invictusbpo.com': 'P6448sp2!P',
+};
+
+// Supabase Client
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Check if environment variables are set
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Supabase URL or Anon Key is not defined. Please check your Vercel environment variables.');
+  // Fallback to a non-functional supabase client to prevent crashes
+  // In a real app, you might want to throw an error or handle this more gracefully
+}
+
+const supabase = createClient(supabaseUrl || 'http://localhost', supabaseAnonKey || 'dummy_key');
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<string | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]); // Initialize as empty, will fetch from Supabase
 
+  const fetchUsers = async () => {
+    const { data, error } = await supabase.from('app_users').select('*');
+    if (error) {
+      console.error('Error fetching users:', error.message);
+    } else if (data) {
+      setUsers(data as User[]);
+    }
+  };
 
-  // Load users on mount and check session
+  // Load users from Supabase on mount and check session
   useEffect(() => {
     fetchUsers();
 
@@ -43,130 +75,75 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    console.log('Login attempt:', email, 'Password length:', password.length);
+  // No longer saving users to localStorage, as they are managed in Supabase
+
+  const login = async (username: string, password: string): Promise<boolean> => {
+    console.log('AuthContext login called for:', username);
     
-    try {
-      console.log('Calling tRPC login endpoint with email:', email);
-      
-      // Call the tRPC login endpoint
-      const response = await fetch('/api/trpc/auth.login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          json: {
-            email: email,
-            password: password,
-          },
-        }),
-      });
-
-      console.log('Response status:', response.status);
-      
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
-
-      if (response.ok && responseData.result?.data?.success) {
-        const { token, user: userData } = responseData.result.data;
-        console.log('Login successful, storing token and redirecting');
-        setIsAuthenticated(true);
-        setUser(email);
-        localStorage.setItem('verizon_cx_user', email);
-        localStorage.setItem('verizon_cx_auth', 'true');
-        localStorage.setItem('authToken', token);
-        return true;
-      } else {
-        const errorMessage = responseData.result?.data?.error || responseData.error?.message || 'Unknown error';
-        console.error('Login error from backend:', errorMessage);
-        return false;
-      }
-    } catch (error) {
-      console.error('Login request failed:', error);
-      return false;
-    }
-  };
+    // At this point, the backend API has already validated credentials
+    // We just need to update the AuthContext state
+    // The token and user info are already stored in localStorage by Login.tsx
+    
+    setIsAuthenticated(true);
+    setUser(username);
+    console.log('AuthContext state updated successfully');
+    return true;
+  }
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
     localStorage.removeItem('verizon_cx_user');
     localStorage.removeItem('verizon_cx_auth');
-    localStorage.removeItem('authToken');
   };
 
-  const addUser = async (email: string, password: string): Promise<boolean> => {
-    try {
-      console.log('Adding user via tRPC:', email);
-      
-      const response = await fetch('/api/trpc/auth.addUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          json: {
-            email: email,
-            password: password,
-          },
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.result?.data?.success) {
-          console.log('User added successfully');
-          await fetchUsers(); // Refresh user list
-          return true;
-        }
-      }
-      
-      console.error('Error adding user:', response.statusText);
-      return false;
-    } catch (error) {
-      console.error('Error adding user:', error);
+  const addUser = async (username: string, password: string): Promise<boolean> => {
+    // Check if user already exists in Supabase
+    const { data: existingUsers, error: fetchError } = await supabase.from('app_users').select('username').eq('username', username);
+    if (fetchError) {
+      console.error('Error checking existing user:', fetchError.message);
       return false;
     }
-  };
+    if (existingUsers && existingUsers.length > 0) {
+      console.warn('User already exists in Supabase:', username);
+      return false;
+    }
 
-  const deleteUser = async (email: string): Promise<boolean> => {
+    const { data: insertData, error: insertError } = await supabase.from('app_users').insert([{ username, password }]);
+    if (insertError) {
+      console.error('Error adding user:', insertError.message);
+      return false;
+    }
+
+    // Supabase insert returns data as an array of inserted objects, or null if no data
+    // With RLS policies, insertData might be null even on success
+    if (!insertError) {
+      console.log("Supabase insert successful. Inserted data:", insertData);
+      // Re-fetch users to update the local state
+      await fetchUsers(); // Call the defined fetchUsers function to refresh the state
+      return true;
+    }
+    console.warn("Supabase insert returned no data, but no error was reported. This might indicate an RLS policy silently blocking the insert, or an issue with the data being inserted.");
+    return false;
+  }
+
+  const deleteUser = async (username: string): Promise<boolean> => {
     // Prevent deleting the admin user
-    if (email === ADMIN_EMAIL) {
-      console.warn('Attempted to delete admin user:', email);
+    if (username === ADMIN_EMAIL) {
+      console.warn('Attempted to delete admin user:', username);
       return false;
     }
 
-    try {
-      console.log('Deleting user via tRPC:', email);
-      
-      const response = await fetch('/api/trpc/auth.deleteUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          json: {
-            email: email,
-          },
-        }),
-      });
+    const { error } = await supabase.from('app_users').delete().eq('username', username);
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.result?.data?.success) {
-          console.log('User deleted successfully');
-          await fetchUsers(); // Refresh user list
-          return true;
-        }
-      }
-
-      console.error('Error deleting user:', response.statusText);
-      return false;
-    } catch (error) {
-      console.error('Error deleting user:', error);
+    if (error) {
+      console.error('Error deleting user:', error.message);
       return false;
     }
+
+    // Re-fetch users to update the local state
+    await fetchUsers(); // Call the defined fetchUsers function
+    return true;
   };
 
   const isAdmin = user === ADMIN_EMAIL;
@@ -180,7 +157,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAdmin,
       users,
       addUser,
-      deleteUser
+      deleteUser,
+      fetchUsers
     }}>
       {children}
     </AuthContext.Provider>
@@ -194,3 +172,4 @@ export const useAuth = () => {
   }
   return context;
 };
+
