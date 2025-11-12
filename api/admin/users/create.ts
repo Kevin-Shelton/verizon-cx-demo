@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { v4 as uuidv4 } from 'uuid';
+// Using built-in crypto.randomUUID() instead of uuid package
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -52,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Create new user with temporary password status
-    const userId = uuidv4();
+    const userId = crypto.randomUUID();
     const { data: newUser, error: createError } = await supabase
       .from('app_users')
       .insert([

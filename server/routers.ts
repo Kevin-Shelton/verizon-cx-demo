@@ -15,7 +15,7 @@ export const appRouter = router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      (ctx.res as any).clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return {
         success: true,
       } as const;
@@ -206,6 +206,7 @@ export const appRouter = router({
       .input((raw) => {
         const data = raw as any;
         return {
+          id: crypto.randomUUID(),
           userName: data.userName as string | undefined,
           userEmail: data.userEmail as string | undefined,
           type: data.type as "question" | "issue" | "improvement" | "observation",
@@ -235,6 +236,7 @@ export const appRouter = router({
       .input((raw) => {
         const data = raw as any;
         return {
+          id: crypto.randomUUID(),
           personaId: data.personaId as string,
           dialect: data.dialect as string,
           original: JSON.stringify(data.original || []),
