@@ -94,20 +94,20 @@ export async function getUser(id: string) {
 export async function createFeedback(data: InsertFeedback) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.insert(feedback).values(data);
+  await db.insert(feedback as any).values(data);
   return data;
 }
 
 export async function getAllFeedback() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(feedback).orderBy(feedback.createdAt);
+  return db.select().from(feedback as any).orderBy(feedback.createdAt);
 }
 
 export async function getFeedbackById(id: string) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(feedback).where(eq(feedback.id, id)).limit(1);
+  const result = await db.select().from(feedback as any).where(eq(feedback.id, id)).limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
@@ -115,20 +115,20 @@ export async function getFeedbackById(id: string) {
 export async function createTranscript(data: InsertTranscript) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.insert(transcripts).values(data);
+  await db.insert(transcripts as any).values(data);
   return data;
 }
 
 export async function getAllTranscripts() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(transcripts).orderBy(transcripts.createdAt);
+  return db.select().from(transcripts as any).orderBy(transcripts.createdAt);
 }
 
 export async function getTranscriptById(id: string) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(transcripts).where(eq(transcripts.id, id)).limit(1);
+  const result = await db.select().from(transcripts as any).where(eq(transcripts.id, id)).limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
 
