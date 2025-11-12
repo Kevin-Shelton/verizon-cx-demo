@@ -175,7 +175,7 @@ export const appRouter = router({
       .mutation(({ ctx }) => {
         try {
           // Log cookie information for debugging
-          console.log('[Auth] Cookies received:', ctx.req.headers.cookie);
+          console.log('[Auth] Cookies received:', (ctx.req as any).headers?.cookie || 'none');
           console.log('[Auth] User from context:', ctx.user ? { id: ctx.user.id, email: ctx.user.email } : 'null');
           
           // Get current user from session
