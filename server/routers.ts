@@ -1,12 +1,12 @@
 import { COOKIE_NAME } from "../shared/const.js";
-import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
-import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld";
+import { getSessionCookieOptions } from "./_core/cookies.js";
+import { systemRouter } from "./_core/systemRouter.js";
+import { publicProcedure, router } from "./_core/trpc.js";
+import { getIkoneWorldVideoAccess, getVideoMetadata } from "./ikoneworld.js";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { getAppUserByEmail } from "./db";
+import { getAppUserByEmail } from "./db.js";
 
 export const appRouter = router({
   system: systemRouter,
