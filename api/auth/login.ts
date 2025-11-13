@@ -220,6 +220,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('[LOGIN] Authentication successful for:', email);
 
+    // Set session cookie for subsequent requests
+    try {
+      // Import SDK dynamically to avoid circular dependencies
+      const { sdk } = await import('../../server/_core/sdk.js');
+      const sessionToken = await sdk.createSessionToken(user.id, { name: user.name || '' });
+      
+      // Set cookie with appropriate options
+      const isSecure = req.headers['x-forwarded-proto'] === 'https';
+      res.setHeader('Set-Cookie', [
+        `app_session_id=${sessionToken}; Path=/; HttpOnly; SameSite=${isSecure ? 'None' : 'Lax'}${isSecure ? '; Secure' : ''}; Max-Age=31536000`
+      ]);
+      console.log('[LOGIN] Session cookie set for user:', user.id);
+    } catch (cookieError) {
+      console.error('[LOGIN] Error setting session cookie:', cookieError);
+      // Continue anyway - user can still use the token
+    }
+
     return res.status(200).json({
       success: true,
       token,
