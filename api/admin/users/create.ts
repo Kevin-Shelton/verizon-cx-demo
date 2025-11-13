@@ -27,19 +27,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { email, password, name, createdBy } = req.body;
+    const { email, name, createdBy } = req.body;
 
     // Validate input
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
-    }
-    
-    if (!password) {
-      return res.status(400).json({ error: 'Password is required' });
-    }
-    
-    if (password.length < 8) {
-      return res.status(400).json({ error: 'Password must be at least 8 characters' });
     }
 
     // Verify the request is from an admin (check auth token)
@@ -59,11 +51,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(409).json({ error: 'User already exists' });
     }
 
-    // Hash the password using bcrypt (10 rounds as per security requirements)
-    const bcrypt = await import('bcryptjs');
-    const passwordHash = await bcrypt.hash(password, 10);
-    
-    // Create new user with hashed password
+    // Create new user WITHOUT password - they will set it via activation link
     const userId = crypto.randomUUID();
     const userName = name || email.split('@')[0]; // Use provided name or email prefix
     
@@ -74,9 +62,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           id: userId,
           email: email,
           name: userName,
-          password_hash: passwordHash,
+          password_hash: null, // No password yet - user will set via activation link
           role: 'user',
-          password_status: 'active', // Password is set and ready to use
+          password_status: 'pending', // Waiting for user to set password
+          account_status: 'pending_activation', // New status field
           created_by: createdBy || 'admin',
         },
       ])
@@ -87,7 +76,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Failed to create user' });
     }
 
-    // Send welcome email via chat system's email API
+    // Generate activation token
+    let activationToken = '';
+    try {
+      const tokenResponse = await fetch(`${req.headers.host?.includes('localhost') ? 'http' : 'https'}://${req.headers.host}/api/auth/create-activation-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          email: email,
+          createdBy: createdBy || 'admin'
+        }),
+      });
+
+      if (tokenResponse.ok) {
+        const tokenResult = await tokenResponse.json();
+        activationToken = tokenResult.token;
+        console.log('Activation token created:', tokenResult.tokenId);
+      } else {
+        console.error('Failed to create activation token:', await tokenResponse.text());
+      }
+    } catch (tokenError) {
+      console.error('Error creating activation token:', tokenError);
+    }
+
+    // Send welcome email via chat system's email API with activation token
     // This is a non-blocking operation - user creation succeeds even if email fails
     try {
       const chatApiUrl = process.env.CHAT_API_URL || 'https://demo-chat.ikoneworld.net';
@@ -105,6 +120,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             name: userName,
             portalUrl: 'https://demo-portal.ikoneworld.net',
             language: 'en',
+            resetToken: activationToken, // Include activation token for magic link
           }),
         });
 
@@ -126,7 +142,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(201).json({
       success: true,
       user: newUser?.[0] || { id: userId, email, name: userName },
-      message: 'User created successfully with hashed password. Welcome email sent.',
+      message: 'User created successfully. Activation email sent with password setup link.',
+      activationRequired: true,
+      tokenCreated: !!activationToken
     });
   } catch (error) {
     console.error('Error in create user endpoint:', error);

@@ -25,12 +25,14 @@ import ExecutiveIntroduction from "./pages/ExecutiveIntroduction";
 import ExecutiveIntroductionV2 from './pages/ExecutiveIntroductionV2';
 import OutboundProspecting from './pages/OutboundProspecting';
 import Admin from "./pages/Admin";
+import SetPassword from "./pages/SetPassword";
 
 function Router() {
   return (
     <Switch>
-      {/* Public route - Login page */}
+      {/* Public routes - Login and SetPassword pages */}
       <Route path="/login" component={Login} />
+      <Route path="/set-password" component={SetPassword} />
       
       {/* All other routes are protected */}
       <Route>

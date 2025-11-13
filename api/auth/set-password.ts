@@ -1,22 +1,41 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const jwtSecret = process.env.JWT_SECRET;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase configuration');
 }
 
+if (!jwtSecret) {
+  console.error('Missing JWT_SECRET');
+}
+
 const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 
+/**
+ * Set password for user via activation token
+ * 
+ * POST /api/auth/set-password
+ * 
+ * Body:
+ *   token: Activation token
+ *   password: New password (min 8 characters)
+ * 
+ * Returns:
+ *   success: boolean
+ *   sessionToken: JWT for auto-login
+ *   user: User details
+ */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -27,73 +46,174 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { email, password, token } = req.body;
+    const { token, password } = req.body;
 
     // Validate input
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+    if (!token) {
+      return res.status(400).json({ error: 'Token is required' });
+    }
+
+    if (!password) {
+      return res.status(400).json({ error: 'Password is required' });
     }
 
     if (password.length < 8) {
-      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+      return res.status(400).json({ 
+        error: 'Password must be at least 8 characters',
+        message: 'Please choose a stronger password with at least 8 characters.'
+      });
     }
 
-    // Get user from database
-    const { data: users, error: fetchError } = await supabase
-      .from('app_users')
-      .select('id, email, password_status')
-      .eq('email', email)
-      .limit(1);
+    // Optional: Additional password strength validation
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
 
-    if (fetchError || !users || users.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!hasUppercase || !hasLowercase || !hasNumber) {
+      return res.status(400).json({
+        error: 'Password too weak',
+        message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number.'
+      });
     }
 
-    const user = users[0];
+    // Look up token with user details
+    const { data: tokenRecord, error: tokenError } = await supabase
+      .from('password_reset_tokens')
+      .select(`
+        id,
+        user_id,
+        token,
+        status,
+        expires_at,
+        app_users (
+          id,
+          email,
+          name,
+          account_status
+        )
+      `)
+      .eq('token', token)
+      .single();
 
-    // Hash the password with bcrypt
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
+    if (tokenError || !tokenRecord) {
+      console.error('[Set Password] Token not found');
+      return res.status(404).json({
+        error: 'Invalid token',
+        message: 'This activation link is not valid.'
+      });
+    }
 
-    // Update user with new password hash
-    const { data: updatedUser, error: updateError } = await supabase
+    // Verify token is still valid
+    if (tokenRecord.status !== 'pending') {
+      return res.status(400).json({
+        error: 'Token not valid',
+        message: 'This activation link has already been used or is no longer valid.'
+      });
+    }
+
+    const now = new Date();
+    const expiresAt = new Date(tokenRecord.expires_at);
+    
+    if (now > expiresAt) {
+      // Mark as expired
+      await supabase
+        .from('password_reset_tokens')
+        .update({ status: 'expired' })
+        .eq('id', tokenRecord.id);
+
+      return res.status(400).json({
+        error: 'Token expired',
+        message: 'This activation link has expired. Please contact your administrator.'
+      });
+    }
+
+    const user = Array.isArray(tokenRecord.app_users) 
+      ? tokenRecord.app_users[0] 
+      : tokenRecord.app_users;
+
+    if (user.account_status === 'active') {
+      return res.status(400).json({
+        error: 'User already activated',
+        message: 'Your account is already activated. Please log in.'
+      });
+    }
+
+    // Hash the password using bcrypt
+    const bcrypt = await import('bcryptjs');
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    // Update user record with hashed password and activate account
+    const { error: updateError } = await supabase
       .from('app_users')
       .update({
         password_hash: passwordHash,
-        password_status: 'set',
+        password_status: 'active',
+        account_status: 'active',
+        activated_at: new Date().toISOString()
       })
-      .eq('id', user.id)
-      .select();
+      .eq('id', user.id);
 
     if (updateError) {
-      console.error('Error updating password:', updateError);
-      return res.status(500).json({ error: 'Failed to set password' });
+      console.error('[Set Password] Error updating user:', updateError);
+      return res.status(500).json({
+        error: 'Failed to set password',
+        message: 'An error occurred while setting your password. Please try again.'
+      });
     }
 
-    // Generate JWT token for the user
-    const jwtSecret = process.env.JWT_SECRET || 'your-secret-key';
-    const payload = {
+    // Mark token as used
+    const { error: tokenUpdateError } = await supabase
+      .from('password_reset_tokens')
+      .update({
+        status: 'used',
+        used_at: new Date().toISOString()
+      })
+      .eq('id', tokenRecord.id);
+
+    if (tokenUpdateError) {
+      console.error('[Set Password] Error updating token:', tokenUpdateError);
+      // Don't fail the request - password was set successfully
+    }
+
+    // Generate session token for auto-login
+    let sessionToken = '';
+    if (jwtSecret) {
+      sessionToken = jwt.sign(
+        {
+          userId: user.id,
+          email: user.email,
+          name: user.name,
+          role: 'user'
+        },
+        jwtSecret,
+        { expiresIn: '7d' } // 7 day session
+      );
+    }
+
+    console.log('[Set Password] Password set successfully:', {
       userId: user.id,
       email: user.email,
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60, // 24 hours
-    };
-
-    // Simple JWT creation (in production, use a proper JWT library)
-    const jwtToken = Buffer.from(JSON.stringify(payload)).toString('base64');
+      activatedAt: new Date().toISOString()
+    });
 
     return res.status(200).json({
       success: true,
-      token: jwtToken,
+      message: 'Password set successfully. You are now logged in.',
       user: {
         id: user.id,
         email: user.email,
+        name: user.name,
+        accountStatus: 'active'
       },
-      message: 'Password set successfully',
+      sessionToken: sessionToken,
+      redirectTo: '/dashboard'
     });
+
   } catch (error) {
-    console.error('Error in set password endpoint:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error('Error in set-password:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
-

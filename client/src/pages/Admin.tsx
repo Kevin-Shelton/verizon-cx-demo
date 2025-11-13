@@ -12,6 +12,16 @@ interface User {
   password_status: string;
   created_by: string;
   createdAt: string;
+  accountStatus?: string;
+  activationDisplayStatus?: string;
+  activatedAt?: string;
+  needsNewLink?: boolean;
+  token?: {
+    id: string;
+    status: string;
+    expiresAt: string;
+    secondsUntilExpiration: number;
+  };
 }
 
 export default function Admin() {
@@ -35,13 +45,26 @@ export default function Admin() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/admin/users/list', {
+      
+      // Try to fetch with activation status first
+      let response = await fetch('/api/admin/users/activation-status', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
       });
+
+      // Fallback to old endpoint if activation-status not available
+      if (!response.ok) {
+        response = await fetch('/api/admin/users/list', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+      }
 
       if (!response.ok) {
         throw new Error('Failed to fetch users');
@@ -61,13 +84,8 @@ export default function Admin() {
     e.preventDefault();
     setMessage(null);
 
-    if (!newEmail || !newPassword) {
-      setMessage({ type: 'error', text: 'Please enter both email and password' });
-      return;
-    }
-
-    if (newPassword.length < 8) {
-      setMessage({ type: 'error', text: 'Password must be at least 8 characters' });
+    if (!newEmail) {
+      setMessage({ type: 'error', text: 'Please enter an email address' });
       return;
     }
 
@@ -83,7 +101,6 @@ export default function Admin() {
         body: JSON.stringify({
           email: newEmail,
           name: newName || undefined, // Optional: use email prefix if not provided
-          password: newPassword,
           createdBy: 'admin',
         }),
       });
@@ -95,10 +112,9 @@ export default function Admin() {
         return;
       }
 
-      setMessage({ type: 'success', text: `User "${newEmail}" added successfully` });
+      setMessage({ type: 'success', text: `User "${newEmail}" created! Activation email sent with password setup link.` });
       setNewEmail('');
       setNewName('');
-      setNewPassword('');
       
       // Refresh user list
       await fetchUsers();
@@ -138,6 +154,37 @@ export default function Admin() {
     } catch (error) {
       console.error('Error deleting user:', error);
       setMessage({ type: 'error', text: 'Failed to delete user' });
+    }
+  };
+
+  const handleResendActivation = async (userId: string, userEmail: string) => {
+    if (!window.confirm(`Resend activation link to ${userEmail}? This will invalidate any previous links.`)) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('/api/admin/users/resend-activation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage({ type: 'error', text: data.error || 'Failed to resend activation link' });
+        return;
+      }
+
+      setMessage({ type: 'success', text: `Activation link resent to ${userEmail}` });
+      await fetchUsers();
+    } catch (error) {
+      console.error('Error resending activation:', error);
+      setMessage({ type: 'error', text: 'Failed to resend activation link' });
     }
   };
 
@@ -289,79 +336,12 @@ export default function Admin() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                      Password
-                    </label>
-                    <div className="relative">
-                      <input
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full pr-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Minimum 8 characters"
-                        disabled={isSubmitting}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                        disabled={isSubmitting}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-5 w-5" />
-                        ) : (
-                          <Eye className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          // Generate strong password: 16 chars with uppercase, lowercase, numbers, and symbols
-                          const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
-                          let password = '';
-                          for (let i = 0; i < 16; i++) {
-                            password += chars.charAt(Math.floor(Math.random() * chars.length));
-                          }
-                          setNewPassword(password);
-                          setShowPassword(true);
-                        }}
-                        className="flex items-center gap-2 px-3 py-1.5 text-sm bg-purple-50 text-purple-700 rounded-md hover:bg-purple-100 transition-colors"
-                        disabled={isSubmitting}
-                      >
-                        <RefreshCw className="h-4 w-4" />
-                        Generate Strong Password
-                      </button>
-                      {newPassword && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            navigator.clipboard.writeText(newPassword);
-                            setPasswordCopied(true);
-                            setTimeout(() => setPasswordCopied(false), 2000);
-                          }}
-                          className="flex items-center gap-2 px-3 py-1.5 text-sm bg-green-50 text-green-700 rounded-md hover:bg-green-100 transition-colors"
-                          disabled={isSubmitting}
-                        >
-                          {passwordCopied ? (
-                            <>
-                              <Check className="h-4 w-4" />
-                              Copied!
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-4 w-4" />
-                              Copy Password
-                            </>
-                          )}
-                        </button>
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-500 mt-2">
-                      This password will be hashed and stored securely. User can log in immediately.
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-sm text-blue-800 font-medium mb-1">
+                      🔐 Password Setup via Email
+                    </p>
+                    <p className="text-xs text-blue-700">
+                      The user will receive an email with a secure activation link to set their own password. The link expires in 24 hours.
                     </p>
                   </div>
 
@@ -410,23 +390,53 @@ export default function Admin() {
                                 Admin
                               </span>
                             )}
-                            {user.password_status === 'temporary' && (
+                            {/* Activation status badges */}
+                            {user.accountStatus === 'active' && (
+                              <span className="px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full flex items-center gap-1">
+                                <CheckCircle className="w-3 h-3" />
+                                Activated
+                              </span>
+                            )}
+                            {user.accountStatus === 'pending_activation' && user.token?.status === 'pending' && (
                               <span className="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full">
-                                Needs Password
+                                ⏳ Pending
+                              </span>
+                            )}
+                            {user.accountStatus === 'pending_activation' && user.needsNewLink && (
+                              <span className="px-2 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">
+                                ⚠️ Link Expired
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">{user.name || 'No name'}</p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {user.name || 'No name'}
+                            {user.activatedAt && (
+                              <span className="ml-2">• Activated {new Date(user.activatedAt).toLocaleDateString()}</span>
+                            )}
+                          </p>
                         </div>
                         {user.role !== 'admin' && (
                           <div className="flex gap-2">
-                            <button
-                              onClick={() => handleResetPassword(user.id, user.email || user.name || 'Unknown')}
-                              className="p-2 text-orange-600 hover:bg-orange-50 rounded transition"
-                              title="Reset password"
-                            >
-                              <RotateCcw className="w-4 h-4" />
-                            </button>
+                            {/* Show resend button if user needs new link */}
+                            {user.needsNewLink && (
+                              <button
+                                onClick={() => handleResendActivation(user.id, user.email || user.name || 'Unknown')}
+                                className="p-2 text-blue-600 hover:bg-blue-50 rounded transition"
+                                title="Resend activation link"
+                              >
+                                <RefreshCw className="w-4 h-4" />
+                              </button>
+                            )}
+                            {/* Show reset password only for activated users */}
+                            {user.accountStatus === 'active' && (
+                              <button
+                                onClick={() => handleResetPassword(user.id, user.email || user.name || 'Unknown')}
+                                className="p-2 text-orange-600 hover:bg-orange-50 rounded transition"
+                                title="Reset password"
+                              >
+                                <RotateCcw className="w-4 h-4" />
+                              </button>
+                            )}
                             <button
                               onClick={() => handleDeleteUser(user.id, user.email || user.name || 'Unknown')}
                               className="p-2 text-red-600 hover:bg-red-50 rounded transition"
