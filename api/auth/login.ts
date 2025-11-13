@@ -222,10 +222,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Set session cookie for subsequent requests
     try {
-      // Import SDK dynamically to avoid circular dependencies
+      // Import SDK and db dynamically to avoid circular dependencies
       const { sdk } = await import('../../server/_core/sdk.js');
+      const { upsertUser } = await import('../../server/db.js');
+      
       // Ensure name is non-empty (required by session validation)
       const userName = user.name || user.email.split('@')[0] || 'User';
+      
+      // Add user to the users table so SDK can find them
+      await upsertUser({
+        id: user.id,
+        name: userName,
+        email: user.email,
+        loginMethod: 'email',
+        lastSignedIn: new Date(),
+      });
+      console.log('[LOGIN] User added to users table:', user.id);
+      
       const sessionToken = await sdk.createSessionToken(user.id, { name: userName });
       
       // Set cookie with appropriate options
