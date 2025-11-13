@@ -54,20 +54,56 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(403).json({ error: 'Cannot delete admin users' });
     }
 
-    // Delete the user
+    // Delete the user from portal database
     const { error: deleteError } = await supabase
       .from('app_users')
       .delete()
       .eq('id', userId);
 
     if (deleteError) {
-      console.error('Error deleting user:', deleteError);
-      return res.status(500).json({ error: 'Failed to delete user' });
+      console.error('Error deleting user from portal:', deleteError);
+      return res.status(500).json({ error: 'Failed to delete user from portal' });
+    }
+
+    console.log(`[User Deletion] User ${user[0].email} deleted from portal database`);
+
+    // Also delete the user from chat database
+    // This is a non-blocking operation - portal deletion succeeds even if chat deletion fails
+    try {
+      const chatApiUrl = process.env.CHAT_API_URL || 'https://demo-chat.ikoneworld.net';
+      const chatApiKey = process.env.CHAT_API_KEY || process.env.JWT_SECRET;
+      
+      if (chatApiUrl && chatApiKey) {
+        const chatDeleteResponse = await fetch(`${chatApiUrl}/api/users/delete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': chatApiKey,
+          },
+          body: JSON.stringify({
+            userId: userId,
+            email: user[0].email,
+          }),
+        });
+
+        if (chatDeleteResponse.ok) {
+          const chatResult = await chatDeleteResponse.json();
+          console.log('[User Deletion] User deleted from chat database:', chatResult);
+        } else {
+          const errorText = await chatDeleteResponse.text();
+          console.error('[User Deletion] Failed to delete user from chat database:', chatDeleteResponse.status, errorText);
+        }
+      } else {
+        console.warn('[User Deletion] Chat deletion skipped: CHAT_API_URL or CHAT_API_KEY not configured');
+      }
+    } catch (chatError) {
+      // Log the error but don't fail portal deletion
+      console.error('[User Deletion] Error deleting user from chat database:', chatError);
     }
 
     return res.status(200).json({
       success: true,
-      message: `User ${user[0].email} deleted successfully`,
+      message: `User ${user[0].email} deleted successfully from portal and chat databases`,
     });
   } catch (error) {
     console.error('Error in delete user endpoint:', error);
