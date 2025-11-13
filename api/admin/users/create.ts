@@ -87,10 +87,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Failed to create user' });
     }
 
+    // Send welcome email via chat system's email API
+    // This is a non-blocking operation - user creation succeeds even if email fails
+    try {
+      const chatApiUrl = process.env.CHAT_API_URL || 'https://demo-chat.ikoneworld.net';
+      const chatApiKey = process.env.CHAT_API_KEY || process.env.JWT_SECRET;
+      
+      if (chatApiUrl && chatApiKey) {
+        const emailResponse = await fetch(`${chatApiUrl}/api/email/welcome`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': chatApiKey,
+          },
+          body: JSON.stringify({
+            email: email,
+            name: userName,
+            portalUrl: 'https://demo-portal.ikoneworld.net',
+            language: 'en',
+          }),
+        });
+
+        if (emailResponse.ok) {
+          const emailResult = await emailResponse.json();
+          console.log('Welcome email sent successfully:', emailResult);
+        } else {
+          const errorText = await emailResponse.text();
+          console.error('Failed to send welcome email:', emailResponse.status, errorText);
+        }
+      } else {
+        console.warn('Welcome email not sent: CHAT_API_URL or CHAT_API_KEY not configured');
+      }
+    } catch (emailError) {
+      // Log the error but don't fail user creation
+      console.error('Error sending welcome email:', emailError);
+    }
+
     return res.status(201).json({
       success: true,
       user: newUser?.[0] || { id: userId, email, name: userName },
-      message: 'User created successfully with hashed password.',
+      message: 'User created successfully with hashed password. Welcome email sent.',
     });
   } catch (error) {
     console.error('Error in create user endpoint:', error);
