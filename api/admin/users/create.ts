@@ -130,12 +130,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Send welcome email via chat system's email API with activation token
-    // This is a non-blocking operation - user creation succeeds even if email fails
-    try {
-      const chatApiUrl = process.env.CHAT_API_URL || 'https://demo-chat.ikoneworld.net';
-      const chatApiKey = process.env.CHAT_API_KEY || process.env.JWT_SECRET;
-      
-      if (chatApiUrl && chatApiKey) {
+    // Only send if activation token was successfully created
+    let emailSent = false;
+    
+    if (!activationToken) {
+      console.error('[User Creation] Activation token not created - welcome email will NOT be sent');
+      console.error('[User Creation] Admin must manually resend activation link from admin dashboard');
+    } else {
+      try {
+        const chatApiUrl = process.env.CHAT_API_URL || 'https://demo-chat.ikoneworld.net';
+        const chatApiKey = process.env.CHAT_API_KEY || process.env.JWT_SECRET;
+        
+        if (chatApiUrl && chatApiKey) {
         const emailResponse = await fetch(`${chatApiUrl}/api/email/welcome`, {
           method: 'POST',
           headers: {
@@ -151,27 +157,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }),
         });
 
-        if (emailResponse.ok) {
-          const emailResult = await emailResponse.json();
-          console.log('Welcome email sent successfully:', emailResult);
+          if (emailResponse.ok) {
+            const emailResult = await emailResponse.json();
+            console.log('[User Creation] Welcome email sent successfully:', emailResult);
+            emailSent = true;
+          } else {
+            const errorText = await emailResponse.text();
+            console.error('[User Creation] Failed to send welcome email:', emailResponse.status, errorText);
+          }
         } else {
-          const errorText = await emailResponse.text();
-          console.error('Failed to send welcome email:', emailResponse.status, errorText);
+          console.warn('[User Creation] Welcome email not sent: CHAT_API_URL or CHAT_API_KEY not configured');
         }
-      } else {
-        console.warn('Welcome email not sent: CHAT_API_URL or CHAT_API_KEY not configured');
+      } catch (emailError) {
+        // Log the error but don't fail user creation
+        console.error('[User Creation] Error sending welcome email:', emailError);
       }
-    } catch (emailError) {
-      // Log the error but don't fail user creation
-      console.error('Error sending welcome email:', emailError);
+    }
+
+    // Return appropriate message based on token and email status
+    let message = 'User created successfully.';
+    let warning = null;
+    
+    if (activationToken && emailSent) {
+      message = 'User created successfully. Activation email sent with password setup link.';
+    } else if (activationToken && !emailSent) {
+      message = 'User created successfully. Activation token created but email failed to send.';
+      warning = 'Please use the "Resend Activation Link" button in the admin dashboard to send the welcome email.';
+    } else {
+      message = 'User created but activation token creation failed.';
+      warning = 'Please use the "Resend Activation Link" button in the admin dashboard to generate a new token and send the welcome email.';
     }
 
     return res.status(201).json({
       success: true,
       user: newUser?.[0] || { id: userId, email, name: userName },
-      message: 'User created successfully. Activation email sent with password setup link.',
+      message: message,
+      warning: warning,
       activationRequired: true,
-      tokenCreated: !!activationToken
+      tokenCreated: !!activationToken,
+      emailSent: emailSent
     });
   } catch (error) {
     console.error('Error in create user endpoint:', error);
