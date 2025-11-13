@@ -117,14 +117,20 @@ export default function SetPassword() {
       if (response.ok && data.success) {
         setSuccess(true);
         
-        // Store session token
+        // Store session token and user info using the correct keys
         if (data.sessionToken) {
           localStorage.setItem('authToken', data.sessionToken);
         }
+        
+        // Store user info for AuthContext
+        if (data.user && data.user.email) {
+          localStorage.setItem('verizon_cx_user', data.user.email);
+          localStorage.setItem('verizon_cx_auth', 'true');
+        }
 
-        // Redirect to dashboard after 2 seconds
+        // Redirect to videos page after 2 seconds
         setTimeout(() => {
-          setLocation('/dashboard');
+          window.location.href = '/videos';
         }, 2000);
       } else {
         setError(data.message || data.error || 'Failed to set password');
