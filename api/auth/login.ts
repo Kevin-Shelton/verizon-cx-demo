@@ -224,7 +224,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       // Import SDK dynamically to avoid circular dependencies
       const { sdk } = await import('../../server/_core/sdk.js');
-      const sessionToken = await sdk.createSessionToken(user.id, { name: user.name || '' });
+      // Ensure name is non-empty (required by session validation)
+      const userName = user.name || user.email.split('@')[0] || 'User';
+      const sessionToken = await sdk.createSessionToken(user.id, { name: userName });
       
       // Set cookie with appropriate options
       const isSecure = req.headers['x-forwarded-proto'] === 'https';
