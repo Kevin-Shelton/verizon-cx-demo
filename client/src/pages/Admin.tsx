@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, Users, UserPlus, Trash2, AlertCircle, CheckCircle, Eye, EyeOff, BarChart3, Lock, RotateCcw } from 'lucide-react';
+import { Shield, Users, UserPlus, Trash2, AlertCircle, CheckCircle, Eye, EyeOff, BarChart3, Lock, RotateCcw, RefreshCw, Copy, Check } from 'lucide-react';
 
 interface User {
   id: string;
@@ -20,6 +20,7 @@ export default function Admin() {
   const [newName, setNewName] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordCopied, setPasswordCopied] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -315,7 +316,51 @@ export default function Admin() {
                         )}
                       </button>
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <div className="flex gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // Generate strong password: 16 chars with uppercase, lowercase, numbers, and symbols
+                          const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+                          let password = '';
+                          for (let i = 0; i < 16; i++) {
+                            password += chars.charAt(Math.floor(Math.random() * chars.length));
+                          }
+                          setNewPassword(password);
+                          setShowPassword(true);
+                        }}
+                        className="flex items-center gap-2 px-3 py-1.5 text-sm bg-purple-50 text-purple-700 rounded-md hover:bg-purple-100 transition-colors"
+                        disabled={isSubmitting}
+                      >
+                        <RefreshCw className="h-4 w-4" />
+                        Generate Strong Password
+                      </button>
+                      {newPassword && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(newPassword);
+                            setPasswordCopied(true);
+                            setTimeout(() => setPasswordCopied(false), 2000);
+                          }}
+                          className="flex items-center gap-2 px-3 py-1.5 text-sm bg-green-50 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+                          disabled={isSubmitting}
+                        >
+                          {passwordCopied ? (
+                            <>
+                              <Check className="h-4 w-4" />
+                              Copied!
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-4 w-4" />
+                              Copy Password
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">
                       This password will be hashed and stored securely. User can log in immediately.
                     </p>
                   </div>
