@@ -20,6 +20,7 @@ import {
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { trpc } from "@/lib/trpc";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -28,7 +29,7 @@ interface MainLayoutProps {
 // More dropdown items
 const moreItems = [
   { name: "Sales Flow Journey", href: "/journey", icon: Map },
-  { name: "Experiences", href: "https://demo-chat.ikoneworld.net/dashboard", icon: Sparkles },
+  { name: "Experiences", href: "https://demo-chat.ikoneworld.net/dashboard", icon: Sparkles, requiresSSO: true },
   { name: "Research & Feedback", href: "/research-sources", icon: BookOpen },
 ];
 
@@ -37,7 +38,35 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLaunchingSSO, setIsLaunchingSSO] = useState(false);
   const { logout, user, isAdmin } = useAuth();
+  const generateTokenMutation = trpc.auth.generateAuthToken.useMutation();
+
+  const handleSSOLaunch = async (url: string) => {
+    try {
+      setIsLaunchingSSO(true);
+      
+      // Generate auth token
+      const response = await generateTokenMutation.mutateAsync();
+      const token = response?.token;
+      
+      // Extract the path from the chat site URL
+      const urlObj = new URL(url);
+      const redirectPath = urlObj.pathname + urlObj.search;
+      
+      // Redirect through SSO login page
+      const finalUrl = `https://demo-chat.ikoneworld.net/sso-login?token=${encodeURIComponent(token)}&redirect=${encodeURIComponent(redirectPath)}`;
+      
+      // Open in new window
+      window.open(finalUrl, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      console.error("Error launching SSO:", err);
+      // Fallback: open without token
+      window.open(url, "_blank", "noopener,noreferrer");
+    } finally {
+      setIsLaunchingSSO(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,16 +174,18 @@ export default function MainLayout({ children }: MainLayoutProps) {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   const isExternal = item.href.startsWith('http://') || item.href.startsWith('https://');
+                  const requiresSSO = 'requiresSSO' in item && item.requiresSSO;
                   
                   if (isExternal) {
                     return (
                       <button
                         key={item.href}
-                        onClick={() => window.open(item.href, '_blank', 'noopener,noreferrer')}
-                        className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent rounded-none text-left"
+                        onClick={() => requiresSSO ? handleSSOLaunch(item.href) : window.open(item.href, '_blank', 'noopener,noreferrer')}
+                        disabled={isLaunchingSSO}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent rounded-none text-left disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Icon className="h-4 w-4" />
-                        {item.name}
+                        {isLaunchingSSO && requiresSSO ? 'Launching...' : item.name}
                       </button>
                     );
                   }
@@ -289,6 +320,30 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 {moreItems.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
+                  const isExternal = item.href.startsWith('http://') || item.href.startsWith('https://');
+                  const requiresSSO = 'requiresSSO' in item && item.requiresSSO;
+                  
+                  if (isExternal) {
+                    return (
+                      <button
+                        key={item.href}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          if (requiresSSO) {
+                            handleSSOLaunch(item.href);
+                          } else {
+                            window.open(item.href, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                        disabled={isLaunchingSSO}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent rounded-md text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Icon className="h-4 w-4" />
+                        {isLaunchingSSO && requiresSSO ? 'Launching...' : item.name}
+                      </button>
+                    );
+                  }
+                  
                   return (
                     <Link key={item.href} href={item.href}>
                       <Button
