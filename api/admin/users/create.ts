@@ -61,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Hash the password using bcrypt (10 rounds as per security requirements)
     const bcrypt = await import('bcryptjs');
-    const passwordHash = await bcrypt.default.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     
     // Create new user with hashed password
     const userId = crypto.randomUUID();
