@@ -229,7 +229,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const userName = user.name || user.email.split('@')[0] || 'User';
       
       // Create session token with email included
-      const sessionToken = await sdk.createSessionToken(user.id, { name: userName, email: user.email } as any);
+      const sessionToken = await sdk.createSessionToken(user.id, { name: userName, email: user.email });
       console.log('[LOGIN] Session token created for:', user.email);
       
       // Set cookie with appropriate options
