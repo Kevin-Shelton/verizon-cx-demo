@@ -28,6 +28,7 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         try {
           const { email, password } = input;
+          console.log('[LOGIN] CODE VERSION: 6fb7b5c - Cookie setting enabled');
           console.log('[LOGIN] Received login request for email:', email);
           
           // Hardcoded admin user for testing
