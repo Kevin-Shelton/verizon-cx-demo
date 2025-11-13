@@ -29,6 +29,14 @@ const videos: VideoItem[] = [
     url: "https://store.ikoneworld.com/vz-carlos/",
     duration: "10:30",
   },
+  {
+    id: "ikoneworld-pillars",
+    title: "iKoneworld Pillars",
+    description:
+      "Explore the foundational pillars of our platform and understand how each component works together to deliver seamless multilingual customer experiences across all touchpoints.",
+    url: "https://video.ikunnect.com/ik-oneworld-pillars/",
+    duration: "8:00",
+  },
 ];
 
 export default function Videos() {
