@@ -17,6 +17,7 @@ interface User {
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<'users' | 'metrics'>('users');
   const [newEmail, setNewEmail] = useState('');
+  const [newName, setNewName] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -80,6 +81,8 @@ export default function Admin() {
         },
         body: JSON.stringify({
           email: newEmail,
+          name: newName || undefined, // Optional: use email prefix if not provided
+          password: newPassword,
           createdBy: 'admin',
         }),
       });
@@ -93,6 +96,7 @@ export default function Admin() {
 
       setMessage({ type: 'success', text: `User "${newEmail}" added successfully` });
       setNewEmail('');
+      setNewName('');
       setNewPassword('');
       
       // Refresh user list
@@ -270,8 +274,23 @@ export default function Admin() {
                   </div>
 
                   <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-700">
+                      Full Name <span className="text-gray-400 text-xs">(Optional)</span>
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="John Doe (defaults to email prefix)"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
                     <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                      Temporary Password
+                      Password
                     </label>
                     <div className="relative">
                       <input
@@ -297,7 +316,7 @@ export default function Admin() {
                       </button>
                     </div>
                     <p className="text-xs text-gray-500">
-                      User will be required to set their own password on first login
+                      This password will be hashed and stored securely. User can log in immediately.
                     </p>
                   </div>
 

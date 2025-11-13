@@ -27,11 +27,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { email, createdBy } = req.body;
+    const { email, password, name, createdBy } = req.body;
 
     // Validate input
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
+    }
+    
+    if (!password) {
+      return res.status(400).json({ error: 'Password is required' });
+    }
+    
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
     }
 
     // Verify the request is from an admin (check auth token)
@@ -51,18 +59,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(409).json({ error: 'User already exists' });
     }
 
-    // Create new user with temporary password status
+    // Hash the password using bcrypt (10 rounds as per security requirements)
+    const bcrypt = await import('bcryptjs');
+    const passwordHash = await bcrypt.hash(password, 10);
+    
+    // Create new user with hashed password
     const userId = crypto.randomUUID();
+    const userName = name || email.split('@')[0]; // Use provided name or email prefix
+    
     const { data: newUser, error: createError } = await supabase
       .from('app_users')
       .insert([
         {
           id: userId,
           email: email,
-          name: email.split('@')[0], // Use email prefix as default name
-          password_hash: null, // No password yet - user must set on first login
+          name: userName,
+          password_hash: passwordHash,
           role: 'user',
-          password_status: 'temporary', // Indicates user needs to set password
+          password_status: 'active', // Password is set and ready to use
           created_by: createdBy || 'admin',
         },
       ])
@@ -75,8 +89,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.status(201).json({
       success: true,
-      user: newUser?.[0] || { id: userId, email },
-      message: 'User created successfully. They must set their password on first login.',
+      user: newUser?.[0] || { id: userId, email, name: userName },
+      message: 'User created successfully with hashed password.',
     });
   } catch (error) {
     console.error('Error in create user endpoint:', error);
