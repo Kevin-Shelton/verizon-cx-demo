@@ -8,6 +8,9 @@ import { z } from "zod";
 import jwt from "jsonwebtoken";
 import { getAppUserByEmail } from "./db.js";
 
+// Force Vercel to reload this module - Version 96e6af7
+console.log('[ROUTER] Module loaded - Version 96e6af7 with cookie setting');
+
 export const appRouter = router({
   system: systemRouter,
 
