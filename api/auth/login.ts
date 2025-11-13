@@ -239,7 +239,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       console.log('[LOGIN] User added to users table:', user.id);
       
-      const sessionToken = await sdk.createSessionToken(user.id, { name: userName });
+      const sessionToken = await sdk.createSessionToken(user.id, { name: userName, email: user.email } as any);
       
       // Set cookie with appropriate options
       const isSecure = req.headers['x-forwarded-proto'] === 'https';

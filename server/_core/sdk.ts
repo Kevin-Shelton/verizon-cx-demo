@@ -191,6 +191,7 @@ class SDKServer {
       openId: payload.openId,
       appId: payload.appId,
       name: payload.name,
+      email: (payload as any).email, // Include email for portal users
     })
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setExpirationTime(expirationSeconds)
@@ -210,7 +211,7 @@ class SDKServer {
       const { payload } = await jwtVerify(cookieValue, secretKey, {
         algorithms: ["HS256"],
       });
-      const { openId, appId, name } = payload as Record<string, unknown>;
+      const { openId, appId, name, email } = payload as Record<string, unknown>;
 
       if (
         !isNonEmptyString(openId) ||
@@ -225,6 +226,7 @@ class SDKServer {
         openId,
         appId,
         name,
+        email: typeof email === 'string' ? email : undefined,
       };
     } catch (error) {
       console.warn("[Auth] Session verification failed", String(error));
@@ -268,9 +270,25 @@ class SDKServer {
 
     const sessionUserId = session.openId;
     const signedInAt = new Date();
+    
+    // First try PostgreSQL users table
     let user = await db.getUser(sessionUserId);
 
-    // If user not in DB, sync from OAuth server automatically
+    // If not in PostgreSQL, use session data (for portal authentication)
+    if (!user) {
+      console.log("[Auth] User not in PostgreSQL, using session data");
+      user = {
+        id: session.openId,
+        name: session.name,
+        email: session.email || null,
+        role: 'user',
+        loginMethod: 'email',
+        createdAt: new Date(),
+        lastSignedIn: signedInAt,
+      } as any;
+    }
+
+    // If still no user, try OAuth sync as last resort
     if (!user) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
@@ -292,10 +310,13 @@ class SDKServer {
       throw ForbiddenError("User not found");
     }
 
-    await db.upsertUser({
-      id: user.id,
-      lastSignedIn: signedInAt,
-    });
+    // Only update PostgreSQL if user exists there
+    if (await db.getUser(user.id)) {
+      await db.upsertUser({
+        id: user.id,
+        lastSignedIn: signedInAt,
+      });
+    }
 
     return user as any;
   }
