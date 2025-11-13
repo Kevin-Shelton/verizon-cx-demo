@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-// Using built-in crypto.randomUUID() instead of uuid package
+import crypto from 'crypto';
+// Using built-in crypto module for UUID and token generation
 
 // Initialize Supabase client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -76,27 +77,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Failed to create user' });
     }
 
-    // Generate activation token
+    // Generate activation token directly (no HTTP call needed)
     let activationToken = '';
     try {
-      const tokenResponse = await fetch(`${req.headers.host?.includes('localhost') ? 'http' : 'https'}://${req.headers.host}/api/auth/create-activation-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: userId,
-          email: email,
-          createdBy: createdBy || 'admin'
-        }),
-      });
+      // Generate cryptographically secure random token
+      const token = crypto.randomBytes(32).toString('hex'); // 64 character hex string
 
-      if (tokenResponse.ok) {
-        const tokenResult = await tokenResponse.json();
-        activationToken = tokenResult.token;
-        console.log('Activation token created:', tokenResult.tokenId);
+      // Set expiration to 24 hours from now
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 24);
+
+      // Get request metadata for audit trail
+      const ipAddress = (req.headers['x-forwarded-for'] as string)?.split(',')[0] || 
+                        (req.headers['x-real-ip'] as string) || 
+                        'unknown';
+      const userAgent = req.headers['user-agent'] || 'unknown';
+
+      // Insert token into database
+      // The trigger will automatically revoke any previous pending tokens
+      const { data: tokenRecord, error: tokenError } = await supabase
+        .from('password_reset_tokens')
+        .insert([{
+          user_id: userId,
+          token: token,
+          token_type: 'activation',
+          status: 'pending',
+          expires_at: expiresAt.toISOString(),
+          created_by: createdBy || 'admin',
+          ip_address: ipAddress,
+          user_agent: userAgent,
+          metadata: {
+            email: email,
+            created_at: new Date().toISOString()
+          }
+        }])
+        .select()
+        .single();
+
+      if (tokenError) {
+        console.error('Error creating token:', tokenError);
       } else {
-        console.error('Failed to create activation token:', await tokenResponse.text());
+        activationToken = token;
+        console.log('[Activation Token] Created for user:', {
+          userId,
+          email,
+          tokenId: tokenRecord.id,
+          expiresAt: expiresAt.toISOString()
+        });
       }
     } catch (tokenError) {
       console.error('Error creating activation token:', tokenError);
